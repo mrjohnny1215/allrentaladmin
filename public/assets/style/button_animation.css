@@ -1,0 +1,51 @@
+.btn-animate {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.4s ease;
+}
+
+/* hover 시 배경과 테두리 제거 */
+.btn-animate:hover {
+  background-color: transparent !important;
+  color: red !important;
+  border: none !important; /* ✅ 테두리 제거 */
+  box-shadow: none !important; /* ✅ 그림자도 제거 (있는 경우) */
+}
+
+/* 상하 선 애니메이션 */
+.btn-animate::before,
+.btn-animate::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 0;
+  background: rgba(255, 0, 0, 0.7); /* 빨간 선 */
+  transition: width 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.btn-animate::before {
+  top: 0;
+  left: 0;
+}
+
+.btn-animate::after {
+  bottom: 0;
+  right: 0;
+}
+
+.btn-animate:hover::before {
+  width: 100%;
+}
+
+.btn-animate:hover::after {
+  width: 100%;
+}
+
+/* 텍스트용 */
+.btn-animate > span {
+  position: relative;
+  z-index: 3;
+}

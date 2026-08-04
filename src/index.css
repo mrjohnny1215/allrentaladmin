@@ -1,0 +1,89 @@
+/* ===== ALL&UP 클론 - 전역 디자인 토큰 (원본 사이트 분석 기반) ===== */
+
+@font-face {
+  font-family: 'cafe';
+  src: url('../public/assets/fonts/cafe.woff2') format('woff2'),
+       url('../public/assets/fonts/cafe.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --navy: #0C1421;          /* 헤더/다크 버튼 (원본 btn-login) */
+  --navy-hover: #1b2430;
+  --cobalt: #2f66ff;        /* 포인트 블루 (원본 gradient #4c82ff->#2f66ff) */
+  --cobalt-dark: #1d4ed8;
+  --cobalt-light: #eef3ff;   /* 연한 블루 배경 */
+  --input-bg: #F7FBFF;      /* 연한 블루 입력창 */
+  --input-border: #D4D7E3;
+  --bg: #f5f7fa;            /* 메인 배경 */
+  --panel: #ffffff;
+  --text: #333333;
+  --text-muted: #666666;
+  --gold: #f5b301;          /* 제휴카드 강조 */
+  --radius: 0.75rem;
+  --shadow: 0 0 30px rgba(0,0,0,0.1);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'cafe', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+
+/* 공통 버튼 */
+.btn-primary-x {
+  background-color: var(--cobalt);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.btn-primary-x:hover { background-color: var(--cobalt-dark); }
+
+.btn-dark-x {
+  background-color: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+  transition: background 0.15s;
+}
+.btn-dark-x:hover { background-color: var(--navy-hover); }
+
+.btn-ghost-x {
+  background: #e9ecef;
+  color: var(--text);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+}
+.btn-ghost-x:hover { background: #dde1e6; }
+
+/* 입력창 */
+.input-x {
+  border-radius: 0.75rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  width: 100%;
+}
+.input-x:focus { outline: 2px solid var(--cobalt); outline-offset: -1px; }

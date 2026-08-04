@@ -1,0 +1,47 @@
+.btn-flat {
+  width: auto;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 8px 20px;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* 색상별 스타일 */
+.btn-flat.color-1 {
+  background: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+}
+.btn-flat.color-2 {
+  background: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+}
+.btn-flat.color-3 {
+  background: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
+}
+.btn-flat.color-4 {
+  background: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+}
+.btn-flat.color-5 {
+  background: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+}
+.btn-flat.color-6 {
+  background: linear-gradient(to right, #009245, #FCEE21, #00A8C5, #D9E021);
+}
+.btn-flat.color-7 {
+  background: linear-gradient(to right, #6253e1, #852D91, #A3A1FF, #F24645);
+}
+.btn-flat.color-8 {
+  background: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+}
+.btn-flat.color-9 {
+  background: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+}
+.btn-flat.color-10 {
+  background: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
+}
+.btn-flat.color-11 {
+  background: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);
+}
