@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>명함 - ALL & UP</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="./assets/style/button_style.css">
+<link rel="stylesheet" href="./assets/style/button_animation.css">
+<style>body{font-family:'cafe',sans-serif;background:#f5f7fa;} .card-box{background:#fff;border-radius:0.75rem;padding:1.25rem;box-shadow:0 0 30px rgba(0,0,0,0.1);margin-bottom:1rem;}</style>
+</head>
+<body>
+
+<div class="page-shell">
+  <div class="topbar topbar-tabs-only mb-3">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link active" href="?tab=materials">상담자료</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="?tab=cards">명함관리</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="tab-content">
+  
+    <div class="row g-3">
+      <!-- =========================
+           TEXT PANEL
+           ========================= -->
+      <div class="col-12 col-xl-6">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="bi bi-file-text"></i>
+              <span>텍스트 자료</span>
+            </div>
+
+            <form class="d-flex flex-nowrap gap-2" id="textSearchForm" style="max-width:420px; width:100%;">
+              <input type="hidden" name="tab" value="materials">
+              <input type="text" class="form-control form-control-sm" id="tqInput" name="tq"
+                     placeholder="제목/내용 검색 (Enter로 다음 결과)"
+                     value="">
+              <button class="btn manage-outline-btn manage-small-btn manage-fixed-btn flex-shrink-0" id="tqBtn" type="submit">
+                <span class="btn-inline-icon-wrap">
+                  <img src="./assets/webimage/button/search.png" alt="" class="btn-inline-icon">
+                  <span>검색</span>
+                </span>
+              </button>
+            </form>
+          </div>
+
+          <div class="panel-body">
+            <div class="split">
+              <!-- Tree -->
+              <div class="tree-wrap">
+                <div class="tree-head">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-folder2-open" style="font-size:16px; color: rgba(15,23,42,.88);"></i>
+                    <strong>폴더/파일</strong>
+                  </div>
+
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="hint d-none d-md-inline">선택 후 편집 메뉴 사용</span>
+
+                    <!-- 루트 폴더 추가 -->
+                    <button type="button" class="btn btn-outline-success btn-sm add-root-folder" data-kind="text" title="루트에 폴더 추가" aria-label="루트에 폴더 추가">
+                      <i class="bi bi-plus-lg"></i>
+                    </button>
+
+                    <!-- 3점(편집) 메뉴 -->
+                    <div class="dropdown">
+                      <button class="btn btn-outline-secondary btn-sm" type="button" id="textTreeMenuBtn"
+                              data-bs-toggle="dropdown" aria-expanded="false" title="편집" aria-label="편집">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end" id="textTreeMenu" aria-labelledby="textTreeMenuBtn">
+                        <li><button class="dropdown-item" type="button" data-act="add">하위 폴더 추가</button></li>
+                        <li><button class="dropdown-item" type="button" data-act="up">위로 이동</button></li>
+                        <li><button class="dropdown-item" type="button" data-act="down">아래로 이동</button></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button class="dropdown-item" type="button" data-act="rename">폴더명 변경</button></li>
+                        <li><button class="dropdown-item text-danger" type="button" data-act="delete">폴더 삭제(비어있을 때)</button></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tree" id="textTree" tabindex="0" data-type="text">
+                                    <ul class="tree-list"></ul>                  <div class="small text-muted mt-2">
+                    위/아래 버튼으로 순서 변경 가능
+                  </div>
+                </div>
+              </div>
+
+              <!-- Work -->
+              <div class="work">
+                <div class="work-head">
+                  <div class="path" id="textSelectedName"></div>
+                  <div class="manage-head-actions">
+                    <button class="btn manage-outline-btn manage-small-btn" type="button" id="btnTextCopy" onclick="copySelectedText()">
+                      <span class="btn-inline-icon-wrap">
+                        <img src="./assets/webimage/button/copy.png" alt="" class="btn-inline-icon">
+                        <span>복사</span>
+                      </span>
+                    </button>
+
+                    <button class="btn manage-outline-btn manage-small-btn" type="button" id="btnTextSave" onclick="submitTextEdit()">
+                      <span class="btn-inline-icon-wrap">
+                        <img src="./assets/webimage/button/save.png" alt="" class="btn-inline-icon">
+                        <span>저장</span>
+                      </span>
+                    </button>
+
+                    <button class="btn manage-outline-btn manage-small-btn" type="button" id="btnTextAdd" onclick="createTextNow()">
+                      <span class="btn-inline-icon-wrap">
+                        <img src="./assets/webimage/button/add.png" alt="" class="btn-inline-icon">
+                        <span>추가</span>
+                      </span>
+                    </button>
+
+                    <form method="post" id="textDeleteForm" onsubmit="return confirm('삭제할까요?');" class="m-0">
+                      <input type="hidden" name="action" value="text_delete">
+                      <input type="hidden" name="target" id="textDeleteTarget" value="">
+                      <button class="btn manage-outline-btn manage-small-btn" type="submit">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/delete.png" alt="" class="btn-inline-icon">
+                          <span>삭제</span>
+                        </span>
+                      </button>
+                    </form>
+                  </div>
+                </div>
+
+                <div class="work-body">
+                  <!-- 제목 입력(생성/리네임에 사용) -->
+                  <form class="d-flex flex-nowrap gap-2" method="post" id="textCreateForm" onsubmit="return false;">
+                    <input type="hidden" name="action" value="text_new">
+                    <input type="hidden" name="parent" id="textParent" value="">
+                    <input type="text" class="form-control form-control-sm" id="textTitle" name="name"
+                           placeholder="제목 (파일명)  ·  예) 상담 스크립트"
+                           required>
+                  </form>
+
+                  <!-- 편집 폼 -->
+                  <form method="post" id="textEditForm" class="m-0 editor">
+                    <input type="hidden" name="action" value="text_update">
+                    <input type="hidden" name="target" id="textEditTarget" value="">
+                    <input type="hidden" name="new_name" id="textNewName" value="">
+                    <textarea class="form-control" name="content" id="textContent" rows="12"
+                              placeholder="내용을 입력하세요"></textarea>
+                  </form>
+
+                  <div class="small text-muted">
+                    <span class="d-none d-md-inline">폴더 선택 후 “추가” → 해당 폴더에 생성 · 파일 선택 후 “저장” → 수정</span>
+                    <span class="d-inline d-md-none">폴더 선택 후 “추가” → 해당 폴더에 생성<br>파일 선택 후 “저장” → 수정</span>
+                  </div>
+                </div>
+              </div>
+            </div><!-- /.split -->
+          </div><!-- /.panel-body -->
+        </div><!-- /.panel -->
+      </div><!-- /.col -->
+
+      <!-- =========================
+           IMAGE PANEL
+           ========================= -->
+      <div class="col-12 col-xl-6" id="imgBox">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="bi bi-images"></i>
+              <span>이미지 자료</span>
+            </div>
+
+            <form class="d-flex flex-nowrap gap-2" method="get" style="max-width:420px; width:100%;">
+              <input type="hidden" name="tab" value="materials">
+              <input type="text" class="form-control form-control-sm" name="iq"
+                     placeholder="파일명 검색"
+                     value="">
+              <button class="btn manage-outline-btn manage-small-btn manage-fixed-btn flex-shrink-0" type="submit">
+                <span class="btn-inline-icon-wrap">
+                  <img src="./assets/webimage/button/search.png" alt="" class="btn-inline-icon">
+                  <span>검색</span>
+                </span>
+              </button>
+            </form>
+          </div>
+
+          <div class="panel-body">
+            <div class="split">
+              <!-- Tree -->
+              <div class="tree-wrap">
+                <div class="tree-head">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-folder2" style="font-size:16px; color: rgba(15,23,42,.88);"></i>
+                    <strong>폴더</strong>
+                  </div>
+
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="hint d-none d-md-inline">선택 후 편집 메뉴 사용</span>
+
+                    <!-- 루트 폴더 추가 -->
+                    <button type="button" class="btn btn-outline-success btn-sm add-root-folder" data-kind="image" title="루트에 폴더 추가" aria-label="루트에 폴더 추가">
+                      <i class="bi bi-plus-lg"></i>
+                    </button>
+
+                    <!-- 3점(편집) 메뉴 -->
+                    <div class="dropdown">
+                      <button class="btn btn-outline-secondary btn-sm" type="button" id="imageTreeMenuBtn"
+                              data-bs-toggle="dropdown" aria-expanded="false" title="편집" aria-label="편집">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end" id="imageTreeMenu" aria-labelledby="imageTreeMenuBtn">
+                        <li><button class="dropdown-item" type="button" data-act="add">하위 폴더 추가</button></li>
+                        <li><button class="dropdown-item" type="button" data-act="up">위로 이동</button></li>
+                        <li><button class="dropdown-item" type="button" data-act="down">아래로 이동</button></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button class="dropdown-item" type="button" data-act="rename">폴더명 변경</button></li>
+                        <li><button class="dropdown-item text-danger" type="button" data-act="delete">폴더 삭제(비어있을 때)</button></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tree" id="imageTree" tabindex="0" data-type="image">
+                                    <ul class="tree-list"></ul>                  <div class="small text-muted mt-2">
+                    위/아래 버튼으로 순서 변경 가능
+                    <span class="d-block d-md-none">폴더를 선택한 뒤 업로드하면 해당 폴더로 저장됩니다.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Work -->
+              <div class="work">
+                <div class="work-head">
+                  <div class="path" id="imageSelectedName">경로 없음</div>
+                  <form class="manage-upload-form m-0" method="post" enctype="multipart/form-data"
+                        id="imgUploadForm" onsubmit="return ensureImageParent();" style="max-width:520px; width:100%;">
+                    <input type="hidden" name="action" value="image_upload">
+                    <input type="hidden" name="parent" id="imageParent" value="">
+                    <input type="file" name="image_file" id="materialImageInput" accept=".jpg,.jpeg,.png,.gif,.webp" style="display:none;">
+
+                    <button type="button" class="btn manage-outline-btn manage-small-btn manage-fixed-btn" onclick="document.getElementById('materialImageInput').click();">
+                      <span class="btn-inline-icon-wrap">
+                        <img src="./assets/webimage/button/add.png" alt="" class="btn-inline-icon">
+                        <span>파일 선택</span>
+                      </span>
+                    </button>
+
+                    <div class="manage-file-name" id="materialImageFileName">선택된 파일 없음</div>
+
+                    <button type="submit" class="btn manage-outline-btn manage-small-btn manage-fixed-btn">
+                      <span class="btn-inline-icon-wrap">
+                        <img src="./assets/webimage/button/upload.png" alt="" class="btn-inline-icon">
+                        <span>업로드</span>
+                      </span>
+                    </button>
+                  </form>
+                </div>
+
+                <div class="work-body">
+                  <div class="grid">
+                    <div id="imgGrid" class="row g-3" data-dir="">
+                      <div class="text-muted">이미지 없음</div>                    </div><!-- /#imgGrid -->
+                  </div><!-- /.grid -->
+
+                  <div class="small text-muted d-none d-md-block">
+                    폴더를 선택한 뒤 업로드하면 해당 폴더로 저장됩니다.
+                  </div>
+                </div><!-- /.work-body -->
+              </div><!-- /.work -->
+            </div><!-- /.split -->
+          </div><!-- /.panel-body -->
+        </div><!-- /.panel -->
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+
+    </div><!-- /.tab-content -->
+</div><!-- /.page-shell -->
+
+<div id="ctxMenu" class="ctx-menu d-none">
+  <div class="ctx-item" data-act="rename">이름 바꾸기</div>
+  <div class="ctx-item" data-act="delete">삭제</div>
+</div>
+<script>
+const USER_ID_ENC = "sunghoon";
+
+const materialImageInput = document.getElementById('materialImageInput');
+const materialImageFileName = document.getElementById('materialImageFileName');
+
+if (materialImageInput) {
+  materialImageInput.addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (materialImageFileName) {
+      materialImageFileName.textContent = file ? file.name : '선택된 파일 없음';
+    }
+  });
+}
+
+const cardInput = document.getElementById('cardInput');
+const cardFileName = document.getElementById('cardFileName');
+
+if (cardInput) {
+  cardInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const preview = document.getElementById('preview');
+    if (!preview) return;
+
+    const empty = document.getElementById('previewEmpty');
+
+    if (cardFileName) {
+      cardFileName.textContent = file ? file.name : '선택된 파일 없음';
+    }
+
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        preview.src = event.target.result;
+        preview.onload = function () {
+          const isLandscape = preview.naturalWidth >= preview.naturalHeight;
+          preview.style.width = isLandscape ? '100%' : 'auto';
+          preview.style.height = isLandscape ? 'auto' : '100%';
+          preview.style.display = 'block';
+          if (empty) empty.style.display = 'none';
+        };
+      };
+      reader.readAsDataURL(file);
+    } else {
+      preview.src = '';
+      preview.style.display = 'none';
+      if (empty) empty.style.display = 'block';
+    }
+  });
+}
+
+function copyImage(filename) {
+  const imgPath = `/business_card/sunghoon/${filename}`;
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.onload = function () {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    canvas.toBlob(blob => {
+      if (blob) {
+        const item = new ClipboardItem({ "image/png": blob });
+        navigator.clipboard.write([item])
+          .then(() => alert("이미지 복사 완료\nCtrl+V로 붙여넣기"))
+          .catch(err => alert("❌ 복사 실패: " + err));
+      } else { alert("❌ Blob 생성 실패"); }
+    }, "image/png");
+  };
+  img.onerror = function () { alert("❌ 이미지 로드 실패"); };
+  img.src = imgPath;
+}
+
+function shareImage(filename) {
+  const imageUrl = `/business_card/sunghoon/${filename}`;
+  fetch(imageUrl)
+    .then(res => res.blob())
+    .then(blob => {
+      const file = new File([blob], filename, { type: blob.type || "image/jpeg" });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share({ title: "명함 이미지", text: "명함 이미지를 공유합니다.", files: [file] })
+          .catch(err => { if (err.name !== "AbortError") alert("❌ 공유 실패: " + err.message); });
+      } else { alert("❌ 공유를 지원하지 않는 브라우저입니다."); }
+    })
+    .catch(err => alert("❌ 이미지 불러오기 실패: " + err.message));
+}
+
+// 텍스트 파일 내용 복사 (상담자료)
+function copyTextFile(relPath) {
+  fetch(location.href, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+    body: new URLSearchParams({ action: 'text_read', target: relPath })
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (!d.ok) { alert('복사 실패: ' + (d.error || 'unknown')); return; }
+    const bytes = Uint8Array.from(atob(d.content), c => c.charCodeAt(0));
+    const txt = (window.TextDecoder
+                 ? new TextDecoder('utf-8').decode(bytes)
+                 : decodeURIComponent(escape(String.fromCharCode.apply(null, bytes))));
+    navigator.clipboard.writeText(txt).then(() => alert('텍스트 복사 완료'));
+  })
+  .catch(err => alert('복사 실패: ' + err));
+}
+
+// 상담자료 이미지 복사
+function copyConsultImage(relPath) {
+  const esc = relPath.split('/').map(encodeURIComponent).join('/');
+  const imgPath = `/consult_materials/${USER_ID_ENC}/image/` + esc;
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.onload = function () {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    canvas.toBlob(blob => {
+      if (blob) {
+        const item = new ClipboardItem({ "image/png": blob });
+        navigator.clipboard.write([item])
+          .then(() => alert("이미지 복사 완료\nCtrl+V로 붙여넣기"))
+          .catch(err => alert("❌ 복사 실패: " + err));
+      } else { alert("❌ Blob 생성 실패"); }
+    }, "image/png");
+  };
+  img.onerror = function () { alert("❌ 이미지 로드 실패"); };
+  img.src = imgPath;
+}
+
+// ===== 선택 상태 =====
+let selectedTextPath = ""; // 파일(.txt)이면 edit, 폴더면 tpath
+let selectedTextType = selectedTextPath && selectedTextPath.endsWith('.txt') ? 'file' : 'folder';
+let selectedImagePath = ""; // 폴더만
+
+// 공용: 노드 선택 표시
+function setActiveNode(container, path) {
+  container.querySelectorAll('.tree-node').forEach(n => n.classList.remove('active'));
+  const node = container.querySelector(`.tree-node[data-path="${CSS.escape(path)}"]`);
+  if (node) node.classList.add('active');
+}
+
+// ===== 텍스트 트리 동작 =====
+const textTree = document.getElementById('textTree');
+if (textTree) {
+  textTree.addEventListener('click', (e) => {
+    // ▲▼ 클릭으로 재정렬 (아이콘 <i> 클릭도 잡히게)
+    const orderBtn = e.target.closest('button.order-up, button.order-down');
+    if (orderBtn) {
+      e.preventDefault();
+      const node = orderBtn.closest('.tree-node');
+      if (!node) return;
+      const delta = orderBtn.classList.contains('order-up') ? -1 : 1;
+      reorderTextNode(node, delta);
+      return;
+    }
+
+    // 펼치기/접기 (아이콘 <i> 클릭도 잡히게)
+    const toggleEl = e.target.closest('.toggle');
+    if (toggleEl) {
+      const node = toggleEl.closest('.tree-node.folder');
+      if (!node) return;
+      const p = node.dataset.path;
+      const kids = textTree.querySelector(`.children[data-parent="${CSS.escape(p)}"]`);
+      if (kids) {
+        const opened = kids.classList.toggle('d-none') === false;
+        const icon = toggleEl.querySelector('i.bi');
+        if (icon) icon.className = opened ? 'bi bi-chevron-down' : 'bi bi-chevron-right';
+        const set = collectOpenFromDOM(textTree);
+        saveOpenSet('text', set);
+      }
+      return;
+    }
+
+    // + 버튼(폴더 추가) (아이콘 <i> 클릭도 잡히게)
+    const addBtn = e.target.closest('button.add-folder');
+    if (addBtn) {
+      const parent = addBtn.dataset.path || '';
+      createInlineNewFolder(textTree, parent, 'text');
+      return;
+    }
+
+    // 라벨 클릭: 선택
+    if (e.target.classList.contains('label') || e.target.closest('.label')) {
+      const node = e.target.closest('.tree-node');
+      const path = node.dataset.path;
+      setActiveNode(textTree, path);
+      if (node.classList.contains('folder')) {
+        selectedTextPath = path;
+        selectedTextType = 'folder';
+        // 폴더 선택 -> 생성 대상 갱신
+        document.getElementById('textParent').value = path;
+        const selLine = document.getElementById('textSelectedName');
+        if (selLine) selLine.textContent = '선택된 폴더: ' + path;
+
+        // 편집창 초기화
+        document.getElementById('textEditTarget').value = '';
+        document.getElementById('textDeleteTarget').value = '';
+        document.getElementById('textContent').value = '';
+      } else { // file
+        e.preventDefault();
+        selectedTextPath = path;
+        selectedTextType = 'file';
+        setSelected('text', path);
+
+        fetch(location.href, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+          body: new URLSearchParams({ action: 'text_read', target: path })
+        })
+        .then(r => r.json())
+        .then(d => {
+          if (!d.ok) {
+            alert('불러오기 실패: ' + (d.error || 'unknown'));
+            return;
+          }
+          // base64 → Uint8Array → UTF-8 문자열
+          const bytes = Uint8Array.from(atob(d.content), c => c.charCodeAt(0));
+          const txt = (window.TextDecoder
+                      ? new TextDecoder('utf-8').decode(bytes)
+                      : decodeURIComponent(escape(String.fromCharCode.apply(null, bytes))));
+
+          document.getElementById('textEditTarget').value = path;
+          document.getElementById('textContent').value = txt;   // ✅ 실제 내용 주입
+          setActiveNode(textTree, path);
+          // 표시용 경로(마지막 세그먼트의 확장자 제거)
+          const displayPath = path.replace(/([^\/]+)$/, (m) => m.replace(/\.[^.]+$/, ''));
+
+          document.getElementById('textSelectedName').textContent =
+            '선택된 파일: ' + displayPath;
+
+          // 제목 입력칸에도 확장자 뺀 이름 채워넣기
+          const nameInput = document.querySelector('#textCreateForm input[name="name"]');
+          if (nameInput) nameInput.value = path.split('/').pop().replace(/\.[^.]+$/, '');
+        })
+        .catch(err => alert('불러오기 실패: ' + err));
+        return;
+      }
+    }
+  });
+
+  // + 키로 현재 선택 폴더에 추가
+  textTree.addEventListener('keydown', (e) => {
+    if (e.key === '+' || (e.shiftKey && e.key === '=')) {
+      e.preventDefault();
+      const base = selectedTextType === 'folder' ? selectedTextPath : (selectedTextPath ? selectedTextPath.split('/').slice(0,-1).join('/') : '');
+      createInlineNewFolder(textTree, base, 'text');
+    }
+  });
+}
+
+// 텍스트 편집/복사/삭제 버튼
+function ensureTextParent(){ // 생성 폼용
+  if (!document.getElementById('textParent').value) document.getElementById('textParent').value = '';
+  return true;
+}
+function ensureImageParent(){
+  const ip = document.getElementById('imageParent');
+  if (!ip.value) ip.value = '';  // 루트 업로드 허용
+  return true;
+}
+function submitTextEdit(){
+  const targetInput = document.getElementById('textEditTarget');
+  const target = targetInput.value || selectedTextPath;
+  if (!target || !target.endsWith('.txt')) { alert('파일(.txt)을 선택하세요'); return; }
+
+  // 제목 입력칸에서 새 파일명 가져오기 (없으면 현재 이름 유지)
+  const titleEl = document.getElementById('textTitle');
+  const raw = (titleEl?.value || '').trim();
+  let newName = '';
+  if (raw) {
+    if (/[<>:"|?*]/.test(raw)) { alert('파일명에 사용할 수 없는 문자가 있습니다.'); titleEl?.focus(); return; }
+    newName = raw.toLowerCase().endsWith('.txt') ? raw : (raw + '.txt');
+  }
+  // 서버로 전달
+  const newNameInput = document.getElementById('textNewName');
+  if (newNameInput) newNameInput.value = newName;
+
+  // 리로드 후 선택 유지(제목 바뀌면 새 경로로)
+  if (newName) {
+    const base = target.split('/').slice(0, -1).join('/');
+    const nextRel = base ? (base + '/' + newName) : newName;
+    setSelected('text', nextRel);
+  } else {
+    setSelected('text', target);
+  }
+
+  targetInput.value = target;
+  document.getElementById('textEditForm').submit();
+}
+function copySelectedText(){
+  const path = (document.getElementById('textEditTarget').value || selectedTextPath);
+  if (!path || !path.endsWith('.txt')) { alert('파일(.txt)을 선택하세요'); return; }
+  copyTextFile(path);
+}
+document.getElementById('textDeleteForm')?.addEventListener('submit', (e)=>{
+  const tgt = document.getElementById('textDeleteTarget');
+  if (!tgt.value) {
+    if (!selectedTextPath || !selectedTextPath.endsWith('.txt')) { alert('삭제할 텍스트 파일을 선택하세요'); e.preventDefault(); return; }
+    tgt.value = selectedTextPath;
+  }
+});
+
+// ===== 이미지 트리 동작 =====
+const imageTree = document.getElementById('imageTree');
+if (imageTree) {
+  imageTree.addEventListener('click', (e) => {
+
+
+    // ▲▼ 클릭(폴더 재정렬)
+    const orderBtn = e.target.closest('button.order-up, button.order-down');
+    if (orderBtn) {
+      e.preventDefault();
+      const node = orderBtn.closest('.tree-node.folder');
+      if (!node) return;
+      const delta = orderBtn.classList.contains('order-up') ? -1 : 1;
+      reorderImageNode(node, delta);
+      return;
+    }
+
+    // 펼치기/접기
+    const toggleEl = e.target.closest('.toggle');
+    if (toggleEl) {
+      const node = toggleEl.closest('.tree-node.folder');
+      if (!node) return;
+      const p = node.dataset.path;
+      const kids = imageTree.querySelector(`.children[data-parent="${CSS.escape(p)}"]`);
+      if (kids) {
+        const opened = kids.classList.toggle('d-none') === false;
+        const icon = toggleEl.querySelector('i.bi');
+        if (icon) icon.className = opened ? 'bi bi-chevron-down' : 'bi bi-chevron-right';
+        const set = collectOpenFromDOM(imageTree);
+        saveOpenSet('image', set);
+      }
+      return;
+    }
+
+    // + 버튼(폴더 추가)
+    const addBtn = e.target.closest('button.add-folder');
+    if (addBtn) {
+      const parent = addBtn.dataset.path || '';
+      createInlineNewFolder(imageTree, parent, 'image');
+      return;
+    }
+
+    if (e.target.classList.contains('label') || e.target.closest('.label')) {
+      const node = e.target.closest('.tree-node.folder');
+      if (!node) return;
+      selectedImagePath = node.dataset.path;
+      setActiveNode(imageTree, selectedImagePath);
+      document.getElementById('imageParent').value = selectedImagePath;
+      setSelected('image', selectedImagePath);
+
+      // ▼ 경로 표시(리로드 전 즉시 반영)
+      const imgSel = document.getElementById('imageSelectedName');
+      if (imgSel) imgSel.textContent = '선택된 폴더: ' + selectedImagePath;
+
+      // 폴더 선택 즉시 해당 폴더 기준으로 목록 리로드
+      const params = new URLSearchParams(window.location.search);
+      params.set('tab', 'materials');
+      params.set('ipath', selectedImagePath);
+      const url = window.location.pathname + '?' + params.toString() +
+                  (window.matchMedia('(max-width: 768px)').matches ? '#imgBox' : '');
+      window.location.href = url;
+      return;
+    }
+  });
+
+    imageTree.addEventListener('keydown', (e) => {
+    if (e.key === '+' || (e.shiftKey && e.key === '=')) {
+        e.preventDefault();
+        const base = selectedImagePath || '';
+        createInlineNewFolder(imageTree, base, 'image');
+    }
+    });
+}
+
+// ===== 컨텍스트 메뉴 (공용) =====
+const ctxMenu = document.getElementById('ctxMenu');
+let ctxNode = null, ctxKind = null;
+
+function showCtx(e, node, kind){
+  ctxNode = node; ctxKind = kind;
+  ctxMenu.style.left = e.pageX+'px';
+  ctxMenu.style.top  = e.pageY+'px';
+  ctxMenu.classList.remove('d-none');
+}
+document.addEventListener('click', ()=> ctxMenu.classList.add('d-none'));
+
+ctxMenu.addEventListener('click', (e)=>{
+  const act = e.target.dataset.act;
+  if (!act || !ctxNode) return;
+  const path = ctxNode.dataset.path;
+  if (act === 'rename'){
+    // 인라인 입력으로 전환
+    const label = ctxNode.querySelector('.label');
+    const old = label.textContent.trim();
+    const input = document.createElement('input');
+    input.className = 'rename-input';
+    input.value = old;
+    label.replaceWith(input);
+    input.focus();
+    input.select();
+    const commit = ()=> {
+      const nn = input.value.trim();
+      if (!nn || nn === old) { input.replaceWith(label); return; }
+      if (ctxKind==='text') postAction('text_rename', {target:path, name:nn});
+      else                   postAction('image_rename',{target:path, name:nn});
+    };
+    input.addEventListener('keydown', (ev)=>{
+      if (ev.key==='Enter') commit();
+      if (ev.key==='Escape'){ input.replaceWith(label); }
+    });
+    input.addEventListener('blur', ()=> input.replaceWith(label));
+  }
+  if (act === 'delete'){
+    if (!confirm('폴더를 삭제할까요? (비어있는 폴더만 삭제됩니다)')) return;
+    if (ctxKind==='text') postAction('text_rmdir', {target:path});
+    else                  postAction('image_rmdir',{target:path});
+  }
+  ctxMenu.classList.add('d-none');
+});
+
+// 트리에서 우클릭 메뉴 연결
+textTree?.addEventListener('contextmenu', (e)=>{
+  const node = e.target.closest('.tree-node.folder'); if (!node) return;
+  e.preventDefault(); showCtx(e, node, 'text');
+});
+imageTree?.addEventListener('contextmenu', (e)=>{
+  const node = e.target.closest('.tree-node.folder'); if (!node) return;
+  e.preventDefault(); showCtx(e, node, 'image');
+});
+
+function createInlineNewFolder(treeEl, parentPath, kind){
+  // parentPath 하위 children 컨테이너 찾기 (루트면 트리 최상단에 추가)
+  let container;
+  if (parentPath){
+    const kids = treeEl.querySelector(`.children[data-parent="${CSS.escape(parentPath)}"]`);
+    if (!kids){ alert('부모 폴더를 펼쳐주세요.'); return; }
+    setNodeOpen(treeEl, parentPath, true);
+    container = kids;
+  } else {
+    container = treeEl.querySelector('.tree-list');
+  }
+  // 임시 노드
+  const li = document.createElement('li');
+  li.className = 'tree-node folder';li.innerHTML = `<span class="toggle" aria-label="toggle"><i class="bi bi-chevron-right"></i></span><span class="icon"><i class="bi bi-folder2"></i></span><input class="rename-input" placeholder="새 폴더명">`;
+
+  container.classList.remove('d-none');
+  container.prepend(li);
+  const input = li.querySelector('input');
+  input.focus();
+  const commit = ()=>{
+    const nn = input.value.trim();
+    if(!nn){ li.remove(); return; }
+    if (kind==='text') postAction('text_mkdir', {parent: parentPath||'', name: nn});
+    else               postAction('image_mkdir',{parent: parentPath||'', name: nn});
+  };
+  input.addEventListener('keydown', (e)=>{ if(e.key==='Enter') commit(); if(e.key==='Escape'){li.remove();} });
+  input.addEventListener('blur', ()=> li.remove());
+}
+
+function getActiveNode(treeEl) {
+  if (!treeEl) return null;
+  return treeEl.querySelector('.tree-node.active') || null;
+}
+
+function startInlineRename(node, kind) {
+  if (!node) return;
+
+  // 폴더만 rename 허용(파일은 오른쪽 저장/제목 변경 루틴 사용)
+  if (!node.classList.contains('folder')) {
+    alert('폴더를 선택하세요.');
+    return;
+  }
+
+  const label = node.querySelector('.label');
+  if (!label) return;
+
+  const old = label.textContent.trim();
+  const input = document.createElement('input');
+  input.className = 'rename-input';
+  input.value = old;
+
+  label.replaceWith(input);
+  input.focus();
+  input.select();
+
+  const commit = () => {
+    const nn = input.value.trim();
+    if (!nn || nn === old) {
+      input.replaceWith(label);
+      return;
+    }
+    const path = node.dataset.path || '';
+    if (kind === 'text') postAction('text_rename', { target: path, name: nn });
+    else postAction('image_rename', { target: path, name: nn });
+  };
+
+  input.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Enter') commit();
+    if (ev.key === 'Escape') input.replaceWith(label);
+  });
+  input.addEventListener('blur', () => input.replaceWith(label));
+}
+
+function handleTreeMenu(kind, act) {
+  const treeEl = (kind === 'text') ? document.getElementById('textTree') : document.getElementById('imageTree');
+  const node = getActiveNode(treeEl);
+
+  if (!node) {
+    alert('트리에서 항목을 먼저 선택하세요.');
+    return;
+  }
+
+  const path = node.dataset.path || '';
+
+  if (act === 'add') {
+    // 선택이 파일이면 상위 폴더로, 폴더면 그 폴더 아래로
+    let parent = '';
+    if (node.classList.contains('folder')) parent = path;
+    else parent = path.includes('/') ? path.split('/').slice(0, -1).join('/') : '';
+    createInlineNewFolder(treeEl, parent, kind);
+    return;
+  }
+
+  if (act === 'up') {
+    if (kind === 'text') reorderTextNode(node, -1);
+    else reorderImageNode(node, -1);
+    return;
+  }
+
+  if (act === 'down') {
+    if (kind === 'text') reorderTextNode(node, 1);
+    else reorderImageNode(node, 1);
+    return;
+  }
+
+  if (act === 'rename') {
+    startInlineRename(node, kind);
+    return;
+  }
+
+  if (act === 'delete') {
+    if (!confirm('폴더를 삭제할까요? (비어있는 폴더만 삭제됩니다)')) return;
+    if (kind === 'text') postAction('text_rmdir', { target: path });
+    else postAction('image_rmdir', { target: path });
+    return;
+  }
+}
+
+// 텍스트 트리 메뉴 클릭
+document.getElementById('textTreeMenu')?.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-act]');
+  if (!btn) return;
+  handleTreeMenu('text', btn.dataset.act);
+});
+
+// 이미지 트리 메뉴 클릭
+document.getElementById('imageTreeMenu')?.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-act]');
+  if (!btn) return;
+  handleTreeMenu('image', btn.dataset.act);
+});
+
+function getTextContainerForParent(parentDir) {
+  if (!parentDir) {
+    // 루트
+    return textTree.querySelector('.tree-list');
+  }
+  const childrenLi = textTree.querySelector(`.children[data-parent="${CSS.escape(parentDir)}"]`);
+  return childrenLi ? childrenLi.querySelector('.tree-list') : null;
+}
+
+function reorderTextNode(node, delta) {
+  const fullPath = node.dataset.path; // 예) foo/bar.txt 또는 foo
+  const parentDir = fullPath.includes('/') ? fullPath.split('/').slice(0,-1).join('/') : '';
+
+  const listEl = getTextContainerForParent(parentDir);
+  if (!listEl) return;
+
+  // 같은 레벨의 항목 수집(폴더는 바로 뒤 children와 한 쌍)
+  const entries = [];
+  for (let el = listEl.firstElementChild; el; el = el.nextElementSibling) {
+    if (!el.classList.contains('tree-node')) continue;
+    const ent = { node: el, isFolder: el.classList.contains('folder') };
+    if (ent.isFolder) {
+      const sib = el.nextElementSibling;
+      if (sib && sib.classList.contains('children') && sib.dataset.parent === el.dataset.path) {
+        ent.children = sib;
+      }
+    }
+    entries.push(ent);
+  }
+
+  const idx = entries.findIndex(x => x.node === node);
+  if (idx < 0) return;
+  const targetIdx = idx + delta;
+  if (targetIdx < 0 || targetIdx >= entries.length) return;
+
+  const myChildren = entries[idx].children || null;
+
+  if (delta < 0) {
+    // 위로: 앞 entry 앞에 삽입
+    listEl.insertBefore(node, entries[targetIdx].node);
+  } else {
+    // 아래로: 다음 entry 뒤로
+    const after = entries[targetIdx];
+    const anchor = after.children ? after.children.nextElementSibling : after.node.nextElementSibling;
+    listEl.insertBefore(node, anchor);
+  }
+  if (myChildren) listEl.insertBefore(myChildren, node.nextElementSibling);
+
+  // DOM 기준 새 순서 → 서버 저장
+  const names = [];
+  for (let el = listEl.firstElementChild; el; el = el.nextElementSibling) {
+    if (!el.classList.contains('tree-node')) continue;
+    const name = el.dataset.path.split('/').pop();
+    names.push(name);
+  }
+  persistTextOrder(parentDir, names);
+}
+
+
+function getImageContainerForParent(parentDir) {
+  if (!parentDir) return imageTree.querySelector('.tree-list'); // 루트
+  const childrenLi = imageTree.querySelector(`.children[data-parent="${CSS.escape(parentDir)}"]`);
+  return childrenLi ? childrenLi.querySelector('.tree-list') : null;
+}
+
+function reorderImageNode(node, delta) {
+  const fullPath = node.dataset.path; // 예: foo/bar
+  const parentDir = fullPath.includes('/') ? fullPath.split('/').slice(0,-1).join('/') : '';
+
+  const listEl = getImageContainerForParent(parentDir);
+  if (!listEl) return;
+
+  const entries = [];
+  for (let el = listEl.firstElementChild; el; el = el.nextElementSibling) {
+    if (!el.classList.contains('tree-node')) continue;
+    const ent = { node: el };
+    const sib = el.nextElementSibling;
+    if (sib && sib.classList.contains('children') && sib.dataset.parent === el.dataset.path) {
+      ent.children = sib;
+    }
+    entries.push(ent);
+  }
+
+  const idx = entries.findIndex(x => x.node === node);
+  if (idx < 0) return;
+  const targetIdx = idx + delta;
+  if (targetIdx < 0 || targetIdx >= entries.length) return;
+
+  const myChildren = entries[idx].children || null;
+
+  if (delta < 0) {
+    listEl.insertBefore(node, entries[targetIdx].node);
+  } else {
+    const after = entries[targetIdx];
+    const anchor = after.children ? after.children.nextElementSibling : after.node.nextElementSibling;
+    listEl.insertBefore(node, anchor);
+  }
+  if (myChildren) listEl.insertBefore(myChildren, node.nextElementSibling);
+
+  // 이름만 뽑아서 서버 저장
+  const names = [];
+  for (let el = listEl.firstElementChild; el; el = el.nextElementSibling) {
+    if (!el.classList.contains('tree-node')) continue;
+    names.push(el.dataset.path.split('/').pop());
+  }
+  persistImageOrder(parentDir, names);
+}
+
+function persistImageOrder(dir, names) {
+  fetch(location.href, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+    body: new URLSearchParams({
+      action: 'image_order',
+      dir: dir,
+      list: JSON.stringify(names)
+    })
+  }).catch(()=>{});
+}
+
+
+function reorderImageFile(btn, delta) {
+  const grid = document.getElementById('imgGrid');
+  if (!grid) return;
+
+  // ✅ 현재 구조: (img-item) > (thumb-card[data-file])
+  const item = btn.closest('.img-item');
+  if (!item) return;
+
+  const dir = grid.dataset.dir || '';
+
+  const items = Array.from(grid.querySelectorAll('.img-item'));
+  const idx = items.indexOf(item);
+  const targetIdx = idx + delta;
+  if (targetIdx < 0 || targetIdx >= items.length) return;
+
+  if (delta < 0) {
+    grid.insertBefore(item, items[targetIdx]);
+  } else {
+    grid.insertBefore(item, items[targetIdx].nextElementSibling);
+  }
+
+  // ✅ 저장용 파일명 순서
+  const names = Array.from(grid.querySelectorAll('.img-item .thumb-card[data-file]'))
+    .map(el => el.dataset.file);
+
+  persistImageFilesOrder(dir, names);
+}
+
+function persistImageFilesOrder(dir, names) {
+  fetch(location.href, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+    body: new URLSearchParams({
+      action: 'image_files_order',
+      dir: dir,
+      list: JSON.stringify(names)
+    })
+  }).catch(()=>{});
+}
+
+
+
+function persistTextOrder(dir, names) {
+  fetch(location.href, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+    body: new URLSearchParams({
+      action: 'text_order',
+      dir: dir,
+      list: JSON.stringify(names)
+    })
+  }).catch(()=>{});
+}
+
+
+// ===== 루트 폴더 추가 버튼 =====
+document.querySelectorAll('.add-root-folder').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const kind = btn.dataset.kind; // text | image
+    if (kind === 'text') createInlineNewFolder(document.getElementById('textTree'),  '', 'text');
+    else                 createInlineNewFolder(document.getElementById('imageTree'), '', 'image');
+  });
+});
+
+// ===== 트리 상태 저장/복원 =====
+function getOpenSet(kind){
+  try{ return new Set(JSON.parse(localStorage.getItem(kind+'.open')||'[]')); }catch(_){ return new Set(); }
+}
+function saveOpenSet(kind,set){
+  localStorage.setItem(kind+'.open', JSON.stringify(Array.from(set)));
+}
+function getSelected(kind){ return localStorage.getItem(kind+'.sel') || ''; }
+function setSelected(kind,path){ localStorage.setItem(kind+'.sel', path||''); }
+
+// 현재 DOM에서 열린 폴더 수집
+function collectOpenFromDOM(treeEl){
+  const opened = new Set();
+  treeEl.querySelectorAll('.children').forEach(ch=>{
+    if(!ch.classList.contains('d-none')){
+      opened.add(ch.dataset.parent);
+    }
+  });
+  return opened;
+}
+
+// 특정 노드 펼치기/접기
+function setNodeOpen(treeEl, path, open){
+  const node = treeEl.querySelector(`.tree-node.folder[data-path="${CSS.escape(path)}"]`);
+  const kids = treeEl.querySelector(`.children[data-parent="${CSS.escape(path)}"]`);
+  if(!node || !kids) return;
+  kids.classList.toggle('d-none', !open);
+  const tog = node.querySelector('.toggle');
+  if (tog) {
+    const icon = tog.querySelector('i.bi');
+    if (icon) icon.className = open ? 'bi bi-chevron-down' : 'bi bi-chevron-right';
+  }
+}
+
+// 부모 체인까지 강제 펼치기
+function openAncestors(treeEl, path){
+  if(!path) return;
+  const parts = path.split('/');
+  for(let i=1;i<=parts.length;i++){
+    const p = parts.slice(0,i).join('/');
+    setNodeOpen(treeEl, p, true);
+  }
+}
+
+// 초기 복원
+document.addEventListener('DOMContentLoaded', ()=>{
+  const selLine = document.getElementById('textSelectedName');
+  if (selLine && !selLine.textContent.trim()) selLine.textContent = '경로 없음';
+
+  const imgSel = document.getElementById('imageSelectedName');
+  if (imgSel) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const ipathParam = urlParams.get('ipath');
+    imgSel.textContent = (ipathParam && ipathParam.trim()) ? ('선택된 폴더: ' + ipathParam) : '경로 없음';
+  }
+
+  const tt = document.getElementById('textTree');
+  if (tt){
+    const open = getOpenSet('text');
+    open.forEach(p=> setNodeOpen(tt, p, true));
+    const sel = getSelected('text');
+    if (sel){
+      openAncestors(tt, sel);
+      setActiveNode(tt, sel);
+    }
+  }
+  const it = document.getElementById('imageTree');
+  if (it){
+    const open = getOpenSet('image');
+    open.forEach(p=> setNodeOpen(it, p, true));
+    const sel = getSelected('image');
+    if (sel){
+      openAncestors(it, sel);
+      setActiveNode(it, sel);
+    }
+  }
+});
+
+// 공용: POST helper
+function postAction(action, params){
+  // 상태 저장(열림/선택)
+  const tt = document.getElementById('textTree'); if (tt) saveOpenSet('text', collectOpenFromDOM(tt));
+  const it = document.getElementById('imageTree'); if (it) saveOpenSet('image', collectOpenFromDOM(it));
+  const f = document.createElement('form');
+  f.method = 'post';
+  for (const [k,v] of Object.entries({action, ...params})) {
+    const i = document.createElement('input');
+    i.type='hidden'; i.name=k; i.value=v;
+    f.appendChild(i);
+  }
+  document.body.appendChild(f);
+  f.submit();
+}
+
+function createTextNow() {
+  const titleEl = document.getElementById('textTitle');
+  const nameRaw = (titleEl?.value || '').trim();
+  if (!nameRaw) { alert('제목을 입력하세요'); titleEl?.focus(); return; }
+  if (/[<>:"|?*]/.test(nameRaw)) { alert('파일명에 사용할 수 없는 문자가 있습니다.'); titleEl?.focus(); return; }
+
+  // 확장자 보정
+  const name = nameRaw.toLowerCase().endsWith('.txt') ? nameRaw : (nameRaw + '.txt');
+
+  // 저장 위치: 선택한 폴더(파일 선택 중이면 그 파일의 상위 폴더)
+  let parent = '';
+  if (selectedTextType === 'folder') parent = selectedTextPath || '';
+  else if (selectedTextPath) parent = selectedTextPath.split('/').slice(0, -1).join('/');
+  else parent = document.getElementById('textParent').value || '';
+
+  const content = document.getElementById('textContent').value;
+
+  // 서버에 생성 + 내용 저장
+  postAction('text_new', { parent, name, content });
+}
+
+// ===== 텍스트 순환 검색 =====
+const textSearchState = { query: "", matches: [], index: -1 };
+
+async function buildTextMatches(query) {
+  const q = (query || "").trim().toLowerCase();
+  textSearchState.query = q;
+  textSearchState.matches = [];
+  textSearchState.index = -1;
+
+  // 이전 표시 제거
+  textTree?.querySelectorAll('.search-hit').forEach(n => n.classList.remove('search-hit'));
+  textTree?.querySelectorAll('.search-focus').forEach(n => n.classList.remove('search-focus'));
+
+  if (!q || !textTree) return;
+
+  // 서버 검색 호출
+  const form = new URLSearchParams({ action: 'text_search', q });
+  const res = await fetch(location.href, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+    body: form
+  });
+  const data = await res.json().catch(() => ({ hits: [] }));
+  const hits = Array.isArray(data.hits) ? data.hits : [];
+
+  // DOM 노드로 매핑 + 하이라이트
+  hits.forEach(rel => {
+    const node = textTree.querySelector(`.tree-node.file[data-path="${CSS.escape(rel)}"]`);
+    if (node) {
+      textSearchState.matches.push(node);
+      node.classList.add('search-hit');
+    }
+  });
+}
+
+function openAncestorsByPath(treeEl, path) {
+  if (!treeEl || !path) return;
+  const parts = path.split('/');
+  for (let i = 1; i <= parts.length; i++) {
+    const p = parts.slice(0, i).join('/');
+    setNodeOpen(treeEl, p, true);
+  }
+}
+
+function focusTextMatch(next = true) {
+  const { matches } = textSearchState;
+  if (!textTree || !matches.length) return false;
+
+  // 이전 포커스 제거
+  textTree.querySelectorAll('.search-focus').forEach(n => n.classList.remove('search-focus'));
+
+  // 인덱스 이동
+  textSearchState.index = (textSearchState.index + (next ? 1 : -1) + matches.length) % matches.length;
+  const node = matches[textSearchState.index];
+  const path = node.dataset.path;
+
+  // 해당 파일의 상위 폴더만 펼침
+  openAncestorsByPath(textTree, path);
+  setActiveNode(textTree, path);
+  node.classList.add('search-focus');
+  node.scrollIntoView({ block: 'center' });
+
+  // 내용 로드 (파일 클릭과 동일)
+  fetch(location.href, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+    body: new URLSearchParams({ action: 'text_read', target: path })
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (!d.ok) return;
+
+    const bytes = Uint8Array.from(atob(d.content), c => c.charCodeAt(0));
+    const txt = (window.TextDecoder
+                  ? new TextDecoder('utf-8').decode(bytes)
+                  : decodeURIComponent(escape(String.fromCharCode.apply(null, bytes))));
+    document.getElementById('textEditTarget').value = path;
+    document.getElementById('textContent').value = txt;
+
+    const displayPath = path.replace(/([^\/]+)$/, m => m.replace(/\.[^.]+$/, ''));
+    const selLine = document.getElementById('textSelectedName');
+    if (selLine) selLine.textContent = '선택된 파일: ' + displayPath;
+
+    const nameInput = document.querySelector('#textCreateForm input[name="name"]');
+    if (nameInput) nameInput.value = path.split('/').pop().replace(/\.[^.]+$/, '');
+  });
+  return true;
+}
+
+function textSearchNext() {
+  const input = document.getElementById('tqInput');
+  if (!input) return false;
+  const q = input.value;
+
+  // 쿼리가 바뀌었으면 매치 목록 재구성
+  if (textSearchState.query !== (q || "").trim().toLowerCase()) {
+    buildTextMatches(q);
+  }
+  if (!textSearchState.matches.length) {
+    alert('검색 결과 없음');
+    return false;
+  }
+  focusTextMatch(true);
+  return false;
+}
+
+// 폼 제출 가로채서 "다음 매치" 순환
+document.getElementById('textSearchForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const input = document.getElementById('tqInput');
+  const q = input?.value || '';
+  await buildTextMatches(q);
+  if (!textSearchState.matches.length) { alert('검색 결과 없음'); return; }
+  focusTextMatch(true); // 다음(첫번째)으로 포커스
+});
+
+document.getElementById('tqInput')?.addEventListener('keydown', async (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const q = e.target.value || '';
+    if (textSearchState.query !== q.trim().toLowerCase()) {
+      await buildTextMatches(q);
+      if (!textSearchState.matches.length) { alert('검색 결과 없음'); return; }
+      focusTextMatch(true);
+    } else {
+      if (!textSearchState.matches.length) { alert('검색 결과 없음'); return; }
+      focusTextMatch(!e.shiftKey); // Shift+Enter는 이전
+    }
+  }
+});
+
+window.addEventListener('load', () => {
+  if (window.innerWidth > 768) return;
+  if (window.location.hash !== '#imgBox') return;
+
+  const target = document.getElementById('imgBox');
+  if (!target) return;
+
+  setTimeout(() => {
+    const extraOffset = 120;
+    const y = target.getBoundingClientRect().top + window.pageYOffset - extraOffset;
+    window.scrollTo({
+      top: Math.max(0, y),
+      behavior: 'auto'
+    });
+  }, 80);
+});
+</script>
+<footer class="custom-footer">
+  <div class="footer-container">
+    <!-- ✅ 모바일: 위아래 구성 + 가운데 정렬 -->
+    <div class="footer-mobile">
+      <p class="fw-bold mb-2">◎ 에러 / 문의 / 건의사항 이용방법</p>
+      <p class="mb-3">
+        <a href="/suggestion_board.php">문의 및 건의사항 게시판</a> 이용
+      </p>
+      <p>© 2026 All rights reserved.</p>
+    </div>
+
+    <!-- ✅ 웹: 전부 한 줄 -->
+<div class="footer-desktop">
+  <div>
+    ◎ 에러 / 문의 / 건의사항 이용방법 &nbsp;&nbsp; | &nbsp;&nbsp;
+    <a href="/suggestion_board.php">문의 및 건의사항 게시판</a> 이용
+  </div>
+  <div style="margin-top: 8px;">
+    © 2026 All rights reserved.
+  </div>
+</div>
+</footer>
+
+<style>
+.custom-footer {
+  background: #ffffff;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  font-size: 14px;
+  color: #333;
+}
+
+.custom-footer a {
+  color: #007bff; /* 원하는 강조 색상으로 바꿔도 됨 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+.footer-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.footer-mobile {
+  display: block;
+}
+
+.footer-desktop {
+  display: none;
+}
+
+.footer-list {
+  list-style-position: inside;
+  padding-left: 0;
+  margin: 0 auto;
+  display: inline-block;
+  text-align: center;
+}
+
+@media (min-width: 992px) {
+  .footer-mobile {
+    display: none;
+  }
+  .footer-desktop {
+    display: block;
+  }
+}
+</style><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+</body>
+</html>

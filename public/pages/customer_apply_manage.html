@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>고객신청 - ALL & UP</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="./assets/style/button_style.css">
+<link rel="stylesheet" href="./assets/style/button_animation.css">
+<style>body{font-family:'cafe',sans-serif;background:#f5f7fa;} .card-box{background:#fff;border-radius:0.75rem;padding:1.25rem;box-shadow:0 0 30px rgba(0,0,0,0.1);margin-bottom:1rem;}</style>
+</head>
+<body>
+
+<div class="ca-page">
+  <div class="ca-hero">
+    <div>
+      <h1>고객 접수정보 링크 관리</h1>
+      <p>고객이 접수 정보를 직접 입력할 수 있는 링크를 생성합니다.</p>
+    </div>
+    <button type="button" class="ca-primary-btn" onclick="caOpenDrawer()">+ 새 링크 만들기</button>
+  </div>
+
+  <form class="ca-filter-card" method="get">
+        <div class="ca-filter-grid">
+      <div class="ca-field">
+        <label for="start_date">시작일</label>
+        <input type="date" id="start_date" name="start_date" class="ca-input" value="2026-05-04">
+      </div>
+      <div class="ca-field">
+        <label for="end_date">종료일</label>
+        <input type="date" id="end_date" name="end_date" class="ca-input" value="2026-08-04">
+      </div>
+            <div class="ca-field">
+        <label for="status">진행상황</label>
+        <select id="status" name="status" class="ca-select">
+                      <option value="" selected>전체</option>
+                      <option value="created" >생성됨</option>
+                      <option value="opened" >열람</option>
+                      <option value="in_progress" >작성 중</option>
+                      <option value="submitted" >제출 완료</option>
+                      <option value="cancelled" >취소</option>
+                      <option value="expired" >만료</option>
+                  </select>
+      </div>
+      <div class="ca-field">
+        <label for="customer_name">고객명</label>
+        <input type="text" id="customer_name" name="customer_name" class="ca-input" value="" autocomplete="off">
+      </div>
+      <div class="ca-field">
+        <label for="customer_phone">고객번호</label>
+        <input type="text" id="customer_phone" name="customer_phone" class="ca-input" value="" autocomplete="off">
+      </div>
+      <button type="submit" class="ca-filter-btn">검색</button>
+    </div>
+  </form>
+
+  <div class="ca-table-card">
+    <div class="ca-table-wrap">
+      <table class="ca-table">
+        <thead>
+          <tr>
+            <th>상태</th>
+            <th>생성일</th>
+                        <th>고객명</th>
+            <th>고객번호</th>
+            <th>브랜드</th>
+            <th>상품명</th>
+            <th>규정</th>
+            <th>최근수정</th>
+            <th>작업</th>
+          </tr>
+        </thead>
+        <tbody>
+                  <tr>
+            <td colspan="9" class="ca-empty">조회된 고객 입력 링크가 없습니다.</td>
+          </tr>
+                </tbody>
+      </table>
+    </div>
+
+      </div>
+</div>
+
+<div class="ca-drawer-backdrop" id="caDrawerBackdrop" onclick="caCloseDrawer()"></div>
+<aside class="ca-drawer" id="caDrawer" aria-hidden="true">
+  <div class="ca-drawer-head">
+    <div class="ca-drawer-title">새 고객 입력 링크 만들기</div>
+    <button type="button" class="ca-close" onclick="caCloseDrawer()">×</button>
+  </div>
+  <div class="ca-drawer-body">
+    <form id="caCreateForm" autocomplete="off">
+      <div class="ca-form-card">
+        <div class="ca-form-title">1. 상품 정보</div>
+        <div class="ca-field">
+          <label for="caBrand">브랜드</label>
+          <select id="caBrand" class="ca-select" required>
+            <option value="">선택하세요</option>
+                          <option value="청호">청호</option>
+                          <option value="코웨이">코웨이</option>
+                          <option value="SK">SK</option>
+                          <option value="쿠쿠">쿠쿠</option>
+                          <option value="LG">LG</option>
+                          <option value="웰스">웰스</option>
+                          <option value="현대">현대</option>
+                          <option value="세스코">세스코</option>
+                      </select>
+        </div>
+
+        <div class="ca-field" style="margin-top:10px;">
+          <label for="caProductSearch">상품명 또는 모델명 검색</label>
+          <div class="ca-suggestions">
+            <input type="text" id="caProductSearch" class="ca-input" placeholder="브랜드 선택 후 상품명 또는 모델명을 입력하세요" required>
+            <div class="ca-suggestion-list" id="caProductSuggestions" hidden></div>
+          </div>
+        </div>
+
+        <div class="ca-field" style="margin-top:10px;">
+          <label for="caModelName">모델명</label>
+          <input type="text" id="caModelName" class="ca-input" readonly>
+        </div>
+
+        <div class="ca-two" style="margin-top:10px;">
+          <div class="ca-field">
+            <label for="caCapacity">용량</label>
+            <input type="text" id="caCapacity" class="ca-input" readonly>
+          </div>
+          <div class="ca-field">
+            <label for="caSizeText">사이즈</label>
+            <input type="text" id="caSizeText" class="ca-input" readonly>
+          </div>
+        </div>
+
+        <div class="ca-product-image-box" id="caProductImageBox" hidden>
+          <div class="ca-product-image-title">상품 이미지</div>
+          <img src="/goods_image/no_image.jpg" alt="상품 이미지" class="ca-product-image-preview" id="caProductImagePreview">
+          <div class="ca-product-image-actions">
+            <button type="button" class="ca-product-image-btn" onclick="document.getElementById('caProductImageUpload').click()">이미지 직접 변경</button>
+            <button type="button" class="ca-product-image-btn" onclick="caResetCustomProductImage()">자동 이미지 사용</button>
+          </div>
+          <input type="file" id="caProductImageUpload" accept="image/png,image/jpeg,image/webp" hidden>
+        </div>
+      </div>
+
+      <div class="ca-form-card">
+        <div class="ca-form-title">2. 색상 선택</div>
+        <div class="ca-choice-wrap" id="caColorChoices"></div>
+        <div class="ca-field" id="caColorDirectBox" style="display:none; margin-top:10px;">
+          <label for="caColorDirect">색상 직접입력</label>
+          <input type="text" id="caColorDirect" class="ca-input" placeholder="색상을 직접 입력하세요">
+        </div>
+      </div>
+
+      <div class="ca-form-card">
+        <div class="ca-form-title">3. 규정 / 관리주기 / 의무약정·렌탈료</div>
+        <div class="ca-field">
+          <label>규정</label>
+          <div class="ca-choice-wrap" id="caRegulationChoices"></div>
+        </div>
+        <div class="ca-field" style="margin-top:12px;">
+          <label>관리주기</label>
+          <div class="ca-choice-wrap" id="caManagementChoices"></div>
+        </div>
+        <div class="ca-field" style="margin-top:12px;">
+          <label>의무약정/렌탈료</label>
+          <div class="ca-choice-wrap" id="caRentalChoices"></div>
+        </div>
+      </div>
+
+      <div class="ca-form-card">
+        <div class="ca-form-title">4. 프로모션 / 사은품</div>
+        <div class="ca-field">
+          <label for="caPromotionText">프로모션</label>
+          <input type="text" id="caPromotionText" class="ca-input" placeholder="예) 3개월 반값, 6개월 면제">
+          <select id="caPromotionSelect" class="ca-select" style="display:none; margin-top:8px;" disabled>
+            <option value="">프로모션 선택</option>
+          </select>
+          <div id="caPromotionGuide" style="display:none; margin-top:6px; color:#64748b; font-size:.8rem; font-weight:850;"></div>
+        </div>
+        <div class="ca-field" style="margin-top:10px;">
+          <label for="caGiftText">사은품</label>
+          <input type="text" id="caGiftText" class="ca-input" placeholder="사은품이 없으면 비워두세요">
+        </div>
+      </div>
+
+      <div class="ca-form-card">
+        <div class="ca-form-title">5. 고객 기본정보</div>
+        <div class="ca-two">
+          <div class="ca-field">
+            <label for="caCustomerName">고객명</label>
+            <input type="text" id="caCustomerName" class="ca-input" required>
+          </div>
+          <div class="ca-field">
+            <label for="caCustomerPhone">연락처</label>
+            <input type="tel" id="caCustomerPhone" class="ca-input" inputmode="numeric" maxlength="13" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="ca-created-box" id="caCreatedBox"></div>
+    </form>
+  </div>
+  <div class="ca-submit-row">
+    <button type="submit" form="caCreateForm" id="caCreateSubmitBtn">링크 생성하기</button>
+  </div>
+</aside>
+
+<div class="ca-modal" id="caDetailModal" aria-hidden="true">
+  <div class="ca-modal-panel">
+    <div class="ca-modal-head">
+      <div class="ca-modal-title">고객 입력 링크 상세보기</div>
+      <div class="ca-modal-head-actions">
+        <button type="button" class="ca-receive-btn" id="caReceiveBtn" onclick="caSubmitReceiveToMain()" disabled>접수</button>
+        <button type="button" class="ca-close" onclick="caCloseDetail()">×</button>
+      </div>
+    </div>
+    <div class="ca-modal-body" id="caDetailBody">
+      <div class="ca-empty">상세 정보를 불러오는 중입니다.</div>
+    </div>
+  </div>
+</div>
+
+<form id="caReceiveToMainForm" method="post" action="main.php" target="_blank" style="display:none;">
+  <input type="hidden" name="customer_apply_prefill" value="1">
+  <input type="hidden" name="customer_apply_prefill_json" id="caReceiveMainPrefillJson" value="">
+</form>
+
+<script>
+const CA_ALLOWED_BRANDS = ["청호","코웨이","SK","쿠쿠","LG","웰스","현대","세스코"];
+const CA_CONTRACT_COLS = [
+  { year: '3년', contract: 6, management: 7, rentalFee: 8 },
+  { year: '4년', contract: 10, management: 11, rentalFee: 12 },
+  { year: '5년', contract: 14, management: 15, rentalFee: 16 },
+  { year: '6년', contract: 18, management: 19, rentalFee: 20 },
+  { year: '7년', contract: 22, management: 23, rentalFee: 24 },
+  { year: '8년', contract: 30, management: 31, rentalFee: 32 },
+  { year: '9년', contract: 34, management: 35, rentalFee: 36 }
+];
+const CA_PROMOTION_HEADER_MAP = {
+  '3년': '3년_프로모션',
+  '4년': '4년_프로모션',
+  '5년': '5년_프로모션',
+  '6년': '6년_프로모션',
+  '7년': '7년_프로모션',
+  '9년': '9년_프로모션'
+};
+const CA_PRODUCT_IMAGE_EXTS = ['png', 'webp', 'jpg', 'jpeg'];
+
+let caWorksheetData = [];
+let caHeaders = [];
+let caRows = [];
+let caSelectedRows = [];
+let caSelectedProduct = null;
+let caSelectedColor = '';
+let caSelectedRegulation = '';
+let caSelectedManagement = '';
+let caSelectedRental = null;
+let caSelectedProductImageUrl = '';
+let caCustomProductImageDataUrl = '';
+let caCustomProductImageOriginalName = '';
+let caCurrentDetailData = null;
+
+function caEscape(value) {
+  return String(value ?? '').replace(/[&<>"']/g, function (m) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+  });
+}
+
+function caNormalize(value) {
+  return String(value ?? '').replace(/[\s\-]/g, '').toLowerCase();
+}
+
+function caMoneyDigits(value) {
+  return String(value ?? '').replace(/[^\d]/g, '');
+}
+
+function caHeaderIndex(names) {
+  const list = Array.isArray(names) ? names : [names];
+
+  for (const name of list) {
+    const index = caHeaders.findIndex(h => String(h ?? '').trim() === name);
+    if (index >= 0) return index;
+  }
+
+  return -1;
+}
+
+function caCell(row, names, fallbackIndex) {
+  const index = caHeaderIndex(names);
+  if (index >= 0) {
+    return String(row[index] ?? '').trim();
+  }
+
+  if (typeof fallbackIndex === 'number') {
+    return String(row[fallbackIndex] ?? '').trim();
+  }
+
+  return '';
+}
+
+function caProductName(row) {
+  return caCell(row, '상품명', 0);
+}
+
+function caModelName(row) {
+  return caCell(row, '모델명', 1);
+}
+
+function caBrandName(row) {
+  return caCell(row, '브랜드', 28);
+}
+
+function caCapacity(row) {
+  return caCell(row, '용량', -1);
+}
+
+function caSizeText(row) {
+  return caCell(row, '사이즈', -1);
+}
+
+function caColorText(row) {
+  return caCell(row, '색상', -1);
+}
+
+function caRegulation(row) {
+  return caCell(row, '규정', 5);
+}
+
+function caSplitValues(text) {
+  return Array.from(new Set(
+    String(text || '')
+      .split(/,|\/|·|ㆍ|\r?\n/)
+      .map(v => v.trim())
+      .filter(Boolean)
+  ));
+}
+
+function caFormatPhone(value) {
+  let digits = String(value || '').replace(/\D/g, '').slice(0, 11);
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 7) return digits.slice(0, 3) + '-' + digits.slice(3);
+  return digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7);
+}
+
+function caUniqueBy(list, keyFn) {
+  const map = new Map();
+  list.forEach(item => {
+    const key = keyFn(item);
+    if (!map.has(key)) map.set(key, item);
+  });
+  return Array.from(map.values());
+}
+
+function caRentalOptionsFromRow(row) {
+  const rentals = [];
+
+  CA_CONTRACT_COLS.forEach(col => {
+    const contract = String(row[col.contract] ?? '').trim();
+    const management = String(row[col.management] ?? '').trim();
+    const fee = String(row[col.rentalFee] ?? '').trim();
+
+    if (!contract || !management || !fee) {
+      return;
+    }
+
+    rentals.push({
+      contract,
+      management,
+      rental_fee: fee,
+      rental_fee_amount: caMoneyDigits(fee),
+      label: contract + ' / ' + fee
+    });
+  });
+
+  return rentals;
+}
+
+function caExtractContractYear(contractValue) {
+  const match = String(contractValue || '').match(/(3년|4년|5년|6년|7년|8년|9년)/);
+  return match ? match[1] : '';
+}
+
+function caParsePromotionCellValue(rawValue) {
+  const raw = String(rawValue || '').trim();
+  if (!raw) return [];
+
+  const parts = raw
+    .split(/\r?\n|\/|,|·|ㆍ/)
+    .map(v => v.trim())
+    .filter(Boolean);
+
+  return Array.from(new Set(parts.length ? parts : [raw]));
+}
+
+function caIsCowayBrand() {
+  const brand = document.getElementById('caBrand')?.value || '';
+  return caNormalize(brand) === caNormalize('코웨이');
+}
+
+function caFindMatchedRowForPromotion() {
+  if (!caSelectedProduct || !caSelectedRegulation || !caSelectedManagement || !caSelectedRental) {
+    return null;
+  }
+
+  const yearKey = caExtractContractYear(caSelectedRental.contract);
+  const col = CA_CONTRACT_COLS.find(item => item.year === yearKey);
+
+  if (!col) {
+    return null;
+  }
+
+  return caSelectedRows.find(row => {
+    if (caProductName(row) !== caSelectedProduct.product_name) return false;
+    if (caModelName(row) !== caSelectedProduct.model_name) return false;
+    if (caRegulation(row) !== caSelectedRegulation) return false;
+
+    const rowContract = String(row[col.contract] ?? '').trim();
+    const rowManagement = String(row[col.management] ?? '').trim();
+    const rowRentalFee = caMoneyDigits(row[col.rentalFee] ?? '');
+
+    if (rowContract !== caSelectedRental.contract) return false;
+    if (rowManagement !== caSelectedManagement) return false;
+    if (rowRentalFee !== caMoneyDigits(caSelectedRental.rental_fee)) return false;
+
+    return true;
+  }) || null;
+}
+
+function caPromotionOptionsForSelected() {
+  const matchedRow = caFindMatchedRowForPromotion();
+
+  if (!matchedRow || !caSelectedRental) {
+    return [];
+  }
+
+  const yearKey = caExtractContractYear(caSelectedRental.contract);
+  const headerName = CA_PROMOTION_HEADER_MAP[yearKey];
+
+  if (!headerName) {
+    return [];
+  }
+
+  const headerIdx = caHeaderIndex(headerName);
+  if (headerIdx < 0) {
+    return [];
+  }
+
+  return caParsePromotionCellValue(matchedRow[headerIdx] ?? '');
+}
+
+function caUpdatePromotionField() {
+  const textInput = document.getElementById('caPromotionText');
+  const selectInput = document.getElementById('caPromotionSelect');
+  const guide = document.getElementById('caPromotionGuide');
+
+  if (!textInput || !selectInput || !guide) {
+    return;
+  }
+
+  const isCoway = caIsCowayBrand();
+
+  selectInput.innerHTML = '<option value="">프로모션 선택</option>';
+  guide.style.display = 'none';
+  guide.textContent = '';
+
+  if (!isCoway) {
+    selectInput.style.display = 'none';
+    selectInput.required = false;
+    selectInput.disabled = true;
+
+    textInput.style.display = '';
+    textInput.disabled = false;
+    textInput.readOnly = false;
+    textInput.required = false;
+    textInput.placeholder = '예) 3개월 반값, 6개월 면제';
+    return;
+  }
+
+  const options = caPromotionOptionsForSelected();
+
+  textInput.value = '';
+  textInput.style.display = 'none';
+  textInput.disabled = true;
+  textInput.required = false;
+
+  if (!options.length) {
+    selectInput.style.display = 'none';
+    selectInput.required = false;
+    selectInput.disabled = true;
+
+    guide.textContent = '코웨이 선택 조합에 등록된 프로모션이 없습니다.';
+    guide.style.display = 'block';
+    return;
+  }
+
+  options.forEach(optionText => {
+    const option = document.createElement('option');
+    option.value = optionText;
+    option.textContent = optionText;
+    selectInput.appendChild(option);
+  });
+
+  selectInput.style.display = '';
+  selectInput.required = true;
+  selectInput.disabled = false;
+
+  guide.textContent = '코웨이는 현재 가격표의 프로모션 목록에서만 선택 가능합니다.';
+  guide.style.display = 'block';
+}
+
+function caGetPromotionTextValue() {
+  if (caIsCowayBrand()) {
+    return document.getElementById('caPromotionSelect')?.value.trim() || '';
+  }
+
+  return document.getElementById('caPromotionText')?.value.trim() || '';
+}
+
+function caImageExists(url) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => resolve(url);
+    img.onerror = () => resolve('');
+    img.src = url;
+  });
+}
+
+function caProductImageCandidates(productName, color) {
+  const name = String(productName || '').trim();
+  const selectedColor = String(color || '').trim();
+  const candidates = [];
+
+  if (!name) {
+    return ['/goods_image/no_image.jpg'];
+  }
+
+  if (selectedColor) {
+    CA_PRODUCT_IMAGE_EXTS.forEach(ext => {
+      candidates.push('/goods_image/color/' + encodeURIComponent(name + '-' + selectedColor + '.' + ext));
+    });
+  }
+
+  CA_PRODUCT_IMAGE_EXTS.forEach(ext => {
+    candidates.push('/goods_image/' + encodeURIComponent(name + '-thumb.' + ext));
+  });
+
+  CA_PRODUCT_IMAGE_EXTS.forEach(ext => {
+    candidates.push('/goods_image/' + encodeURIComponent(name + '.' + ext));
+  });
+
+  candidates.push('/goods_image/no_image.jpg');
+  return candidates;
+}
+
+async function caPickProductImage(productName, color) {
+  const candidates = caProductImageCandidates(productName, color);
+
+  for (const url of candidates) {
+    const found = await caImageExists(url);
+    if (found) {
+      return found;
+    }
+  }
+
+  return '/goods_image/no_image.jpg';
+}
+
+async function caUpdateProductImagePreview() {
+  const box = document.getElementById('caProductImageBox');
+  const img = document.getElementById('caProductImagePreview');
+
+  if (!box || !img || !caSelectedProduct) {
+    caSelectedProductImageUrl = '';
+    if (box) box.hidden = true;
+    return;
+  }
+
+  box.hidden = false;
+
+  if (caCustomProductImageDataUrl) {
+    img.src = caCustomProductImageDataUrl;
+    return;
+  }
+
+  img.src = '/goods_image/no_image.jpg';
+
+  const imageUrl = await caPickProductImage(caSelectedProduct.product_name, caGetSelectedColorValue());
+  caSelectedProductImageUrl = imageUrl;
+  img.src = imageUrl;
+}
+
+function caResetCustomProductImage() {
+  caCustomProductImageDataUrl = '';
+  caCustomProductImageOriginalName = '';
+
+  const input = document.getElementById('caProductImageUpload');
+  if (input) {
+    input.value = '';
+  }
+
+  caUpdateProductImagePreview();
+}
+
+function caHandleCustomProductImage(file) {
+  if (!file) {
+    return;
+  }
+
+  if (!/^image\/(png|jpeg|webp)$/i.test(file.type || '')) {
+    alert('상품 이미지는 PNG, JPG, WEBP 파일만 사용할 수 있습니다.');
+    return;
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    alert('상품 이미지는 최대 5MB까지만 업로드할 수 있습니다.');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function () {
+    caCustomProductImageDataUrl = String(reader.result || '');
+    caCustomProductImageOriginalName = file.name || '';
+    caSelectedProductImageUrl = '';
+
+    const box = document.getElementById('caProductImageBox');
+    const img = document.getElementById('caProductImagePreview');
+
+    if (box && img) {
+      box.hidden = false;
+      img.src = caCustomProductImageDataUrl;
+    }
+  };
+  reader.onerror = function () {
+    alert('상품 이미지를 불러오지 못했습니다.');
+  };
+  reader.readAsDataURL(file);
+}
+
+function caApplyDrawerSafeArea() {
+  let safeBottom = window.innerWidth <= 760 ? 24 : 56;
+
+  try {
+    const frame = window.frameElement;
+
+    if (frame && window.parent) {
+      const frameRect = frame.getBoundingClientRect();
+      const parentViewportHeight = window.parent.visualViewport
+        ? window.parent.visualViewport.height
+        : window.parent.innerHeight;
+
+      const scale = frameRect.height > 0 && window.innerHeight > 0
+        ? frameRect.height / window.innerHeight
+        : 1;
+
+      const hiddenBottom = Math.max(0, frameRect.bottom - parentViewportHeight);
+      const hiddenBottomCss = scale > 0 ? hiddenBottom / scale : hiddenBottom;
+
+      safeBottom = Math.max(safeBottom, Math.ceil(hiddenBottomCss) + 24);
+    } else if (window.visualViewport) {
+      const hiddenBottom = Math.max(
+        0,
+        window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop
+      );
+
+      safeBottom = Math.max(safeBottom, Math.ceil(hiddenBottom) + 24);
+    }
+  } catch (e) {
+    safeBottom = window.innerWidth <= 760 ? 24 : 56;
+  }
+
+  document.documentElement.style.setProperty('--ca-drawer-bottom-safe', safeBottom + 'px');
+}
+
+function caOpenDrawer() {
+  caApplyDrawerSafeArea();
+  document.getElementById('caDrawerBackdrop').classList.add('is-open');
+  document.getElementById('caDrawer').classList.add('is-open');
+  document.getElementById('caDrawer').setAttribute('aria-hidden', 'false');
+}
+
+function caCloseDrawer() {
+  document.getElementById('caDrawerBackdrop').classList.remove('is-open');
+  document.getElementById('caDrawer').classList.remove('is-open');
+  document.getElementById('caDrawer').setAttribute('aria-hidden', 'true');
+}
+
+function caResetBelowProduct() {
+  caSelectedColor = '';
+  caSelectedRegulation = '';
+  caSelectedManagement = '';
+  caSelectedRental = null;
+  document.getElementById('caColorDirect').value = '';
+  document.getElementById('caColorDirectBox').style.display = 'none';
+  caSelectedProductImageUrl = '';
+  caCustomProductImageDataUrl = '';
+  caCustomProductImageOriginalName = '';
+  const productImageUpload = document.getElementById('caProductImageUpload');
+  if (productImageUpload) {
+    productImageUpload.value = '';
+  }
+  caRenderColorChoices();
+  caUpdateProductImagePreview();
+  caRenderRegulationChoices();
+  caRenderManagementChoices();
+  caRenderRentalChoices();
+  caUpdatePromotionField();
+}
+
+function caResetBelowRegulation() {
+  caSelectedManagement = '';
+  caSelectedRental = null;
+  caRenderManagementChoices();
+  caRenderRentalChoices();
+  caUpdatePromotionField();
+}
+
+function caResetBelowManagement() {
+  caSelectedRental = null;
+  caRenderRentalChoices();
+  caUpdatePromotionField();
+}
+
+function caLoadProducts() {
+  fetch('./data/estimate_ws.json', { credentials: 'include', cache: 'no-store' })
+    .then(res => res.json())
+    .then(data => {
+      caWorksheetData = Array.isArray(data) ? data : [];
+      caHeaders = Array.isArray(caWorksheetData[0]) ? caWorksheetData[0] : [];
+      caRows = caWorksheetData.slice(1);
+    })
+    .catch(err => {
+      console.error(err);
+      alert('가격표 데이터를 불러오지 못했습니다.');
+    });
+}
+
+function caRowsForBrand() {
+  const brand = document.getElementById('caBrand').value;
+
+  if (!brand) return [];
+
+  return caRows.filter(row => caNormalize(caBrandName(row)) === caNormalize(brand));
+}
+
+function caProductKeyFromRow(row) {
+  return [
+    caBrandName(row),
+    caProductName(row),
+    caModelName(row),
+    caCapacity(row),
+    caSizeText(row)
+  ].join('|');
+}
+
+function caBuildProductCandidates(term) {
+  const keyword = caNormalize(term);
+  if (!keyword) return [];
+
+  const rows = caRowsForBrand();
+  const filtered = rows.filter(row => {
+    const haystack = caNormalize(caProductName(row) + ' ' + caModelName(row));
+    return haystack.includes(keyword);
+  });
+
+  return caUniqueBy(filtered, caProductKeyFromRow).slice(0, 40);
+}
+
+function caRenderProductSuggestions() {
+  const input = document.getElementById('caProductSearch');
+  const wrap = document.getElementById('caProductSuggestions');
+  const candidates = caBuildProductCandidates(input.value);
+
+  if (!candidates.length) {
+    wrap.hidden = true;
+    wrap.innerHTML = '';
+    return;
+  }
+
+  wrap.innerHTML = candidates.map((row, index) => {
+    return `
+      <button type="button" class="ca-suggestion-item" data-index="${index}">
+        <div class="ca-suggestion-main">${caEscape(caProductName(row))}</div>
+        <div class="ca-suggestion-sub">모델명: ${caEscape(caModelName(row) || '-')}</div>
+      </button>
+    `;
+  }).join('');
+
+  wrap.querySelectorAll('.ca-suggestion-item').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const row = candidates[Number(this.dataset.index)];
+      caSelectProductRow(row);
+      wrap.hidden = true;
+    });
+  });
+
+  wrap.hidden = false;
+}
+
+function caSelectProductRow(row) {
+  if (!row) return;
+
+  const key = caProductKeyFromRow(row);
+  caSelectedRows = caRowsForBrand().filter(item => caProductKeyFromRow(item) === key);
+  caSelectedProduct = {
+    brand: caBrandName(row),
+    product_name: caProductName(row),
+    model_name: caModelName(row),
+    capacity: caCapacity(row),
+    size_text: caSizeText(row)
+  };
+
+  document.getElementById('caProductSearch').value = caSelectedProduct.product_name;
+  document.getElementById('caModelName').value = caSelectedProduct.model_name;
+  document.getElementById('caCapacity').value = caSelectedProduct.capacity;
+  document.getElementById('caSizeText').value = caSelectedProduct.size_text;
+
+  caResetBelowProduct();
+  caUpdateProductImagePreview();
+}
+
+function caRenderChoices(wrapId, values, selectedValue, onClick) {
+  const wrap = document.getElementById(wrapId);
+  if (!wrap) return;
+
+  if (!values.length) {
+    wrap.innerHTML = '<span style="color:#94a3b8;font-size:.86rem;font-weight:800;">선택 가능한 값이 없습니다.</span>';
+    return;
+  }
+
+  wrap.innerHTML = values.map(value => {
+    const active = String(value) === String(selectedValue) ? 'is-active' : '';
+    const pressed = active ? 'true' : 'false';
+    return `<button type="button" class="ca-choice ${active}" data-value="${caEscape(value)}" aria-pressed="${pressed}">${caEscape(value)}</button>`;
+  }).join('');
+
+  wrap.querySelectorAll('.ca-choice').forEach(btn => {
+    btn.addEventListener('click', function () {
+      onClick(this.dataset.value || '');
+    });
+  });
+}
+
+function caRenderColorChoices() {
+  const colors = [];
+
+  caSelectedRows.forEach(row => {
+    caSplitValues(caColorText(row)).forEach(color => colors.push(color));
+  });
+
+  const uniqueColors = Array.from(new Set(colors));
+  uniqueColors.push('직접입력');
+
+  caRenderChoices('caColorChoices', uniqueColors, caSelectedColor || '', value => {
+    caSelectedColor = value;
+    document.getElementById('caColorDirectBox').style.display = value === '직접입력' ? 'block' : 'none';
+    caRenderColorChoices();
+    caUpdateProductImagePreview();
+  });
+}
+
+function caRenderRegulationChoices() {
+  const values = Array.from(new Set(caSelectedRows.map(caRegulation).filter(Boolean)));
+
+  caRenderChoices('caRegulationChoices', values, caSelectedRegulation, value => {
+    caSelectedRegulation = value;
+    caRenderRegulationChoices();
+    caResetBelowRegulation();
+  });
+}
+
+function caRowsForRegulation() {
+  return caSelectedRows.filter(row => caRegulation(row) === caSelectedRegulation);
+}
+
+function caRenderManagementChoices() {
+  const values = [];
+  caRowsForRegulation().forEach(row => {
+    caRentalOptionsFromRow(row).forEach(rental => values.push(rental.management));
+  });
+
+  const unique = Array.from(new Set(values)).filter(Boolean);
+
+  caRenderChoices('caManagementChoices', unique, caSelectedManagement, value => {
+    caSelectedManagement = value;
+    caRenderManagementChoices();
+    caResetBelowManagement();
+  });
+}
+
+function caRentalsForSelected() {
+  const rentals = [];
+  caRowsForRegulation().forEach(row => {
+    caRentalOptionsFromRow(row).forEach(rental => {
+      if (rental.management === caSelectedManagement) {
+        rentals.push(rental);
+      }
+    });
+  });
+
+  return caUniqueBy(rentals, rental => [rental.contract, rental.management, rental.rental_fee].join('|'));
+}
+
+function caRenderRentalChoices() {
+  const rentals = caRentalsForSelected();
+  const values = rentals.map(rental => rental.label);
+  const selectedLabel = caSelectedRental ? caSelectedRental.label : '';
+
+  caRenderChoices('caRentalChoices', values, selectedLabel, value => {
+    caSelectedRental = rentals.find(rental => rental.label === value) || null;
+    caRenderRentalChoices();
+    caUpdatePromotionField();
+  });
+
+  caUpdatePromotionField();
+}
+
+function caGetSelectedColorValue() {
+  if (caSelectedColor === '직접입력') {
+    return document.getElementById('caColorDirect').value.trim();
+  }
+
+  return caSelectedColor || '';
+}
+
+async function caCreatePayload() {
+  let productImageUrl = caSelectedProductImageUrl || '';
+
+  if (caCustomProductImageDataUrl) {
+    productImageUrl = '';
+  } else if (caSelectedProduct) {
+    productImageUrl = await caPickProductImage(caSelectedProduct.product_name, caGetSelectedColorValue());
+    caSelectedProductImageUrl = productImageUrl;
+
+    const img = document.getElementById('caProductImagePreview');
+    const box = document.getElementById('caProductImageBox');
+    if (img && box) {
+      box.hidden = false;
+      img.src = productImageUrl;
+    }
+  }
+
+  return {
+    brand: document.getElementById('caBrand').value,
+    product_name: caSelectedProduct?.product_name || document.getElementById('caProductSearch').value.trim(),
+    model_name: caSelectedProduct?.model_name || document.getElementById('caModelName').value.trim(),
+    capacity: caSelectedProduct?.capacity || document.getElementById('caCapacity').value.trim(),
+    size_text: caSelectedProduct?.size_text || document.getElementById('caSizeText').value.trim(),
+    color: caGetSelectedColorValue(),
+    regulation: caSelectedRegulation,
+    management_cycle: caSelectedManagement,
+    contract_period: caSelectedRental?.contract || '',
+    rental_fee: caSelectedRental?.rental_fee || '',
+    promotion_text: caGetPromotionTextValue(),
+    gift_text: document.getElementById('caGiftText').value.trim(),
+    product_image_url: productImageUrl,
+    product_image_data_url: caCustomProductImageDataUrl,
+    product_image_original_name: caCustomProductImageOriginalName,
+    customer_name: document.getElementById('caCustomerName').value.trim(),
+    customer_phone: document.getElementById('caCustomerPhone').value.trim()
+  };
+}
+
+function caValidateCreatePayload(payload) {
+  if (!payload.brand) return '브랜드를 선택해주세요.';
+  if (!payload.product_name) return '상품명을 선택해주세요.';
+  if (!payload.regulation) return '규정을 선택해주세요.';
+  if (!payload.management_cycle) return '관리주기를 선택해주세요.';
+  if (!payload.contract_period || !payload.rental_fee) return '의무약정/렌탈료를 선택해주세요.';
+
+  if (caIsCowayBrand() && caPromotionOptionsForSelected().length > 0 && !payload.promotion_text) {
+    return '코웨이 프로모션은 목록에서 선택해주세요.';
+  }
+
+  if (!payload.customer_name) return '고객명을 입력해주세요.';
+  if (payload.customer_phone.replace(/\D/g, '').length < 10) return '연락처를 정확히 입력해주세요.';
+  return '';
+}
+
+function caCopyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text);
+  }
+
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.left = '-9999px';
+  document.body.appendChild(textarea);
+  textarea.select();
+
+  try {
+    document.execCommand('copy');
+  } finally {
+    textarea.remove();
+  }
+
+  return Promise.resolve();
+}
+
+function caCopyLink(btn) {
+  const link = btn.dataset.link || '';
+  const token = btn.dataset.token || '';
+
+  if (!link) return;
+
+  caCopyText(link).then(() => {
+    btn.textContent = '복사완료';
+    setTimeout(() => { btn.textContent = '링크복사'; }, 1300);
+
+    fetch('customer_apply_detail.php?token=' + encodeURIComponent(token) + '&event=copied_link', {
+      credentials: 'same-origin',
+      cache: 'no-store'
+    }).catch(() => {});
+  });
+}
+
+function caOpenDetail(token) {
+  const modal = document.getElementById('caDetailModal');
+  const body = document.getElementById('caDetailBody');
+  const receiveBtn = document.getElementById('caReceiveBtn');
+
+  caCurrentDetailData = null;
+
+  if (receiveBtn) {
+    receiveBtn.disabled = true;
+  }
+
+  body.innerHTML = '<div class="ca-empty">상세 정보를 불러오는 중입니다.</div>';
+  modal.classList.add('is-open');
+  modal.setAttribute('aria-hidden', 'false');
+
+  fetch('customer_apply_detail.php?token=' + encodeURIComponent(token) + '&event=viewed_detail', {
+    credentials: 'same-origin',
+    cache: 'no-store'
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success) {
+        body.innerHTML = '<div class="ca-empty">' + caEscape(data.error || '상세 정보를 불러오지 못했습니다.') + '</div>';
+        return;
+      }
+
+      caCurrentDetailData = data;
+
+      if (receiveBtn) {
+        receiveBtn.disabled = !data.main_prefill;
+      }
+
+      body.innerHTML = caDetailHtml(data);
+    })
+    .catch(err => {
+      console.error(err);
+      body.innerHTML = '<div class="ca-empty">상세 정보를 불러오는 중 오류가 발생했습니다.</div>';
+    });
+}
+
+function caSubmitReceiveToMain() {
+  if (!caCurrentDetailData || !caCurrentDetailData.main_prefill) {
+    alert('접수폼으로 넘길 데이터가 없습니다.');
+    return;
+  }
+
+  const form = document.getElementById('caReceiveToMainForm');
+  const input = document.getElementById('caReceiveMainPrefillJson');
+
+  if (!form || !input) {
+    alert('접수 전송 폼을 찾을 수 없습니다.');
+    return;
+  }
+
+  input.value = JSON.stringify(caCurrentDetailData.main_prefill || {});
+  form.submit();
+}
+
+function caCloseDetail() {
+  const modal = document.getElementById('caDetailModal');
+  const receiveBtn = document.getElementById('caReceiveBtn');
+
+  caCurrentDetailData = null;
+
+  if (receiveBtn) {
+    receiveBtn.disabled = true;
+  }
+
+  modal.classList.remove('is-open');
+  modal.setAttribute('aria-hidden', 'true');
+}
+
+function caRowsHtml(rows) {
+  if (!Array.isArray(rows) || !rows.length) {
+    return '<div class="ca-empty" style="padding:18px 8px !important;">표시할 값이 없습니다.</div>';
+  }
+
+  return rows.map(row => `
+    <div class="ca-kv">
+      <div class="ca-kv-label">${caEscape(row.label)}</div>
+      <div class="ca-kv-value">${caEscape(row.value)}</div>
+    </div>
+  `).join('');
+}
+
+function caShouldShowEvent(ev) {
+  const hiddenTypes = [
+    'copied_link',
+    'viewed_detail'
+  ];
+
+  return !hiddenTypes.includes(String(ev.event_type || ''));
+}
+
+function caEventMessage(ev) {
+  const type = String(ev.event_type || '');
+
+  const map = {
+    created: '링크가 생성되었습니다.',
+    opened: '고객이 링크를 열었습니다.',
+    in_progress: '고객이 입력을 시작했습니다.',
+    file_uploaded: '고객이 첨부파일을 업로드했습니다.',
+    file_deleted: '고객이 첨부파일을 삭제했습니다.',
+    submitted: '고객이 접수정보를 제출했습니다.',
+    resubmitted: '고객이 접수정보를 수정 제출했습니다.',
+    cancelled: '링크가 취소되었습니다.',
+    expired: '링크가 만료되었습니다.'
+  };
+
+  return map[type] || '상태 이력이 기록되었습니다.';
+}
+
+function caStatusLabel(status) {
+  const map = {
+    created: '생성됨',
+    opened: '열람',
+    in_progress: '작성 중',
+    submitted: '제출 완료',
+    cancelled: '취소',
+    expired: '만료'
+  };
+
+  return map[String(status || '')] || '';
+}
+
+function caEventMeta(ev) {
+  const parts = [];
+
+  if (ev.created_at) {
+    parts.push(ev.created_at);
+  }
+
+  const oldStatus = caStatusLabel(ev.old_status);
+  const newStatus = caStatusLabel(ev.new_status);
+
+  if (oldStatus && newStatus && oldStatus !== newStatus) {
+    parts.push(oldStatus + ' → ' + newStatus);
+  }
+
+  return parts.join(' · ');
+}
+
+function caDetailHtml(data) {
+  const files = Array.isArray(data.files) ? data.files : [];
+  const events = Array.isArray(data.events) ? data.events.filter(caShouldShowEvent) : [];
+
+  const fileHtml = files.length
+    ? files.map(file => {
+        const viewUrl = String(file.url || '');
+        const downloadUrl = viewUrl + (viewUrl.includes('?') ? '&' : '?') + 'download=1';
+
+        return `
+          <div class="ca-file-item">
+            <div class="ca-file-top">
+              <div>
+                <a class="ca-file-name-link" href="${caEscape(viewUrl)}" target="_blank" rel="noopener">${caEscape(file.original_name)}</a>
+                <div class="ca-file-meta">${caEscape(file.file_size_text || '')}${file.uploaded_at ? ' / ' + caEscape(file.uploaded_at) : ''}</div>
+              </div>
+              <div class="ca-file-actions">
+                <a class="ca-file-btn" href="${caEscape(viewUrl)}" target="_blank" rel="noopener">보기</a>
+                <a class="ca-file-btn download" href="${caEscape(downloadUrl)}">다운로드</a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('')
+    : '<div class="ca-empty" style="padding:18px 8px !important;">첨부파일이 없습니다.</div>';
+
+  const eventHtml = events.length
+    ? events.map(ev => `
+        <div class="ca-event-item">
+          <div class="ca-event-title">${caEscape(caEventMessage(ev))}</div>
+          <div class="ca-event-meta">${caEscape(caEventMeta(ev))}</div>
+        </div>
+      `).join('')
+    : '<div class="ca-empty" style="padding:18px 8px !important;">표시할 고객 진행 이력이 없습니다.</div>';
+
+  return `
+    <div class="ca-detail-grid">
+      <section class="ca-detail-section">
+        <h3>상담원 입력값</h3>
+        ${caRowsHtml(data.agent_rows)}
+      </section>
+      <section class="ca-detail-section">
+        <h3>고객 입력값</h3>
+        ${caRowsHtml(data.customer_rows)}
+      </section>
+      <section class="ca-detail-section">
+        <h3>제출 정보</h3>
+        ${caRowsHtml(data.submit_rows)}
+      </section>
+      <section class="ca-detail-section">
+        <h3>첨부파일</h3>
+        <div class="ca-file-list">${fileHtml}</div>
+      </section>
+      <section class="ca-detail-section" style="grid-column:1/-1;">
+        <h3>고객 진행 이력</h3>
+        <div class="ca-event-list">${eventHtml}</div>
+      </section>
+    </div>
+  `;
+}
+
+function caCancelLink(token) {
+  if (!token) return;
+
+  if (!confirm('이 고객 입력 링크를 취소하시겠습니까?\n\n취소 후 고객은 링크에 접근할 수 없습니다.')) {
+    return;
+  }
+
+  fetch('customer_apply_cancel.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token }),
+    credentials: 'same-origin'
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success) {
+        alert(data.error || '취소 처리에 실패했습니다.');
+        return;
+      }
+
+      alert('취소 처리되었습니다.');
+      location.reload();
+    })
+    .catch(err => {
+      console.error(err);
+      alert('취소 처리 중 오류가 발생했습니다.');
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  caApplyDrawerSafeArea();
+
+  window.addEventListener('resize', caApplyDrawerSafeArea);
+  window.addEventListener('orientationchange', caApplyDrawerSafeArea);
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', caApplyDrawerSafeArea);
+    window.visualViewport.addEventListener('scroll', caApplyDrawerSafeArea);
+  }
+
+  caLoadProducts();
+
+  document.getElementById('caBrand').addEventListener('change', function () {
+    caSelectedProduct = null;
+    caSelectedRows = [];
+    document.getElementById('caProductSearch').value = '';
+    document.getElementById('caModelName').value = '';
+    document.getElementById('caCapacity').value = '';
+    document.getElementById('caSizeText').value = '';
+    document.getElementById('caProductSuggestions').hidden = true;
+    caSelectedProductImageUrl = '';
+    caUpdateProductImagePreview();
+    caResetBelowProduct();
+  });
+
+  document.getElementById('caProductSearch').addEventListener('input', caRenderProductSuggestions);
+  document.getElementById('caProductSearch').addEventListener('focus', caRenderProductSuggestions);
+
+  document.addEventListener('click', function (event) {
+    if (!event.target.closest('.ca-suggestions')) {
+      document.getElementById('caProductSuggestions').hidden = true;
+    }
+  });
+
+  document.getElementById('caCustomerPhone').addEventListener('input', function () {
+    this.value = caFormatPhone(this.value);
+  });
+
+  document.getElementById('caColorDirect').addEventListener('input', function () {
+    if (caSelectedColor === '직접입력') {
+      caUpdateProductImagePreview();
+    }
+  });
+
+  const productImageUpload = document.getElementById('caProductImageUpload');
+  if (productImageUpload) {
+    productImageUpload.addEventListener('change', function () {
+      caHandleCustomProductImage(this.files && this.files[0] ? this.files[0] : null);
+    });
+  }
+
+  document.getElementById('caCreateForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const submitBtn = document.getElementById('caCreateSubmitBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = '링크 생성 중...';
+
+    let payload;
+    try {
+      payload = await caCreatePayload();
+    } catch (err) {
+      console.error(err);
+      alert('상품 이미지를 확인하는 중 오류가 발생했습니다. 다시 시도해주세요.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = '링크 생성하기';
+      return;
+    }
+
+    const error = caValidateCreatePayload(payload);
+
+    if (error) {
+      alert(error);
+      submitBtn.disabled = false;
+      submitBtn.textContent = '링크 생성하기';
+      return;
+    }
+
+    fetch('customer_apply_create.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      credentials: 'same-origin'
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (!data.success) {
+          alert(data.error || '링크 생성에 실패했습니다.');
+          return;
+        }
+
+        const box = document.getElementById('caCreatedBox');
+        box.classList.add('is-open');
+        box.innerHTML = `
+          <div>링크가 생성되었습니다.</div>
+          <div style="margin-top:6px;">${caEscape(data.link)}</div>
+          ${data.requires_attachment ? '<div style="margin-top:6px;color:#b45309;">첨부 필요: ' + caEscape(data.attachment_guide || '') + '</div>' : ''}
+          <button type="button" class="ca-action-btn copy" style="margin-top:10px;" data-link="${caEscape(data.link)}" data-token="${caEscape(data.token)}" onclick="caCopyLink(this)">링크복사</button>
+        `;
+
+        caCopyText(data.link).then(() => {
+          alert('링크가 생성되어 복사되었습니다.\n고객에게 문자/카톡으로 붙여넣어 발송해주세요.');
+          const url = new URL(window.location.href);
+          url.searchParams.set('ca_page', '1');
+          window.location.href = url.toString();
+        }).catch(() => {
+          alert('링크가 생성되었습니다. 화면의 링크복사 버튼을 눌러 복사해주세요.');
+          const url = new URL(window.location.href);
+          url.searchParams.set('ca_page', '1');
+          window.location.href = url.toString();
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        alert('링크 생성 중 오류가 발생했습니다.');
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '링크 생성하기';
+      });
+  });
+});
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+</body>
+</html>

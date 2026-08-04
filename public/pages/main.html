@@ -1,0 +1,4370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>메인 - ALL & UP</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="./assets/style/button_style.css">
+<link rel="stylesheet" href="./assets/style/button_animation.css">
+<style>
+body{font-family:'cafe',sans-serif;background:#f5f7fa;}
+.card-box{background:#fff;border-radius:0.75rem;padding:1.25rem;box-shadow:0 0 30px rgba(0,0,0,0.1);margin-bottom:1rem;}
+</style>
+</head>
+<body>
+
+        
+            <form method="post" autocomplete="off">
+                <div class="row flex-lg-nowrap">
+                <div class="col-lg-4 col-12 px-lg-2">
+
+<div class="card-box">
+  <h5 class="card-title">유형</h5>
+
+                    <div class="mb-3 row align-items-center">
+                        <label for="brand" class="col-sm-3 col-form-label"><span class="text-danger">*</span>브랜드</label>
+                        <div class="col-sm-9">
+                            <select
+                                id="brand"
+                                name="brand"
+                                class="form-select"
+                                required
+                                style=""
+                            >
+                                <option value="" selected>선택하세요</option>
+<option value="청호">청호</option>
+<option value="코웨이">코웨이</option>
+<option value="SK">SK</option>
+<option value="쿠쿠">쿠쿠</option>
+<option value="LG">LG</option>
+<option value="웰스">웰스</option>
+<option value="현대">현대</option>
+<option value="세스코">세스코</option>
+<option value="직접입력">직접입력</option>                            </select>
+
+                            <div
+                            id="brand_input_box"
+                            style="display:none;margin-top:10px;"
+                            >
+                                <div class="d-flex">
+                                    <input
+                                    type="text"
+                                    id="brand_input"
+                                    name="brand_input"
+                                    class="form-control"
+                                    placeholder="브랜드를 입력하세요"
+                                    value=""
+                                    >
+                                    <button type="button" id="back_to_select" class="btn btn-secondary ms-2">선택으로 변경</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row align-items-center">
+                        <label for="customer_type" class="col-sm-3 col-form-label"><span class="text-danger">*</span>고객유형</label>
+                        <div class="col-sm-9">
+                            <select id="customer_type" name="customer_type" class="form-select" required>
+                                <option value="" selected>선택하세요</option>
+                                <option value="개인">개인</option>
+                                <option value="개인사업자">개인사업자</option>
+                                <option value="법인사업자">법인사업자</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+<div id="business_info" class="card-box" style="display: none;">
+  <h5 class="card-title">사업자 정보</h5>
+
+                    <div class="mb-3 row align-items-center">
+                        <label for="business_name" class="col-sm-3 col-form-label">상호명</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="business_name" name="business_name" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row align-items-center">
+                        <label for="business_number" class="col-sm-3 col-form-label">사업자번호</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="business_number" name="business_number" class="form-control" oninput="formatBusinessNumber()">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row align-items-center">
+                        <label for="corporation_number" class="col-sm-3 col-form-label">법인등록번호</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="corporation_number" name="corporation_number" class="form-control" oninput="formatCorporationNumber()">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row align-items-center">
+                        <label class="col-sm-3 col-form-label">이메일</label>
+                        <div class="col-sm-9">
+                            <div class="d-flex mb-2">
+                                <input type="text" id="email_id" name="email_id" class="form-control" placeholder="카드 결제시 입력 불필요">
+                                <span class="mx-2">@</span>
+                            </div>
+                            <div class="d-flex">
+                                <input type="text" id="email_domain" name="email_domain" class="form-control" placeholder="도메인 입력">
+                                <select id="email_domain_select" class="form-select ms-2" style="width: auto;">
+                                    <option value="">선택</option>
+                                    <option value="naver.com">네이버</option>
+                                    <option value="daum.net">다음</option>
+                                    <option value="hanmail.net">한메일</option>
+                                    <option value="gmail.com">구글</option>
+                                    <option value="nate.com">네이트</option>
+                                    <option value="kakao.com">카카오</option>
+                                    <option value="direct_input">직접입력</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+<div id="customer_info" class="card-box position-relative">
+    <h5 class="card-title">고객 정보</h5>
+
+                    <div class="mb-3 row align-items-center">
+                        <label class="col-sm-3 col-form-label"><span class="text-danger">*</span>고객명</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="customer_name" class="form-control" required value="">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row align-items-center">
+                        <label class="col-sm-3 col-form-label"><span class="text-danger">*</span>생년월일</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="birth_date" name="birth_date" class="form-control" placeholder="ex) 850202-2 // 법인 입력 불필요" required value="">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row align-items-center">
+                        <label class="col-sm-3 col-form-label"><span class="text-danger">*</span>연락처</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="contact" id="contact" class="form-control" required value="">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row align-items-center">
+                        <label class="col-sm-3 col-form-label">결제정보</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="payment_info" class="form-control" placeholder="은행명+계좌 // 카드회사+카드번호+유효기간" value="">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row align-items-start">
+                        <label class="col-sm-3 col-form-label"><span class="text-danger">*</span>설치주소</label>
+                        <div class="col-sm-9" id="customer_address_wrap">
+                            <div class="customer_address_group customer_address_group_basic">
+<div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold">주소1</span>
+                                    <button type="button" class="btn btn-success btn-sm customer_address_add btn-animate">
+                                        <span class="btn-inline-icon-wrap">
+                                            <img src="./assets/webimage/button/add.png" alt="" class="btn-inline-icon">
+                                            <span>추가</span>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control customer_zipcode" maxlength="7" placeholder="설치 우편번호" />
+                                    <button type="button" class="btn btn-primary customer_address_search btn-animate" onclick="execDaumPostcode(this)">
+                                        <span class="btn-inline-icon-wrap">
+                                            <img src="./assets/webimage/button/search.png" alt="" class="btn-inline-icon">
+                                            <span>주소검색</span>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control customer_address_normal" placeholder="설치 기본주소" required />
+                                </div>
+                                <div>
+                                    <input type="text" class="form-control customer_address_detail" placeholder="설치 상세주소 (선택입력)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+    <!-- ✅ 중앙 영역 -->
+    <div class="col-lg-4 col-12 px-lg-2">
+<div class="card-box position-relative">
+    <h5 class="card-title">제품정보</h5>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="product-info-title fw-bold">제품정보1</span>
+                        <div>
+                            <button type="button" class="btn btn-success btn-sm me-2 btn-animate" id="addProduct">
+                                <span class="btn-inline-icon-wrap">
+                                    <img src="./assets/webimage/button/add.png" alt="" class="btn-inline-icon">
+                                    <span>제품정보 추가</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="product_info_wrap">
+                        <div class="product-info-group product-info-basic border rounded p-3 mb-3">
+                            <div class="mb-3 row align-items-center">
+                                <label for="product" class="col-sm-3 col-form-label"><span class="text-danger">*</span>상품명</label>
+                                <div class="col-sm-9">
+                                <input
+                                type="text"
+                                class="form-control product"
+                                placeholder="상품명 또는 모델명 검색"
+                                required
+                                value=""
+                                >
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row align-items-center">
+                                <label for="model" class="col-sm-3 col-form-label"><span class="text-danger">*</span>모델명</label>
+                                <div class="col-sm-9">
+                                <input
+                                type="text"
+                                class="form-control model"
+                                placeholder="상품선택시 자동입력"
+                                required
+                                value=""
+                                >
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row align-items-center">
+                                <label for="color" class="col-sm-3 col-form-label">색상</label>
+                                <div class="col-sm-9">
+                                <input type="text" name="color" class="form-control color">
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row align-items-center">
+                                <label for="regulation" class="col-sm-3 col-form-label"><span class="text-danger">*</span>규정</label>
+                                <div class="col-sm-9">
+                                <input
+                                type="text"
+                                class="form-control regulation"
+                                name="regulation[]"
+                                placeholder="규정 입력 또는 선택"
+                                required
+                                value=""
+                                >
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row align-items-center">
+                                <label for="contract" class="col-sm-3 col-form-label"><span class="text-danger">*</span>약정</label>
+                                <div class="col-sm-9">
+                                <input
+                                type="text"
+                                class="form-control contract"
+                                name="contract[]"
+                                placeholder="약정 입력 또는 선택"
+                                required
+                                value=""
+                                >
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row align-items-center">
+                                <label for="management" class="col-sm-3 col-form-label"><span class="text-danger">*</span>관리</label>
+                                <div class="col-sm-9">
+                                <input
+                                type="text"
+                                class="form-control management"
+                                name="management[]"
+                                placeholder="관리 입력 또는 선택"
+                                required
+                                value=""
+                                >
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row align-items-center">
+                                <label for="rental_fee" class="col-sm-3 col-form-label"><span class="text-danger">*</span>렌탈료</label>
+                                <div class="col-sm-9">
+                                <input
+                                type="text"
+                                class="form-control rental-fee"
+                                name="rental_fee[]"
+                                placeholder="렌탈료 입력 또는 선택"
+                                required
+                                value=""
+                                >
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row align-items-center">
+                                <label class="col-sm-3 col-form-label"><span class="text-danger">*</span>프로모션</label>
+                                <div class="col-sm-9">
+                                    <div class="d-flex flex-wrap align-items-center gap-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input promotion-request promotion-request-yes" type="radio" name="promotion_request_1" value="있음" id="promotion_request_yes_1" required>
+                                            <label class="form-check-label" for="promotion_request_yes_1">있음</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input promotion-request promotion-request-no" type="radio" name="promotion_request_1" value="없음" id="promotion_request_no_1" required>
+                                            <label class="form-check-label" for="promotion_request_no_1">없음</label>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control mt-2 promotion-text" name="promotion_text[]" placeholder="ex)3개월 반값, 6개월 면제" style="display: none;">
+                                    <div class="form-text promotion-guide" style="display: none;"></div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row align-items-center">
+                                <label class="col-sm-3 col-form-label">확인요청</label>
+                                <div class="col-sm-9 d-flex flex-wrap align-items-center" style="column-gap: 1.5rem; row-gap: .1rem;">
+                                    <div class="form-check">
+                                        <input class="form-check-input pre-visit" type="checkbox" name="pre_visit[]" id="preVisit" disabled>
+                                        <label class="form-check-label text-muted" for="preVisit">
+                                        사전답사
+                                        <span
+                                            class="info-circle"
+                                            tabindex="0"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="top"
+                                            data-bs-html="true"
+                                            data-bs-custom-class="wide-tooltip"
+                                            data-bs-title="사업장 설치전 설치 가능여부 답사진행<br>(사전답사 진행시 설치일정<br>지연 발생 될 수 있음)"
+                                        >?</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input hard-construction" type="checkbox" name="hard_construction[]" id="hardConstruction" disabled>
+                                        <label class="form-check-label text-muted" for="hardConstruction">
+                                        난공사 요청
+                                        <span
+                                            class="info-circle"
+                                            tabindex="0"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="top"
+                                            data-bs-html="true"
+                                            data-bs-custom-class="wide-tooltip"
+                                            data-bs-title="사업장 설치전 공사진행<br>(원수, 설치장소, 중간연결부<br>&gt;&gt; 총 3장 사진 필수 첨부)"
+                                        >?</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input other-company" type="checkbox" name="other_company[]" id="otherCompany" disabled>
+                                        <label class="form-check-label text-muted" for="otherCompany">타사정보</label>
+                                    </div>
+
+                                    <div class="w-100"></div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input product-collect" type="checkbox" name="product_collect[]" id="productCollect">
+                                        <label class="form-check-label text-danger fw-bold" for="productCollect">기존 제품 수거</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input self-receipt" type="checkbox" name="self_receipt[]" id="selfReceipt" disabled>
+                                        <label class="form-check-label text-muted" for="selfReceipt">자체접수</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="other-company-extra mt-3" style="display: none; border: 1px solid #ccc; padding: 15px; border-radius: 10px;">
+                                <div class="mb-3">
+                                    <label for="other_brand" class="form-label">브랜드</label>
+                                    <select class="form-select other-brand" name="other_brand[]">
+                                        <option value="">선택하세요</option>
+                                        <option value="SK">SK</option>
+                                        <option value="LG">LG</option>
+                                        <option value="쿠쿠">쿠쿠</option>
+                                        <option value="청호">청호</option>
+                                        <option value="웰스">웰스</option>
+                                        <option value="현대">현대</option>
+                                        <option value="기타">기타</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        설치 또는 제조년월
+                                        <br>
+                                    </label>
+                                    <input type="text" class="form-control install-year" name="install_year[]" placeholder="예: 2505 또는 202505">
+                                </div>
+
+                                <!-- 제품 타입 -->
+<div class="mb-3">
+    <label class="form-label">제품 타입</label><br>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input product-type" type="radio" name="product_type_1" value="데스크탑" id="type_desktop">
+        <label class="form-check-label" for="type_desktop">데스크탑</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input product-type" type="radio" name="product_type_1" value="스탠드" id="type_stand">
+        <label class="form-check-label" for="type_stand">스탠드</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input product-type" type="radio" name="product_type_1" value="빌트인" id="type_built">
+        <label class="form-check-label" for="type_built">빌트인</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input product-type" type="radio" name="product_type_1" value="이온수기" id="type_ion">
+        <label class="form-check-label" for="type_ion">이온수기</label>
+    </div>
+</div>
+
+<!-- 제품 종류 -->
+<div class="mb-3">
+    <label class="form-label">제품 종류</label><br>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input product-kind" type="radio" name="product_kind_1" value="얼음" id="kind_ice">
+        <label class="form-check-label" for="kind_ice">얼음</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input product-kind" type="radio" name="product_kind_1" value="냉온" id="kind_coldhot">
+        <label class="form-check-label" for="kind_coldhot">냉온</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input product-kind" type="radio" name="product_kind_1" value="냉정" id="kind_coldonly">
+        <label class="form-check-label" for="kind_coldonly">냉정</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input product-kind" type="radio" name="product_kind_1" value="정수" id="kind_purified">
+        <label class="form-check-label" for="kind_purified">정수</label>
+    </div>
+</div>
+
+<!-- 설치 형태 -->
+<div class="mb-3">
+    <label class="form-label">설치형태</label><br>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input install-type" type="radio" name="install_type_1" value="직수형" id="install_direct">
+        <label class="form-check-label" for="install_direct">직수형</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input install-type" type="radio" name="install_type_1" value="수조형" id="install_tank">
+        <label class="form-check-label" for="install_tank">수조형</label>
+    </div>
+</div>
+
+
+                                <div class="mb-3">
+                                    <label for="watermark_number" class="form-label">물마크 번호 (8자리)</label>
+                                    <input type="text" class="form-control watermark-number" name="watermark_number[]" maxlength="8" placeholder="숫자 8자리만 입력">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+<div class="card-box position-relative" id="specialNoteCard">
+    <div class="mb-2">
+    <h5 class="card-title d-inline-block">특이사항</h5>
+        <button type="button" class="btn btn-secondary btn-sm ms-2 align-text-bottom btn-animate" id="insertDefaultNote"><span>기본 문구</span></button>
+    </div>
+    <textarea name="special_note" id="special_note" rows="8" class="form-control"></textarea>
+</div>
+</div>
+
+
+<!-- 복사/초기화 버튼 -->
+<div class="col-lg-4 col-12 px-lg-2 mobile-action-column">
+<div class="card-box main-action-box" id="mainActionBox">
+<div class="main-action-row main-action-row--submit">
+    <button type="button" id="resetBtn" class="btn btn-secondary btn-animate">
+        <span class="btn-inline-icon-wrap">
+            <img src="./assets/webimage/button/reset.png" alt="" class="btn-inline-icon">
+            <span>초기화</span>
+        </span>
+    </button>
+
+    <div class="main-action-divider" aria-hidden="true"></div>
+
+    <button type="button" id="loadTempBtn" class="btn btn-green btn-animate">
+        <span class="btn-inline-icon-wrap">
+            <img src="./assets/webimage/button/load.png" alt="" class="btn-inline-icon">
+            <span>불러오기</span>
+        </span>
+    </button>
+
+    <div class="main-action-divider" aria-hidden="true"></div>
+
+    <button type="button" id="saveTempBtn" class="btn btn-pink btn-animate" data-source="저장">
+        <span class="btn-inline-icon-wrap">
+            <img src="./assets/webimage/button/save.png" alt="" class="btn-inline-icon">
+            <span>저장</span>
+        </span>
+    </button>
+
+    <div class="main-action-divider" aria-hidden="true"></div>
+
+    <button type="button" id="submitBtn" class="btn btn-primary btn-animate" data-source="접수">
+        <span class="btn-inline-icon-wrap">
+            <img src="./assets/webimage/button/register.png" alt="" class="btn-inline-icon">
+            <span>접수</span>
+        </span>
+    </button>
+</div>
+</div>
+
+<div class="card-box position-relative preview-card-box" id="previewCard">
+        <h5 class="card-title">미리보기</h5>
+<textarea id="previewBox" class="form-control" rows="30"></textarea>
+</div>
+</div>
+</div>
+
+            </form>
+
+            <script>
+document.getElementById('customer_type').addEventListener('change', function () {
+    const businessInfo = document.getElementById('business_info');
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const isBusiness = this.value === '개인사업자' || this.value === '법인사업자';
+
+    const birthDateInput = document.getElementById('birth_date');
+    birthDateInput.required = (this.value !== '법인사업자');
+
+    // 모바일에서는 기존 방식 유지 (보이기/숨기기)
+    if (isMobile) {
+        businessInfo.style.display = isBusiness ? 'block' : 'none';
+    } else {
+        // 웹에서는 항상 보이고, disabled 처리만 함
+        businessInfo.style.display = 'block';
+        const inputs = businessInfo.querySelectorAll("input, select, textarea");
+        inputs.forEach(el => {
+            el.disabled = !isBusiness;
+        });
+    }
+});
+
+// ✅ 로딩 시 한 번 실행 (초기 설정용)
+document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(() => {
+        // 1) 고객유형(사업자 여부) 처리
+        const ct = document.getElementById('customer_type');
+        if (ct) {
+            ct.dispatchEvent(new Event('change'));
+        }
+
+        // 2) counsel.php → main.php 로 넘어온 경우
+        //    미리 선택된 브랜드에 맞춰 체크박스 활성화
+            }, 0);
+});
+
+document.getElementById('brand').addEventListener('change', function () {
+    if (this.dataset.restoring) return;
+    const brandInputBox = document.getElementById('brand_input_box');
+    const brandSelect = document.getElementById('brand');
+
+    // 직접입력 처리
+    if (this.value === '직접입력') {
+        brandSelect.style.display = 'none';
+        brandInputBox.style.display = 'block';
+        document.getElementById('brand_input').focus();
+    } else {
+        brandSelect.style.display = 'block';
+        brandInputBox.style.display = 'none';
+    }
+
+    // 모든 체크박스, 라벨 일단 회색/비활성화/체크해제
+    // ✅ product-collect(기존 제품 수거)는 브랜드 무관 "항상 활성"이므로 여기서 제외
+    document.querySelectorAll('.pre-visit, .hard-construction, .other-company, .self-receipt').forEach(cb => {
+        cb.disabled = true;
+        cb.checked = false;
+        const label = cb.closest('.form-check').querySelector('label');
+        if (label) {
+            label.classList.remove('text-danger', 'fw-bold');
+            label.classList.add('text-muted');
+        }
+    });
+
+    // 브랜드별로 다시 활성화/색상적용
+    if (this.value === '청호') {
+        document.querySelectorAll('.pre-visit').forEach(cb => {
+            cb.disabled = false;
+            const label = cb.closest('.form-check').querySelector('label');
+            if (label) {
+                label.classList.remove('text-muted');
+                label.classList.add('text-danger', 'fw-bold');
+            }
+        });
+    } else if (this.value === '코웨이') {
+        document.querySelectorAll('.hard-construction, .other-company, .self-receipt').forEach(cb => {
+            cb.disabled = false;
+            const label = cb.closest('.form-check').querySelector('label');
+            if (label) {
+                label.classList.remove('text-muted');
+                label.classList.add('text-danger', 'fw-bold');
+            }
+        });
+    }
+
+    if (window.crmPythonPrefillStage === 'customer' || window.crmPythonPrefillStage === 'product') {
+        return;
+    }
+
+    document.querySelectorAll('.product-info-group').forEach(groupEl => {
+        const $group = $(groupEl);
+        resetPromotionField($group);
+        updatePromotionAutocomplete($group);
+    });
+});
+            
+                document.getElementById('back_to_select').addEventListener('click', function() {
+                    const brandInputBox = document.getElementById('brand_input_box');
+                    const brandSelect = document.getElementById('brand');
+                    brandInputBox.style.display = 'none';
+                    brandSelect.style.display = 'block';
+                    brandSelect.value = '';
+                });
+            
+                function formatBusinessNumber() {
+                    const input = document.getElementById('business_number');
+                    let value = input.value.replace(/\D/g, '');
+                    if (value.length > 10) value = value.slice(0, 10);
+                    if (value.length >= 6) {
+                        input.value = value.slice(0, 3) + '-' + value.slice(3, 5) + '-' + value.slice(5);
+                    } else if (value.length >= 4) {
+                        input.value = value.slice(0, 3) + '-' + value.slice(3);
+                    } else {
+                        input.value = value;
+                    }
+                    if (value.length === 10) {
+                        document.getElementById('corporation_number').focus();
+                    }
+                }
+            
+                function formatCorporationNumber() {
+                    const input = document.getElementById('corporation_number');
+                    let value = input.value.replace(/\D/g, '');
+                    if (value.length > 13) value = value.slice(0, 13);
+                    if (value.length > 6) {
+                        input.value = value.slice(0, 6) + '-' + value.slice(6);
+                    } else {
+                        input.value = value;
+                    }
+                }
+            
+                function validateBusinessNumber() {
+                    const input = document.getElementById('business_number');
+                    const value = input.value.replace(/\D/g, '');
+                    if (value === '') return;
+                    if (value.length !== 10) {
+                        alert('사업자번호는 10자리로 입력해야 합니다.');
+                        setTimeout(function() { input.focus(); }, 10);
+                    }
+                }
+            
+                function validateCorporationNumber() {
+                    const input = document.getElementById('corporation_number');
+                    const value = input.value.replace(/\D/g, '');
+                    if (value === '') return;
+                    if (value.length !== 13) {
+                        alert('법인등록번호는 13자리로 입력해야 합니다.');
+                        setTimeout(function() { input.focus(); }, 10);
+                    }
+                }
+            
+                document.getElementById('business_number').addEventListener('blur', validateBusinessNumber);
+                document.getElementById('corporation_number').addEventListener('blur', validateCorporationNumber);
+            
+                document.getElementById('email_domain_select').addEventListener('change', function() {
+                    const emailDomainInput = document.getElementById('email_domain');
+                    if (this.value === 'direct_input') {
+                        emailDomainInput.value = '';
+                        emailDomainInput.disabled = false;
+                        emailDomainInput.focus();
+                    } else if (this.value !== '') {
+                        emailDomainInput.value = this.value;
+                        emailDomainInput.disabled = true;
+                    } else {
+                        emailDomainInput.value = '';
+                        emailDomainInput.disabled = false;
+                    }
+                });
+            
+                $("#contact").on("input", function() {
+                    let value = $(this).val().replace(/\D/g, '');
+                    if (value.length > 3 && value.length <= 7) value = value.slice(0, 3) + '-' + value.slice(3);
+                    else if (value.length > 7) value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7);
+                    $(this).val(value);
+                });
+
+$(".customer_address_add").on("click", function () {
+    // 기존 주소 번호 재정렬 (템플릿은 제외)
+    $(".customer_address_group").each(function (i) {
+        $(this).find(".fw-bold").text("주소" + (i + 1));
+    });
+
+    const nextIndex = $(".customer_address_group").length + 1;
+
+    const newGroup = $(".customer_address_group_basic").first().clone(true, true);
+    newGroup.removeClass("customer_address_group_basic d-none").addClass("mt-3 customer_address_group");
+
+    newGroup.find(".fw-bold").text("주소" + nextIndex);
+    newGroup.find(".customer_zipcode").val("");
+    newGroup.find(".customer_address_normal").val("");
+    newGroup.find(".customer_address_detail").val("");
+
+    newGroup.find(".customer_address_add").remove();
+
+    const deleteBtn = $('<button type="button" class="btn btn-danger btn-sm ms-2 customer_address_remove btn-animate"><span class="btn-inline-icon-wrap"><img src="./assets/webimage/button/delete.png" alt="" class="btn-inline-icon"><span>삭제</span></span></button>');
+    newGroup.find(".d-flex.justify-content-between").append(deleteBtn);
+
+    $("#customer_address_wrap").append(newGroup);
+});
+        
+                            $(".customer_address_title").on("click", ".customer_address_remove", function() {
+                    if (!!confirm("주소를 삭제하시겠습니까?\n\n삭제된 이 후에는 작성한 내용을 복구할 수 없습니다.")) {
+                        $(this).closest(".customer_address_group").remove();
+                        for (let i = 0; i < $(".customer_address_group").length; i++) {
+                            const customerAddressGroup = $(".customer_address_group")[i];
+                            $(customerAddressGroup).find(".fw-bold").text("주소" + (i + 1));
+                        }
+                    }
+                });
+            
+                function execDaumPostcode(obj) {
+                    new daum.Postcode({
+                        oncomplete: function(data) {
+                            var addr = '';
+                            var extraAddr = '';
+                            if (data.userSelectedType === 'R') {
+                                addr = data.roadAddress;
+                            } else {
+                                addr = data.jibunAddress;
+                            }
+                            if(data.userSelectedType === 'R') {
+                                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                                    extraAddr += data.bname;
+                                }
+                                if(data.buildingName !== '' && data.apartment === 'Y'){
+                                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                                }
+                                if(extraAddr !== '') {
+                                    extraAddr = ' (' + extraAddr + ')';
+                                }
+                            }
+                            $(obj).closest(".customer_address_group").find(".customer_address_normal").val(addr + (!!extraAddr ? extraAddr : ""));
+                            $(obj).closest(".customer_address_group").find(".customer_zipcode").val(data.zonecode);
+                            $(obj).closest(".customer_address_group").find(".customer_address_detail").focus();
+                        }
+                    }).open();
+                }
+                
+                document.getElementById('birth_date').addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, ''); // 숫자만 남기기
+            
+                    if (value.length > 7) {
+                        value = value.slice(0, 7); // 7자리까지만 자르기
+                    }
+            
+                    if (value.length === 7) {
+                        e.target.value = value.slice(0, 6) + '-' + value.slice(6);
+                    } else {
+                        e.target.value = value;
+                    }
+                });
+            </script>
+
+
+
+<script>
+let worksheetData = [];
+
+const CUSTOMER_APPLY_PREFILL = [];
+const HAS_CUSTOMER_APPLY_PREFILL = false;
+
+const CRM_PYTHON_PREFILL = {"source":"crm_python","brand":"","product_name":"","model_name":"","regulation":"","contract_period":"","management_cycle":"","rental_fee":"","customer_type":"","customer_name":"","birth_info":"","contact":"","payment_info":""};
+const HAS_CRM_PYTHON_PREFILL = false;
+
+let CRM_HASH_PREFILL_CACHE = null;
+let CRM_HASH_PREFILL_READ = false;
+let CRM_PYTHON_PREFILL_ACTIVE = false;
+let CRM_PYTHON_CUSTOMER_PREFILL_DONE = false;
+let CRM_PYTHON_PRODUCT_PREFILL_DONE = false;
+window.crmPythonPrefillStage = '';
+
+function readCrmPythonPrefillFromHash() {
+    if (CRM_HASH_PREFILL_READ) {
+        return CRM_HASH_PREFILL_CACHE;
+    }
+
+    CRM_HASH_PREFILL_READ = true;
+
+    const hash = window.location.hash || '';
+    const marker = '#crm_prefill=';
+
+    if (!hash.startsWith(marker)) {
+        return null;
+    }
+
+    let encoded = hash.slice(marker.length).trim();
+
+    if (!encoded) {
+        return null;
+    }
+
+    try {
+        encoded = decodeURIComponent(encoded);
+    } catch (e) {
+        // base64url 값이면 decodeURIComponent가 필요 없을 수 있으므로 무시
+    }
+
+    try {
+        let normalized = encoded.replace(/-/g, '+').replace(/_/g, '/');
+
+        while (normalized.length % 4 !== 0) {
+            normalized += '=';
+        }
+
+        const binary = window.atob(normalized);
+        const bytes = new Uint8Array(binary.length);
+
+        for (let i = 0; i < binary.length; i++) {
+            bytes[i] = binary.charCodeAt(i);
+        }
+
+        let jsonText = '';
+
+        if (window.TextDecoder) {
+            jsonText = new TextDecoder('utf-8').decode(bytes);
+        } else {
+            jsonText = decodeURIComponent(escape(binary));
+        }
+
+        const parsed = JSON.parse(jsonText);
+
+        if (!parsed || parsed.source !== 'crm_python') {
+            return null;
+        }
+
+        CRM_HASH_PREFILL_CACHE = parsed;
+
+        // 주소창에 개인정보 hash가 남지 않도록 자동입력용 데이터 읽은 직후 제거
+        if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+        }
+
+        return CRM_HASH_PREFILL_CACHE;
+    } catch (e) {
+        console.error('CRM hash prefill decode failed:', e);
+        return null;
+    }
+}
+
+function getActiveCrmPythonPrefill() {
+    const hashData = readCrmPythonPrefillFromHash();
+
+    if (hashData && hashData.source === 'crm_python') {
+        CRM_PYTHON_PREFILL_ACTIVE = true;
+        return hashData;
+    }
+
+    if (HAS_CRM_PYTHON_PREFILL && CRM_PYTHON_PREFILL && CRM_PYTHON_PREFILL.source === 'crm_python') {
+        CRM_PYTHON_PREFILL_ACTIVE = true;
+        return CRM_PYTHON_PREFILL;
+    }
+
+    return null;
+}
+
+function isCrmPythonPrefillActive() {
+    if (CRM_PYTHON_PREFILL_ACTIVE) {
+        return true;
+    }
+
+    const data = getActiveCrmPythonPrefill();
+    return !!(data && data.source === 'crm_python');
+}
+
+function crmPrefillBrandOnly(value) {
+    const raw = caPrefillValue(value);
+
+    if (!raw) {
+        return '';
+    }
+
+    const firstPart = raw.split(/[-–—]/)[0].trim();
+
+    return firstPart || raw;
+}
+
+function crmPrefillCanonicalBrand(value) {
+    const brandOnly = crmPrefillBrandOnly(value);
+    const normalized = brandOnly.replace(/\s|-/g, '').trim().toLowerCase();
+
+    const brandMap = {
+        '청호': '청호',
+        '청호나이스': '청호',
+        '코웨이': '코웨이',
+        'coway': '코웨이',
+        'sk': 'SK',
+        'sk매직': 'SK',
+        'skmagic': 'SK',
+        'lg': 'LG',
+        'lge': 'LG',
+        '쿠쿠': '쿠쿠',
+        'cuckoo': '쿠쿠',
+        '웰스': '웰스',
+        '교원웰스': '웰스',
+        '현대': '현대',
+        '현대렌탈케어': '현대',
+        '세스코': '세스코'
+    };
+
+    return brandMap[normalized] || brandOnly;
+}
+
+function crmPrefillNormalizeBrand(value) {
+    return caPrefillNormalize(crmPrefillCanonicalBrand(value));
+}
+
+function crmPrefillSetBrand(brandValue) {
+    caPrefillSetBrand(crmPrefillCanonicalBrand(brandValue));
+}
+
+function crmPrefillIsCowayCompensation(data) {
+    if (!data || data.source !== 'crm_python') {
+        return false;
+    }
+
+    return crmPrefillNormalizeBrand(data.brand) === caPrefillNormalize('코웨이')
+        && caPrefillValue(data.regulation).includes('보상');
+}
+
+function crmPrefillAutoCheckCowayOtherCompany(container, data) {
+    if (!container || !container.length || !crmPrefillIsCowayCompensation(data)) {
+        return;
+    }
+
+    const otherCompany = container.find('.other-company').first();
+    if (!otherCompany.length) {
+        return;
+    }
+
+    otherCompany.prop('disabled', false);
+    otherCompany.prop('checked', true);
+    otherCompany.trigger('change');
+
+    const label = otherCompany.closest('.form-check').find('label');
+    if (label.length) {
+        label.removeClass('text-muted');
+        label.addClass('text-danger fw-bold');
+    }
+}
+
+function shouldAddCrmCowayCompensationNotice(productItem) {
+    if (!productItem || !productItem.other_company_info) {
+        return false;
+    }
+
+    const activeData = getActiveCrmPythonPrefill();
+    const isEvergrowthUser = false;
+
+    const isCoway = caPrefillNormalize(getSelectedBrandValue()) === caPrefillNormalize('코웨이')
+        || crmPrefillNormalizeBrand(activeData?.brand) === caPrefillNormalize('코웨이');
+
+    const regulationText = caPrefillValue(productItem.regulation || activeData?.regulation);
+    const isCowayCompensation = isCoway && regulationText.includes('보상');
+
+    if (!isCowayCompensation) {
+        return false;
+    }
+
+    return isCrmPythonPrefillActive() || isEvergrowthUser;
+}
+
+const promotionHeaderMap = {
+    '3년': '3년_프로모션',
+    '4년': '4년_프로모션',
+    '5년': '5년_프로모션',
+    '6년': '6년_프로모션',
+    '7년': '7년_프로모션',
+    '9년': '9년_프로모션'
+};
+
+const contractColumnMap = {
+    '3년': { contract: 6, management: 7, rentalFee: 8 },
+    '4년': { contract: 10, management: 11, rentalFee: 12 },
+    '5년': { contract: 14, management: 15, rentalFee: 16 },
+    '6년': { contract: 18, management: 19, rentalFee: 20 },
+    '7년': { contract: 22, management: 23, rentalFee: 24 },
+    '8년': { contract: 30, management: 31, rentalFee: 32 },
+    '9년': { contract: 34, management: 35, rentalFee: 36 }
+};
+
+function getSelectedBrandValue() {
+    const brandSelectEl = document.getElementById("brand");
+    const brandInputEl = document.getElementById("brand_input");
+
+    const selectValue = (brandSelectEl?.value || "").trim();
+
+    if (selectValue === "직접입력") {
+        return (brandInputEl?.value || "").trim();
+    }
+
+    return selectValue;
+}
+
+function getWorksheetHeaders() {
+    return Array.isArray(worksheetData) && Array.isArray(worksheetData[0]) ? worksheetData[0] : [];
+}
+
+function findWorksheetHeaderIndex(headerName) {
+    return getWorksheetHeaders().findIndex(h => String(h ?? '').trim() === headerName);
+}
+
+function normalizeCompareText(v) {
+    return String(v ?? '').replace(/\s|-/g, '').trim();
+}
+
+function normalizeMoneyValue(v) {
+    return String(v ?? '').replace(/[^0-9]/g, '');
+}
+
+function extractContractYear(contractValue) {
+    const match = String(contractValue ?? '').match(/(3년|4년|5년|6년|7년|8년|9년)/);
+    return match ? match[1] : '';
+}
+
+function parsePromotionCellValue(rawValue) {
+    const raw = String(rawValue ?? '').trim();
+    if (!raw) return [];
+
+    const parts = raw
+        .split(/\r?\n|\/|,|·|ㆍ/)
+        .map(s => s.trim())
+        .filter(Boolean);
+
+    return [...new Set(parts.length ? parts : [raw])];
+}
+
+function isCowaySelectedBrand() {
+    return normalizeCompareText(getSelectedBrandValue()) === normalizeCompareText('코웨이');
+}
+
+function resetPromotionField(container) {
+    const promotionTextInput = container.find(".promotion-text");
+    const promotionGuide = container.find(".promotion-guide");
+    const selectedRequest = container.find(".promotion-request:checked").val() || '';
+
+    promotionTextInput.val('');
+    promotionTextInput.prop('readonly', false);
+
+    if (selectedRequest === '있음') {
+        promotionTextInput.show();
+        promotionTextInput.prop('required', true);
+    } else {
+        promotionTextInput.hide();
+        promotionTextInput.prop('required', false);
+    }
+
+    promotionGuide.hide().text('');
+}
+
+function findMatchedWorksheetRow(container) {
+    const selectedBrand = getSelectedBrandValue();
+    const product = container.find(".product").val().trim();
+    const model = container.find(".model").val().trim();
+    const regulation = container.find(".regulation").val().trim();
+    const contract = container.find(".contract").val().trim();
+    const management = container.find(".management").val().trim();
+    const rentalFee = container.find(".rental-fee").val().trim();
+
+    const yearKey = extractContractYear(contract);
+    const pairInfo = contractColumnMap[yearKey];
+
+    if (!selectedBrand || !product || !regulation || !contract || !management || !rentalFee || !pairInfo) {
+        return null;
+    }
+
+    return worksheetData.find((row, index) => {
+        if (index === 0) return false;
+
+        const rowProduct = String(row[0] ?? '').trim();
+        const rowModel = String(row[1] ?? '').trim();
+        const rowBrand = normalizeCompareText(row[28] ?? '');
+        const rowRegulation = String(row[5] ?? '').trim();
+        const rowContract = String(row[pairInfo.contract] ?? '').trim();
+        const rowManagement = String(row[pairInfo.management] ?? '').trim();
+        const rowRentalFee = normalizeMoneyValue(row[pairInfo.rentalFee] ?? '');
+
+        if (rowProduct !== product) return false;
+        if (model && rowModel !== model) return false;
+        if (rowBrand !== normalizeCompareText(selectedBrand)) return false;
+        if (rowRegulation !== regulation) return false;
+        if (rowContract !== contract) return false;
+        if (rowManagement !== management) return false;
+        if (rowRentalFee !== normalizeMoneyValue(rentalFee)) return false;
+
+        return true;
+    }) || null;
+}
+
+function getMatchedPromotionOptions(container) {
+    const contract = container.find(".contract").val().trim();
+    const yearKey = extractContractYear(contract);
+    const headerName = promotionHeaderMap[yearKey];
+    const matchedRow = findMatchedWorksheetRow(container);
+
+    if (!headerName || !matchedRow) {
+        return [];
+    }
+
+    const headerIdx = findWorksheetHeaderIndex(headerName);
+    if (headerIdx < 0) {
+        return [];
+    }
+
+    return parsePromotionCellValue(matchedRow[headerIdx] ?? '');
+}
+
+function updatePromotionAutocomplete(container, showAlert = false) {
+    const promotionTextInput = container.find(".promotion-text");
+    const promotionGuide = container.find(".promotion-guide");
+    const promoYes = container.find(".promotion-request-yes");
+    const promoNo = container.find(".promotion-request-no");
+    let selectedRequest = container.find(".promotion-request:checked").val() || '';
+    const sourceValues = getMatchedPromotionOptions(container);
+    const isCoway = isCowaySelectedBrand();
+
+    if (promotionTextInput.data("uiAutocomplete")) {
+        promotionTextInput.autocomplete("destroy");
+    }
+
+    promotionTextInput.autocomplete({
+        source: sourceValues,
+        minLength: 0
+    });
+
+    promotionTextInput.off("focus.promotionAuto").on("focus.promotionAuto", function () {
+        const latestSourceValues = getMatchedPromotionOptions(container);
+
+        if ($(this).data("ui-autocomplete")) {
+            $(this).autocomplete("option", "source", latestSourceValues);
+            if (latestSourceValues.length > 0) {
+                $(this).autocomplete("search", "");
+            }
+        }
+    });
+
+    promotionTextInput.prop('readonly', false);
+    promotionGuide.hide().text('');
+    promoYes.prop('disabled', false);
+
+    if (isCoway) {
+        if (sourceValues.length === 0) {
+            promoYes.prop('disabled', true);
+
+            if (selectedRequest === '있음') {
+                if (showAlert) {
+                    alert("코웨이=프로모션 있을 때만 선택 가능");
+                }
+                promoYes.prop('checked', false);
+                promoNo.prop('checked', true);
+                selectedRequest = '없음';
+            }
+
+            promotionTextInput.val('');
+            promotionTextInput.hide();
+            promotionTextInput.prop('required', false);
+            promotionTextInput.prop('readonly', true);
+            promotionTextInput.attr('placeholder', '선택 가능한 프로모션이 없습니다');
+
+            promotionGuide.text("코웨이=프로모션 있을 때만 선택 가능").show();
+            return;
+        }
+
+        const currentValue = promotionTextInput.val().trim();
+        if (currentValue && !sourceValues.includes(currentValue)) {
+            promotionTextInput.val('');
+        }
+
+        promotionTextInput.prop('readonly', true);
+        promotionTextInput.attr('placeholder', '코웨이=목록에서만 선택 가능');
+
+        if (selectedRequest === '있음') {
+            promotionTextInput.show();
+            promotionTextInput.prop('required', true);
+        } else {
+            promotionTextInput.hide();
+            promotionTextInput.prop('required', false);
+        }
+        return;
+    }
+
+    promotionTextInput.attr('placeholder', 'ex)3개월 반값, 6개월 면제');
+
+    if (selectedRequest === '있음') {
+        promotionTextInput.show();
+        promotionTextInput.prop('required', true);
+    } else {
+        promotionTextInput.hide();
+        promotionTextInput.prop('required', false);
+    }
+}
+
+function caPrefillValue(value) {
+    return String(value ?? '').trim();
+}
+
+function caPrefillNormalize(value) {
+    return String(value ?? '').replace(/\s|-/g, '').trim();
+}
+
+function caPrefillMoney(value) {
+    return String(value ?? '').replace(/[^0-9]/g, '');
+}
+
+function caPrefillSetField(selector, value) {
+    const el = document.querySelector(selector);
+
+    if (el) {
+        el.value = caPrefillValue(value);
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+}
+
+function caPrefillBuildBirthDate(data) {
+    const birthRaw = caPrefillValue(data.birth_date);
+    const genderRaw = caPrefillValue(data.gender);
+    const digits = birthRaw.replace(/\D/g, '');
+
+    if (!digits) {
+        return '';
+    }
+
+    if (digits.length !== 8) {
+        return '';
+    }
+
+    const fullYear = parseInt(digits.slice(0, 4), 10) || 0;
+    const month = parseInt(digits.slice(4, 6), 10) || 0;
+    const day = parseInt(digits.slice(6, 8), 10) || 0;
+    const birthDateObj = new Date(fullYear, month - 1, day);
+
+    if (
+        birthDateObj.getFullYear() !== fullYear ||
+        birthDateObj.getMonth() + 1 !== month ||
+        birthDateObj.getDate() !== day
+    ) {
+        return '';
+    }
+
+    const yy = digits.slice(2, 4);
+    const mm = digits.slice(4, 6);
+    const dd = digits.slice(6, 8);
+
+    const genderKey = genderRaw.toLowerCase();
+    const isMale = ['남', '남자', '남성', 'm', 'male'].includes(genderKey);
+    const isFemale = ['여', '여자', '여성', 'f', 'female'].includes(genderKey);
+
+    if (!isMale && !isFemale) {
+        return yy + mm + dd;
+    }
+
+    const suffix = fullYear >= 2000
+        ? (isMale ? '3' : '4')
+        : (isMale ? '1' : '2');
+
+    return yy + mm + dd + '-' + suffix;
+}
+
+function caPrefillSetBrand(brandValue) {
+    const brand = caPrefillValue(brandValue);
+    const brandSelect = document.getElementById('brand');
+    const brandInputBox = document.getElementById('brand_input_box');
+    const brandInput = document.getElementById('brand_input');
+
+    if (!brandSelect || !brandInputBox || !brandInput) {
+        return;
+    }
+
+    const option = Array.from(brandSelect.options).find(opt => caPrefillNormalize(opt.value) === caPrefillNormalize(brand));
+
+    if (option) {
+        brandSelect.value = option.value;
+        brandSelect.style.display = 'block';
+        brandInputBox.style.display = 'none';
+        brandInput.value = '';
+    } else {
+        brandSelect.value = '직접입력';
+        brandSelect.style.display = 'none';
+        brandInputBox.style.display = 'block';
+        brandInput.value = brand;
+    }
+
+    brandSelect.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
+function caPrefillApplyAddress(data) {
+    const addressWrap = document.getElementById('customer_address_wrap');
+    if (!addressWrap) return;
+
+    addressWrap.querySelectorAll('.customer_address_group:not(.customer_address_group_basic)').forEach(el => el.remove());
+
+    const baseGroup = $('#customer_address_wrap .customer_address_group_basic').first();
+    if (baseGroup.length === 0) {
+        return;
+    }
+
+    baseGroup.find('.fw-bold').text('주소1');
+    baseGroup.find('.customer_zipcode').val(caPrefillValue(data.install_zipcode));
+    baseGroup.find('.customer_address_normal').val(caPrefillValue(data.install_address));
+    baseGroup.find('.customer_address_detail').val(caPrefillValue(data.install_address_detail));
+}
+
+function caPrefillFindMatchedWorksheetRow(data) {
+    const brand = caPrefillValue(data.brand);
+    const product = caPrefillValue(data.product_name);
+    const model = caPrefillValue(data.model_name);
+    const regulation = caPrefillValue(data.regulation);
+    const contract = caPrefillValue(data.contract_period);
+    const management = caPrefillValue(data.management_cycle);
+    const rentalFee = caPrefillValue(data.rental_fee);
+
+    const yearKey = extractContractYear(contract);
+    const pairInfo = contractColumnMap[yearKey];
+
+    if (!brand || !product || !regulation || !contract || !management || !rentalFee || !pairInfo) {
+        return null;
+    }
+
+    return worksheetData.find((row, index) => {
+        if (index === 0) return false;
+
+        const rowProduct = String(row[0] ?? '').trim();
+        const rowModel = String(row[1] ?? '').trim();
+        const rowBrand = caPrefillNormalize(row[28] ?? '');
+        const rowRegulation = String(row[5] ?? '').trim();
+        const rowContract = String(row[pairInfo.contract] ?? '').trim();
+        const rowManagement = String(row[pairInfo.management] ?? '').trim();
+        const rowRentalFee = caPrefillMoney(row[pairInfo.rentalFee] ?? '');
+
+        if (rowProduct !== product) return false;
+        if (model && rowModel !== model) return false;
+        if (rowBrand !== caPrefillNormalize(brand)) return false;
+        if (rowRegulation !== regulation) return false;
+        if (rowContract !== contract) return false;
+        if (rowManagement !== management) return false;
+        if (rowRentalFee !== caPrefillMoney(rentalFee)) return false;
+
+        return true;
+    }) || null;
+}
+
+function caPrefillPromotionOptionsFromRow(row, contractValue) {
+    const yearKey = extractContractYear(contractValue);
+    const headerName = promotionHeaderMap[yearKey];
+
+    if (!headerName || !row) {
+        return [];
+    }
+
+    const headerIdx = findWorksheetHeaderIndex(headerName);
+    if (headerIdx < 0) {
+        return [];
+    }
+
+    return parsePromotionCellValue(row[headerIdx] ?? '');
+}
+
+function caPrefillProductMismatchNote(data) {
+    return [
+        '[자동입력 확인 필요]',
+        '고객 입력 링크의 상품/규정/약정/관리/렌탈료 정보가 현재 가격표와 일치하지 않아 제품정보를 자동 입력하지 않았습니다.',
+        '현재 정책 기준으로 상품을 다시 선택해주세요.',
+        '',
+        '기존 링크 정보:',
+        '상품명: ' + caPrefillValue(data.product_name),
+        '모델명: ' + caPrefillValue(data.model_name),
+        '색상: ' + caPrefillValue(data.color),
+        '규정: ' + caPrefillValue(data.regulation),
+        '약정: ' + caPrefillValue(data.contract_period),
+        '관리: ' + caPrefillValue(data.management_cycle),
+        '렌탈료: ' + caPrefillValue(data.rental_fee),
+        '프로모션: ' + caPrefillValue(data.promotion_text)
+    ].join('\n');
+}
+
+function caPrefillPromotionMismatchNote(data) {
+    return [
+        '[프로모션 확인 필요]',
+        '고객 입력 링크의 프로모션 값이 현재 코웨이 프로모션 목록과 일치하지 않아 자동 선택하지 않았습니다.',
+        '기존 프로모션: ' + caPrefillValue(data.promotion_text)
+    ].join('\n');
+}
+
+function caPrefillAppendSpecialNote(baseText, appendText) {
+    const base = caPrefillValue(baseText);
+    const append = caPrefillValue(appendText);
+
+    if (!base) return append;
+    if (!append) return base;
+
+    return base + '\n\n' + append;
+}
+
+function caPrefillClearProductInfo(container) {
+    container.find('.product').val('');
+    container.find('.model').val('');
+    container.find('.color').val('');
+    container.find('.regulation').val('');
+    container.find('.contract').val('');
+    container.find('.management').val('');
+    container.find('.rental-fee').val('');
+
+    container.find('.promotion-request-yes').prop('checked', false);
+    container.find('.promotion-request-no').prop('checked', true);
+    container.find('.promotion-text').val('').hide().prop('required', false);
+    updatePromotionAutocomplete(container);
+}
+
+function caPrefillApplyProductInfo(container, data, matchedRow) {
+    const product = caPrefillValue(data.product_name);
+    const model = caPrefillValue(data.model_name);
+    const color = caPrefillValue(data.color);
+    const regulation = caPrefillValue(data.regulation);
+    const contract = caPrefillValue(data.contract_period);
+    const management = caPrefillValue(data.management_cycle);
+    const rentalFee = caPrefillValue(data.rental_fee);
+    const promotionText = caPrefillValue(data.promotion_text);
+
+    container.find('.product').val(product);
+    updateModelName(container, product);
+    container.find('.model').val(model);
+    container.find('.color').val(color);
+
+    updateRegulationAutocomplete(container, product);
+    container.find('.regulation').val(regulation);
+
+    updateContractAutocomplete(container, product, regulation);
+    container.find('.contract').val(contract);
+
+    updateManagementAutocomplete(container, product, regulation, contract);
+    container.find('.management').val(management);
+
+    updateRentalFeeAutocomplete(container, product, regulation, contract, management);
+    container.find('.rental-fee').val(rentalFee);
+
+    const promoYes = container.find('.promotion-request-yes');
+    const promoNo = container.find('.promotion-request-no');
+    const promoText = container.find('.promotion-text');
+
+    let note = '';
+
+    if (!promotionText) {
+        promoYes.prop('checked', false);
+        promoNo.prop('checked', true);
+        promoText.val('').hide().prop('required', false);
+        updatePromotionAutocomplete(container);
+        return note;
+    }
+
+    if (caPrefillNormalize(data.brand) === caPrefillNormalize('코웨이')) {
+        const options = caPrefillPromotionOptionsFromRow(matchedRow, contract);
+
+        if (options.includes(promotionText)) {
+            promoYes.prop('checked', true);
+            promoNo.prop('checked', false);
+            promoText.val(promotionText).show().prop('required', true);
+            updatePromotionAutocomplete(container);
+        } else {
+            promoYes.prop('checked', false);
+            promoNo.prop('checked', true);
+            promoText.val('').hide().prop('required', false);
+            updatePromotionAutocomplete(container);
+            note = caPrefillPromotionMismatchNote(data);
+        }
+
+        return note;
+    }
+
+    promoYes.prop('checked', true);
+    promoNo.prop('checked', false);
+    promoText.val(promotionText).show().prop('required', true);
+    updatePromotionAutocomplete(container);
+
+    return note;
+}
+
+function applyCustomerApplyPrefill() {
+    if (!HAS_CUSTOMER_APPLY_PREFILL || !CUSTOMER_APPLY_PREFILL || CUSTOMER_APPLY_PREFILL.source !== 'customer_apply') {
+        return;
+    }
+
+    const data = CUSTOMER_APPLY_PREFILL;
+    let specialNote = caPrefillValue(data.customer_request);
+
+    caPrefillSetBrand(data.brand);
+
+    const customerType = document.getElementById('customer_type');
+    if (customerType) {
+        customerType.value = '개인';
+        customerType.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    caPrefillSetField("[name='customer_name']", data.customer_name);
+
+    const builtBirthDate = caPrefillBuildBirthDate(data);
+    caPrefillSetField("#birth_date", builtBirthDate);
+
+    if (caPrefillValue(data.birth_date) && !builtBirthDate) {
+        specialNote = caPrefillAppendSpecialNote(
+            specialNote,
+            '[생년월일 확인 필요]\n고객 입력 링크의 생년월일이 4자리 연도 형식이 아니어서 자동 입력하지 않았습니다.\n기존 생년월일: ' + caPrefillValue(data.birth_date)
+        );
+    }
+
+    caPrefillSetField("#contact", data.contact);
+    caPrefillSetField("[name='payment_info']", data.payment_info);
+
+    caPrefillApplyAddress(data);
+
+    const container = $('.product-info-basic').first();
+    const hasProductPayload = [
+        data.product_name,
+        data.model_name,
+        data.regulation,
+        data.contract_period,
+        data.management_cycle,
+        data.rental_fee
+    ].some(value => caPrefillValue(value) !== '');
+
+    if (container.length && hasProductPayload) {
+        const matchedRow = caPrefillFindMatchedWorksheetRow(data);
+
+        if (matchedRow) {
+            const promoNote = caPrefillApplyProductInfo(container, data, matchedRow);
+            specialNote = caPrefillAppendSpecialNote(specialNote, promoNote);
+        } else {
+            caPrefillClearProductInfo(container);
+            specialNote = caPrefillAppendSpecialNote(specialNote, caPrefillProductMismatchNote(data));
+        }
+    }
+
+    caPrefillSetField("#special_note", specialNote);
+
+    if (typeof prepareMobileSectionUI === 'function') {
+        prepareMobileSectionUI();
+    }
+}
+
+function crmPrefillResetProductInfo(container) {
+    container.find('.product').val('');
+    container.find('.model').val('');
+    container.find('.color').val('');
+    container.find('.regulation').val('');
+    container.find('.contract').val('');
+    container.find('.management').val('');
+    container.find('.rental-fee').val('');
+    container.find('.promotion-request-yes').prop('checked', false);
+    container.find('.promotion-request-no').prop('checked', false);
+    container.find('.promotion-text').val('').hide().prop('required', false);
+    updatePromotionAutocomplete(container);
+}
+
+function crmPrefillFindBrandProductRows(data) {
+    const brand = crmPrefillNormalizeBrand(data.brand);
+    const product = caPrefillValue(data.product_name);
+
+    if (!brand || !product) {
+        return [];
+    }
+
+    return worksheetData.filter((row, index) => {
+        if (index === 0) return false;
+        return String(row[0] ?? '').trim() === product
+            && caPrefillNormalize(row[28] ?? '') === brand;
+    });
+}
+
+function crmPrefillFindContractPair(row, contractValue) {
+    const contract = caPrefillValue(contractValue);
+
+    if (!contract) {
+        return null;
+    }
+
+    for (const key of Object.keys(contractColumnMap)) {
+        const pairInfo = contractColumnMap[key];
+        if (String(row[pairInfo.contract] ?? '').trim() === contract) {
+            return pairInfo;
+        }
+    }
+
+    return null;
+}
+
+function crmPrefillApplyProductByStage(container, data) {
+    crmPrefillResetProductInfo(container);
+
+    const product = caPrefillValue(data.product_name);
+    const model = caPrefillValue(data.model_name);
+    const regulation = caPrefillValue(data.regulation);
+    const contract = caPrefillValue(data.contract_period);
+    const management = caPrefillValue(data.management_cycle);
+    const rentalFee = caPrefillValue(data.rental_fee);
+
+    const productRows = crmPrefillFindBrandProductRows(data);
+    if (!product || productRows.length === 0) {
+        return;
+    }
+
+    const productRow = productRows.find(row => String(row[1] ?? '').trim() === model) || productRows[0];
+    container.find('.product').val(product);
+    container.find('.model').val(String(productRow[1] ?? '').trim());
+    updateRegulationAutocomplete(container, product);
+
+    if (!regulation) {
+        updatePromotionAutocomplete(container);
+        return;
+    }
+
+    const regulationRows = productRows.filter(row => String(row[5] ?? '').trim() === regulation);
+    if (regulationRows.length === 0) {
+        updatePromotionAutocomplete(container);
+        return;
+    }
+
+    container.find('.regulation').val(regulation);
+    updateContractAutocomplete(container, product, regulation);
+
+    if (!contract) {
+        updatePromotionAutocomplete(container);
+        return;
+    }
+
+    const contractMatches = [];
+    regulationRows.forEach(row => {
+        const pairInfo = crmPrefillFindContractPair(row, contract);
+        if (pairInfo) {
+            contractMatches.push({ row, pairInfo });
+        }
+    });
+
+    if (contractMatches.length === 0) {
+        updatePromotionAutocomplete(container);
+        return;
+    }
+
+    container.find('.contract').val(contract);
+    updateManagementAutocomplete(container, product, regulation, contract);
+
+    if (!management) {
+        updatePromotionAutocomplete(container);
+        return;
+    }
+
+    const managementMatches = contractMatches.filter(item => {
+        return String(item.row[item.pairInfo.management] ?? '').trim() === management;
+    });
+
+    if (managementMatches.length === 0) {
+        updatePromotionAutocomplete(container);
+        return;
+    }
+
+    container.find('.management').val(management);
+    updateRentalFeeAutocomplete(container, product, regulation, contract, management);
+
+    if (!rentalFee) {
+        updatePromotionAutocomplete(container);
+        return;
+    }
+
+    const rentalMatches = managementMatches.filter(item => {
+        return caPrefillMoney(item.row[item.pairInfo.rentalFee] ?? '') === caPrefillMoney(rentalFee);
+    });
+
+    if (rentalMatches.length === 0) {
+        updatePromotionAutocomplete(container);
+        return;
+    }
+
+    container.find('.rental-fee').val(rentalFee);
+    updatePromotionAutocomplete(container);
+}
+
+function applyCrmPythonPrefill() {
+    const data = getActiveCrmPythonPrefill();
+
+    if (!data || data.source !== 'crm_python') {
+        return;
+    }
+
+    if (!CRM_PYTHON_CUSTOMER_PREFILL_DONE) {
+        CRM_PYTHON_CUSTOMER_PREFILL_DONE = true;
+        window.crmPythonPrefillStage = 'customer';
+
+        try {
+            crmPrefillSetBrand(data.brand);
+
+            const customerType = document.getElementById('customer_type');
+            if (customerType) {
+                const typeValue = caPrefillValue(data.customer_type) || '개인';
+                customerType.value = ['개인', '개인사업자', '법인사업자'].includes(typeValue) ? typeValue : '개인';
+                customerType.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+
+            caPrefillSetField("[name='customer_name']", data.customer_name);
+            caPrefillSetField("#birth_date", data.birth_info);
+            caPrefillSetField("#contact", data.contact);
+            caPrefillSetField("[name='payment_info']", data.payment_info);
+        } finally {
+            window.crmPythonPrefillStage = '';
+        }
+    }
+
+    if (
+        !CRM_PYTHON_PRODUCT_PREFILL_DONE
+        && Array.isArray(worksheetData)
+        && worksheetData.length > 0
+    ) {
+        CRM_PYTHON_PRODUCT_PREFILL_DONE = true;
+        window.crmPythonPrefillStage = 'product';
+
+        try {
+            const container = $('.product-info-basic').first();
+            if (container.length) {
+                crmPrefillApplyProductByStage(container, data);
+                crmPrefillAutoCheckCowayOtherCompany(container, data);
+            }
+        } finally {
+            window.crmPythonPrefillStage = '';
+        }
+    }
+
+    if (typeof prepareMobileSectionUI === 'function') {
+        prepareMobileSectionUI();
+    }
+}
+                
+// 데이터 가져오기
+$(document).ready(function () {
+    // hash 방식 CRM 프리필은 가격표 로딩 전에도 고객정보를 먼저 채운다.
+    // 제품정보는 아래 fetch 성공 후 한 번 더 실행되면서 단계별 매칭으로 채워진다.
+    applyCrmPythonPrefill();
+
+    fetch('/api_data.php?view=estimate_ws', { credentials: 'include', cache: 'no-store' })
+        .then(response => response.json())
+        .then(data => {
+            worksheetData = data;
+
+            const $initialGroup = $(".product-info-basic");
+            initializeAllAutocompletes($initialGroup);
+
+            // ✅ 최초 제품정보1 라디오 ID/for 고유하게 다시 설정
+            const radioTypes = [
+                { class: '.product-type', prefix: 'type' },
+                { class: '.product-kind', prefix: 'kind' },
+                { class: '.install-type', prefix: 'install' }
+            ];
+
+            radioTypes.forEach(({ class: selector, prefix }) => {
+                $initialGroup.find(selector).each(function (i) {
+                    const prevId = $(this).attr('id');
+                    const newId = `${prefix}_${i}_p1`;
+                    $(this).attr('id', newId);
+                    $initialGroup.find(`label[for="${prevId}"]`).attr('for', newId);
+                });
+            });
+
+            applyCustomerApplyPrefill();
+            applyCrmPythonPrefill();
+        })
+        .catch(error => {
+            console.error("❌ 데이터 불러오기 실패:", error);
+        });
+});
+                
+// 상품명 autocomplete
+function initializeProductAutocomplete(target) {
+    const $targetInput = target ? $(target) : $(".product");
+
+    $targetInput.each(function () {
+        const $input = $(this);
+        if ($input.hasClass('ui-autocomplete-input')) return;
+
+        $input.autocomplete({
+            source: function(request, response) {
+                const selectedBrand = getSelectedBrandValue();
+                const term = request.term.toLowerCase().replace(/\s|-/g, '');
+
+                const filtered = worksheetData.filter((row, index) => {
+                    if (index === 0) return false;
+                    const brandName = row[28] || '';
+                    return brandName.replace(/\s|-/g, '') === selectedBrand.replace(/\s|-/g, '');
+                });
+
+                const searchList = filtered.map(row => ({
+                    label: row[0],
+                    value: row[0],
+                    searchable: (row[0] + ' ' + row[1]).toLowerCase().replace(/\s|-/g, '')
+                }));
+
+                const uniqueList = [...new Map(searchList.map(item => [item.label, item])).values()];
+                const finalList = uniqueList.filter(item => item.searchable.includes(term));
+
+                response(finalList);
+            },
+            minLength: 0,
+            select: function(event, ui) {
+                const $self = $(this);
+                $self.val(ui.item.value);
+                const container = $self.closest(".product-info-group");
+
+                container.find(".model").val('');
+                container.find(".regulation").val('');
+                container.find(".contract").val('');
+                container.find(".management").val('');
+                container.find(".rental-fee").val('');
+                resetPromotionField(container);
+
+                updateModelName(container, ui.item.value);
+                updateRegulationAutocomplete(container, ui.item.value);
+                return false;
+            }
+        });
+
+        $input.on("focus", function () {
+            if ($(this).data("ui-autocomplete")) {
+                $(this).autocomplete("search", "");
+            }
+        });
+    });
+}
+function initializeAllAutocompletes($group) {
+    const $productInput = $group.find(".product");
+
+    initializeProductAutocomplete($productInput);
+
+    const selectedProduct = $productInput.val().trim();
+    if (selectedProduct) {
+        updateModelName($group, selectedProduct);
+        updateRegulationAutocomplete($group, selectedProduct);
+
+        const selectedReg = $group.find(".regulation").val().trim();
+        if (selectedReg) {
+            updateContractAutocomplete($group, selectedProduct, selectedReg);
+
+            const selectedContract = $group.find(".contract").val().trim();
+            if (selectedContract) {
+                updateManagementAutocomplete($group, selectedProduct, selectedReg, selectedContract);
+
+                const selectedMgmt = $group.find(".management").val().trim();
+                if (selectedMgmt) {
+                    updateRentalFeeAutocomplete($group, selectedProduct, selectedReg, selectedContract, selectedMgmt);
+                }
+            }
+        }
+    }
+
+    updatePromotionAutocomplete($group);
+}
+           
+// 모델명 자동입력
+function updateModelName(container, product) {
+    const selectedBrand = getSelectedBrandValue();
+    const matchingRow = worksheetData.find((row, index) => {
+        if (index === 0) return false;
+        return row[0] === product && (row[28] || '').replace(/\s|-/g, '') === selectedBrand.replace(/\s|-/g, '');
+    });
+
+    container.find(".model").val(matchingRow ? matchingRow[1] : '');
+}
+
+                
+// 규정 autocomplete
+function updateRegulationAutocomplete(container, product) {
+    const selectedBrand = getSelectedBrandValue();
+    const regulations = new Set();
+
+    worksheetData.forEach((row, index) => {
+        if (index === 0) return;
+        if ((row[0] || '').trim() === product && (row[28] || '').replace(/\s|-/g, '') === selectedBrand.replace(/\s|-/g, '')) {
+            if (row[5]?.trim()) regulations.add(row[5].trim());
+        }
+    });
+
+    const regulationInput = container.find(".regulation");
+    const contractInput = container.find(".contract");
+    const managementInput = container.find(".management");
+    const rentalFeeInput = container.find(".rental-fee");
+
+    regulationInput.autocomplete({
+        source: [...regulations].sort(),
+        minLength: 0,
+        select: function(event, ui) {
+            contractInput.val('');
+            managementInput.val('');
+            rentalFeeInput.val('');
+            resetPromotionField(container);
+            updateContractAutocomplete(container, product, ui.item.value);
+        }
+    });
+
+    regulationInput.on("focus", function () {
+        if ($(this).data("ui-autocomplete")) {
+            $(this).autocomplete("search", "");
+        }
+    });
+
+    regulationInput.on("change", function() {
+        const selectedRegulation = $(this).val().trim();
+        const realContainer = $(this).closest(".product-info-group");
+        const product = realContainer.find(".product").val().trim();
+
+        realContainer.find(".contract").val('');
+        realContainer.find(".management").val('');
+        realContainer.find(".rental-fee").val('');
+        resetPromotionField(realContainer);
+        updateContractAutocomplete(realContainer, product, selectedRegulation);
+    });
+}
+
+                
+// 약정 autocomplete
+function updateContractAutocomplete(container, product, regulation) {
+    const selectedBrand = getSelectedBrandValue();
+    const contracts = new Set();
+
+    worksheetData.forEach((row, index) => {
+        if (index === 0) return;
+        if ((row[0] || '').trim() === product && (row[28] || '').replace(/\s|-/g, '') === selectedBrand.replace(/\s|-/g, '') && (row[5] || '').trim() === regulation) {
+            [6, 10, 14, 18, 22, 30, 34].forEach(idx => {
+                const contract = row[idx]?.trim();
+                if (contract) contracts.add(contract);
+            });
+        }
+    });
+
+    const contractInput = container.find(".contract");
+    const managementInput = container.find(".management");
+    const rentalFeeInput = container.find(".rental-fee");
+
+    contractInput.autocomplete({
+        source: [...contracts].sort(),
+        minLength: 0,
+        select: function(event, ui) {
+            managementInput.val('');
+            rentalFeeInput.val('');
+            resetPromotionField(container);
+            updateManagementAutocomplete(container, product, regulation, ui.item.value);
+        }
+    });
+
+    contractInput.on("focus", function () {
+        if ($(this).data("ui-autocomplete")) {
+            $(this).autocomplete("search", "");
+        }
+    });
+
+    contractInput.on("change", function() {
+        const selectedContract = $(this).val().trim();
+        const realContainer = $(this).closest(".product-info-group");
+        const product = realContainer.find(".product").val().trim();
+        const currentRegulation = realContainer.find(".regulation").val().trim();
+
+        realContainer.find(".management").val('');
+        realContainer.find(".rental-fee").val('');
+        resetPromotionField(realContainer);
+        updateManagementAutocomplete(realContainer, product, currentRegulation, selectedContract);
+    });
+}
+      
+// 관리 autocomplete
+function updateManagementAutocomplete(container, product, regulation, contract) {
+    const selectedBrand = getSelectedBrandValue();
+    const managements = new Set();
+
+    worksheetData.forEach((row, index) => {
+        if (index === 0) return;
+        if ((row[0] || '').trim() === product &&
+            (row[28] || '').replace(/\s|-/g, '') === selectedBrand.replace(/\s|-/g, '') &&
+            (row[5] || '').trim() === regulation) {
+
+            if (row[6]?.trim() === contract) managements.add(row[7]?.trim());
+            if (row[10]?.trim() === contract) managements.add(row[11]?.trim());
+            if (row[14]?.trim() === contract) managements.add(row[15]?.trim());
+            if (row[18]?.trim() === contract) managements.add(row[19]?.trim());
+            if (row[22]?.trim() === contract) managements.add(row[23]?.trim());
+            if (row[30]?.trim() === contract) managements.add(row[31]?.trim());
+            if (row[34]?.trim() === contract) managements.add(row[35]?.trim());
+        }
+    });
+
+    const managementInput = container.find(".management");
+    const rentalFeeInput = container.find(".rental-fee");
+
+    managementInput.autocomplete({
+        source: [...managements].sort(),
+        minLength: 0,
+        select: function(event, ui) {
+            rentalFeeInput.val('');
+            resetPromotionField(container);
+            updateRentalFeeAutocomplete(container, product, regulation, contract, ui.item.value);
+        }
+    });
+
+    managementInput.on("focus", function () {
+        if ($(this).data("ui-autocomplete")) {
+            $(this).autocomplete("search", "");
+        }
+    });
+
+    managementInput.on("change", function() {
+        const selectedManagement = $(this).val().trim();
+        const realContainer = $(this).closest(".product-info-group");
+        const product = realContainer.find(".product").val().trim();
+        const currentRegulation = realContainer.find(".regulation").val().trim();
+        const currentContract = realContainer.find(".contract").val().trim();
+
+        realContainer.find(".rental-fee").val('');
+        resetPromotionField(realContainer);
+        updateRentalFeeAutocomplete(realContainer, product, currentRegulation, currentContract, selectedManagement);
+    });
+}
+                
+// 렌탈료 autocomplete
+function updateRentalFeeAutocomplete(container, product, regulation, contract, management) {
+    const selectedBrand = getSelectedBrandValue();
+    const rentalFees = new Set();
+
+    worksheetData.forEach((row, index) => {
+        if (index === 0) return;
+        if ((row[0] || '').trim() === product &&
+            (row[28] || '').replace(/\s|-/g, '') === selectedBrand.replace(/\s|-/g, '') &&
+            (row[5] || '').trim() === regulation) {
+
+            if (row[6]?.trim() === contract && row[7]?.trim() === management) rentalFees.add(row[8]?.trim());
+            if (row[10]?.trim() === contract && row[11]?.trim() === management) rentalFees.add(row[12]?.trim());
+            if (row[14]?.trim() === contract && row[15]?.trim() === management) rentalFees.add(row[16]?.trim());
+            if (row[18]?.trim() === contract && row[19]?.trim() === management) rentalFees.add(row[20]?.trim());
+            if (row[22]?.trim() === contract && row[23]?.trim() === management) rentalFees.add(row[24]?.trim());
+            if (row[30]?.trim() === contract && row[31]?.trim() === management) rentalFees.add(row[32]?.trim());
+            if (row[34]?.trim() === contract && row[35]?.trim() === management) rentalFees.add(row[36]?.trim());
+        }
+    });
+
+    const rentalFeeInput = container.find(".rental-fee");
+
+    rentalFeeInput.autocomplete({
+        source: [...rentalFees].sort(),
+        minLength: 0,
+        select: function(event, ui) {
+            $(this).val(ui.item.value);
+            updatePromotionAutocomplete(container);
+            return false;
+        }
+    });
+
+    rentalFeeInput.on("focus", function () {
+        if ($(this).data("ui-autocomplete")) {
+            $(this).autocomplete("search", "");
+        }
+    });
+
+    rentalFeeInput.on("change", function() {
+        const realContainer = $(this).closest(".product-info-group");
+        updatePromotionAutocomplete(realContainer);
+    });
+}
+
+                // 프로모션 변경요청 토글
+                $(document).on("change", ".promotion-request", function () {
+    const container = $(this).closest(".product-info-group");
+    updatePromotionAutocomplete(container, true);
+});
+             
+                document.addEventListener("DOMContentLoaded", function () {
+                    let deleteModalInstance = null;
+                    const modalEl = document.getElementById('deleteAddressModal');
+                    const confirmBtn = document.getElementById('confirmDeleteAddress');
+                
+                    // 모달이 완전히 열린 후에 포커스 주기 (이벤트는 한 번만 실행)
+                    modalEl.addEventListener('shown.bs.modal', () => {
+                        confirmBtn.focus();
+                    });
+                
+                    // 삭제 버튼 클릭 시 모달 열기
+                    $(document).on("click", ".customer_address_remove", function () {
+                        targetToDelete = $(this).closest(".customer_address_group");
+                
+                        if (!deleteModalInstance) {
+                            deleteModalInstance = new bootstrap.Modal(modalEl);
+                        }
+                        deleteModalInstance.show();
+                    });
+                
+                    // 확인 버튼 동작
+                    confirmBtn.addEventListener("click", function () {
+                        if (targetToDelete) {
+                            targetToDelete.remove();
+                
+                            $(".customer_address_group").each(function (index) {
+                                $(this).find(".fw-bold").text("주소" + (index + 1));
+                            });
+                
+                            targetToDelete = null;
+                
+                            if (deleteModalInstance) {
+                                deleteModalInstance.hide();
+                            }
+                        }
+                    });
+                });
+            </script>
+
+            <!-- 주소 삭제 확인 모달 -->
+            <div class="modal fade" id="deleteAddressModal" tabindex="-1" aria-labelledby="deleteAddressModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteAddressModalLabel">주소 삭제</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+                        </div>
+                        <div class="modal-body">
+                            주소를 삭제하시겠습니까?
+                            <br>
+                            <small class="text-muted">삭제된 이 후에는 작성한 내용을 복구할 수 없습니다.</small>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                            <button type="button" class="btn btn-danger" id="confirmDeleteAddress">삭제</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                // 설치 또는 제조년월 자동 정제 (모든 .install-year 클래스 대상)
+$(document).on('input', '.install-year', function (e) {
+    const raw = e.target.value;
+    const digits = raw.replace(/\D/g, '').slice(0, 6);
+    let formatted = '';
+    let cursor = e.target.selectionStart;
+
+    // 현재 커서 위치에서 하이픈이 생기는 시점 이후면 커서 보정 필요
+    if (digits.length === 4) {
+        formatted = digits.slice(0, 2) + '-' + digits.slice(2, 4);
+        if (cursor > 2) cursor++;  // 첫 하이픈 위치 보정
+    } else if (digits.length === 6) {
+        formatted = digits.slice(0, 4) + '-' + digits.slice(4, 6);
+        if (cursor > 4) cursor++;  // 두 번째 하이픈 위치 보정
+    } else {
+        formatted = digits;
+    }
+
+    e.target.value = formatted;
+
+    // 커서 위치가 문자열 길이를 초과하지 않도록 보정
+    const safeCursor = Math.min(cursor, formatted.length);
+    e.target.setSelectionRange(safeCursor, safeCursor);
+});
+
+                
+                // 물마크 번호: 숫자만 허용 + 유효성 검사 (클래스로 모두 적용)
+$(document).on('input', '.watermark-number', function (e) {
+    let value = e.target.value;
+    let cleaned = value.replace(/\D/g, '').slice(0, 8);
+
+    // 커서 위치 계산
+    const cursor = e.target.selectionStart;
+    const diff = value.length - cleaned.length;
+    const newCursor = Math.max(cursor - diff, 0);
+
+    e.target.value = cleaned;
+    e.target.setSelectionRange(newCursor, newCursor);
+});
+
+$(document).on('blur', '.watermark-number', function (e) {
+    const value = e.target.value.trim();
+    if (value && value.length !== 8) {
+        alert("물마크 번호는 숫자 8자리로 입력해야 합니다.");
+        setTimeout(() => {
+            e.target.focus();
+        }, 10);
+    }
+});
+
+                $(document).on("change", ".other-company", function () {
+    const wrapper = $(this).closest(".product-info-group");
+    const extraSection = wrapper.find(".other-company-extra");
+    extraSection.toggle(this.checked);
+});
+
+$(document).ready(function () {
+    reorderProductGroups()
+
+    // ✅ 고유 ID 생성 함수 (추가)
+    function generateUniqueId(prefix, index) {
+        return `${prefix}_${index}`;
+    }
+
+    // ✅ 제품정보 추가
+    $("#addProduct").on("click", function () {
+        const newGroup = $(".product-info-basic").first().clone(false, false);
+        newGroup.removeClass("product-info-basic").addClass("mt-3 product-info-group");
+
+        // 필드 초기화
+        newGroup.find('input[type="text"], input[type="hidden"], input:not([type])').val("");
+        newGroup.find("select").val("");
+        newGroup.find("input:checkbox, input:radio").prop("checked", false);
+        newGroup.find(".promotion-text, .other-company-extra").hide();
+        newGroup.find(".promotion-text").prop("required", false);
+        newGroup.find(".other-company").prop("checked", false);
+
+        // 프로모션 radio value 복구
+        newGroup.find(".promotion-request-yes").val("있음");
+        newGroup.find(".promotion-request-no").val("없음");
+
+        // 기존 헤더 제거 (클론된 경우 대비)
+        newGroup.find(".d-flex.justify-content-between").remove();
+
+        // 오토컴플릿 관련 초기화
+        const autocompleteFields = [".product", ".regulation", ".contract", ".management", ".rental-fee", ".promotion-text"];
+        autocompleteFields.forEach(selector => {
+            newGroup.find(selector).each(function () {
+                const $input = $(this);
+                if ($input.data("uiAutocomplete")) {
+                    $input.autocomplete("destroy");
+                }
+
+                $input.removeClass("ui-autocomplete-input")
+                    .removeAttr("autocomplete")
+                    .removeAttr("aria-autocomplete")
+                    .removeAttr("aria-haspopup")
+                    .removeAttr("aria-expanded")
+                    .removeAttr("role")
+                    .removeData("ui-autocomplete")
+                    .removeData("autocomplete");
+            });
+        });
+
+        $("#product_info_wrap").append(newGroup);
+
+        // 새로 추가한 제품정보의 프로모션 상태 초기화
+        resetPromotionField(newGroup);
+
+        // ✅ 전체 재정렬
+        reorderProductGroups();
+    });
+
+    // ✅ 제품정보 삭제
+    $(document).on("click", ".removeProduct", function () {
+        if ($(".product-info-group").length <= 1) {
+            alert("최소 1개의 제품정보는 남겨야 합니다.");
+            return;
+        }
+
+        $(this).closest(".product-info-group").remove();
+        reorderProductGroups();
+    });
+
+    // ✅ 제품정보 라벨 및 속성 재정렬 함수
+    function reorderProductGroups() {
+        $(".product-info-group").each(function (index) {
+            const num = index + 1;
+
+            // 기존 헤더 제거 후 재생성
+            $(this).find(".d-flex.justify-content-between").remove();
+            $(this).prepend(`
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="fw-bold product-info-title">제품정보${num}</span>
+                    ${num > 1 ? '<button type="button" class="btn btn-danger btn-sm removeProduct btn-animate"><span class="btn-inline-icon-wrap"><img src="./assets/webimage/button/delete.png" alt="" class="btn-inline-icon"><span>삭제</span></span></button>' : ''}
+                </div>
+            `);
+            
+            // ✅ 프로모션 변경요청 radio 고유 ID / name 설정
+            const promoYes = $(this).find(".promotion-request-yes");
+            const promoNo = $(this).find(".promotion-request-no");
+            const promoText = $(this).find(".promotion-text");
+
+            const promoYesId = `promotion_request_yes_${num}`;
+            const promoNoId = `promotion_request_no_${num}`;
+            const promoName = `promotion_request_${num}`;
+
+            promoYes.attr("name", promoName).attr("id", promoYesId);
+            promoNo.attr("name", promoName).attr("id", promoNoId);
+
+            promoYes.closest(".form-check").find(".form-check-label").attr("for", promoYesId);
+            promoNo.closest(".form-check").find(".form-check-label").attr("for", promoNoId);
+
+            promoText.prop("required", promoYes.is(":checked")).toggle(promoYes.is(":checked"));
+
+            // ✅ 라디오 버튼 name, id, for, value 재설정
+            const radioGroups = [
+                { selector: ".product-type", namePrefix: "product_type_" },
+                { selector: ".product-kind", namePrefix: "product_kind_" },
+                { selector: ".install-type", namePrefix: "install_type_" }
+            ];
+
+            radioGroups.forEach(group => {
+                const inputs = $(this).find(group.selector);
+                inputs.each(function (i) {
+                    const newName = group.namePrefix + num;
+                    const newId = `${group.namePrefix}${i}_p${num}`;
+                    const labelText = $(this).next("label").text().trim();
+
+                    $(this)
+                        .attr("name", newName)
+                        .attr("id", newId)
+                        .attr("value", labelText);
+                    $(this).next("label").attr("for", newId);
+                });
+            });
+
+            const checkboxGroups = [
+                { inputClass: ".pre-visit", baseId: "preVisit" },
+                { inputClass: ".hard-construction", baseId: "hardConstruction" },
+                { inputClass: ".other-company", baseId: "otherCompany" },
+                { inputClass: ".product-collect", baseId: "productCollect" },
+                { inputClass: ".self-receipt", baseId: "selfReceipt" }
+            ];
+
+            checkboxGroups.forEach(({ inputClass, baseId }) => {
+                const $input = $(this).find(inputClass);
+                const $label = $input.closest(".form-check").find("label");
+
+                const newId = `${baseId}_${num}`;
+                $input.attr("id", newId);
+                $label.attr("for", newId);
+            });
+
+            // ✅ 오토컴플릿 다시 연결
+            if (typeof worksheetData !== "undefined" && worksheetData.length > 0) {
+                initializeAllAutocompletes($(this));
+            } else {
+                const interval = setInterval(() => {
+                    if (worksheetData.length > 0) {
+                        initializeAllAutocompletes($(this));
+                        clearInterval(interval);
+                    }
+                }, 100);
+            }
+        });
+    }
+});
+</script>
+
+<script>
+document.querySelector("form").addEventListener("keydown", function (e) {
+    const tag = e.target.tagName.toLowerCase();
+    const type = e.target.type?.toLowerCase();
+
+    // textarea는 줄바꿈 허용, 그 외에는 엔터 막기
+    if (e.key === "Enter" && tag !== "textarea") {
+        e.preventDefault();
+    }
+});
+</script>
+
+<script>
+document.getElementById('insertDefaultNote').addEventListener('click', function () {
+    document.getElementById('special_note').value = '가장 빠른 설치 요청';
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    let isMainSaveSubmitBusy = false;
+
+    function setSaveSubmitBusy(activeButton, source, busy) {
+        const saveBtn = document.getElementById("saveTempBtn");
+        const submitBtn = document.getElementById("submitBtn");
+        const buttons = [saveBtn, submitBtn].filter(Boolean);
+
+        if (busy) {
+            isMainSaveSubmitBusy = true;
+
+            buttons.forEach(btn => {
+                if (!btn.dataset.originalHtml) {
+                    btn.dataset.originalHtml = btn.innerHTML;
+                }
+                btn.disabled = true;
+                btn.classList.add("disabled");
+                btn.setAttribute("aria-disabled", "true");
+            });
+
+            if (activeButton) {
+                activeButton.innerHTML =
+                    `<span class="btn-inline-icon-wrap"><span>${source === "접수" ? "접수 중..." : "저장 중..."}</span></span>`;
+            }
+        } else {
+            isMainSaveSubmitBusy = false;
+
+            buttons.forEach(btn => {
+                btn.disabled = false;
+                btn.classList.remove("disabled");
+                btn.removeAttribute("aria-disabled");
+
+                if (btn.dataset.originalHtml) {
+                    btn.innerHTML = btn.dataset.originalHtml;
+                }
+            });
+        }
+    }
+
+    async function copyPreviewTextSafely(text) {
+        const value = String(text ?? "");
+        if (!value) return false;
+
+        if (navigator.clipboard && window.isSecureContext) {
+            try {
+                await navigator.clipboard.writeText(value);
+                return true;
+            } catch (err) {
+                console.warn("navigator.clipboard 복사 실패, fallback 시도:", err);
+            }
+        }
+
+        try {
+            const previewBox = document.getElementById("previewBox");
+            if (previewBox) {
+                previewBox.focus({ preventScroll: true });
+                previewBox.value = value;
+                previewBox.select();
+                previewBox.setSelectionRange(0, value.length);
+
+                if (document.execCommand("copy")) {
+                    return true;
+                }
+            }
+        } catch (err) {
+            console.warn("previewBox fallback 복사 실패:", err);
+        }
+
+        try {
+            const temp = document.createElement("textarea");
+            temp.value = value;
+            temp.setAttribute("readonly", "readonly");
+            temp.style.position = "fixed";
+            temp.style.left = "-9999px";
+            temp.style.top = "0";
+            document.body.appendChild(temp);
+            temp.focus();
+            temp.select();
+
+            const copied = document.execCommand("copy");
+            document.body.removeChild(temp);
+
+            return !!copied;
+        } catch (err) {
+            console.warn("textarea fallback 복사 실패:", err);
+            return false;
+        }
+    }
+
+    async function handleSaveOrSubmit(event) {
+    if (isMainSaveSubmitBusy) {
+        return;
+    }
+
+    const actionButton = event.currentTarget;
+
+    if (window.openMobilePreviewSection) {
+        window.openMobilePreviewSection();
+    }
+
+    // ✅ 모바일에서도 명확히 보이도록 프로모션 선택 여부를 먼저 직접 검사
+    const promotionGroups = form.querySelectorAll(".product-info-group");
+
+    for (let i = 0; i < promotionGroups.length; i++) {
+        const group = promotionGroups[i];
+        const checkedPromotion = group.querySelector(".promotion-request:checked");
+
+        if (!checkedPromotion) {
+            const firstPromotionRadio =
+                group.querySelector(".promotion-request-yes") ||
+                group.querySelector(".promotion-request-no");
+
+            if (firstPromotionRadio) {
+                firstPromotionRadio.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+                setTimeout(() => {
+                    firstPromotionRadio.focus();
+                }, 50);
+            }
+
+            alert(`제품정보${i + 1}의 프로모션을 선택해주세요.\n\n"있음" 또는 "없음" 중 하나를 꼭 선택해야 합니다.`);
+            return;
+        }
+    }
+
+    // ✅ 필수 항목 검수
+    if (!form.checkValidity()) {
+        form.reportValidity(); // 브라우저가 빨간 테두리 + 안내 메시지 보여줌
+        return; // ⛔ 복사 및 미리보기 중단
+    }
+
+    // ✅ 어떤 버튼(저장/접수)인지 먼저 판단
+    const _source = event.currentTarget.dataset.source || '저장';
+
+    // ✅ 접수 버튼일 때만 "예/아니오" 확인창 + 상세정보 표시
+    if (_source === '접수') {
+        const nameV  = (document.querySelector("[name='customer_name']")?.value || "").trim();
+
+        const brandV = (document.getElementById("brand_input")?.value || "").trim()
+                    || (document.getElementById("brand")?.selectedOptions?.[0]?.text || "").trim();
+
+        const prodV  = (document.querySelector(".product-info-group .product")?.value || "").trim();
+
+        const msg =
+            `접수를 진행하시겠습니까?\n\n` +
+            `브랜드: ${brandV}\n` +
+            `고객명: ${nameV}\n` +
+            `상품명: ${prodV}`;
+
+        const ok = confirm(msg);
+        if (!ok) return; // ❌ 아니오면 아무것도 안 함(중단)
+    }
+
+    const getVal = id => document.getElementById(id)?.value?.trim() || "";
+    const getSel = id => {
+        const el = document.getElementById(id);
+        if (!el) return "";
+        const selected = el.selectedOptions?.[0]?.text || "";
+        return (selected === "선택하세요") ? "" : selected;
+    };
+
+    const today = new Date();
+    const yyyy = today.getFullYear().toString().slice(2);
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const yymmdd = `${yyyy}${mm}${dd}`;
+
+    const brand = getVal("brand_input") || getSel("brand");
+    const customerType = getSel("customer_type");
+
+    const isBusiness = ["개인사업자", "법인사업자"].includes(getSel("customer_type"));
+
+    const businessName = isBusiness ? getVal("business_name") : "";
+    const businessNumber = isBusiness ? getVal("business_number") : "";
+    const corporationNumber = isBusiness ? getVal("corporation_number") : "";
+
+    const emailId = isBusiness ? getVal("email_id") : "";
+    const emailDomain = isBusiness ? getVal("email_domain") : "";
+    const email = (emailId && emailDomain) ? `${emailId}@${emailDomain}` : "";
+
+    const name = document.querySelector("[name='customer_name']")?.value.trim() || "";
+    const birth = getVal("birth_date");
+    const contact = getVal("contact");
+    const payment = document.querySelector("[name='payment_info']")?.value.trim() || "";
+
+    const addresses = [];
+    document.querySelectorAll(".customer_address_group").forEach(group => {
+    const zip    = (group.querySelector(".customer_zipcode")?.value || "").trim();
+    const basic  = (group.querySelector(".customer_address_normal")?.value || "").trim();
+    const detail = (group.querySelector(".customer_address_detail")?.value || "").trim();
+    if (zip || basic || detail) {
+        addresses.push({ zip, basic, detail });   // ← 객체로 저장
+    }
+    });
+
+    // 미리보기 텍스트는 보기 좋게 다시 조합
+    const addressLines = addresses.map(a =>
+    `[${a.zip || ''}] ${[a.basic, a.detail].filter(Boolean).join(' ')}`.trim()
+    );
+    const addressBlock = addressLines.length ? addressLines.join("\n") + '\n------------------------------' : "";
+
+    const products = [];
+    const productGroups = document.querySelectorAll(".product-info-group");
+
+    for (let idx = 0; idx < productGroups.length; idx++) {
+        const group = productGroups[idx];
+
+        const product = group.querySelector(".product")?.value || "";
+        const model = group.querySelector(".model")?.value || "";
+        const color = group.querySelector(".color")?.value || "";
+        const reg = group.querySelector(".regulation")?.value || "";
+        const contract = group.querySelector(".contract")?.value || "";
+        const manage = group.querySelector(".management")?.value || "";
+        const fee = group.querySelector(".rental-fee")?.value || "";
+
+        const promotionRequest = group.querySelector(".promotion-request:checked")?.value || "";
+        const promotionTextEl = group.querySelector(".promotion-text");
+        const promo = promotionRequest === "있음" ? (promotionTextEl?.value || "").trim() : "";
+
+        if (promotionRequest === "있음" && promo === "") {
+            alert(`제품정보${idx + 1}의 프로모션을 입력하거나 목록에서 선택해주세요.`);
+            if (promotionTextEl) {
+                promotionTextEl.style.display = "";
+                promotionTextEl.required = true;
+                promotionTextEl.focus();
+            }
+            return;
+        }
+
+        const preVisit = group.querySelector(".pre-visit")?.checked ? "사전답사" : "";
+        const hardConstruction = group.querySelector(".hard-construction")?.checked ? "난공사 요청" : "";
+        const productCollect = group.querySelector(".product-collect")?.checked ? "기존 제품 수거" : "";
+        const selfReceipt = group.querySelector(".self-receipt")?.checked ? "자체접수" : "";
+
+        let productType = "", productKind = "", installType = "", otherBrand = "", installYear = "", watermark = "", otherInfo = "";
+
+        if (group.querySelector(".other-company")?.checked) {
+            const otherSection = group.querySelector(".other-company-extra");
+
+            otherBrand = otherSection?.querySelector(".other-brand")?.value || "";
+            installYear = otherSection?.querySelector(".install-year")?.value || "";
+            watermark = otherSection?.querySelector(".watermark-number")?.value?.trim() || "";
+
+            productType = otherSection.querySelector(`input[name="product_type_${idx + 1}"]:checked`)?.value || "";
+            productKind = otherSection.querySelector(`input[name="product_kind_${idx + 1}"]:checked`)?.value || "";
+            installType = otherSection.querySelector(`input[name="install_type_${idx + 1}"]:checked`)?.value || "";
+
+            const line1 = [otherBrand, installYear, productType, productKind, installType].filter(Boolean).join("/");
+            const lines = [];
+
+            if (line1 || watermark) {
+                lines.push(`타사정보`);
+                if (line1) lines.push(line1);
+                if (watermark) lines.push(watermark);
+                otherInfo = '\n' + lines.join("\n");
+            }
+        }
+
+        const confirmLine = [preVisit, hardConstruction, productCollect, selfReceipt].filter(Boolean).join(", ");
+        const productObj = {
+            label: `제품정보${idx + 1}`,
+            name: product,
+            model,
+            color,
+            regulation: reg,
+            contract,
+            management: manage,
+            promotion_request: promotionRequest || "없음",
+            promotion: promo,
+            rental_fee: fee,
+            pre_visit: !!preVisit,
+            hard_construction: !!hardConstruction,
+            product_collect: !!productCollect,
+            self_receipt: !!selfReceipt,
+            other_company_info: group.querySelector(".other-company")?.checked ? {
+                brand: otherBrand,
+                install_year: installYear,
+                watermark,
+                type: productType,
+                kind: productKind,
+                install: installType
+            } : null
+        };
+        products.push(productObj);
+    }
+
+    const productText = products.map(p => {
+        const lines = [
+            p.label,
+            p.name,
+            p.model,
+            p.color,
+            [p.regulation, p.contract, p.management].filter(Boolean).join("/"),
+            p.promotion,
+            p.rental_fee ? `${p.rental_fee}원` : "",
+            p.pre_visit ? "사전답사" : "",
+            p.hard_construction ? "난공사 요청" : "",
+            p.self_receipt ? "자체접수" : ""
+        ].filter(Boolean);
+
+        if (p.other_company_info) {
+            if (shouldAddCrmCowayCompensationNotice(p)) {
+                lines.push(
+                    "",
+                    "★정말 정말 중요★",
+                    "설치 방문시 현장에",
+                    "타사정수기 필수로",
+                    "있어야 할인가능!!",
+                    ""
+                );
+            }
+
+            const other = p.other_company_info;
+            const line1 = [other.brand, other.install_year, other.type, other.kind, other.install].filter(Boolean).join("/");
+            if (line1) lines.push("타사정보", line1);
+            if (other.watermark) lines.push(other.watermark);
+        }
+
+        return lines.join("\n");
+    }).join("\n\n");
+
+    const specialNote = getVal("special_note");
+
+    const collectNoteLines = products
+        .map((p, idx) => p.product_collect ? `제품${idx + 1} : 기존 제품 수거` : "")
+        .filter(Boolean);
+
+    const collectNoteBlock = collectNoteLines.length ? collectNoteLines.join("\n") : "";
+
+    const specialNoteWithDivider = `------------------------------\n특이사항\n${collectNoteBlock ? collectNoteBlock + "\n" : ""}${specialNote}`;
+
+    const businessInfo = [businessName, businessNumber, corporationNumber, email].filter(v => v).join("\n");
+
+    const previewText = 
+`$${yymmdd}
+${brand}
+${customerType}
+
+${businessInfo ? businessInfo + '\n\n' : ''}` +
+(name ? name + '\n' : '') +
+(birth ? birth + '\n' : '') +
+(contact ? contact + '\n' : '') +
+(payment ? payment + '\n' : '') +
+(addressBlock ? addressBlock + '\n' : '') +
+productText +
+"\n" + specialNoteWithDivider;
+
+document.getElementById("previewBox").value = previewText;
+
+// ✅ 서버로 JSON 전송
+const jsonToSave = {
+    brand,
+    customer_type: customerType,
+    business_name: businessName,
+    business_number: businessNumber,
+    corporation_number: corporationNumber,
+    email,
+    customer_name: name,
+    birth_date: birth,
+    contact,
+    payment_info: payment,
+    addresses,
+    products,
+    special_note: specialNote
+};
+
+setSaveSubmitBusy(actionButton, _source, true);
+
+try {
+    const copySuccess = await copyPreviewTextSafely(previewText);
+    const jsonText = JSON.stringify(jsonToSave);
+
+    const res = await fetch("save_json.php?_source=" + encodeURIComponent(_source), {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache"
+        },
+        body: jsonText,
+        credentials: "same-origin",
+        cache: "no-store"
+    });
+
+    const contentType = res.headers.get("content-type") || "";
+
+    if (!res.ok) {
+        const errorText = await res.text();
+        console.error("❌ 서버 응답 (에러 포함):", errorText);
+        throw new Error("서버 오류 (" + res.status + "):\n" + errorText);
+    }
+
+    if (!contentType.includes("application/json")) {
+        const text = await res.text();
+        console.error("⚠️ 서버에서 JSON 아닌 응답:", text);
+        alert("⚠️ 서버에서 JSON이 아닌 응답을 받았습니다:\n" + text);
+        return;
+    }
+
+    const data = await res.json();
+
+    if (data.success) {
+        if (_source === "접수") {
+            const info = data.inserted || {};
+            const copyNotice = copySuccess
+                ? ""
+                : "\n\n※ 자동 복사는 실패했습니다. 미리보기 내용을 수동으로 복사해주세요.";
+
+            alert(
+                `✅ 접수가 완료되었습니다!\n\n` +
+                `브랜드: ${info.brand || brand}\n` +
+                `고객명: ${info.customer_name || name}\n` +
+                `연락처: ${info.contact || contact}\n` +
+                `상품명: ${info.product_name || (products[0]?.name || "")}` +
+                copyNotice
+            );
+        } else {
+            if (copySuccess) {
+                alert("내용이 복사되었습니다!");
+            } else {
+                alert("저장되었습니다.\n\n※ 자동 복사는 실패했습니다. 미리보기 내용을 수동으로 복사해주세요.");
+            }
+        }
+    } else {
+        alert("❌ 저장 실패: " + (data.error || data.message || "알 수 없는 오류"));
+        console.error("🔍 서버 오류 응답:", data);
+    }
+} catch (err) {
+    alert("⚠️ 저장 요청 실패:\n" + err.message);
+    console.error("🧨 에러 상세:", err);
+} finally {
+    setSaveSubmitBusy(actionButton, _source, false);
+}
+}
+document.getElementById("saveTempBtn").addEventListener("click", handleSaveOrSubmit);
+document.getElementById("submitBtn").addEventListener("click", handleSaveOrSubmit);
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const currentUserId = "sunghoon"; // ✅ 현재 로그인한 사용자 ID
+    document.getElementById("resetBtn").addEventListener("click", function () {
+    if (confirm("모든 입력값을 초기화하시겠습니까?")) {
+        window.location.href = 'main.php';
+    }
+    });
+
+
+  // ✅ 오늘 ~ 7일 전 날짜 자동 설정
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  const todayStr = `${yyyy}-${mm}-${dd}`;
+
+  const sevenDaysAgo = new Date(today);
+  sevenDaysAgo.setDate(today.getDate() - 6);
+  const sevenDaysAgoStr = `${sevenDaysAgo.getFullYear()}-${String(sevenDaysAgo.getMonth() + 1).padStart(2, '0')}-${String(sevenDaysAgo.getDate()).padStart(2, '0')}`;
+
+  document.getElementById("startDate").value = sevenDaysAgoStr;
+  document.getElementById("endDate").value = todayStr;
+
+  let allData = [];
+  let showAll = true;
+  let currentPage = 1;
+  const rowsPerPage = 20;
+
+  const showAllCheckbox = document.getElementById("showAllToggle");
+if (showAllCheckbox) {
+  showAllCheckbox.addEventListener("change", function () {
+    showAll = this.checked;
+    currentPage = 1;
+    showFilteredData();
+  });
+}
+
+  document.getElementById("loadTempBtn").addEventListener("click", function () {
+    const listUrl = "fetch_saved_list.php?_=" + Date.now();
+
+    fetch(listUrl, {
+      method: "GET",
+      credentials: "same-origin",
+      cache: "no-store",
+      headers: {
+        "Cache-Control": "no-cache"
+      }
+    })
+      .then(async res => {
+        if (!res.ok) {
+          const errorText = await res.text();
+          throw new Error("서버 오류 (" + res.status + "): " + errorText);
+        }
+
+        return res.json();
+      })
+      .then(data => {
+        if (!Array.isArray(data)) {
+          throw new Error(data?.error || "저장 리스트 응답 형식이 올바르지 않습니다.");
+        }
+
+        allData = data;
+        currentPage = 1;
+        showFilteredData();
+      })
+      .catch(err => {
+        console.error("불러오기 실패:", err);
+        alert("저장 리스트 불러오기 중 오류가 발생했습니다.");
+      });
+  });
+
+  document.getElementById("filterBtn").addEventListener("click", () => {
+    currentPage = 1;
+    showFilteredData();
+  });
+  document.getElementById("searchKeyword").addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      currentPage = 1;
+      showFilteredData();
+    }
+  });
+
+    function showFilteredData() {
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+
+    const keywordRaw = (document.getElementById("searchKeyword")?.value || "");
+    const keyword = keywordRaw.trim();
+
+    // ✅ null/undefined 안전 정규화
+    const normalize = (v) => String(v ?? "").replace(/[\s\-\/]/g, "").toLowerCase();
+
+    const keywordNorm = normalize(keyword);
+
+    const filtered = allData.filter(row => {
+        const createdAt = String(row?.created_at ?? "");
+        const date = createdAt.substring(0, 10);
+
+        if (startDate && date < startDate) return false;
+        if (endDate && date > endDate) return false;
+
+        if (!showAll && String(row?.user_id ?? "") !== String(currentUserId ?? "")) return false;
+
+        // ✅ 키워드가 있을 때만 필터
+        if (keywordNorm) {
+        const combined = [
+            row?.customer_name,
+            row?.contact,
+            row?.birth_date,
+            row?.brand,
+            row?.user_id,        // ✅ 담당자 ID도 검색되게 추가
+            row?.name_snapshot
+        ].map(normalize).join("");
+
+        if (!combined.includes(keywordNorm)) return false;
+        }
+
+        return true;
+    });
+
+    renderTable(filtered);
+    renderPagination(filtered.length);
+
+    const modalEl = document.getElementById("loadListModal");
+    const existingModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+    existingModal.show();
+    }
+
+  function renderTable(data) {
+    const tbody = document.querySelector("#loadListTable tbody");
+    const cardWrap = document.getElementById("loadListCardWrap");
+
+    tbody.innerHTML = "";
+    if (cardWrap) cardWrap.innerHTML = "";
+
+    const startIdx = (currentPage - 1) * rowsPerPage;
+    const paginated = data.slice(startIdx, startIdx + rowsPerPage);
+
+    const esc = (v) => String(v ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+    if (paginated.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="9" class="text-center text-muted">데이터가 없습니다.</td>
+        </tr>
+      `;
+
+      if (cardWrap) {
+        cardWrap.innerHTML = `<div class="text-muted small">데이터가 없습니다.</div>`;
+      }
+      return;
+    }
+
+    paginated.forEach((row, index) => {
+      const managerText = `${row.user_id || ''}${row.name_snapshot ? ' / ' + row.name_snapshot : ''}`;
+      const sourceText = row.source || '-';
+      const sourceClass =
+        sourceText === '저장'
+          ? 'saved-source-badge--save'
+          : sourceText === '접수'
+            ? 'saved-source-badge--submit'
+            : 'saved-source-badge--other';
+
+      const safeCollapseId = `saved_detail_${String(row.id || '').replace(/[^a-zA-Z0-9_-]/g, '_')}_${index}`;
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td style="display: none;">${esc(row.id)}</td>
+        <td class="left-text">${esc(row.created_at)}</td>
+        <td class="center-text">${esc(managerText)}</td>
+        <td class="left-text">${esc(row.customer_name)}</td>
+        <td class="left-text">${esc(row.contact)}</td>
+        <td class="left-text">${esc(row.birth_date)}</td>
+        <td class="center-text">${esc(row.brand)}</td>
+        <td class="center-text">${esc(sourceText)}</td>
+        <td class="center-text">
+          <div class="d-inline-flex justify-content-center align-items-center gap-2">
+            <button class="btn btn-sm btn-animate load-single" data-id="${esc(row.id)}">
+              <span class="btn-inline-icon-wrap">
+                <img src="./assets/webimage/button/load.png" alt="" class="btn-inline-icon">
+                <span>불러오기</span>
+              </span>
+            </button>
+            <button class="btn btn-sm btn-animate delete-single" data-id="${esc(row.id)}">
+              <span class="btn-inline-icon-wrap">
+                <img src="./assets/webimage/button/delete.png" alt="" class="btn-inline-icon">
+                <span>삭제</span>
+              </span>
+            </button>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+
+      if (cardWrap) {
+        const card = document.createElement("div");
+        card.className = "saved-card";
+        card.innerHTML = `
+          <div class="saved-card-body">
+            <div class="saved-card-top">
+              <div class="saved-card-title">${esc(row.customer_name)}</div>
+              <div class="saved-card-top-side">
+                <button type="button"
+                        class="btn btn-sm btn-animate saved-card-detail-btn"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#${safeCollapseId}"
+                        aria-expanded="false"
+                        aria-controls="${safeCollapseId}">
+                  <span class="btn-inline-icon-wrap">
+                    <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                    <span>상세</span>
+                  </span>
+                </button>
+                <span class="saved-source-badge ${sourceClass}">${esc(sourceText)}</span>
+              </div>
+            </div>
+
+            <div class="saved-card-meta">
+              <div class="saved-card-meta-left">${esc(row.created_at)}</div>
+              <div class="saved-card-meta-right">
+                <span class="saved-manager-badge">${esc(managerText)}</span>
+              </div>
+            </div>
+
+            <div class="saved-card-summary-row">
+              <div class="saved-card-summary-chip">${esc(row.contact)}</div>
+              <div class="saved-card-summary-chip">${esc(row.birth_date)}</div>
+              <div class="saved-card-summary-chip">${esc(row.brand)}</div>
+            </div>
+
+            <div class="collapse mt-2" id="${safeCollapseId}">
+              <div class="saved-card-detail-box">
+                <div class="saved-card-actions">
+                  <button class="btn btn-sm btn-animate load-single" data-id="${esc(row.id)}">
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/load.png" alt="" class="btn-inline-icon">
+                      <span>불러오기</span>
+                    </span>
+                  </button>
+
+                  <div class="saved-card-action-divider" aria-hidden="true"></div>
+
+                  <button class="btn btn-sm btn-animate delete-single" data-id="${esc(row.id)}">
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/delete.png" alt="" class="btn-inline-icon">
+                      <span>삭제</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        cardWrap.appendChild(card);
+      }
+    });
+  }
+
+    function renderPagination(totalRows) {
+    const pagination = document.getElementById("paginationArea");
+    const jumpForm = document.getElementById("paginationJumpForm");
+    const jumpInput = document.getElementById("paginationJumpInput");
+    const statusText = document.getElementById("paginationStatusText");
+
+    pagination.innerHTML = "";
+
+    const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+    // ✅ 페이지가 1개 이하면 페이지네이션/점프 숨김(기존과 동일 효과)
+    if (totalPages <= 1) {
+        if (jumpForm) jumpForm.style.display = "none";
+        if (statusText) statusText.textContent = "1 / 1";
+        return;
+    }
+
+    // ✅ currentPage가 범위를 벗어나면 보정(필터 변경 시 방어)
+    if (currentPage < 1) currentPage = 1;
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    // ✅ 모바일에서는 숫자 범위를 줄여서 가로 스크롤 방지
+    const isMobile = window.innerWidth <= 768;
+    const around = isMobile ? 1 : 2;
+
+    const createBtn = (label, page, { disabled = false, active = false } = {}) => {
+        const li = document.createElement("li");
+        li.className = "page-item" + (disabled ? " disabled" : "") + (active ? " active" : "");
+
+        const a = document.createElement("a");
+        a.className = "page-link";
+        a.href = "#";
+        a.textContent = label;
+
+        a.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (disabled || active) return;
+        currentPage = page;
+        showFilteredData();
+        });
+
+        li.appendChild(a);
+        return li;
+    };
+
+    const createDots = () => {
+        const li = document.createElement("li");
+        li.className = "page-item disabled";
+        li.innerHTML = `<span class="page-link">…</span>`;
+        return li;
+    };
+
+    // « 맨앞 / ‹ 이전
+    pagination.appendChild(createBtn("«", 1, { disabled: currentPage === 1 }));
+    pagination.appendChild(createBtn("‹", Math.max(1, currentPage - 1), { disabled: currentPage === 1 }));
+
+    // 숫자 범위 계산
+    let start = Math.max(1, currentPage - around);
+    let end = Math.min(totalPages, currentPage + around);
+
+    // 1페이지는 항상 노출 + ...
+    if (start > 1) {
+        pagination.appendChild(createBtn("1", 1, { active: currentPage === 1 }));
+        if (start > 2) pagination.appendChild(createDots());
+    }
+
+    for (let p = start; p <= end; p++) {
+        pagination.appendChild(createBtn(String(p), p, { active: p === currentPage }));
+    }
+
+    // 마지막 페이지는 항상 노출 + ...
+    if (end < totalPages) {
+        if (end < totalPages - 1) pagination.appendChild(createDots());
+        pagination.appendChild(createBtn(String(totalPages), totalPages, { active: currentPage === totalPages }));
+    }
+
+    // › 다음 / » 맨뒤
+    pagination.appendChild(createBtn("›", Math.min(totalPages, currentPage + 1), { disabled: currentPage === totalPages }));
+    pagination.appendChild(createBtn("»", totalPages, { disabled: currentPage === totalPages }));
+
+    // ✅ 점프 UI 표시 + 상태 텍스트 갱신
+    if (jumpForm) {
+    jumpForm.style.display = "flex";
+    jumpForm.dataset.totalPages = String(totalPages); // ✅ 필터 결과 기준 totalPages 저장
+    }
+    if (statusText) statusText.textContent = `${currentPage} / ${totalPages}`;
+
+    if (jumpInput) {
+        jumpInput.min = "1";
+        jumpInput.max = String(totalPages);
+        jumpInput.value = "";
+    }
+    }
+
+(function bindPaginationJumpOnce() {
+  const jumpForm = document.getElementById("paginationJumpForm");
+  const jumpInput = document.getElementById("paginationJumpInput");
+  if (!jumpForm || !jumpInput || jumpForm.dataset.bound === "1") return;
+
+  jumpForm.dataset.bound = "1";
+
+  jumpForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const totalPages = parseInt(jumpForm.dataset.totalPages || "1", 10) || 1;
+
+    let p = parseInt((jumpInput.value || "").trim(), 10);
+    if (!p || p < 1) p = 1;
+    if (p > totalPages) p = totalPages;
+
+    currentPage = p;
+    showFilteredData();
+  });
+})();
+
+  // 삭제, 불러오기 기능
+document.getElementById("loadListModal").addEventListener("click", function (e) {
+  const loadBtn = e.target.closest(".load-single");
+  if (loadBtn) {
+    const id = loadBtn.dataset.id;
+
+    fetch("fetch_saved_single.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        const rawData = JSON.parse(data.raw_data);
+
+        if ($('.customer_address_group_basic').length === 0) {
+          console.warn("⛔ .customer_address_group_basic 요소가 없습니다. DOM이 준비되었는지 확인하세요.");
+          alert("주소 템플릿 요소가 없어 주소를 복원할 수 없습니다.");
+          return;
+        }
+
+        fillFormWithData(rawData);
+        $("#loadListModal").modal("hide");
+        setTimeout(() => {
+          const ct = document.getElementById("customer_type");
+          if (ct) ct.dispatchEvent(new Event("change"));
+        }, 50);
+      } else {
+        alert("불러오기 실패: " + (data.error || "알 수 없음"));
+      }
+    })
+    .catch(err => {
+      console.error("불러오기 요청 실패:", err);
+      alert("서버 오류 발생");
+    });
+    return;
+  }
+
+  const deleteBtn = e.target.closest(".delete-single");
+  if (deleteBtn) {
+    const id = deleteBtn.dataset.id;
+    if (confirm("이 항목을 정말 삭제하시겠습니까?")) {
+      fetch("fetch_delete.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id })
+      })
+      .then(res => res.json())
+      .then(response => {
+        if (response.success) {
+          alert("삭제되었습니다.");
+          allData = allData.filter(item => item.id !== id);
+          showFilteredData();
+        } else {
+          alert("삭제 실패: " + (response.error || ''));
+        }
+      })
+      .catch(err => {
+        console.error("삭제 요청 실패:", err);
+        alert("삭제 요청 중 오류 발생");
+      });
+    }
+  }
+});
+
+  document.getElementById("loadListModal").addEventListener("hidden.bs.modal", function () {
+    document.body.classList.remove("modal-open");
+    document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+  });
+  function fillFormWithData(rawData) {
+  const brandSelect = document.getElementById("brand");
+  const brandInputBox = document.getElementById("brand_input_box");
+  const brandInput = document.getElementById("brand_input");
+
+  if (["청호", "코웨이", "SK", "쿠쿠", "LG", "웰스", "현대", "세스코"].includes(rawData.brand)) {
+    brandSelect.dataset.restoring = "true";
+    brandSelect.value = rawData.brand;
+    brandSelect.style.display = "block";
+    brandInputBox.style.display = "none";
+    brandSelect.dispatchEvent(new Event("change"));
+
+    setTimeout(() => {
+        const brand = brandSelect.value;
+        const preList = document.querySelectorAll('.pre-visit');
+        const hardList = document.querySelectorAll('.hard-construction');
+        const otherList = document.querySelectorAll('.other-company');
+        const collectList = document.querySelectorAll('.product-collect');
+        const selfList = document.querySelectorAll('.self-receipt');
+
+        // ✅ 체크박스 상태 복원 (rawData.products 기준)
+        rawData.products.forEach((product, idx) => {
+        if (preList[idx]) preList[idx].checked = !!product.pre_visit;
+        if (hardList[idx]) hardList[idx].checked = !!product.hard_construction;
+        if (otherList[idx]) otherList[idx].checked = !!product.other_company_info;
+        if (collectList[idx]) collectList[idx].checked = !!product.product_collect;
+        if (selfList[idx]) selfList[idx].checked = !!product.self_receipt;
+        });
+
+        // ✅ 모든 체크박스 비활성화 + 스타일 초기화
+        // ✅ collectList(기존 제품 수거)는 항상 활성이라 제외
+        [preList, hardList, otherList, selfList].forEach(list => {
+        list.forEach(el => {
+            el.disabled = true;
+            const label = el.closest('.form-check')?.querySelector('label');
+            if (label) {
+            label.classList.remove('text-danger', 'fw-bold');
+            label.classList.add('text-muted');
+            }
+        });
+        });
+
+        // ✅ collectList는 브랜드와 상관없이 항상 활성
+        collectList.forEach(el => {
+            el.disabled = false;
+            const label = el.closest('.form-check')?.querySelector('label');
+            if (label) {
+                label.classList.remove('text-muted');
+                label.classList.add('text-danger', 'fw-bold');
+            }
+        });
+
+        // ✅ 브랜드별 활성화 및 강조
+        if (brand === '청호') {
+        preList.forEach(el => {
+            el.disabled = false;
+            const label = el.closest('.form-check')?.querySelector('label');
+            if (label) {
+            label.classList.remove('text-muted');
+            label.classList.add('text-danger', 'fw-bold');
+            }
+        });
+        } else if (brand === '코웨이') {
+        [...hardList, ...otherList, ...selfList].forEach(el => {
+            el.disabled = false;
+            const label = el.closest('.form-check')?.querySelector('label');
+            if (label) {
+            label.classList.remove('text-muted');
+            label.classList.add('text-danger', 'fw-bold');
+            }
+        });
+        }
+
+    delete brandSelect.dataset.restoring;
+    }, 100);
+
+  } else {
+    brandSelect.value = "직접입력";
+    brandSelect.style.display = "none";
+    brandInputBox.style.display = "block";
+    brandInput.value = rawData.brand;
+  }
+
+  // 고객유형
+  document.getElementById("customer_type").value = rawData.customer_type;
+
+  // 사업자 정보
+  document.getElementById("business_name").value = rawData.business_name || "";
+  document.getElementById("business_number").value = rawData.business_number || "";
+  document.getElementById("corporation_number").value = rawData.corporation_number || "";
+
+  // 이메일
+  const emailParts = rawData.email?.split("@") || [];
+  document.getElementById("email_id").value = emailParts[0] || "";
+  document.getElementById("email_domain").value = emailParts[1] || "";
+
+  // 고객 정보
+  document.querySelector("[name='customer_name']").value = rawData.customer_name || "";
+  document.getElementById("birth_date").value = rawData.birth_date || "";
+  document.getElementById("contact").value = rawData.contact || "";
+  document.querySelector("[name='payment_info']").value = rawData.payment_info || "";
+
+// 주소 영역 초기화 (템플릿은 유지)
+const addressWrap = document.getElementById("customer_address_wrap");
+addressWrap.querySelectorAll(".customer_address_group:not(.customer_address_group_basic)").forEach(el => el.remove());
+
+const baseGroup = $("#customer_address_wrap .customer_address_group_basic").first();
+if (baseGroup.length === 0) {
+  console.error("❌ .customer_address_group_basic 요소가 없습니다.");
+  return;
+}
+
+(rawData.addresses || []).forEach((address, idx) => {
+  let $group;
+
+  // ✅ 첫 번째 주소는 템플릿 그대로 사용
+  if (idx === 0) {
+    $group = baseGroup;
+  } else {
+    // ✅ 두 번째 이후는 템플릿 복제
+    $group = baseGroup.clone(true, true);
+    $group.removeClass("customer_address_group_basic d-none").addClass("mt-3 customer_address_group");
+    addressWrap.appendChild($group.get(0));
+  }
+
+  // ✅ 새 포맷(객체)과 구 포맷(문자열) 모두 처리
+  let zip = "", basic = "", detail = "";
+
+  if (address && typeof address === "object") {
+    // { zip, basic, detail } 객체 저장분
+    zip    = (address.zip    || "").trim();
+    basic  = (address.basic  || "").trim();
+    detail = (address.detail || "").trim();
+  } else {
+    // "[12345] 기본 상세" 문자열 저장분 (레거시)
+    const str = String(address || "").trim();
+    const zipMatch = str.match(/\[(\d{5})\]/);
+    zip = zipMatch?.[1] || "";
+    const rest = str.replace(/\[(\d{5})\]/, "").trim();
+
+    // 참고항목이 괄호로 붙은 경우만 ')' 기준으로 분리
+    if (rest.includes(')')) {
+      const endIdx = rest.indexOf(')') + 1;
+      basic  = rest.slice(0, endIdx).trim();
+      detail = rest.slice(endIdx).trim();
+    } else {
+    // 🔁 레거시 문자열 호환: 마지막 공백 기준으로 상세주소 분리(없으면 전체를 기본주소로)
+    const lastSpace = rest.lastIndexOf(' ');
+    if (lastSpace > -1) {
+        basic  = rest.slice(0, lastSpace).trim();
+        detail = rest.slice(lastSpace + 1).trim();
+    } else {
+        basic  = rest;
+        detail = "";
+    }
+    }
+  }
+
+  // DOM 채우기
+  $group.find(".fw-bold").text("주소" + (idx + 1));
+  $group.find(".customer_zipcode").val(zip);
+  $group.find(".customer_address_normal").val(basic);
+  $group.find(".customer_address_detail").val(detail);
+
+  if (idx === 0) {
+    $group.find(".customer_address_add").show();
+  } else {
+    $group.find(".customer_address_add").remove();
+    const deleteBtn = $('<button type="button" class="btn btn-danger btn-sm ms-2 customer_address_remove btn-animate"><span class="btn-inline-icon-wrap"><img src="./assets/webimage/button/delete.png" alt="" class="btn-inline-icon"><span>삭제</span></span></button>');
+    $group.find(".d-flex.justify-content-between").append(deleteBtn);
+  }
+});
+
+  // 특이사항
+  document.getElementById("special_note").value = rawData.special_note || "";
+
+  // 제품정보 (나중에 별도 함수로 분리)
+    // 기존 제품정보 영역 정리 (1개 남기고 삭제)
+    $("#product_info_wrap .product-info-group").slice(1).remove();
+
+    // 필요한 만큼 추가
+    while ($("#product_info_wrap .product-info-group").length < rawData.products.length) {
+        $("#addProduct").trigger("click");
+    }
+
+    // 제품별로 값 채우기
+    $("#product_info_wrap .product-info-group").each(function (index) {
+        const data = rawData.products[index];
+        const container = $(this);
+
+        container.find(".product-info-title").text(data.label || `제품정보${index + 1}`);
+        container.find(".product").val(data.name || "").trigger("change");
+        container.find(".model").val(data.model || "");
+        container.find(".color").val(data.color || "");
+        container.find(".regulation").val(data.regulation || "").trigger("change");
+        container.find(".contract").val(data.contract || "").trigger("change");
+        container.find(".management").val(data.management || "").trigger("change");
+        container.find(".rental-fee").val(data.rental_fee || "");
+
+        // 프로모션
+        const promoYes = container.find(".promotion-request-yes");
+        const promoNo = container.find(".promotion-request-no");
+        const promoText = container.find(".promotion-text");
+
+        const savedPromotionText = (data.promotion || "").trim();
+        const savedPromotionRequest = (data.promotion_request || "").trim();
+        const isPromotionYes = savedPromotionText !== "" || savedPromotionRequest === "있음";
+
+        if (isPromotionYes) {
+            promoYes.prop("checked", true);
+            promoNo.prop("checked", false);
+            promoText.val(savedPromotionText).show();
+            promoText.prop("required", true);
+        } else {
+            promoYes.prop("checked", false);
+            promoNo.prop("checked", true);
+            promoText.val("").hide();
+            promoText.prop("required", false);
+        }
+
+        updatePromotionAutocomplete(container);
+
+// 확인요청
+// A >> B: 불러오기 시점에 disabled 잠시 해제 → 체크 여부 반영 → 다시 비활성화
+
+// 사전답사
+container.find(".pre-visit")
+  .prop("disabled", false)
+  .prop("checked", !!data.pre_visit)
+  .prop("disabled", true);
+
+// 난공사 요청
+container.find(".hard-construction")
+.prop("disabled", false)
+.prop("checked", !!data.hard_construction)
+.prop("disabled", true);
+
+// 기존 제품 수거 (브랜드 무관 항상 활성)
+container.find(".product-collect")
+.prop("disabled", false)
+.prop("checked", !!data.product_collect);
+
+// 자체접수
+container.find(".self-receipt")
+.prop("disabled", false)
+.prop("checked", !!data.self_receipt)
+.prop("disabled", true);
+
+// 타사 정보
+const otherCompanyChecked = !!data.other_company_info;
+container.find(".other-company")
+  .prop("disabled", false)
+  .prop("checked", otherCompanyChecked)
+  .trigger("change")
+  .prop("disabled", true);
+
+// 타사정보 입력폼 펼치기 (radio 등)
+if (otherCompanyChecked) {
+  container.find(".other-company-extra").show();
+  const info = data.other_company_info;
+  container.find(".other-company-extra input[name$='kind']").val(info.kind);
+  container.find(".other-company-extra input[name$='type']").val(info.type);
+  container.find(".other-company-extra input[name$='brand']").val(info.brand);
+  container.find(".other-company-extra input[name$='install']").val(info.install);
+  container.find(".other-company-extra input[name$='watermark']").val(info.watermark);
+  container.find(".other-company-extra input[name$='install_year']").val(info.install_year);
+}
+
+        container.find(".hard-construction").prop("checked", !!data.hard_construction);
+
+        // 타사정보
+        const other = data.other_company_info;
+        const otherCheck = container.find(".other-company");
+        const otherSection = container.find(".other-company-extra");
+
+        if (other) {
+            otherCheck.prop("checked", true);
+            otherSection.show();
+
+            otherSection.find(".other-brand").val(other.brand || "");
+            otherSection.find(".install-year").val(other.install_year || "");
+            otherSection.find(".watermark-number").val(other.watermark || "");
+
+            // 라디오 버튼 처리
+            otherSection.find(`input[name="product_type_${index + 1}"][value="${other.type}"]`).prop("checked", true);
+            otherSection.find(`input[name="product_kind_${index + 1}"][value="${other.kind}"]`).prop("checked", true);
+            otherSection.find(`input[name="install_type_${index + 1}"][value="${other.install}"]`).prop("checked", true);
+        } else {
+            otherCheck.prop("checked", false);
+            otherSection.hide();
+        }
+    });
+}
+
+});
+</script>
+
+<!-- ✅ Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// 확인요청 옆 ? 아이콘 툴팁용
+document.addEventListener('DOMContentLoaded', function () {
+  var tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  );
+
+  tooltipTriggerList.forEach(function (el) {
+    new bootstrap.Tooltip(el, {
+      // PC: hover 로 뜨고
+      // 모바일/PC: 클릭(포커스) 시에도 뜸
+      trigger: 'hover focus',
+      html: true
+    });
+  });
+});
+</script>
+
+<!-- ✅ 정렬 및 가로 확장용 CSS -->
+<style>
+  .modal-lg {
+    max-width: 95vw; /* ✅ 모달 가로폭 확장 */
+  }
+
+.modal-backdrop {
+z-index: 100040 !important;
+}
+
+.modal {
+z-index: 100050 !important;
+}
+
+.modal-dialog {
+max-width: 95vw;
+margin: 1.75rem auto;
+}
+
+.modal-content {
+max-height: 90vh;
+overflow: hidden;
+display: flex;
+flex-direction: column;
+}
+
+.modal-body {
+overflow-y: auto;
+flex: 1 1 auto;
+}
+
+@media (max-width: 768px) {
+  #loadListModal .modal-dialog {
+    max-width: calc(100vw - 16px);
+    margin: 0.75rem auto calc(96px + env(safe-area-inset-bottom));
+  }
+
+  #loadListModal .modal-content {
+    max-height: calc(100dvh - 0.75rem - 96px - env(safe-area-inset-bottom));
+  }
+}
+
+  #loadListTable {
+    table-layout: auto;       /* ✅ 열 넓이 자동 조정 */
+    width: max-content;       /* ✅ 내용 기반 가로폭 */
+    min-width: 100%;          /* ✅ 최소 화면 크기만큼은 유지 */
+    white-space: nowrap;      /* ✅ 줄바꿈 방지 */
+  }
+  th.center-text {
+    text-align: center;
+  }
+  td.left-text {
+    text-align: left;
+  }
+  td.center-text {
+    text-align: center;
+  }
+  .load-single,
+  .delete-single {
+    width: 96px;
+    min-width: 96px;
+    min-height: 34px;
+    padding: 0.42rem 0.78rem !important;
+    border-radius: 10px;
+    font-size: 13px !important;
+    font-weight: 700;
+    line-height: 1.2;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    transition: all 0.15s ease;
+  }
+
+  .load-single:hover,
+  .delete-single:hover {
+    transform: translateY(-1px);
+  }
+
+  .load-single {
+    color: #111827 !important;
+    border: 1px solid #8be199 !important;
+  }
+
+  .load-single:hover {
+    background: #f0fdf4 !important;
+    color: #111827 !important;
+    border-color: #5fd17a !important;
+  }
+
+  .delete-single {
+    color: #111827 !important;
+    border: 1px solid #fca5a5 !important;
+  }
+
+  .delete-single:hover {
+    background: #fef2f2 !important;
+    color: #111827 !important;
+    border-color: #ef4444 !important;
+  }
+
+  #loadListCardWrap {
+    gap: 0.65rem;
+  }
+
+  .saved-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .saved-card-body {
+    padding: 12px;
+  }
+
+  .saved-card-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .saved-card-title {
+    min-width: 0;
+    flex: 1 1 auto;
+    font-weight: 700;
+    font-size: 15px;
+    color: #111827;
+    line-height: 1.3;
+    word-break: break-all;
+    padding-top: 0;
+    display: flex;
+    align-items: center;
+    min-height: 30px;
+  }
+
+  .saved-card-top-side {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    flex-shrink: 0;
+    margin-top: 0;
+  }
+
+  .saved-card-detail-btn {
+    width: auto !important;
+    min-width: auto !important;
+    min-height: 26px;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #000000 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    margin-top: 0;
+  }
+
+  .saved-card-detail-btn:hover,
+  .saved-card-detail-btn:focus {
+    background: transparent !important;
+    color: #000000 !important;
+  }
+
+  .saved-source-badge {
+    min-height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    border: 0 !important;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .saved-source-badge--save {
+    background: #fff5f9;
+    color: #111827;
+  }
+
+  .saved-source-badge--submit {
+    background: #eff6ff;
+    color: #111827;
+  }
+
+  .saved-source-badge--other {
+    background: #eef2f7;
+    color: #6b7280;
+  }
+
+  .saved-card-meta {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  .saved-card-meta-left,
+  .saved-card-meta-right {
+    min-width: 0;
+  }
+
+  .saved-card-meta-left {
+    text-align: left;
+  }
+
+  .saved-card-meta-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: right;
+    min-width: 0;
+  }
+
+  .saved-manager-badge {
+    min-height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b7280;
+    border: 0 !important;
+    background: transparent !important;
+    white-space: nowrap;
+    line-height: 1;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .saved-card-summary-row {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .saved-card-summary-chip {
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 8px;
+    border-radius: 10px;
+    background: #f9fafb;
+    color: #374151;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .saved-card-detail-box {
+    margin-top: 2px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 6px 0 0;
+    background: #ffffff;
+  }
+
+  .saved-card-actions {
+    margin-top: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .saved-card-action-divider {
+    width: 1px;
+    background: #d1d5db;
+    margin: 8px 0;
+    align-self: stretch;
+  }
+
+  .saved-card-actions .load-single,
+  .saved-card-actions .delete-single {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 36px;
+    padding: 7px 8px !important;
+    border: 0 !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+  }
+
+  .saved-card-actions .load-single:hover {
+    background: #f0fdf4 !important;
+  }
+
+  .saved-card-actions .delete-single:hover {
+    background: #fef2f2 !important;
+  }
+
+  @media (max-width: 767.98px) {
+    .load-single:hover,
+    .delete-single:hover {
+      transform: none !important;
+    }
+
+    .saved-card-title {
+      font-size: 14px;
+    }
+
+    .saved-card-summary-chip {
+      font-size: 11.5px;
+      padding: 6px 6px;
+    }
+  }
+
+@media (min-width: 992px) {
+  .row.flex-lg-nowrap {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+}
+
+@media (min-width: 992px) {
+  #previewBox {
+    min-height: 792px;
+  }
+}
+
+.card-box {
+  position: relative; /* 타이틀의 absolute 기준이 됨 */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+  padding: 1.5em 1em 1em; /* 상단 padding 충분히 줘야 타이틀이 걸칠 공간 생김 */
+  margin-bottom: 20px;
+}
+
+.card-title {
+  position: absolute;                /* 카드 내부에서 절대 위치 지정 */
+  top: 0;                            /* 카드 상단 기준 */
+  transform: translateY(-50%);      /* 수직 중앙에 걸쳐지도록 */
+  left: 1.2em;                       /* 왼쪽 여백 */
+  background-color: #fff;
+  padding: 0 0.8em;
+  font-weight: bold;
+  border-radius: 1em;
+  font-size: 1.1rem;
+  line-height: 1;
+  margin: 0;                         /* 불필요한 마진 제거 */
+}
+
+/* 기본은 왼쪽 정렬 (모바일) */
+.col-form-label {
+  text-align: left;
+  padding-left: 0.3rem;
+  margin-bottom: 0 !important;
+}
+
+/* 화면이 충분히 클 때만 오른쪽 정렬 */
+@media (min-width: 768px) {
+  .col-form-label {
+    text-align: right;
+    padding-right: 0.3rem !important;
+    padding-left: 0 !important;
+  }
+}
+
+.col-form-label > .text-danger {
+  margin-right: 4px;
+}
+
+</style>
+
+<!-- ✅ 저장된 접수 리스트 모달 -->
+<div class="modal fade" id="loadListModal" tabindex="-1" aria-labelledby="loadListLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loadListLabel">저장된 접수 리스트</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body">
+      <!-- ✅ 검색 필터 -->
+      <div class="row mb-3 align-items-end">
+  <div class="col-md-3 mb-2">
+    <label for="startDate" class="form-label">시작일</label>
+    <input type="date" class="form-control" id="startDate">
+  </div>
+  <div class="col-md-3 mb-2">
+    <label for="endDate" class="form-label">종료일</label>
+    <input type="date" class="form-control" id="endDate">
+  </div>
+<div class="col-md-4 mb-2">
+  <label for="searchKeyword" class="form-label">키워드 검색</label>
+  <div class="d-flex align-items-center">
+    <input type="text" class="form-control me-2" id="searchKeyword" placeholder="고객명, 연락처, 생년월일, 브랜드, 담당자에서 검색" autocomplete="off">
+      </div>
+</div>
+  <div class="col-md-2 mb-2">
+    <button id="filterBtn" class="btn btn-outline-primary w-100 btn-animate">
+        <span class="btn-inline-icon-wrap">
+            <img src="./assets/webimage/button/search.png" alt="" class="btn-inline-icon">
+            <span>검색</span>
+        </span>
+    </button>
+  </div>
+</div>
+
+        <div class="saved-list-table-wrap d-none d-md-block" style="overflow-x: auto;">
+          <table class="table table-bordered table-hover" id="loadListTable">
+            <thead>
+              <tr>
+                <th style="display: none;">ID</th>
+                <th class="center-text">저장일시</th>
+                <th class="center-text">담당자</th>
+                <th class="center-text">고객명</th>
+                <th class="center-text">연락처</th>
+                <th class="center-text">생년월일</th>
+                <th class="center-text">브랜드</th>
+                <th class="center-text">유형</th>
+                <th class="center-text">선택</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="d-block d-md-none">
+          <div id="loadListCardWrap" class="d-flex flex-column">
+            <div class="text-muted small">검색 후 목록이 표시됩니다.</div>
+          </div>
+        </div>
+
+        <div class="mt-3 d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
+          <nav aria-label="페이지 이동">
+            <ul class="pagination pagination-sm mb-0" id="paginationArea"></ul>
+          </nav>
+
+          <form id="paginationJumpForm" class="d-flex align-items-center gap-2" aria-label="페이지 점프">
+            <span class="small text-muted" id="paginationStatusText">1 / 1</span>
+            <input
+              type="number"
+              id="paginationJumpInput"
+              class="form-control form-control-sm"
+              inputmode="numeric"
+              min="1"
+              placeholder="페이지"
+              style="width: 90px;"
+            >
+            <button type="submit" class="btn btn-sm btn-outline-primary">이동</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 숨겨진 주소 복사용 템플릿 -->
+<div class="customer_address_group_basic d-none">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <span class="fw-bold">주소</span>
+    <button type="button" class="btn btn-success btn-sm customer_address_add btn-animate">
+      <span class="btn-inline-icon-wrap">
+        <img src="./assets/webimage/button/add.png" alt="" class="btn-inline-icon">
+        <span>추가</span>
+      </span>
+    </button>
+  </div>
+  <div class="input-group mb-2">
+    <input type="text" class="form-control customer_zipcode" maxlength="7" placeholder="설치 우편번호" />
+    <button type="button" class="btn btn-primary customer_address_search btn-animate" onclick="execDaumPostcode(this)">
+      <span class="btn-inline-icon-wrap">
+        <img src="./assets/webimage/button/search.png" alt="" class="btn-inline-icon">
+        <span>주소검색</span>
+      </span>
+    </button>
+  </div>
+  <div class="mb-2">
+    <input type="text" class="form-control customer_address_normal" placeholder="설치 기본주소" required />
+  </div>
+  <div>
+    <input type="text" class="form-control customer_address_detail" placeholder="설치 상세주소 (선택입력)" />
+  </div>
+</div>
+
+<script>
+(function () {
+  let mobileUiObserver = null;
+  let isPreparingMobileUI = false;
+
+  function isMobileView() {
+    return window.matchMedia('(max-width: 768px)').matches;
+  }
+
+  function stripMobileButtonAnimation(root) {
+    if (!isMobileView()) return;
+
+    (root || document).querySelectorAll('.btn-animate').forEach(function (btn) {
+      btn.classList.remove('btn-animate');
+
+      if (btn.dataset.mobileAnimBound === '1') return;
+      btn.dataset.mobileAnimBound = '1';
+
+      btn.addEventListener('click', function () {
+        try { btn.blur(); } catch (e) {}
+      }, true);
+
+      btn.addEventListener('touchend', function () {
+        try { btn.blur(); } catch (e) {}
+      }, { passive: true });
+    });
+  }
+
+  function setCollapsedState(holder, btn, body, collapsed) {
+    if (!holder || !btn || !body) return;
+
+    holder.dataset.collapsed = collapsed ? '1' : '0';
+    body.style.display = collapsed ? 'none' : '';
+    btn.textContent = collapsed ? '펼치기 ▼' : '접기 ▲';
+    btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+  }
+
+  function bindToggle(holder, btn, body, defaultCollapsed) {
+    if (!holder || !btn || !body) return;
+
+    const hasStored = holder.dataset.collapsed === '1' || holder.dataset.collapsed === '0';
+    const initialCollapsed = hasStored ? holder.dataset.collapsed === '1' : defaultCollapsed;
+
+    if (isMobileView()) {
+      setCollapsedState(holder, btn, body, initialCollapsed);
+    } else {
+      holder.dataset.collapsed = '0';
+      body.style.display = '';
+      btn.textContent = '접기 ▲';
+      btn.setAttribute('aria-expanded', 'true');
+    }
+
+    if (btn.dataset.toggleBound === '1') return;
+    btn.dataset.toggleBound = '1';
+
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (!isMobileView()) return;
+
+      const nextCollapsed = holder.dataset.collapsed !== '1';
+      setCollapsedState(holder, btn, body, nextCollapsed);
+    });
+  }
+
+  function ensureStaticCard(cardId, titleSelector, defaultCollapsed, bodySelector) {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+
+    const title = card.querySelector(titleSelector);
+    if (!title) return;
+
+    let btn = card.querySelector('.section-toggle-btn[data-owner="' + cardId + '"]');
+    if (!btn) {
+      btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'section-toggle-btn';
+      btn.dataset.owner = cardId;
+      btn.textContent = '접기 ▲';
+
+      const host = (title.parentElement && title.parentElement !== card) ? title.parentElement : card;
+      host.appendChild(btn);
+    }
+
+    let body = card.querySelector(':scope > .section-body');
+    if (!body) {
+      body = document.createElement('div');
+      body.className = 'section-body';
+
+      if (bodySelector) {
+        const targets = Array.from(card.querySelectorAll(bodySelector)).filter(function (el) {
+          return !el.closest('.section-body');
+        });
+
+        if (!targets.length) return;
+
+        targets[0].parentNode.insertBefore(body, targets[0]);
+        targets.forEach(function (el) {
+          body.appendChild(el);
+        });
+      } else {
+        const children = Array.from(card.childNodes);
+        let started = false;
+
+        children.forEach(function (node) {
+          if (node === title) {
+            started = true;
+            return;
+          }
+
+          if (!started) return;
+          if (node === btn) return;
+          if (node.nodeType === 3 && !String(node.textContent || '').trim()) return;
+
+          body.appendChild(node);
+        });
+
+        card.appendChild(body);
+      }
+    }
+
+    bindToggle(card, btn, body, defaultCollapsed);
+  }
+
+  function ensureProductSections() {
+    document.querySelectorAll('.product-info-group').forEach(function (group, idx) {
+      const header = group.querySelector(':scope > .d-flex.justify-content-between.align-items-center.mb-3');
+      if (!header) return;
+
+      let right = header.querySelector('.product-header-actions');
+      if (!right) {
+        right = document.createElement('div');
+        right.className = 'product-header-actions';
+
+        while (header.children.length > 1) {
+          right.appendChild(header.children[1]);
+        }
+        header.appendChild(right);
+      }
+
+      let btn = right.querySelector('.product-toggle-btn');
+      if (!btn) {
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'product-toggle-btn';
+        btn.textContent = '접기 ▲';
+        right.insertBefore(btn, right.firstChild);
+      }
+
+      let body = group.querySelector(':scope > .product-info-body');
+      if (!body) {
+        body = document.createElement('div');
+        body.className = 'product-info-body';
+
+        const children = Array.from(group.childNodes);
+        let started = false;
+
+        children.forEach(function (node) {
+          if (node === header) {
+            started = true;
+            return;
+          }
+
+          if (!started) return;
+          if (node === body) return;
+          if (node.nodeType === 3 && !String(node.textContent || '').trim()) return;
+
+          body.appendChild(node);
+        });
+
+        group.appendChild(body);
+      }
+
+      body.id = 'product_info_body_' + (idx + 1);
+      bindToggle(group, btn, body, false);
+    });
+  }
+
+  function applyMobileActionLayout() {
+    if (isMobileView()) {
+      document.body.classList.add('mobile-fixed-actionbar');
+    } else {
+      document.body.classList.remove('mobile-fixed-actionbar');
+    }
+  }
+
+  window.openMobilePreviewSection = function () {
+    const card = document.getElementById('previewCard');
+    if (!card) return;
+
+    const btn = card.querySelector('.section-toggle-btn');
+    const body = card.querySelector(':scope > .section-body');
+    if (!btn || !body) return;
+
+    setCollapsedState(card, btn, body, false);
+  };
+
+  function safelyPrepareMobileUI() {
+    if (isPreparingMobileUI) return;
+    isPreparingMobileUI = true;
+
+    if (mobileUiObserver) {
+      mobileUiObserver.disconnect();
+    }
+
+    try {
+      applyMobileActionLayout();
+      ensureStaticCard('business_info', '.card-title', false);
+      ensureStaticCard('customer_info', '.card-title', false);
+      ensureStaticCard('specialNoteCard', '.card-title', false, '#special_note');
+      ensureStaticCard('previewCard', '.card-title', true, '#previewBox');
+      ensureProductSections();
+      stripMobileButtonAnimation(document);
+    } finally {
+      isPreparingMobileUI = false;
+
+      if (mobileUiObserver) {
+        mobileUiObserver.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      }
+    }
+  }
+
+  window.prepareMobileSectionUI = safelyPrepareMobileUI;
+
+  document.addEventListener('DOMContentLoaded', function () {
+    mobileUiObserver = new MutationObserver(function (mutations) {
+      if (!isMobileView()) return;
+      if (isPreparingMobileUI) return;
+
+      let shouldRefresh = false;
+
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (!(node instanceof Element)) return;
+
+          if (
+            node.matches('.product-info-group, .btn-animate, .customer_address_group') ||
+            node.querySelector('.product-info-group, .btn-animate, .customer_address_group')
+          ) {
+            shouldRefresh = true;
+          }
+        });
+      });
+
+      if (shouldRefresh) {
+        safelyPrepareMobileUI();
+      }
+    });
+
+    safelyPrepareMobileUI();
+
+    setTimeout(function () {
+      safelyPrepareMobileUI();
+    }, 0);
+
+    mobileUiObserver.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+
+    window.addEventListener('resize', function () {
+      safelyPrepareMobileUI();
+    });
+
+    window.addEventListener('load', function () {
+      safelyPrepareMobileUI();
+    });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  function clearLegacyMobileBottomOffset() {
+    document.documentElement.style.setProperty('--mobile-bottom-offset', '0px');
+  }
+
+  document.addEventListener('DOMContentLoaded', clearLegacyMobileBottomOffset);
+  window.addEventListener('resize', clearLegacyMobileBottomOffset);
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', clearLegacyMobileBottomOffset);
+    window.visualViewport.addEventListener('scroll', clearLegacyMobileBottomOffset);
+  }
+})();
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</body>
+</html>

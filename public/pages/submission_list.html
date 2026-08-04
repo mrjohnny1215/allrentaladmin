@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>접수목록 - ALL & UP</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="./assets/style/button_style.css">
+<link rel="stylesheet" href="./assets/style/button_animation.css">
+<style>body{font-family:'cafe',sans-serif;background:#f5f7fa;} .card-box{background:#fff;border-radius:0.75rem;padding:1.25rem;box-shadow:0 0 30px rgba(0,0,0,0.1);margin-bottom:1rem;}</style>
+</head>
+<body>
+
+
+<div id="search-card" class="position-relative mb-5 pb-2">
+  <h5 class="card-title">검색</h5>
+
+  <button
+    id="searchCollapseBtn"
+    type="button"
+    class="btn btn-danger btn-sm search-collapse-btn d-md-none"
+    data-bs-toggle="collapse"
+    data-bs-target="#searchCollapse"
+    aria-controls="searchCollapse"
+    aria-expanded="true"
+  >펼치기 ▼</button>
+
+  <div class="card-box">
+    <div class="collapse show" id="searchCollapse">
+      <div class="search-form-wrap">
+        <form method="get" class="d-flex flex-wrap gap-2 mb-0 align-items-end justify-content-start" autocomplete="off">
+
+          <div class="search-date-row">
+            <label for="start_date" class="form-label mb-0">시작일</label>
+            <input type="date" id="start_date" name="start_date" class="form-control"
+                  value="">
+          </div>
+
+          <div class="search-date-row">
+            <label for="end_date" class="form-label mb-0">종료일</label>
+            <input type="date" id="end_date" name="end_date" class="form-control"
+                  value="">
+          </div>
+
+          <div class="search-keyword-row">
+            <label for="keyword" class="form-label mb-0">키워드</label>
+            <input type="text" id="keyword" name="keyword" class="form-control" placeholder="고객명, 연락처 등"
+                  value="">
+
+            <button type="submit" class="btn submission-outline-btn submission-btn-search btn-animate">
+              <span class="btn-inline-icon-wrap">
+                <img src="./assets/webimage/button/search.png" alt="" class="btn-inline-icon">
+                <span>검색</span>
+              </span>
+            </button>
+          </div>
+
+                  </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+<div class="position-relative mb-4 mt-4">
+  <h5 class="card-title">접수내역</h5>
+
+  <div class="card-box card-box-lg">
+
+    <!-- PC: 기존 테이블 그대로 -->
+    <div class="pc-only">
+      <div class="table-responsive">
+        <table class="table table-bordered align-middle text-center">
+          <thead class="table-light">
+            <tr>
+              <th>접수일자</th>
+              <th>담당자</th>
+              <th>고객명</th>
+              <th>연락처</th>
+              <th>브랜드</th>
+              <th>상품명</th>
+              <th>규정</th>
+              <th>약정</th>
+              <th>관리</th>
+              <th>렌탈료</th>
+              <th>특이사항</th>
+              <th>건수</th>
+              <th>선택</th>
+            </tr>
+          </thead>
+          <tbody>
+                                          <tr
+                  data-id="00cab3a1-0c6c-496e-be69-b4647384ef20"
+                  data-created="2026-07-27 16:07:51.796542+09"
+                  data-json='{&quot;brand&quot;: &quot;웰스&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-7709-5151&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;웰스 비데 올스텐 트윈&quot;, &quot;color&quot;: &quot;&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;BQ650&quot;, &quot;contract&quot;: &quot;5년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;3개월&quot;, &quot;regulation&quot;: &quot;특가&quot;, &quot;rental_fee&quot;: &quot;20,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 목포시 백년대로 375번길 20&quot;, &quot;detail&quot;: &quot;204동207호&quot;}], &quot;birth_date&quot;: &quot;820111-1&quot;, &quot;payment_info&quot;: &quot;5366 2474 4706 4043 07/32 국민카드&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;김성욱&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-07-27 16:07</td>
+                  <td>김성훈</td>
+                  <td>김성욱</td>
+                  <td>010-7709-5151</td>
+                  <td>웰스</td>
+                  <td>웰스 비데 올스텐 트윈</td>
+                  <td>특가</td>
+                  <td>5년타사</td>
+                  <td>3개월</td>
+                  <td>20,900</td>
+                  <td></td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="6366ed37-373f-4bc6-baa0-93b7c40cbff1"
+                  data-created="2026-07-16 17:17:26.37727+09"
+                  data-json='{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-7709-5151&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;프라임 비데(BA36-B)&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;BA36-B&quot;, &quot;contract&quot;: &quot;5년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;2개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;21,400&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;목포시 옥암동 금호아파트2차&quot;, &quot;detail&quot;: &quot;204동207호&quot;}], &quot;birth_date&quot;: &quot;820111-1&quot;, &quot;payment_info&quot;: &quot;국민카드 5366 2474 4706 4043 07/32&quot;, &quot;special_note&quot;: &quot;기존폐기&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;김성욱&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-07-16 17:17</td>
+                  <td>김성훈</td>
+                  <td>김성욱</td>
+                  <td>010-7709-5151</td>
+                  <td>코웨이</td>
+                  <td>프라임 비데(BA36-B)</td>
+                  <td>신규</td>
+                  <td>5년신규</td>
+                  <td>2개월</td>
+                  <td>21,400</td>
+                  <td>기존폐기</td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="9fd5a7e1-7ca1-4a52-a903-bb377973b828"
+                  data-created="2026-07-15 09:44:52.969178+09"
+                  data-json='{&quot;brand&quot;: &quot;청호&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-9945-8005&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;얼음냉온 슈퍼아이스트리&quot;, &quot;color&quot;: &quot;블랙&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;WI-80S9P510M&quot;, &quot;contract&quot;: &quot;5년약정_P&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;6개월&quot;, &quot;regulation&quot;: &quot;결합&quot;, &quot;rental_fee&quot;: &quot;49,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 신안군 지도읍 해제지도로1283-24&quot;, &quot;detail&quot;: &quot;만성호젓갈&quot;}], &quot;birth_date&quot;: &quot;670805-2&quot;, &quot;payment_info&quot;: &quot;농협 653037 52 058912&quot;, &quot;special_note&quot;: &quot;결합할인 기존제품폐기&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;장애심&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-07-15 09:44</td>
+                  <td>김성훈</td>
+                  <td>장애심</td>
+                  <td>010-9945-8005</td>
+                  <td>청호</td>
+                  <td>얼음냉온 슈퍼아이스트리</td>
+                  <td>결합</td>
+                  <td>5년약정_P</td>
+                  <td>6개월</td>
+                  <td>49,900</td>
+                  <td>결합할인 기존제품폐기</td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="296a956b-78b0-4a5a-9408-bef0bf1f6df8"
+                  data-created="2026-07-08 09:32:31.856724+09"
+                  data-json='{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-3632-7566&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;냉온 아이콘3&quot;, &quot;color&quot;: &quot;핑크&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CHP-7220N&quot;, &quot;contract&quot;: &quot;3년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;타사보상(할인+1년간1만원)&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;보상/동시구매&quot;, &quot;rental_fee&quot;: &quot;31,500&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: {&quot;kind&quot;: &quot;냉온&quot;, &quot;type&quot;: &quot;데스크탑&quot;, &quot;brand&quot;: &quot;청호&quot;, &quot;install&quot;: &quot;직수형&quot;, &quot;watermark&quot;: &quot;45515968&quot;, &quot;install_year&quot;: &quot;23-08&quot;}}, {&quot;name&quot;: &quot;냉온 엘리트&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보2&quot;, &quot;model&quot;: &quot;CHP-6340L&quot;, &quot;contract&quot;: &quot;3년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;타사보상(할인+1년간1만원)&quot;, &quot;management&quot;: &quot;2개월&quot;, &quot;regulation&quot;: &quot;보상/동시구매&quot;, &quot;rental_fee&quot;: &quot;27,450&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: {&quot;kind&quot;: &quot;냉온&quot;, &quot;type&quot;: &quot;데스크탑&quot;, &quot;brand&quot;: &quot;청호&quot;, &quot;install&quot;: &quot;수조형&quot;, &quot;watermark&quot;: &quot;42027359&quot;, &quot;install_year&quot;: &quot;22-10&quot;}}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58691&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 목포시 장미로 29 (상동)&quot;, &quot;detail&quot;: &quot;착한마녀&quot;}, {&quot;zip&quot;: &quot;58690&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 목포시 신흥로45번길 13 (상동, 동아아파트)&quot;, &quot;detail&quot;: &quot;106-905&quot;}], &quot;birth_date&quot;: &quot;780714-2&quot;, &quot;payment_info&quot;: &quot;하나카드 9411810065904225 06-31&quot;, &quot;special_note&quot;: &quot;2대. 주소상이\n장미로29-아이콘3\n동아à -엘리트&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;손주화&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-07-08 09:32</td>
+                  <td>김성훈</td>
+                  <td>손주화</td>
+                  <td>010-3632-7566</td>
+                  <td>코웨이</td>
+                  <td>냉온 아이콘3</td>
+                  <td>보상/동시구매</td>
+                  <td>3년타사</td>
+                  <td>4개월</td>
+                  <td>31,500</td>
+                  <td>2대. 주소상이
+장미로29-아이콘3
+동아à -엘리트</td>
+                  <td>2</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="b3366f5d-1f01-4740-9c50-c2943de3756c"
+                  data-created="2026-07-07 18:31:47.17997+09"
+                  data-json='{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-8888-9858&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;스퀘어핏 공기청정기(50㎡)&quot;, &quot;color&quot;: &quot;베이지&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;AP-1526A&quot;, &quot;contract&quot;: &quot;5년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규/동시구매&quot;, &quot;rental_fee&quot;: &quot;21,960&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}, {&quot;name&quot;: &quot;냉온 엘리트&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보2&quot;, &quot;model&quot;: &quot;CHP-6340L&quot;, &quot;contract&quot;: &quot;5년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;2개월&quot;, &quot;regulation&quot;: &quot;신규/동시구매&quot;, &quot;rental_fee&quot;: &quot;29,610&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58690&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 목포시 신흥로45번길 13 (상동, 동아아파트)&quot;, &quot;detail&quot;: &quot;107-304&quot;}, {&quot;zip&quot;: &quot;58227&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 나주시 남평읍 남평2로 32-29&quot;, &quot;detail&quot;: &quot;1층&quot;}], &quot;birth_date&quot;: &quot;791110-2&quot;, &quot;payment_info&quot;: &quot;신협 132143233599&quot;, &quot;special_note&quot;: &quot;2대. 주소상이\n\n동아a -청정기\n나주 -정수기&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;박수진&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-07-07 18:31</td>
+                  <td>김성훈</td>
+                  <td>박수진</td>
+                  <td>010-8888-9858</td>
+                  <td>코웨이</td>
+                  <td>스퀘어핏 공기청정기(50㎡)</td>
+                  <td>신규/동시구매</td>
+                  <td>5년신규</td>
+                  <td>4개월</td>
+                  <td>21,960</td>
+                  <td>2대. 주소상이
+
+동아a -청정기
+나주 -정수기</td>
+                  <td>2</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="c62a828c-d6f1-4c0e-83df-2f5e89a0536b"
+                  data-created="2026-07-07 18:25:11.854891+09"
+                  data-json='{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-3632-7566&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;냉온 아이콘3&quot;, &quot;color&quot;: &quot;핑크&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CHP-7220N&quot;, &quot;contract&quot;: &quot;3년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;타사보상(할인+1년간1만원)&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;보상/동시구매&quot;, &quot;rental_fee&quot;: &quot;31,500&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: {&quot;kind&quot;: &quot;냉온&quot;, &quot;type&quot;: &quot;데스크탑&quot;, &quot;brand&quot;: &quot;청호&quot;, &quot;install&quot;: &quot;직수형&quot;, &quot;watermark&quot;: &quot;45515968&quot;, &quot;install_year&quot;: &quot;23-08&quot;}}, {&quot;name&quot;: &quot;냉온 엘리트&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보2&quot;, &quot;model&quot;: &quot;CHP-6340L&quot;, &quot;contract&quot;: &quot;3년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;타사보상(할인+1년간1만원)&quot;, &quot;management&quot;: &quot;2개월&quot;, &quot;regulation&quot;: &quot;보상/동시구매&quot;, &quot;rental_fee&quot;: &quot;27,450&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58691&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 목포시 장미로 29 (상동)&quot;, &quot;detail&quot;: &quot;착한마녀&quot;}, {&quot;zip&quot;: &quot;58690&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 목포시 신흥로45번길 13 (상동, 동아아파트)&quot;, &quot;detail&quot;: &quot;106-905&quot;}], &quot;birth_date&quot;: &quot;780714-2&quot;, &quot;payment_info&quot;: &quot;하나카드 9411810065904225 06-31&quot;, &quot;special_note&quot;: &quot;2대. 주소상이\n장미로29-아이콘3\n동아à -엘리트&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;손주화&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-07-07 18:25</td>
+                  <td>김성훈</td>
+                  <td>손주화</td>
+                  <td>010-3632-7566</td>
+                  <td>코웨이</td>
+                  <td>냉온 아이콘3</td>
+                  <td>보상/동시구매</td>
+                  <td>3년타사</td>
+                  <td>4개월</td>
+                  <td>31,500</td>
+                  <td>2대. 주소상이
+장미로29-아이콘3
+동아à -엘리트</td>
+                  <td>2</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="1fb1bebc-e9ef-4d67-9071-091ed62dda17"
+                  data-created="2026-07-06 17:13:40.698492+09"
+                  data-json='{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-6556-8965&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;제로 음식물 처리기 분쇄형 3L&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;WMG-3004&quot;, &quot;contract&quot;: &quot;6년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;4개월 반값할인&quot;, &quot;management&quot;: &quot;셀프(4개월배송)&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;22,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 신안군 임자면 구산길 116&quot;, &quot;detail&quot;: &quot;1층&quot;}], &quot;birth_date&quot;: &quot;450708-1&quot;, &quot;payment_info&quot;: &quot;농협 653037 56 016349&quot;, &quot;special_note&quot;: &quot;반값할인\n전자서명진행&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;남춘희&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-07-06 17:13</td>
+                  <td>김성훈</td>
+                  <td>남춘희</td>
+                  <td>010-6556-8965</td>
+                  <td>코웨이</td>
+                  <td>제로 음식물 처리기 분쇄형 3L</td>
+                  <td>신규</td>
+                  <td>6년신규</td>
+                  <td>셀프(4개월배송)</td>
+                  <td>22,900</td>
+                  <td>반값할인
+전자서명진행</td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="f0db1619-fd62-4c2b-9ab9-203fecd1d0c0"
+                  data-created="2026-07-06 17:07:45.140669+09"
+                  data-json='{&quot;brand&quot;: &quot;쿠쿠&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-6556-8965&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;제로 100 슬림 플러스 얼음(AHS101)&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CP-AHS101HE&quot;, &quot;contract&quot;: &quot;5년약정_신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;6개월반값&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;46,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 신안군 임자면 구산길116&quot;, &quot;detail&quot;: &quot;1층&quot;}], &quot;birth_date&quot;: &quot;450708-1&quot;, &quot;payment_info&quot;: &quot;농협 653037 56 016349&quot;, &quot;special_note&quot;: &quot;화이트 6개월 할인 반값\n기존폐기\n전자서명 진행&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;남춘희&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-07-06 17:07</td>
+                  <td>김성훈</td>
+                  <td>남춘희</td>
+                  <td>010-6556-8965</td>
+                  <td>쿠쿠</td>
+                  <td>제로 100 슬림 플러스 얼음(AHS101)</td>
+                  <td>신규</td>
+                  <td>5년약정_신규</td>
+                  <td>4개월</td>
+                  <td>46,900</td>
+                  <td>화이트 6개월 할인 반값
+기존폐기
+전자서명 진행</td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="7f9051bf-2f19-4b4f-875e-dbf41f9c05c4"
+                  data-created="2026-07-06 17:00:41.367604+09"
+                  data-json='{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-6556-8965&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;제로 음식물 처리기 분쇄형 3L&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;WMG-3004&quot;, &quot;contract&quot;: &quot;6년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;4개월 반값할인&quot;, &quot;management&quot;: &quot;셀프(4개월배송)&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;22,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 신안군 임자면 구산길 116&quot;, &quot;detail&quot;: &quot;1층&quot;}], &quot;birth_date&quot;: &quot;450708-1&quot;, &quot;payment_info&quot;: &quot;농협 653037 56 016349&quot;, &quot;special_note&quot;: &quot;반값할인&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;남춘희&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-07-06 17:00</td>
+                  <td>김성훈</td>
+                  <td>남춘희</td>
+                  <td>010-6556-8965</td>
+                  <td>코웨이</td>
+                  <td>제로 음식물 처리기 분쇄형 3L</td>
+                  <td>신규</td>
+                  <td>6년신규</td>
+                  <td>셀프(4개월배송)</td>
+                  <td>22,900</td>
+                  <td>반값할인</td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="7fb65a91-4886-4432-b34f-19cf2a0eca7d"
+                  data-created="2026-07-06 16:41:40.123231+09"
+                  data-json='{&quot;brand&quot;: &quot;쿠쿠&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-6556-8965&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;제로 100 슬림 플러스 얼음(AHS101)&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CP-AHS101HE&quot;, &quot;contract&quot;: &quot;5년약정_신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;6개월반값&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;46,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 신안군 임자면 구산길116&quot;, &quot;detail&quot;: &quot;1층&quot;}], &quot;birth_date&quot;: &quot;450708-1&quot;, &quot;payment_info&quot;: &quot;농협 653037 56 016349&quot;, &quot;special_note&quot;: &quot;화이트 6개월 할인 반값\n기존폐기&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;남춘희&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-07-06 16:41</td>
+                  <td>김성훈</td>
+                  <td>남춘희</td>
+                  <td>010-6556-8965</td>
+                  <td>쿠쿠</td>
+                  <td>제로 100 슬림 플러스 얼음(AHS101)</td>
+                  <td>신규</td>
+                  <td>5년약정_신규</td>
+                  <td>4개월</td>
+                  <td>46,900</td>
+                  <td>화이트 6개월 할인 반값
+기존폐기</td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="39c3005b-23cb-45e6-a3f9-9693f2b1fbd3"
+                  data-created="2026-07-06 15:13:38.438464+09"
+                  data-json='{&quot;brand&quot;: &quot;쿠쿠&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-5297-6661&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;제로 100 슬림 플러스 얼음(AHS101)&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CP-AHS101HE&quot;, &quot;contract&quot;: &quot;5년약정_신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;46,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;신안군 임자면 구산길92-6&quot;, &quot;detail&quot;: &quot;1층단독&quot;}], &quot;birth_date&quot;: &quot;730105-1&quot;, &quot;payment_info&quot;: &quot;농협 352 1742 0728 43&quot;, &quot;special_note&quot;: &quot;기존제품 폐기 안함\n반값적용&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;남대원&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-07-06 15:13</td>
+                  <td>김성훈</td>
+                  <td>남대원</td>
+                  <td>010-5297-6661</td>
+                  <td>쿠쿠</td>
+                  <td>제로 100 슬림 플러스 얼음(AHS101)</td>
+                  <td>신규</td>
+                  <td>5년약정_신규</td>
+                  <td>4개월</td>
+                  <td>46,900</td>
+                  <td>기존제품 폐기 안함
+반값적용</td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="ae81892b-50aa-4d53-8955-282a2cfe881b"
+                  data-created="2026-07-06 14:31:26.263756+09"
+                  data-json='{&quot;brand&quot;: &quot;쿠쿠&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-5297-6661&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;제로 100 슬림 플러스 얼음(AHS101)(반값 미적용)&quot;, &quot;color&quot;: &quot;베이지&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CP-AHS101HE&quot;, &quot;contract&quot;: &quot;5년약정_신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;46,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;신안군 임자면 구산길92-6&quot;, &quot;detail&quot;: &quot;1층단독&quot;}], &quot;birth_date&quot;: &quot;730105-1&quot;, &quot;payment_info&quot;: &quot;농협 352 1742 0728 43&quot;, &quot;special_note&quot;: &quot;기존제품 폐기 안함&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;남대원&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-07-06 14:31</td>
+                  <td>김성훈</td>
+                  <td>남대원</td>
+                  <td>010-5297-6661</td>
+                  <td>쿠쿠</td>
+                  <td>제로 100 슬림 플러스 얼음(AHS101)(반값 미적용)</td>
+                  <td>신규</td>
+                  <td>5년약정_신규</td>
+                  <td>4개월</td>
+                  <td>46,900</td>
+                  <td>기존제품 폐기 안함</td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="0280b348-b92e-41b1-8cd9-e9b13a5d9955"
+                  data-created="2026-07-02 21:30:09.645453+09"
+                  data-json='{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-3646-9114&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;얼음냉온 아이콘 오리지널&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CHPI-7400N&quot;, &quot;contract&quot;: &quot;5년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;타사보상(할인+1년간1만원)&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;보상/동시구매&quot;, &quot;rental_fee&quot;: &quot;39,200&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: {&quot;kind&quot;: &quot;얼음&quot;, &quot;type&quot;: &quot;데스크탑&quot;, &quot;brand&quot;: &quot;청호&quot;, &quot;install&quot;: &quot;수조형&quot;, &quot;watermark&quot;: &quot;37704095&quot;, &quot;install_year&quot;: &quot;20-07&quot;}}, {&quot;name&quot;: &quot;스타일 비데 플러스&quot;, &quot;color&quot;: &quot;&quot;, &quot;label&quot;: &quot;제품정보2&quot;, &quot;model&quot;: &quot;BAS41-A&quot;, &quot;contract&quot;: &quot;5년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;셀프&quot;, &quot;regulation&quot;: &quot;보상/동시구매&quot;, &quot;rental_fee&quot;: &quot;16,920&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58657&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 목포시 하당로289번길 6 (옥암동, 제일3차풍경채아파트)&quot;, &quot;detail&quot;: &quot;302-1507&quot;}], &quot;birth_date&quot;: &quot;670413-1&quot;, &quot;payment_info&quot;: &quot;하나 620164858184&quot;, &quot;special_note&quot;: &quot;정수기 수거안함. 비데만 수거함&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;김규태&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-07-02 21:30</td>
+                  <td>김성훈</td>
+                  <td>김규태</td>
+                  <td>010-3646-9114</td>
+                  <td>코웨이</td>
+                  <td>얼음냉온 아이콘 오리지널</td>
+                  <td>보상/동시구매</td>
+                  <td>5년타사</td>
+                  <td>4개월</td>
+                  <td>39,200</td>
+                  <td>정수기 수거안함. 비데만 수거함</td>
+                  <td>2</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="4303be02-b151-4b86-884a-20492f45a16b"
+                  data-created="2026-06-30 18:05:19.13079+09"
+                  data-json='{&quot;brand&quot;: &quot;쿠쿠&quot;, &quot;email&quot;: &quot;kcc6666@naver.com&quot;, &quot;contact&quot;: &quot;010-4089-2482&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;대용량 얼음 정수기 PLUS(CP-AJS821SW)&quot;, &quot;color&quot;: &quot;노블화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CP-AJS821SW&quot;, &quot;contract&quot;: &quot;5년약정_타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;보상&quot;, &quot;rental_fee&quot;: &quot;41,560&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58542&quot;, &quot;basic&quot;: &quot;전남 무안군 청계면 영산로 1840&quot;, &quot;detail&quot;: &quot;1층&quot;}], &quot;birth_date&quot;: &quot;&quot;, &quot;payment_info&quot;: &quot;140010191782 신한&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;(유)승원&quot;, &quot;customer_name&quot;: &quot;(유)승원&quot;, &quot;customer_type&quot;: &quot;법인사업자&quot;, &quot;business_number&quot;: &quot;411-81-72310&quot;, &quot;corporation_number&quot;: &quot;205414-0011516&quot;}'
+                >
+                  <td>2026-06-30 18:05</td>
+                  <td>김성훈</td>
+                  <td>(유)승원</td>
+                  <td>010-4089-2482</td>
+                  <td>쿠쿠</td>
+                  <td>대용량 얼음 정수기 PLUS(CP-AJS821SW)</td>
+                  <td>보상</td>
+                  <td>5년약정_타사</td>
+                  <td>4개월</td>
+                  <td>41,560</td>
+                  <td></td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="33e15f8a-5f3b-4f25-b528-d3453b75bbee"
+                  data-created="2026-06-24 20:43:55.059655+09"
+                  data-json='{&quot;brand&quot;: &quot;LG&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-9636-7018&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;냉온 맞춤출수(초고온수)&quot;, &quot;color&quot;: &quot;베이지&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;WD523V(C/H/S/P/M)&quot;, &quot;contract&quot;: &quot;5년결합&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;셀프&quot;, &quot;regulation&quot;: &quot;결합&quot;, &quot;rental_fee&quot;: &quot;34,100&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}, {&quot;name&quot;: &quot;360플러스 2단 29평&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보2&quot;, &quot;model&quot;: &quot;AS285DWWAM&quot;, &quot;contract&quot;: &quot;5년결합&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;셀프&quot;, &quot;regulation&quot;: &quot;결합&quot;, &quot;rental_fee&quot;: &quot;36,700&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58613&quot;, &quot;basic&quot;: &quot;전남 목포시 용당로331번길 88 (용해동, 호반리젠시빌스위트)&quot;, &quot;detail&quot;: &quot;207동206호&quot;}], &quot;birth_date&quot;: &quot;830704-2&quot;, &quot;payment_info&quot;: &quot;기업 50505385201010&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;김미정&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-06-24 20:43</td>
+                  <td>김성훈</td>
+                  <td>김미정</td>
+                  <td>010-9636-7018</td>
+                  <td>LG</td>
+                  <td>냉온 맞춤출수(초고온수)</td>
+                  <td>결합</td>
+                  <td>5년결합</td>
+                  <td>셀프</td>
+                  <td>34,100</td>
+                  <td></td>
+                  <td>2</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="86673902-f06a-496e-b707-a6aaa54bdc55"
+                  data-created="2026-06-04 20:04:43.448044+09"
+                  data-json='{&quot;brand&quot;: &quot;청호&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-3163-6777&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;얼음냉온 아이스트리 플리&quot;, &quot;color&quot;: &quot;다크그레이&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;WI-60C90511M&quot;, &quot;contract&quot;: &quot;*3년약정_S&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;49,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 무안군 일로읍 오룡번영로153&quot;, &quot;detail&quot;: &quot;205.1304&quot;}], &quot;birth_date&quot;: &quot;821012-1&quot;, &quot;payment_info&quot;: &quot;기업 191-096450-01-011&quot;, &quot;special_note&quot;: &quot;다크그레이&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;김중근&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-06-04 20:04</td>
+                  <td>김성훈</td>
+                  <td>김중근</td>
+                  <td>010-3163-6777</td>
+                  <td>청호</td>
+                  <td>얼음냉온 아이스트리 플리</td>
+                  <td>신규</td>
+                  <td>*3년약정_S</td>
+                  <td>4개월</td>
+                  <td>49,900</td>
+                  <td>다크그레이</td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="60cca0a5-7839-489c-aee6-8b2d08376746"
+                  data-created="2026-06-02 16:49:23.158358+09"
+                  data-json='{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-3778-7002&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;노블 공기청정기(100㎡)&quot;, &quot;color&quot;: &quot;베이지&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;AP-3021D&quot;, &quot;contract&quot;: &quot;3년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;59,400&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 무안군 일로읍 양지길 73-31&quot;, &quot;detail&quot;: &quot;포미아구찜&quot;}], &quot;birth_date&quot;: &quot;870617&quot;, &quot;payment_info&quot;: &quot;신협 132-122-089351&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;권민진&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-06-02 16:49</td>
+                  <td>김성훈</td>
+                  <td>권민진</td>
+                  <td>010-3778-7002</td>
+                  <td>코웨이</td>
+                  <td>노블 공기청정기(100㎡)</td>
+                  <td>신규</td>
+                  <td>3년신규</td>
+                  <td>4개월</td>
+                  <td>59,400</td>
+                  <td></td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="1424dfb0-dfc2-4bbc-8c8f-3c5bbc62bfe3"
+                  data-created="2026-03-16 16:17:56.828262+09"
+                  data-json='{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-5500-6641&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;냉온 워터스탠드 플러스 펌프형&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CHP-5730R&quot;, &quot;contract&quot;: &quot;3년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;3개월 반값&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;32,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;62244&quot;, &quot;basic&quot;: &quot;광주 광산구 도천동 355-4&quot;, &quot;detail&quot;: &quot;아우토스킨&quot;}], &quot;birth_date&quot;: &quot;821031-1&quot;, &quot;payment_info&quot;: &quot;카카오뱅크 3333-04-8053271&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;여준상&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-03-16 16:17</td>
+                  <td>김성훈</td>
+                  <td>여준상</td>
+                  <td>010-5500-6641</td>
+                  <td>코웨이</td>
+                  <td>냉온 워터스탠드 플러스 펌프형</td>
+                  <td>신규</td>
+                  <td>3년신규</td>
+                  <td>4개월</td>
+                  <td>32,900</td>
+                  <td></td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="4e3e78fb-d3b0-4f13-b516-b771b887a799"
+                  data-created="2026-02-23 17:08:28.677209+09"
+                  data-json='{&quot;brand&quot;: &quot;청호&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-2990-8646&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;얼음냉온 슈퍼아이스트리&quot;, &quot;color&quot;: &quot;블랙&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;WI-80S9P510M&quot;, &quot;contract&quot;: &quot;5년약정_P&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;2개월&quot;, &quot;regulation&quot;: &quot;결합&quot;, &quot;rental_fee&quot;: &quot;53,900&quot;, &quot;self_receipt&quot;: false, &quot;hard_construction&quot;: false, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58567&quot;, &quot;basic&quot;: &quot;전남 무안군 삼향읍 대죽서로15번길 34&quot;, &quot;detail&quot;: &quot;401호. 메가(주)리치 목포사업단&quot;}], &quot;birth_date&quot;: &quot;741115-2&quot;, &quot;payment_info&quot;: &quot;5317640006713903&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;김명희&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-02-23 17:08</td>
+                  <td>김성훈</td>
+                  <td>김명희</td>
+                  <td>010-2990-8646</td>
+                  <td>청호</td>
+                  <td>얼음냉온 슈퍼아이스트리</td>
+                  <td>결합</td>
+                  <td>5년약정_P</td>
+                  <td>2개월</td>
+                  <td>53,900</td>
+                  <td></td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                              <tr
+                  data-id="662cd384-5d67-468d-abd5-7a976f81992b"
+                  data-created="2026-02-11 15:54:05.651298+09"
+                  data-json='{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-4273-8111&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;모디 매트리스(Q)&quot;, &quot;color&quot;: &quot;미디움&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CMQ-SE02&quot;, &quot;contract&quot;: &quot;7년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;베이직케어&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;26,900&quot;, &quot;self_receipt&quot;: false, &quot;hard_construction&quot;: false, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58839&quot;, &quot;basic&quot;: &quot;전남 신안군 안좌면 중부로 854&quot;, &quot;detail&quot;: &quot;1츨&quot;}], &quot;birth_date&quot;: &quot;681105-2&quot;, &quot;payment_info&quot;: &quot;농 352248170213&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;차영옥&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}'
+                >
+                  <td>2026-02-11 15:54</td>
+                  <td>김성훈</td>
+                  <td>차영옥</td>
+                  <td>010-4273-8111</td>
+                  <td>코웨이</td>
+                  <td>모디 매트리스(Q)</td>
+                  <td>신규</td>
+                  <td>7년신규</td>
+                  <td>베이직케어</td>
+                  <td>26,900</td>
+                  <td></td>
+                  <td>1</td>
+                  <td>
+                    <div class="d-flex">
+                      <button type="button" class="btn btn-sm submission-btn-detail flex-fill me-1 btn-detail btn-animate">
+                        <span class="btn-inline-icon-wrap">
+                          <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                          <span>자세히</span>
+                        </span>
+                      </button>
+                      <button class="btn btn-sm btn-danger flex-fill btn-delete btn-animate d-none"><span>삭제</span></button>
+                    </div>
+                  </td>
+                </tr>
+                                    </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 모바일: 카드 리스트 -->
+    <div class="mobile-only">
+      <div class="mobile-cards">
+                              <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="00cab3a1-0c6c-496e-be69-b4647384ef20"
+              data-created="2026-07-27 16:07:51.796542+09"
+              data-json="{&quot;brand&quot;: &quot;웰스&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-7709-5151&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;웰스 비데 올스텐 트윈&quot;, &quot;color&quot;: &quot;&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;BQ650&quot;, &quot;contract&quot;: &quot;5년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;3개월&quot;, &quot;regulation&quot;: &quot;특가&quot;, &quot;rental_fee&quot;: &quot;20,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 목포시 백년대로 375번길 20&quot;, &quot;detail&quot;: &quot;204동207호&quot;}], &quot;birth_date&quot;: &quot;820111-1&quot;, &quot;payment_info&quot;: &quot;5366 2474 4706 4043 07/32 국민카드&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;김성욱&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-07-27 16:07">
+                    2026-07-27 16:07                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="김성욱">
+                김성욱              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-7709-5151 · 웰스 · 웰스 비데 올스텐 트윈">
+                  010-7709-5151 · 웰스 · 웰스 비데 올스텐 트윈                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">특가</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">5년타사</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">3개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">20,900</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long"></div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="6366ed37-373f-4bc6-baa0-93b7c40cbff1"
+              data-created="2026-07-16 17:17:26.37727+09"
+              data-json="{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-7709-5151&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;프라임 비데(BA36-B)&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;BA36-B&quot;, &quot;contract&quot;: &quot;5년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;2개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;21,400&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;목포시 옥암동 금호아파트2차&quot;, &quot;detail&quot;: &quot;204동207호&quot;}], &quot;birth_date&quot;: &quot;820111-1&quot;, &quot;payment_info&quot;: &quot;국민카드 5366 2474 4706 4043 07/32&quot;, &quot;special_note&quot;: &quot;기존폐기&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;김성욱&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-07-16 17:17">
+                    2026-07-16 17:17                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="김성욱">
+                김성욱              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-7709-5151 · 코웨이 · 프라임 비데(BA36-B)">
+                  010-7709-5151 · 코웨이 · 프라임 비데(BA36-B)                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">신규</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">5년신규</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">2개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">21,400</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long">기존폐기</div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="9fd5a7e1-7ca1-4a52-a903-bb377973b828"
+              data-created="2026-07-15 09:44:52.969178+09"
+              data-json="{&quot;brand&quot;: &quot;청호&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-9945-8005&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;얼음냉온 슈퍼아이스트리&quot;, &quot;color&quot;: &quot;블랙&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;WI-80S9P510M&quot;, &quot;contract&quot;: &quot;5년약정_P&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;6개월&quot;, &quot;regulation&quot;: &quot;결합&quot;, &quot;rental_fee&quot;: &quot;49,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 신안군 지도읍 해제지도로1283-24&quot;, &quot;detail&quot;: &quot;만성호젓갈&quot;}], &quot;birth_date&quot;: &quot;670805-2&quot;, &quot;payment_info&quot;: &quot;농협 653037 52 058912&quot;, &quot;special_note&quot;: &quot;결합할인 기존제품폐기&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;장애심&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-07-15 09:44">
+                    2026-07-15 09:44                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="장애심">
+                장애심              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-9945-8005 · 청호 · 얼음냉온 슈퍼아이스트리">
+                  010-9945-8005 · 청호 · 얼음냉온 슈퍼아이스트리                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">결합</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">5년약정_P</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">6개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">49,900</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long">결합할인 기존제품폐기</div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="296a956b-78b0-4a5a-9408-bef0bf1f6df8"
+              data-created="2026-07-08 09:32:31.856724+09"
+              data-json="{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-3632-7566&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;냉온 아이콘3&quot;, &quot;color&quot;: &quot;핑크&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CHP-7220N&quot;, &quot;contract&quot;: &quot;3년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;타사보상(할인+1년간1만원)&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;보상/동시구매&quot;, &quot;rental_fee&quot;: &quot;31,500&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: {&quot;kind&quot;: &quot;냉온&quot;, &quot;type&quot;: &quot;데스크탑&quot;, &quot;brand&quot;: &quot;청호&quot;, &quot;install&quot;: &quot;직수형&quot;, &quot;watermark&quot;: &quot;45515968&quot;, &quot;install_year&quot;: &quot;23-08&quot;}}, {&quot;name&quot;: &quot;냉온 엘리트&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보2&quot;, &quot;model&quot;: &quot;CHP-6340L&quot;, &quot;contract&quot;: &quot;3년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;타사보상(할인+1년간1만원)&quot;, &quot;management&quot;: &quot;2개월&quot;, &quot;regulation&quot;: &quot;보상/동시구매&quot;, &quot;rental_fee&quot;: &quot;27,450&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: {&quot;kind&quot;: &quot;냉온&quot;, &quot;type&quot;: &quot;데스크탑&quot;, &quot;brand&quot;: &quot;청호&quot;, &quot;install&quot;: &quot;수조형&quot;, &quot;watermark&quot;: &quot;42027359&quot;, &quot;install_year&quot;: &quot;22-10&quot;}}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58691&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 목포시 장미로 29 (상동)&quot;, &quot;detail&quot;: &quot;착한마녀&quot;}, {&quot;zip&quot;: &quot;58690&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 목포시 신흥로45번길 13 (상동, 동아아파트)&quot;, &quot;detail&quot;: &quot;106-905&quot;}], &quot;birth_date&quot;: &quot;780714-2&quot;, &quot;payment_info&quot;: &quot;하나카드 9411810065904225 06-31&quot;, &quot;special_note&quot;: &quot;2대. 주소상이\n장미로29-아이콘3\n동아à -엘리트&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;손주화&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-07-08 09:32">
+                    2026-07-08 09:32                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="손주화">
+                손주화              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-3632-7566 · 코웨이 · 냉온 아이콘3">
+                  010-3632-7566 · 코웨이 · 냉온 아이콘3                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">보상/동시구매</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">3년타사</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">4개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">31,500</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">2</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long">2대. 주소상이
+장미로29-아이콘3
+동아à -엘리트</div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="b3366f5d-1f01-4740-9c50-c2943de3756c"
+              data-created="2026-07-07 18:31:47.17997+09"
+              data-json="{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-8888-9858&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;스퀘어핏 공기청정기(50㎡)&quot;, &quot;color&quot;: &quot;베이지&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;AP-1526A&quot;, &quot;contract&quot;: &quot;5년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규/동시구매&quot;, &quot;rental_fee&quot;: &quot;21,960&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}, {&quot;name&quot;: &quot;냉온 엘리트&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보2&quot;, &quot;model&quot;: &quot;CHP-6340L&quot;, &quot;contract&quot;: &quot;5년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;2개월&quot;, &quot;regulation&quot;: &quot;신규/동시구매&quot;, &quot;rental_fee&quot;: &quot;29,610&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58690&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 목포시 신흥로45번길 13 (상동, 동아아파트)&quot;, &quot;detail&quot;: &quot;107-304&quot;}, {&quot;zip&quot;: &quot;58227&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 나주시 남평읍 남평2로 32-29&quot;, &quot;detail&quot;: &quot;1층&quot;}], &quot;birth_date&quot;: &quot;791110-2&quot;, &quot;payment_info&quot;: &quot;신협 132143233599&quot;, &quot;special_note&quot;: &quot;2대. 주소상이\n\n동아a -청정기\n나주 -정수기&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;박수진&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-07-07 18:31">
+                    2026-07-07 18:31                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="박수진">
+                박수진              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-8888-9858 · 코웨이 · 스퀘어핏 공기청정기(50㎡)">
+                  010-8888-9858 · 코웨이 · 스퀘어핏 공기청정기(50㎡)                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">신규/동시구매</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">5년신규</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">4개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">21,960</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">2</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long">2대. 주소상이
+
+동아a -청정기
+나주 -정수기</div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="c62a828c-d6f1-4c0e-83df-2f5e89a0536b"
+              data-created="2026-07-07 18:25:11.854891+09"
+              data-json="{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-3632-7566&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;냉온 아이콘3&quot;, &quot;color&quot;: &quot;핑크&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CHP-7220N&quot;, &quot;contract&quot;: &quot;3년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;타사보상(할인+1년간1만원)&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;보상/동시구매&quot;, &quot;rental_fee&quot;: &quot;31,500&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: {&quot;kind&quot;: &quot;냉온&quot;, &quot;type&quot;: &quot;데스크탑&quot;, &quot;brand&quot;: &quot;청호&quot;, &quot;install&quot;: &quot;직수형&quot;, &quot;watermark&quot;: &quot;45515968&quot;, &quot;install_year&quot;: &quot;23-08&quot;}}, {&quot;name&quot;: &quot;냉온 엘리트&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보2&quot;, &quot;model&quot;: &quot;CHP-6340L&quot;, &quot;contract&quot;: &quot;3년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;타사보상(할인+1년간1만원)&quot;, &quot;management&quot;: &quot;2개월&quot;, &quot;regulation&quot;: &quot;보상/동시구매&quot;, &quot;rental_fee&quot;: &quot;27,450&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58691&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 목포시 장미로 29 (상동)&quot;, &quot;detail&quot;: &quot;착한마녀&quot;}, {&quot;zip&quot;: &quot;58690&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 목포시 신흥로45번길 13 (상동, 동아아파트)&quot;, &quot;detail&quot;: &quot;106-905&quot;}], &quot;birth_date&quot;: &quot;780714-2&quot;, &quot;payment_info&quot;: &quot;하나카드 9411810065904225 06-31&quot;, &quot;special_note&quot;: &quot;2대. 주소상이\n장미로29-아이콘3\n동아à -엘리트&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;손주화&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-07-07 18:25">
+                    2026-07-07 18:25                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="손주화">
+                손주화              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-3632-7566 · 코웨이 · 냉온 아이콘3">
+                  010-3632-7566 · 코웨이 · 냉온 아이콘3                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">보상/동시구매</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">3년타사</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">4개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">31,500</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">2</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long">2대. 주소상이
+장미로29-아이콘3
+동아à -엘리트</div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="1fb1bebc-e9ef-4d67-9071-091ed62dda17"
+              data-created="2026-07-06 17:13:40.698492+09"
+              data-json="{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-6556-8965&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;제로 음식물 처리기 분쇄형 3L&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;WMG-3004&quot;, &quot;contract&quot;: &quot;6년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;4개월 반값할인&quot;, &quot;management&quot;: &quot;셀프(4개월배송)&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;22,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 신안군 임자면 구산길 116&quot;, &quot;detail&quot;: &quot;1층&quot;}], &quot;birth_date&quot;: &quot;450708-1&quot;, &quot;payment_info&quot;: &quot;농협 653037 56 016349&quot;, &quot;special_note&quot;: &quot;반값할인\n전자서명진행&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;남춘희&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-07-06 17:13">
+                    2026-07-06 17:13                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="남춘희">
+                남춘희              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-6556-8965 · 코웨이 · 제로 음식물 처리기 분쇄형 3L">
+                  010-6556-8965 · 코웨이 · 제로 음식물 처리기 분쇄형 3L                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">신규</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">6년신규</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">셀프(4개월배송)</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">22,900</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long">반값할인
+전자서명진행</div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="f0db1619-fd62-4c2b-9ab9-203fecd1d0c0"
+              data-created="2026-07-06 17:07:45.140669+09"
+              data-json="{&quot;brand&quot;: &quot;쿠쿠&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-6556-8965&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;제로 100 슬림 플러스 얼음(AHS101)&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CP-AHS101HE&quot;, &quot;contract&quot;: &quot;5년약정_신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;6개월반값&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;46,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 신안군 임자면 구산길116&quot;, &quot;detail&quot;: &quot;1층&quot;}], &quot;birth_date&quot;: &quot;450708-1&quot;, &quot;payment_info&quot;: &quot;농협 653037 56 016349&quot;, &quot;special_note&quot;: &quot;화이트 6개월 할인 반값\n기존폐기\n전자서명 진행&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;남춘희&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-07-06 17:07">
+                    2026-07-06 17:07                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="남춘희">
+                남춘희              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-6556-8965 · 쿠쿠 · 제로 100 슬림 플러스 얼음(AHS101)">
+                  010-6556-8965 · 쿠쿠 · 제로 100 슬림 플러스 얼음(AHS101)                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">신규</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">5년약정_신규</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">4개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">46,900</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long">화이트 6개월 할인 반값
+기존폐기
+전자서명 진행</div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="7f9051bf-2f19-4b4f-875e-dbf41f9c05c4"
+              data-created="2026-07-06 17:00:41.367604+09"
+              data-json="{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-6556-8965&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;제로 음식물 처리기 분쇄형 3L&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;WMG-3004&quot;, &quot;contract&quot;: &quot;6년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;4개월 반값할인&quot;, &quot;management&quot;: &quot;셀프(4개월배송)&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;22,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 신안군 임자면 구산길 116&quot;, &quot;detail&quot;: &quot;1층&quot;}], &quot;birth_date&quot;: &quot;450708-1&quot;, &quot;payment_info&quot;: &quot;농협 653037 56 016349&quot;, &quot;special_note&quot;: &quot;반값할인&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;남춘희&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-07-06 17:00">
+                    2026-07-06 17:00                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="남춘희">
+                남춘희              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-6556-8965 · 코웨이 · 제로 음식물 처리기 분쇄형 3L">
+                  010-6556-8965 · 코웨이 · 제로 음식물 처리기 분쇄형 3L                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">신규</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">6년신규</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">셀프(4개월배송)</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">22,900</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long">반값할인</div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="7fb65a91-4886-4432-b34f-19cf2a0eca7d"
+              data-created="2026-07-06 16:41:40.123231+09"
+              data-json="{&quot;brand&quot;: &quot;쿠쿠&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-6556-8965&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;제로 100 슬림 플러스 얼음(AHS101)&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CP-AHS101HE&quot;, &quot;contract&quot;: &quot;5년약정_신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;6개월반값&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;46,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 신안군 임자면 구산길116&quot;, &quot;detail&quot;: &quot;1층&quot;}], &quot;birth_date&quot;: &quot;450708-1&quot;, &quot;payment_info&quot;: &quot;농협 653037 56 016349&quot;, &quot;special_note&quot;: &quot;화이트 6개월 할인 반값\n기존폐기&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;남춘희&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-07-06 16:41">
+                    2026-07-06 16:41                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="남춘희">
+                남춘희              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-6556-8965 · 쿠쿠 · 제로 100 슬림 플러스 얼음(AHS101)">
+                  010-6556-8965 · 쿠쿠 · 제로 100 슬림 플러스 얼음(AHS101)                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">신규</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">5년약정_신규</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">4개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">46,900</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long">화이트 6개월 할인 반값
+기존폐기</div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="39c3005b-23cb-45e6-a3f9-9693f2b1fbd3"
+              data-created="2026-07-06 15:13:38.438464+09"
+              data-json="{&quot;brand&quot;: &quot;쿠쿠&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-5297-6661&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;제로 100 슬림 플러스 얼음(AHS101)&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CP-AHS101HE&quot;, &quot;contract&quot;: &quot;5년약정_신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;46,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;신안군 임자면 구산길92-6&quot;, &quot;detail&quot;: &quot;1층단독&quot;}], &quot;birth_date&quot;: &quot;730105-1&quot;, &quot;payment_info&quot;: &quot;농협 352 1742 0728 43&quot;, &quot;special_note&quot;: &quot;기존제품 폐기 안함\n반값적용&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;남대원&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-07-06 15:13">
+                    2026-07-06 15:13                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="남대원">
+                남대원              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-5297-6661 · 쿠쿠 · 제로 100 슬림 플러스 얼음(AHS101)">
+                  010-5297-6661 · 쿠쿠 · 제로 100 슬림 플러스 얼음(AHS101)                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">신규</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">5년약정_신규</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">4개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">46,900</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long">기존제품 폐기 안함
+반값적용</div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="ae81892b-50aa-4d53-8955-282a2cfe881b"
+              data-created="2026-07-06 14:31:26.263756+09"
+              data-json="{&quot;brand&quot;: &quot;쿠쿠&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-5297-6661&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;제로 100 슬림 플러스 얼음(AHS101)(반값 미적용)&quot;, &quot;color&quot;: &quot;베이지&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CP-AHS101HE&quot;, &quot;contract&quot;: &quot;5년약정_신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;46,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;신안군 임자면 구산길92-6&quot;, &quot;detail&quot;: &quot;1층단독&quot;}], &quot;birth_date&quot;: &quot;730105-1&quot;, &quot;payment_info&quot;: &quot;농협 352 1742 0728 43&quot;, &quot;special_note&quot;: &quot;기존제품 폐기 안함&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;남대원&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-07-06 14:31">
+                    2026-07-06 14:31                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="남대원">
+                남대원              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-5297-6661 · 쿠쿠 · 제로 100 슬림 플러스 얼음(AHS101)(반값 미적용)">
+                  010-5297-6661 · 쿠쿠 · 제로 100 슬림 플러스 얼음(AHS101)(반값 미적용)                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">신규</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">5년약정_신규</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">4개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">46,900</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long">기존제품 폐기 안함</div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="0280b348-b92e-41b1-8cd9-e9b13a5d9955"
+              data-created="2026-07-02 21:30:09.645453+09"
+              data-json="{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-3646-9114&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;얼음냉온 아이콘 오리지널&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CHPI-7400N&quot;, &quot;contract&quot;: &quot;5년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;타사보상(할인+1년간1만원)&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;보상/동시구매&quot;, &quot;rental_fee&quot;: &quot;39,200&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;있음&quot;, &quot;other_company_info&quot;: {&quot;kind&quot;: &quot;얼음&quot;, &quot;type&quot;: &quot;데스크탑&quot;, &quot;brand&quot;: &quot;청호&quot;, &quot;install&quot;: &quot;수조형&quot;, &quot;watermark&quot;: &quot;37704095&quot;, &quot;install_year&quot;: &quot;20-07&quot;}}, {&quot;name&quot;: &quot;스타일 비데 플러스&quot;, &quot;color&quot;: &quot;&quot;, &quot;label&quot;: &quot;제품정보2&quot;, &quot;model&quot;: &quot;BAS41-A&quot;, &quot;contract&quot;: &quot;5년타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;셀프&quot;, &quot;regulation&quot;: &quot;보상/동시구매&quot;, &quot;rental_fee&quot;: &quot;16,920&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58657&quot;, &quot;basic&quot;: &quot;전남광주통합특별시 목포시 하당로289번길 6 (옥암동, 제일3차풍경채아파트)&quot;, &quot;detail&quot;: &quot;302-1507&quot;}], &quot;birth_date&quot;: &quot;670413-1&quot;, &quot;payment_info&quot;: &quot;하나 620164858184&quot;, &quot;special_note&quot;: &quot;정수기 수거안함. 비데만 수거함&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;김규태&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-07-02 21:30">
+                    2026-07-02 21:30                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="김규태">
+                김규태              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-3646-9114 · 코웨이 · 얼음냉온 아이콘 오리지널">
+                  010-3646-9114 · 코웨이 · 얼음냉온 아이콘 오리지널                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">보상/동시구매</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">5년타사</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">4개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">39,200</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">2</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long">정수기 수거안함. 비데만 수거함</div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="4303be02-b151-4b86-884a-20492f45a16b"
+              data-created="2026-06-30 18:05:19.13079+09"
+              data-json="{&quot;brand&quot;: &quot;쿠쿠&quot;, &quot;email&quot;: &quot;kcc6666@naver.com&quot;, &quot;contact&quot;: &quot;010-4089-2482&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;대용량 얼음 정수기 PLUS(CP-AJS821SW)&quot;, &quot;color&quot;: &quot;노블화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CP-AJS821SW&quot;, &quot;contract&quot;: &quot;5년약정_타사&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;보상&quot;, &quot;rental_fee&quot;: &quot;41,560&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58542&quot;, &quot;basic&quot;: &quot;전남 무안군 청계면 영산로 1840&quot;, &quot;detail&quot;: &quot;1층&quot;}], &quot;birth_date&quot;: &quot;&quot;, &quot;payment_info&quot;: &quot;140010191782 신한&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;(유)승원&quot;, &quot;customer_name&quot;: &quot;(유)승원&quot;, &quot;customer_type&quot;: &quot;법인사업자&quot;, &quot;business_number&quot;: &quot;411-81-72310&quot;, &quot;corporation_number&quot;: &quot;205414-0011516&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-06-30 18:05">
+                    2026-06-30 18:05                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="(유)승원">
+                (유)승원              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-4089-2482 · 쿠쿠 · 대용량 얼음 정수기 PLUS(CP-AJS821SW)">
+                  010-4089-2482 · 쿠쿠 · 대용량 얼음 정수기 PLUS(CP-AJS821SW)                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">보상</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">5년약정_타사</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">4개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">41,560</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long"></div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="33e15f8a-5f3b-4f25-b528-d3453b75bbee"
+              data-created="2026-06-24 20:43:55.059655+09"
+              data-json="{&quot;brand&quot;: &quot;LG&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-9636-7018&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;냉온 맞춤출수(초고온수)&quot;, &quot;color&quot;: &quot;베이지&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;WD523V(C/H/S/P/M)&quot;, &quot;contract&quot;: &quot;5년결합&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;셀프&quot;, &quot;regulation&quot;: &quot;결합&quot;, &quot;rental_fee&quot;: &quot;34,100&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}, {&quot;name&quot;: &quot;360플러스 2단 29평&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보2&quot;, &quot;model&quot;: &quot;AS285DWWAM&quot;, &quot;contract&quot;: &quot;5년결합&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;셀프&quot;, &quot;regulation&quot;: &quot;결합&quot;, &quot;rental_fee&quot;: &quot;36,700&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: true, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58613&quot;, &quot;basic&quot;: &quot;전남 목포시 용당로331번길 88 (용해동, 호반리젠시빌스위트)&quot;, &quot;detail&quot;: &quot;207동206호&quot;}], &quot;birth_date&quot;: &quot;830704-2&quot;, &quot;payment_info&quot;: &quot;기업 50505385201010&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;김미정&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-06-24 20:43">
+                    2026-06-24 20:43                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="김미정">
+                김미정              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-9636-7018 · LG · 냉온 맞춤출수(초고온수)">
+                  010-9636-7018 · LG · 냉온 맞춤출수(초고온수)                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">결합</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">5년결합</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">셀프</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">34,100</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">2</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long"></div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="86673902-f06a-496e-b707-a6aaa54bdc55"
+              data-created="2026-06-04 20:04:43.448044+09"
+              data-json="{&quot;brand&quot;: &quot;청호&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-3163-6777&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;얼음냉온 아이스트리 플리&quot;, &quot;color&quot;: &quot;다크그레이&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;WI-60C90511M&quot;, &quot;contract&quot;: &quot;*3년약정_S&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;49,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 무안군 일로읍 오룡번영로153&quot;, &quot;detail&quot;: &quot;205.1304&quot;}], &quot;birth_date&quot;: &quot;821012-1&quot;, &quot;payment_info&quot;: &quot;기업 191-096450-01-011&quot;, &quot;special_note&quot;: &quot;다크그레이&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;김중근&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-06-04 20:04">
+                    2026-06-04 20:04                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="김중근">
+                김중근              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-3163-6777 · 청호 · 얼음냉온 아이스트리 플리">
+                  010-3163-6777 · 청호 · 얼음냉온 아이스트리 플리                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">신규</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">*3년약정_S</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">4개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">49,900</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long">다크그레이</div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="60cca0a5-7839-489c-aee6-8b2d08376746"
+              data-created="2026-06-02 16:49:23.158358+09"
+              data-json="{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-3778-7002&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;노블 공기청정기(100㎡)&quot;, &quot;color&quot;: &quot;베이지&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;AP-3021D&quot;, &quot;contract&quot;: &quot;3년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;59,400&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;promotion_request&quot;: &quot;없음&quot;, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;&quot;, &quot;basic&quot;: &quot;전남 무안군 일로읍 양지길 73-31&quot;, &quot;detail&quot;: &quot;포미아구찜&quot;}], &quot;birth_date&quot;: &quot;870617&quot;, &quot;payment_info&quot;: &quot;신협 132-122-089351&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;권민진&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-06-02 16:49">
+                    2026-06-02 16:49                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="권민진">
+                권민진              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-3778-7002 · 코웨이 · 노블 공기청정기(100㎡)">
+                  010-3778-7002 · 코웨이 · 노블 공기청정기(100㎡)                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">신규</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">3년신규</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">4개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">59,400</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long"></div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="1424dfb0-dfc2-4bbc-8c8f-3c5bbc62bfe3"
+              data-created="2026-03-16 16:17:56.828262+09"
+              data-json="{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-5500-6641&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;냉온 워터스탠드 플러스 펌프형&quot;, &quot;color&quot;: &quot;화이트&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CHP-5730R&quot;, &quot;contract&quot;: &quot;3년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;3개월 반값&quot;, &quot;management&quot;: &quot;4개월&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;32,900&quot;, &quot;self_receipt&quot;: false, &quot;product_collect&quot;: false, &quot;hard_construction&quot;: false, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;62244&quot;, &quot;basic&quot;: &quot;광주 광산구 도천동 355-4&quot;, &quot;detail&quot;: &quot;아우토스킨&quot;}], &quot;birth_date&quot;: &quot;821031-1&quot;, &quot;payment_info&quot;: &quot;카카오뱅크 3333-04-8053271&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;여준상&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-03-16 16:17">
+                    2026-03-16 16:17                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="여준상">
+                여준상              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-5500-6641 · 코웨이 · 냉온 워터스탠드 플러스 펌프형">
+                  010-5500-6641 · 코웨이 · 냉온 워터스탠드 플러스 펌프형                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">신규</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">3년신규</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">4개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">32,900</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long"></div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="4e3e78fb-d3b0-4f13-b516-b771b887a799"
+              data-created="2026-02-23 17:08:28.677209+09"
+              data-json="{&quot;brand&quot;: &quot;청호&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-2990-8646&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;얼음냉온 슈퍼아이스트리&quot;, &quot;color&quot;: &quot;블랙&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;WI-80S9P510M&quot;, &quot;contract&quot;: &quot;5년약정_P&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;2개월&quot;, &quot;regulation&quot;: &quot;결합&quot;, &quot;rental_fee&quot;: &quot;53,900&quot;, &quot;self_receipt&quot;: false, &quot;hard_construction&quot;: false, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58567&quot;, &quot;basic&quot;: &quot;전남 무안군 삼향읍 대죽서로15번길 34&quot;, &quot;detail&quot;: &quot;401호. 메가(주)리치 목포사업단&quot;}], &quot;birth_date&quot;: &quot;741115-2&quot;, &quot;payment_info&quot;: &quot;5317640006713903&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;김명희&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-02-23 17:08">
+                    2026-02-23 17:08                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="김명희">
+                김명희              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-2990-8646 · 청호 · 얼음냉온 슈퍼아이스트리">
+                  010-2990-8646 · 청호 · 얼음냉온 슈퍼아이스트리                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">결합</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">5년약정_P</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">2개월</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">53,900</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long"></div></div>
+              </div>
+            </div>
+                      <div
+              class="mobile-card"
+              onclick="toggleSubmissionCard(this)"
+              aria-expanded="false"
+              data-id="662cd384-5d67-468d-abd5-7a976f81992b"
+              data-created="2026-02-11 15:54:05.651298+09"
+              data-json="{&quot;brand&quot;: &quot;코웨이&quot;, &quot;email&quot;: &quot;&quot;, &quot;contact&quot;: &quot;010-4273-8111&quot;, &quot;products&quot;: [{&quot;name&quot;: &quot;모디 매트리스(Q)&quot;, &quot;color&quot;: &quot;미디움&quot;, &quot;label&quot;: &quot;제품정보1&quot;, &quot;model&quot;: &quot;CMQ-SE02&quot;, &quot;contract&quot;: &quot;7년신규&quot;, &quot;pre_visit&quot;: false, &quot;promotion&quot;: &quot;&quot;, &quot;management&quot;: &quot;베이직케어&quot;, &quot;regulation&quot;: &quot;신규&quot;, &quot;rental_fee&quot;: &quot;26,900&quot;, &quot;self_receipt&quot;: false, &quot;hard_construction&quot;: false, &quot;other_company_info&quot;: null}], &quot;addresses&quot;: [{&quot;zip&quot;: &quot;58839&quot;, &quot;basic&quot;: &quot;전남 신안군 안좌면 중부로 854&quot;, &quot;detail&quot;: &quot;1츨&quot;}], &quot;birth_date&quot;: &quot;681105-2&quot;, &quot;payment_info&quot;: &quot;농 352248170213&quot;, &quot;special_note&quot;: &quot;&quot;, &quot;business_name&quot;: &quot;&quot;, &quot;customer_name&quot;: &quot;차영옥&quot;, &quot;customer_type&quot;: &quot;개인&quot;, &quot;business_number&quot;: &quot;&quot;, &quot;corporation_number&quot;: &quot;&quot;}"
+            >
+              <div class="mobile-card-top">
+                <div class="mobile-card-top-left">
+                  <div class="mobile-date" title="2026-02-11 15:54">
+                    2026-02-11 15:54                  </div>
+
+                                      <div class="mobile-mgr" title="김성훈">
+                      김성훈                    </div>
+                  
+                  <button
+                    type="button"
+                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
+                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
+                  >
+                    <span class="btn-inline-icon-wrap">
+                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+                      <span>자세히</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-name" title="차영옥">
+                차영옥              </div>
+
+                            <div class="mobile-subline">
+                <div class="mobile-line3" title="010-4273-8111 · 코웨이 · 모디 매트리스(Q)">
+                  010-4273-8111 · 코웨이 · 모디 매트리스(Q)                </div>
+              </div>
+
+              <div class="mobile-extra">
+                <div class="kv"><div class="k">규정</div><div class="v">신규</div></div>
+                <div class="kv"><div class="k">약정</div><div class="v">7년신규</div></div>
+                <div class="kv"><div class="k">관리</div><div class="v">베이직케어</div></div>
+                <div class="kv"><div class="k">렌탈</div><div class="v">26,900</div></div>
+                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
+                <div class="kv"><div class="k">특이</div><div class="v long"></div></div>
+              </div>
+            </div>
+                        </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 페이지네이션 -->
+  
+  <nav class="mt-4" aria-label="페이지 이동">
+    <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
+
+      <ul class="pagination mb-0">
+
+        <li class="page-item disabled">
+          <a class="page-link" href="?page=1" aria-label="맨앞">«</a>
+        </li>
+
+        <li class="page-item disabled">
+          <a class="page-link" href="?page=1" aria-label="이전">‹</a>
+        </li>
+
+        
+                  <li class="page-item active">
+            <a class="page-link" href="?page=1">1</a>
+          </li>
+                  <li class="page-item ">
+            <a class="page-link" href="?page=2">2</a>
+          </li>
+                  <li class="page-item ">
+            <a class="page-link" href="?page=3">3</a>
+          </li>
+        
+                            <li class="page-item ">
+            <a class="page-link" href="?page=4">4</a>
+          </li>
+        
+        <li class="page-item ">
+          <a class="page-link" href="?page=2" aria-label="다음">›</a>
+        </li>
+
+        <li class="page-item ">
+          <a class="page-link" href="?page=4" aria-label="맨뒤">»</a>
+        </li>
+
+      </ul>
+
+      <form class="d-flex align-items-center gap-2 submission-pagejump" data-total="4" aria-label="페이지 점프">
+        <span class="small text-muted">1 / 4</span>
+        <input
+          type="number"
+          name="page_jump"
+          class="form-control form-control-sm"
+          inputmode="numeric"
+          min="1"
+          max="4"
+          placeholder="페이지"
+          style="width: 90px;"
+        >
+        <button type="submit" class="btn btn-sm btn-outline-primary">이동</button>
+      </form>
+
+    </div>
+  </nav>
+
+<!-- ✅ 여기부터 상세정보 모달 추가 -->
+<div class="modal fade" id="detailModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">상세 정보</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <pre id="detailOutput" class="bg-light p-3 rounded text-break" style="white-space:pre-wrap; font-family:inherit;"></pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn submission-outline-btn submission-btn-close btn-animate" data-bs-dismiss="modal">
+          <span class="btn-inline-icon-wrap">
+            <img src="./assets/webimage/button/close.png" alt="" class="btn-inline-icon">
+            <span>닫기</span>
+          </span>
+        </button>
+        <button type="button" class="btn submission-outline-btn submission-btn-delete btn-animate" id="modalDeleteBtn">
+          <span class="btn-inline-icon-wrap">
+            <img src="./assets/webimage/button/delete.png" alt="" class="btn-inline-icon">
+            <span>삭제</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+(function () {
+  function stripMobileButtonAnimation(root) {
+    if (!(window.matchMedia && window.matchMedia('(max-width: 768px)').matches)) return;
+
+    const targets = [];
+
+    if (root instanceof Element) {
+      if (root.matches('.btn-animate')) {
+        targets.push(root);
+      }
+      root.querySelectorAll('.btn-animate').forEach(function (el) {
+        targets.push(el);
+      });
+    } else {
+      document.querySelectorAll('.btn-animate').forEach(function (el) {
+        targets.push(el);
+      });
+    }
+
+    targets.forEach(function (btn) {
+      btn.classList.remove('btn-animate');
+
+      if (btn.dataset.mobileAnimBound === '1') return;
+      btn.dataset.mobileAnimBound = '1';
+
+      btn.addEventListener('click', function () {
+        try { btn.blur(); } catch (e) {}
+      }, true);
+
+      btn.addEventListener('touchend', function () {
+        try { btn.blur(); } catch (e) {}
+      }, { passive: true });
+    });
+  }
+
+  window.stripSubmissionMobileButtonAnimation = stripMobileButtonAnimation;
+
+  document.addEventListener('DOMContentLoaded', function () {
+    stripMobileButtonAnimation(document.body);
+
+    if (window.MutationObserver) {
+      const observer = new MutationObserver(function (mutations) {
+        if (!(window.matchMedia && window.matchMedia('(max-width: 768px)').matches)) return;
+
+        mutations.forEach(function (mutation) {
+          mutation.addedNodes.forEach(function (node) {
+            if (node instanceof Element) {
+              stripMobileButtonAnimation(node);
+            }
+          });
+        });
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    }
+  });
+
+  window.addEventListener('resize', function () {
+    stripMobileButtonAnimation(document.body);
+  });
+
+  window.addEventListener('load', function () {
+    stripMobileButtonAnimation(document.body);
+  });
+})();
+</script>
+
+<script>
+let selectedId = null;
+
+document.addEventListener("DOMContentLoaded", function () {
+
+document.querySelectorAll(".btn-detail").forEach(function (btn) {
+btn.addEventListener("click", function () {
+  const row = btn.closest("tr");
+  selectedId = row.dataset.id;
+
+  let json = {};
+  try {
+    json = JSON.parse(row.dataset.json);
+  } catch (e) {
+    alert("데이터를 불러올 수 없습니다.");
+    return;
+  }
+
+  const get = key => json[key] || '';
+  const createdAtRaw = row.dataset.created || '';
+  const createdDatePart = createdAtRaw.slice(0, 10);
+  const yymmdd = /^\d{4}-\d{2}-\d{2}$/.test(createdDatePart)
+    ? createdDatePart.slice(2).replace(/-/g, '')
+    : new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' }).slice(2).replace(/-/g, '');
+
+  const businessFields = [
+    get('business_name'),
+    get('business_number'),
+    get('corporation_number'),
+    get('email')
+  ].filter(Boolean);
+  const businessBlock = businessFields.length ? businessFields.join('\n') + '\n\n' : '';
+
+  const addrList = Array.isArray(json.addresses)
+    ? json.addresses.map(addr => {
+        if (typeof addr === 'string') {
+          return addr.trim();
+        }
+
+        if (addr && typeof addr === 'object') {
+          const zip = String(addr.zip || '').trim();
+          const basic = String(addr.basic || '').trim();
+          const detail = String(addr.detail || '').trim();
+
+          const addressText = [basic, detail].filter(Boolean).join(' ');
+          return zip ? `[${zip}] ${addressText}`.trim() : addressText;
+        }
+
+        return '';
+      }).filter(Boolean)
+    : [];
+  const addressBlock = addrList.length ? addrList.join('\n') + '\n------------------------------\n' : '';
+
+  const products = Array.isArray(json.products) ? json.products : [];
+  const productBlocks = products.map((p, idx) => {
+    const block = [];
+
+    block.push(p.label || `제품정보${idx + 1}`);
+    if (p.name) block.push(p.name);
+    if (p.model) block.push(p.model);
+    if (p.color) block.push(p.color);
+
+    const regCombo = [p.regulation, p.contract, p.management].filter(Boolean).join('/');
+    if (regCombo) block.push(regCombo);
+
+    if (p.promotion) block.push(p.promotion);
+    if (p.rental_fee) block.push(`${p.rental_fee}원`);
+
+    if (p.pre_visit === true) block.push("사전답사 요청");
+    if (p.hard_construction === true) block.push("난공사 요청");
+    if (p.product_collect === true) block.push("기존 제품 수거");
+    if (p.self_receipt === true) block.push("자체접수");
+
+    if (p.other_company_info) {
+      block.push("타사정보");
+
+      if (typeof p.other_company_info === 'string') {
+        block.push(p.other_company_info);
+      } else if (typeof p.other_company_info === 'object') {
+        const oc = p.other_company_info;
+
+        const line1 = [oc.brand, oc.install_year, oc.type, oc.kind, oc.install].filter(Boolean).join('/');
+        if (line1) block.push(line1);
+
+        if (oc.watermark) block.push(`물마크: ${oc.watermark}`);
+        if (oc.water) block.push(oc.water);
+      }
+    }
+
+    return block.join('\n');
+  });
+
+  const specialNote = get('special_note');
+  const specialBlock = `------------------------------\n특이사항\n${specialNote}`;
+
+  const finalText =
+`$${yymmdd}
+${get('brand')}
+${get('customer_type')}
+
+${businessBlock}${get('customer_name')}
+${get('birth_date')}
+${get('contact')}
+${get('payment_info')}
+${addressBlock}${productBlocks.join('\n\n')}
+${specialBlock}`;
+
+  document.getElementById("detailOutput").textContent = finalText.trim();
+  bootstrap.Modal.getOrCreateInstance(document.getElementById("detailModal")).show();
+});
+});
+
+document.getElementById("modalDeleteBtn").addEventListener("click", function () {
+  if (!selectedId || !confirm("정말 삭제하시겠습니까?")) return;
+
+  fetch("delete_entry.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id: selectedId })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      const row = document.querySelector(`tr[data-id="${selectedId}"]`);
+      if (row) row.remove();
+
+      const card = document.querySelector(`.mobile-card[data-id="${selectedId}"]`);
+      if (card) card.remove();
+
+      bootstrap.Modal.getOrCreateInstance(document.getElementById("detailModal")).hide();
+    } else {
+      alert("삭제 실패: " + (data.error || "알 수 없는 오류"));
+    }
+  })
+  .catch(() => alert("서버 오류가 발생했습니다."));
+});
+});
+
+document.addEventListener('submit', (e) => {
+  const form = e.target.closest('form.submission-pagejump');
+  if (!form) return;
+
+  e.preventDefault();
+
+  const total = parseInt(form.dataset.total || '1', 10) || 1;
+  const input = form.querySelector('input[name="page_jump"]');
+  let p = parseInt((input?.value || '').trim(), 10);
+
+  if (!p || p < 1) p = 1;
+  if (p > total) p = total;
+
+  const qs = new URLSearchParams(window.location.search);
+  qs.set('page', String(p));
+
+  const base = window.location.pathname;
+  window.location.href = base + '?' + qs.toString();
+});
+
+(function initMobileSearchCollapse(){
+  const collapseEl = document.getElementById('searchCollapse');
+  const btn = document.getElementById('searchCollapseBtn');
+  if (!collapseEl || !btn || !window.bootstrap) return;
+
+  const isMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+  if (!isMobile) return;
+
+  const saved = sessionStorage.getItem('submission_search_collapsed');
+  const collapsed = (saved === '1' || saved === null);
+
+  const inst = bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false });
+
+  const setLabel = (expanded) => {
+    btn.textContent = expanded ? '접기 ▲' : '펼치기 ▼';
+    btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  };
+
+  if (collapsed) {
+    inst.hide();
+    setLabel(false);
+  } else {
+    inst.show();
+    setLabel(true);
+  }
+
+  document.documentElement.classList.remove('search-pre-collapsed');
+
+  collapseEl.addEventListener('shown.bs.collapse', () => {
+    sessionStorage.setItem('submission_search_collapsed', '0');
+    setLabel(true);
+  });
+
+  collapseEl.addEventListener('hidden.bs.collapse', () => {
+    sessionStorage.setItem('submission_search_collapsed', '1');
+    setLabel(false);
+  });
+})();
+
+window.toggleSubmissionCard = function(cardEl){
+  if (!cardEl) return;
+  const isOpen = cardEl.classList.toggle('is-open');
+  cardEl.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+};
+
+window.openSubmissionDetailFromCard = function(btn){
+  const card = btn.closest('.mobile-card');
+  if (!card) return;
+
+  const id = card.getAttribute('data-id') || '';
+  const jsonStr = card.getAttribute('data-json') || '';
+
+  selectedId = id;
+
+  let json = {};
+  try {
+    json = JSON.parse(jsonStr);
+  } catch (e) {
+    alert("데이터를 불러올 수 없습니다.");
+    return;
+  }
+
+  const get = key => json[key] || '';
+  const createdAtRaw = card.getAttribute('data-created') || '';
+  const createdDatePart = createdAtRaw.slice(0, 10);
+  const yymmdd = /^\d{4}-\d{2}-\d{2}$/.test(createdDatePart)
+    ? createdDatePart.slice(2).replace(/-/g, '')
+    : new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' }).slice(2).replace(/-/g, '');
+
+  const businessFields = [
+    get('business_name'),
+    get('business_number'),
+    get('corporation_number'),
+    get('email')
+  ].filter(Boolean);
+  const businessBlock = businessFields.length ? businessFields.join('\n') + '\n\n' : '';
+
+  const addrList = Array.isArray(json.addresses)
+    ? json.addresses.map(addr => {
+        if (typeof addr === 'string') {
+          return addr.trim();
+        }
+
+        if (addr && typeof addr === 'object') {
+          const zip = String(addr.zip || '').trim();
+          const basic = String(addr.basic || '').trim();
+          const detail = String(addr.detail || '').trim();
+
+          const addressText = [basic, detail].filter(Boolean).join(' ');
+          return zip ? `[${zip}] ${addressText}`.trim() : addressText;
+        }
+
+        return '';
+      }).filter(Boolean)
+    : [];
+  const addressBlock = addrList.length ? addrList.join('\n') + '\n------------------------------\n' : '';
+
+  const products = Array.isArray(json.products) ? json.products : [];
+  const productBlocks = products.map((p, idx) => {
+    const block = [];
+
+    block.push(p.label || `제품정보${idx + 1}`);
+    if (p.name) block.push(p.name);
+    if (p.model) block.push(p.model);
+    if (p.color) block.push(p.color);
+
+    const regCombo = [p.regulation, p.contract, p.management].filter(Boolean).join('/');
+    if (regCombo) block.push(regCombo);
+
+    if (p.promotion) block.push(p.promotion);
+    if (p.rental_fee) block.push(`${p.rental_fee}원`);
+
+    if (p.pre_visit === true) block.push("사전답사 요청");
+    if (p.hard_construction === true) block.push("난공사 요청");
+    if (p.product_collect === true) block.push("기존 제품 수거");
+    if (p.self_receipt === true) block.push("자체접수");
+
+    if (p.other_company_info) {
+      block.push("타사정보");
+
+      if (typeof p.other_company_info === 'string') {
+        block.push(p.other_company_info);
+      } else if (typeof p.other_company_info === 'object') {
+        const oc = p.other_company_info;
+
+        const line1 = [oc.brand, oc.install_year, oc.type, oc.kind, oc.install].filter(Boolean).join('/');
+        if (line1) block.push(line1);
+
+        if (oc.watermark) block.push(`물마크: ${oc.watermark}`);
+        if (oc.water) block.push(oc.water);
+      }
+    }
+
+    return block.join('\n');
+  });
+
+  const specialNote = get('special_note');
+  const specialBlock = `------------------------------\n특이사항\n${specialNote}`;
+
+  const finalText =
+`$${yymmdd}
+${get('brand')}
+${get('customer_type')}
+
+${businessBlock}${get('customer_name')}
+${get('birth_date')}
+${get('contact')}
+${get('payment_info')}
+${addressBlock}${productBlocks.join('\n\n')}
+${specialBlock}`;
+
+  document.getElementById("detailOutput").textContent = finalText.trim();
+  bootstrap.Modal.getOrCreateInstance(document.getElementById("detailModal")).show();
+};
+</script>
+
+<footer class="custom-footer">
+  <div class="footer-container">
+    <!-- ✅ 모바일: 위아래 구성 + 가운데 정렬 -->
+    <div class="footer-mobile">
+      <p class="fw-bold mb-2">◎ 에러 / 문의 / 건의사항 이용방법</p>
+      <p class="mb-3">
+        <a href="/suggestion_board.php">문의 및 건의사항 게시판</a> 이용
+      </p>
+      <p>© 2026 All rights reserved.</p>
+    </div>
+
+    <!-- ✅ 웹: 전부 한 줄 -->
+<div class="footer-desktop">
+  <div>
+    ◎ 에러 / 문의 / 건의사항 이용방법 &nbsp;&nbsp; | &nbsp;&nbsp;
+    <a href="/suggestion_board.php">문의 및 건의사항 게시판</a> 이용
+  </div>
+  <div style="margin-top: 8px;">
+    © 2026 All rights reserved.
+  </div>
+</div>
+</footer>
+
+<style>
+.custom-footer {
+  background: #ffffff;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  font-size: 14px;
+  color: #333;
+}
+
+.custom-footer a {
+  color: #007bff; /* 원하는 강조 색상으로 바꿔도 됨 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+.footer-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.footer-mobile {
+  display: block;
+}
+
+.footer-desktop {
+  display: none;
+}
+
+.footer-list {
+  list-style-position: inside;
+  padding-left: 0;
+  margin: 0 auto;
+  display: inline-block;
+  text-align: center;
+}
+
+@media (min-width: 992px) {
+  .footer-mobile {
+    display: none;
+  }
+  .footer-desktop {
+    display: block;
+  }
+}
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+</body>
+</html>

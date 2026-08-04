@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상세 - ALL & UP</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="./assets/style/button_style.css">
+<link rel="stylesheet" href="./assets/style/button_animation.css">
+<style>body{font-family:'cafe',sans-serif;background:#f5f7fa;} .card-box{background:#fff;border-radius:0.75rem;padding:1.25rem;box-shadow:0 0 30px rgba(0,0,0,0.1);margin-bottom:1rem;}</style>
+</head>
+<body>
+
+<div class="container-fluid py-4">
+<!-- ✅ 필터 영역 -->
+<div class="card-box details-page-shell">
+    <h5 class="card-title details-page-title d-none d-md-block">제품비교</h5>
+
+<div class="mobile-section-card mobile-search-section">
+    <h5 class="card-title mobile-section-title d-md-none">검색</h5>
+
+<div class="d-flex align-items-end filter-group gap-3 flex-wrap">
+
+<!-- 제품군 (드롭다운처럼 보이게) -->
+<div class="d-flex flex-column align-self-end position-relative filter-item filter-item-product" style="margin-bottom: 8px; width: 180px;">
+  <label class="form-label mb-1">제품군</label>
+  <button id="productDropdownToggle" class="form-select text-start" type="button">전체</button>
+  <div id="productDropdownPopup" style="
+    display: none;
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    z-index: 1000;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    width: 200px;
+    max-height: min(420px, 70vh);
+    overflow: hidden;
+    padding: 10px;
+  ">
+    <div id="filterProductOptions" style="
+      max-height: min(330px, 52vh);
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding-right: 4px;
+    "></div>
+    <button id="applyProductFilter" class="btn btn-sm btn-primary w-100 mt-2 btn-animate">적용</button>
+  </div>
+</div>
+
+<!-- 관리주기 -->
+<div class="d-flex flex-column align-self-end filter-item filter-item-period" style="margin-bottom: 8px;">
+    <label class="form-label mb-1">관리주기</label>
+    <select id="filterPeriod" class="form-select">
+        <option value="">전체</option>
+    </select>
+</div>
+
+<!-- 렌탈료 필터 박스 -->
+<div class="border rounded p-2 rental-filter-box filter-item">
+    <label class="form-label mb-1">렌탈료 검색</label>
+    <div class="d-flex align-items-center gap-2 rental-inline">
+        <select id="filterContract" class="form-select rental-contract">
+            <option value="">약정 선택 후 렌탈료 입력</option>
+            <option value="3년">3년</option>
+            <option value="4년">4년</option>
+            <option value="5년">5년</option>
+            <option value="6년">6년</option>
+            <option value="7년">7년</option>
+            <option value="9년">9년</option>
+        </select>
+        <input type="text" id="filterMin" class="form-control rental-min" placeholder="최소 렌탈료" autocomplete="off">
+        <input type="text" id="filterMax" class="form-control rental-max" placeholder="최대 렌탈료" autocomplete="off">
+    </div>
+</div>
+
+<!-- 키워드 + 버튼 -->
+<div class="d-flex flex-column align-self-end filter-item filter-item-keyword" style="margin-bottom: 8px; flex: 1; min-width: 260px;">
+    <label class="form-label mb-1">키워드</label>
+
+    <div class="d-flex align-items-center gap-2 keyword-inline">
+        <input type="text" id="filterKeyword" class="form-control keyword-input" placeholder="상품명 또는 모델명" autocomplete="off">
+
+        <div class="keyword-button-row">
+            <button id="resetFilter" type="button" class="btn details-outline-btn details-btn-reset btn-animate keyword-btn">
+                <span class="btn-inline-icon-wrap">
+                    <img src="./assets/webimage/button/reset.png" alt="" class="btn-inline-icon">
+                    <span>전체 초기화</span>
+                </span>
+            </button>
+
+            <button id="applyFilter" type="button" class="btn details-outline-btn details-btn-filter btn-animate keyword-btn">
+                <span class="btn-inline-icon-wrap">
+                    <img src="./assets/webimage/button/filter.png" alt="" class="btn-inline-icon">
+                    <span>필터 적용</span>
+                </span>
+            </button>
+        </div>
+
+        <button id="resetHeaderFilter" type="button" class="btn details-outline-btn details-btn-reset btn-animate keyword-btn">
+            <span class="btn-inline-icon-wrap">
+                <img src="./assets/webimage/button/reset.png" alt="" class="btn-inline-icon">
+                <span>헤더필터 초기화</span>
+            </span>
+        </button>
+    </div>
+</div>
+    </div>
+</div>
+
+<!-- ✅ 테이블 영역 -->
+<div id="mobileView" class="d-none">
+  <div class="mobile-section-card mobile-sort-filter-section">
+    <h5 class="card-title mobile-section-title">필터&amp;정렬</h5>
+
+    <div class="mobile-control-row">
+      <div class="mobile-control-label">정렬</div>
+      <div class="mobile-control-body">
+        <div class="mobile-sort-inline">
+          <select id="mobileSortField" class="form-select" style="width:160px;">
+            <option value="fee">렌탈료</option>
+            <option value="sup">지원금</option>
+            <option value="name">상품명</option>
+          </select>
+
+          <button id="mobileSortAsc" type="button" class="btn details-outline-btn details-btn-sort btn-animate">
+            <span class="btn-inline-icon-wrap">
+              <img src="./assets/webimage/button/sort.png" alt="" class="btn-inline-icon">
+              <span>오름차순</span>
+            </span>
+          </button>
+
+          <button id="mobileSortDesc" type="button" class="btn details-outline-btn details-btn-sort btn-animate">
+            <span class="btn-inline-icon-wrap">
+              <img src="./assets/webimage/button/sort.png" alt="" class="btn-inline-icon">
+              <span>내림차순</span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-control-row">
+      <div class="mobile-control-label">약정기간</div>
+      <div class="mobile-control-body">
+        <ul class="nav nav-pills mb-0" id="contractTabs" role="tablist"></ul>
+      </div>
+    </div>
+
+    <div class="mobile-control-row">
+      <div class="mobile-control-label">필터설정</div>
+      <div class="mobile-control-body">
+        <div class="d-flex gap-2 align-items-center mobile-filter-button-row">
+          <button id="mOpenBrand" type="button" class="btn details-outline-btn details-btn-mobile-filter btn-animate mobile-filter-equal-btn">
+            <span class="btn-inline-icon-wrap">
+              <span>브랜드</span>
+            </span>
+          </button>
+
+          <button id="mOpenRule" type="button" class="btn details-outline-btn details-btn-mobile-filter btn-animate mobile-filter-equal-btn">
+            <span class="btn-inline-icon-wrap">
+              <span>규정</span>
+            </span>
+          </button>
+
+          <button id="mOpenManage" type="button" class="btn details-outline-btn details-btn-mobile-filter btn-animate mobile-filter-equal-btn">
+            <span class="btn-inline-icon-wrap">
+              <span>관리</span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="mobileFilterPopup" style="
+      display:none;
+      position:fixed;
+      top: 8px;
+      left: 8px;
+      z-index: 2000;
+      background: #fff;
+      border: 1px solid #ccc;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.18);
+      width: 320px;
+      max-width: calc(100vw - 16px);
+      padding: 10px;
+      border-radius: 12px;
+
+      max-height: calc(100dvh - 16px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    ">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="fw-bold" id="mPopupTitle">필터</div>
+        <button type="button" class="btn btn-sm btn-outline-secondary" id="mPopupClose">닫기</button>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="fw-semibold" id="mPopupSubTitle">항목</div>
+        <label class="small m-0"><input type="checkbox" id="mPopupAll"> 전체</label>
+      </div>
+
+      <input type="text" id="mPopupSearch" class="form-control form-control-sm mt-1" placeholder="검색..." autocomplete="off">
+
+      <div id="mPopupOptions" style="max-height:240px; overflow:auto; border:1px solid #eee; border-radius:10px; padding:6px; margin-top:6px;"></div>
+
+      <button id="mPopupApply" class="btn btn-sm btn-primary w-100 mt-2">적용</button>
+    </div>
+  </div>
+
+  <div class="mobile-results-section">
+    <div id="mobileCards"></div>
+
+    <div class="text-center my-3">
+      <button id="mobileLoadMore" class="btn btn-outline-primary btn-sm d-none">더보기</button>
+    </div>
+  </div>
+</div>
+
+<button id="mobileScrollTopBtn" type="button" class="details-scroll-top-btn" aria-label="최상단 이동">↑</button>
+
+<div id="dataTable"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script src="https://unpkg.com/tabulator-tables@6.2.1/dist/js/tabulator.min.js"></script>
+<script>
+const allowedBrandList = ["청호","코웨이","SK","쿠쿠","LG","웰스","현대","세스코"];
+const isBrandMasterUser = false;
+const allowedBrandSet = new Set(
+    (Array.isArray(allowedBrandList) ? allowedBrandList : []).map(v => String(v || "").trim())
+);
+
+function filterWorksheetRowsByBrandAccess(rows) {
+    if (!Array.isArray(rows)) return [];
+
+    if (isBrandMasterUser) {
+        return rows;
+    }
+
+    if (allowedBrandSet.size === 0) {
+        return [];
+    }
+
+    return rows.filter(row => {
+        const brand = String((row && row["브랜드"]) || "").trim();
+        return allowedBrandSet.has(brand);
+    });
+}
+
+const columns = [
+    "제품군", "브랜드", "상품명", "모델명", "규정",
+    "3년 관리", "3년 렌탈료", "3년 지원금",
+    "4년 관리", "4년 렌탈료", "4년 지원금",
+    "5년 관리", "5년 렌탈료", "5년 지원금",
+    "6년 관리", "6년 렌탈료", "6년 지원금",
+    "7년 관리", "7년 렌탈료", "7년 지원금",
+    "9년 관리", "9년 렌탈료", "9년 지원금"
+];
+
+let worksheetData = [];
+let currentSort = { column: null, order: 'asc' };
+let headerFilterMap = {};  // ✅ key: column name, value: array of checked values
+let currentFilterColumn = null;
+let table;
+
+// ✅ Tabulator 컬럼 정의를 보관(모바일 → PC 전환 시 Tabulator 초기화에 필요)
+let lastTabulatorColumns = null;
+
+// ✅ 모바일 전용: 약정 탭 + 카드 렌더링
+const contractYears = ["3년", "4년", "5년", "6년", "7년", "9년"];
+let mobileSelectedYear = "5년";
+let mobilePage = 1;
+const mobilePageSize = 50;
+
+// ✅ 모바일 정렬/필터 상태(PC에 영향 없음)
+let mobileSortField = "fee";
+let mobileSortDir = "asc";
+
+// ✅ 모바일 전용 필터(PC headerFilterMap과 분리)
+let mobileHeaderFilterMap = {}; // key: "브랜드", "규정", "5년 관리" 형태
+
+function mobileManageKey() {
+  return `${mobileSelectedYear} 관리`;
+}
+
+function parseNum(val) {
+  const s = String(val ?? "").replace(/,/g, "").trim();
+  if (s === "") return null;
+  const n = parseFloat(s);
+  return isNaN(n) ? null : n;
+}
+
+function sortMobileData(rows) {
+  const year = mobileSelectedYear;
+
+  function getSortVal(row) {
+    if (mobileSortField === "name") {
+      const s = (row["상품명"] || "").toString().trim();
+      return s === "" ? null : s;
+    }
+    const col = (mobileSortField === "fee") ? `${year} 렌탈료` : `${year} 지원금`;
+    return parseNum(row[col]);
+  }
+
+  // ✅ 1) 빈값(null/empty)은 따로 모아서 "항상 맨 아래"로 보냄
+  const withIdx = rows.map((r, i) => ({ r, i, v: getSortVal(r) }));
+  const nonEmpty = withIdx.filter(x => x.v !== null);
+  const empty = withIdx.filter(x => x.v === null);
+
+  // ✅ 2) nonEmpty만 정렬 (동점일 때는 원래 순서 유지)
+  nonEmpty.sort((a, b) => {
+    if (mobileSortField === "name") {
+      const r = String(a.v).localeCompare(String(b.v), "ko");
+      if (r !== 0) return (mobileSortDir === "asc") ? r : -r;
+      return a.i - b.i;
+    }
+
+    const r = a.v - b.v;
+    if (r !== 0) return (mobileSortDir === "asc") ? r : -r;
+    return a.i - b.i;
+  });
+
+  // ✅ 3) 마지막에 empty를 그대로 붙임 (정렬 제외)
+  return nonEmpty.map(x => x.r).concat(empty.map(x => x.r));
+}
+
+let currentMobileFilterKey = null;
+
+function renderMobileFilterOptions(type) {
+  let key = "";
+  let title = "";
+
+  if (type === "brand") {
+    key = "브랜드";
+    title = "브랜드";
+  } else if (type === "rule") {
+    key = "규정";
+    title = "규정";
+  } else if (type === "manage") {
+    key = mobileManageKey();
+    title = `${mobileSelectedYear} 관리`;
+  } else {
+    return;
+  }
+
+  currentMobileFilterKey = key;
+
+  // 1) 현재 컬럼의 "전체 값 목록"(PC처럼 전체는 보여주되, 불가 값은 흐리게)
+  const allValues = [...new Set(
+    worksheetData.map(r => (r[key] ?? "").toString().trim()).filter(v => v !== "")
+  )].sort((a, b) => a.localeCompare(b, "ko"));
+
+  // 2) "다른 필터들"만 적용된 상태에서 가능한 값(availableValues) 계산
+  const originalMap = mobileHeaderFilterMap;
+  const tempMap = Object.assign({}, mobileHeaderFilterMap);
+  delete tempMap[key];
+
+  // filterRow()를 그대로 재사용하기 위해 잠깐 치환 후 즉시 복구
+  mobileHeaderFilterMap = tempMap;
+
+  const filteredRows = worksheetData.filter(row => {
+    return filterRow(row);
+  });
+
+  mobileHeaderFilterMap = originalMap;
+
+  const availableValues = new Set(
+    filteredRows
+      .map(r => (r[key] ?? "").toString().trim())
+      .filter(v => v !== "")
+  );
+
+  // 3) 팝업 렌더
+  const selected = originalMap[key] || [];
+
+  $("#mPopupTitle").text(title);
+  $("#mPopupSubTitle").text(title);
+
+  const $opts = $("#mPopupOptions").empty();
+
+  allValues.forEach(v => {
+    const isAvailable = availableValues.has(v);
+    const isChecked = selected.includes(v);
+
+    const dimStyle = isAvailable ? "" : 'style="opacity:0.4;"';
+
+    $opts.append(
+      `<div ${dimStyle} title="${v}">
+        <label class="m-0">
+          <input class="me-2 mPopupChk" type="checkbox" value="${v}" ${isChecked ? "checked" : ""}>
+          ${v}
+        </label>
+      </div>`
+    );
+  });
+
+  // 4) 전체선택 체크 상태(PC처럼 전체값 기준)
+  const total = $("#mPopupOptions input.mPopupChk").length;
+  const checked = $("#mPopupOptions input.mPopupChk:checked").length;
+  $("#mPopupAll").prop("checked", total > 0 && total === checked);
+
+  $("#mPopupSearch").val("");
+}
+
+function isMobileView() {
+  return window.matchMedia("(max-width: 768px)").matches;
+}
+
+function getCell(row, key) {
+  const v = row[key];
+  return (v === undefined || v === null) ? "" : String(v).trim();
+}
+
+function getYearKey(year, suffix) {
+  return `${year} ${suffix}`;
+}
+
+function renderMobileTabs() {
+  const $tabs = $("#contractTabs").empty();
+
+  contractYears.forEach((y) => {
+    const active = (y === mobileSelectedYear) ? "active" : "";
+    $tabs.append(`
+      <li class="nav-item" role="presentation">
+        <button class="nav-link ${active}" type="button" data-year="${y}">${y}</button>
+      </li>
+    `);
+  });
+}
+
+function buildMobileCard(row, idx) {
+  const product = getCell(row, "제품군");
+  const brand   = getCell(row, "브랜드");
+  const name    = getCell(row, "상품명");
+  const model   = getCell(row, "모델명");
+  const rule    = getCell(row, "규정"); // ✅ 공통(한 번만 표시)
+
+  const manage = getCell(row, getYearKey(mobileSelectedYear, "관리"));
+  const fee    = getCell(row, getYearKey(mobileSelectedYear, "렌탈료"));
+  const sup    = getCell(row, getYearKey(mobileSelectedYear, "지원금"));
+
+  const collapseId = `mcard_${idx}`;
+
+  const otherLines = contractYears
+    .filter(y => y !== mobileSelectedYear)
+    .map(y => {
+      const m = getCell(row, getYearKey(y, "관리"));
+      const f = getCell(row, getYearKey(y, "렌탈료"));
+      const s = getCell(row, getYearKey(y, "지원금"));
+
+      if (!m && !f && !s) return "";
+
+      return `
+        <div class="d-flex justify-content-between align-items-start py-1 border-top">
+          <div class="fw-bold" style="min-width:48px;">${y}</div>
+          <div class="flex-grow-1 text-end">
+            <div class="small text-muted">${m ? `관리: ${m}` : ""}</div>
+            <div>${f ? `렌탈료: ${f}` : ""}</div>
+            <div>${s ? `지원금: ${s}` : ""}</div>
+          </div>
+        </div>
+      `;
+    })
+    .filter(html => html !== "")
+    .join("");
+
+  const row1Brand  = brand ? brand : "";
+  const row1Product = product ? product : "분류없음";
+
+  return `
+    <div class="card mb-2" style="border:1px solid #e6e6e6; border-radius:12px;">
+      <div class="card-body p-3">
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <div class="small fw-bold">${row1Brand}</div>
+          <div class="small text-muted">${row1Product}</div>
+        </div>
+
+        <div class="fw-bold" style="font-size:1.05rem; line-height:1.25;">${name}</div>
+        <div class="text-muted small mb-2">${model}</div>
+
+        <div class="d-flex flex-wrap gap-3 align-items-start mb-1">
+          <div class="small">
+            <span class="text-muted">규정:</span>
+            <span class="fw-bold">${rule}</span>
+          </div>
+          <div class="small">
+            <span class="text-muted">${mobileSelectedYear} 관리:</span>
+            <span class="fw-bold">${manage}</span>
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap gap-3 align-items-center">
+          <div class="small">
+            <span class="text-muted">${mobileSelectedYear} 렌탈료:</span>
+            <span class="fw-bold">${fee}</span>
+          </div>
+          <div class="small">
+            <span class="text-muted">${mobileSelectedYear} 지원금:</span>
+            <span class="fw-bold">${sup}</span>
+          </div>
+        </div>
+
+        <div class="mt-2">
+          <button class="btn details-outline-btn details-btn-card-toggle btn-animate w-100" type="button"
+            data-bs-toggle="collapse" data-bs-target="#${collapseId}">
+            <span class="btn-inline-icon-wrap">
+              <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
+              <span>다른 약정 보기</span>
+            </span>
+          </button>
+        </div>
+
+        <div class="collapse mt-2" id="${collapseId}">
+          <div class="border rounded p-2" style="background:#fafbfc;">
+            ${otherLines ? otherLines : `<div class="text-muted small">다른 약정 데이터가 없습니다.</div>`}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderMobileCards(sortedAll) {
+  if (!isMobileView()) return;
+
+  $("#mobileCards").empty();
+  $("#mobileLoadMore").addClass("d-none");
+
+  const maxCount = mobilePage * mobilePageSize;
+  const slice = sortedAll.slice(0, maxCount);
+
+  const html = slice.map((row, i) => buildMobileCard(row, i)).join("");
+  $("#mobileCards").html(html);
+
+  if (sortedAll.length > slice.length) {
+    $("#mobileLoadMore").removeClass("d-none");
+  }
+}
+
+function updateDetailsMobileBottomOffset() {
+  const body = document.body;
+  if (!body) return;
+
+  if (!isMobileView()) {
+    body.style.setProperty("--details-mobile-bottom-offset", "0px");
+    return;
+  }
+
+  let localBottomOffset = 0;
+
+  if (window.visualViewport) {
+    const vv = window.visualViewport;
+    const visibleBottom = vv.height + vv.offsetTop;
+    localBottomOffset = Math.max(0, window.innerHeight - visibleBottom);
+  }
+
+  let parentFrameOverlap = 0;
+
+  try {
+    if (window.parent && window.parent !== window && window.frameElement) {
+      const frameRect = window.frameElement.getBoundingClientRect();
+
+      let parentVisibleBottom = window.parent.innerHeight;
+      if (window.parent.visualViewport) {
+        parentVisibleBottom = window.parent.visualViewport.height + window.parent.visualViewport.offsetTop;
+      }
+
+      parentFrameOverlap = Math.max(0, frameRect.bottom - parentVisibleBottom);
+    }
+  } catch (e) {
+    parentFrameOverlap = 0;
+  }
+
+  const finalOffset = Math.max(localBottomOffset, parentFrameOverlap);
+  body.style.setProperty("--details-mobile-bottom-offset", Math.ceil(finalOffset) + "px");
+}
+
+function updateMobileScrollTopButton() {
+  const btn = document.getElementById("mobileScrollTopBtn");
+  if (!btn) return;
+
+  if (!isMobileView()) {
+    btn.classList.remove("show");
+    return;
+  }
+
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+  if (scrollTop > 260) {
+    btn.classList.add("show");
+  } else {
+    btn.classList.remove("show");
+  }
+}
+
+function syncDetailsMobileFloatingUi() {
+  updateDetailsMobileBottomOffset();
+  updateMobileScrollTopButton();
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const btn = document.getElementById("mobileScrollTopBtn");
+  if (!btn || btn.dataset.bound === "1") return;
+
+  btn.dataset.bound = "1";
+
+  btn.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+
+  syncDetailsMobileFloatingUi();
+});
+
+window.addEventListener("scroll", updateMobileScrollTopButton, { passive: true });
+
+window.addEventListener("resize", syncDetailsMobileFloatingUi);
+window.addEventListener("orientationchange", syncDetailsMobileFloatingUi);
+window.addEventListener("load", syncDetailsMobileFloatingUi);
+
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", syncDetailsMobileFloatingUi);
+  window.visualViewport.addEventListener("scroll", syncDetailsMobileFloatingUi);
+}
+
+try {
+  if (window.parent && window.parent !== window && window.parent.visualViewport) {
+    window.parent.visualViewport.addEventListener("resize", syncDetailsMobileFloatingUi);
+    window.parent.visualViewport.addEventListener("scroll", syncDetailsMobileFloatingUi);
+  }
+
+  if (window.parent && window.parent !== window) {
+    window.parent.addEventListener("resize", syncDetailsMobileFloatingUi);
+  }
+} catch (e) {
+}
+
+function initTabulatorIfNeeded() {
+  if (table) return;
+  if (!lastTabulatorColumns) return;
+  if (isMobileView()) return;
+
+  table = new Tabulator("#dataTable", {
+    data: [],
+    columns: lastTabulatorColumns,
+    height: "70vh",
+    layout: "fitColumns",
+    movableColumns: false,
+  });
+
+  table.on("cellClick", function(e, cell){
+    cell.getRow().getElement().classList.toggle("selected-row");
+
+    const text = cell.getValue();
+    const $tooltip = $('#cellTooltip');
+    $tooltip.text(text)
+      .css({
+        top: e.pageY + 10 + 'px',
+        left: e.pageX + 10 + 'px',
+        display: 'block'
+      });
+    setTimeout(() => $tooltip.hide(), 3000);
+  });
+}
+
+function applyUnifiedFilter() {
+  const filtered = worksheetData.filter(filterRow);
+
+  if (isMobileView()) {
+    // ✅ 모바일은 "전체 filtered"를 먼저 정렬한 결과를 기준으로 더보기(slice)만 적용
+    const sortedAll = sortMobileData(filtered);
+
+    renderMobileTabs();
+    renderMobileCards(sortedAll);
+
+    $("#mobileView").removeClass("d-none");
+    $("#dataTable").hide();
+  } else {
+    $("#mobileView").addClass("d-none");
+    $("#dataTable").show();
+
+    initTabulatorIfNeeded();
+    if (table) table.setData(filtered);
+  }
+}
+
+let _resizeTimer = null;
+$(window).on("resize", function () {
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(() => {
+    applyUnifiedFilter();
+  }, 150);
+});
+
+$(document).on("click", "#contractTabs .nav-link", function () {
+  mobileSelectedYear = $(this).data("year");
+
+  Object.keys(mobileHeaderFilterMap).forEach(k => {
+    if (k.endsWith(" 관리")) delete mobileHeaderFilterMap[k];
+  });
+
+  mobilePage = 1;
+  applyUnifiedFilter();
+});
+
+$(document).on("click", "#mobileLoadMore", function () {
+  mobilePage += 1;
+  applyUnifiedFilter();
+});
+
+$(document).on("change", "#mobileSortField", function () {
+  mobileSortField = $(this).val();
+  mobilePage = 1;
+  applyUnifiedFilter();
+});
+
+$(document).on("click", "#mobileSortAsc", function () {
+  mobileSortDir = "asc";
+  mobilePage = 1;
+  applyUnifiedFilter();
+});
+
+$(document).on("click", "#mobileSortDesc", function () {
+  mobileSortDir = "desc";
+  mobilePage = 1;
+  applyUnifiedFilter();
+});
+
+// 1. 분류용 배열
+const sortableColumns = [
+    "3년 렌탈료", "3년 지원금", "4년 렌탈료", "4년 지원금",
+    "5년 렌탈료", "5년 지원금", "6년 렌탈료", "6년 지원금",
+    "7년 렌탈료", "7년 지원금", "9년 렌탈료", "9년 지원금"
+];
+
+const filterPopupColumns = [
+    "브랜드", "규정",
+    "3년 관리", "4년 관리", "5년 관리",
+    "6년 관리", "7년 관리", "9년 관리"
+];
+
+function initializeKeywordAutocomplete() {
+    const $keyword = $("#filterKeyword");
+    if ($keyword.length === 0) return;
+
+    if ($keyword.data("ui-autocomplete")) {
+        $keyword.autocomplete("destroy");
+    }
+    $keyword.off(".keywordAutocomplete");
+
+    const seen = new Set();
+    const suggestions = worksheetData
+        .map(row => {
+            const name = String(row["상품명"] || "").trim();
+            const model = String(row["모델명"] || "").trim();
+
+            if (!name && !model) return null;
+
+            const label = model ? `${name}//${model}` : name;
+            const matchKey = `${name}${model}`.toLowerCase().replace(/[\s-]/g, '');
+
+            return {
+                label: label,
+                value: label,
+                matchKey: matchKey
+            };
+        })
+        .filter(item => {
+            if (!item) return false;
+            if (seen.has(item.label)) return false;
+            seen.add(item.label);
+            return true;
+        });
+
+    $keyword.autocomplete({
+        source: function (request, response) {
+            const term = String(request.term || "").toLowerCase().replace(/[\s-]/g, '');
+            const list = suggestions
+                .filter(item => term === "" || item.matchKey.includes(term))
+                .slice(0, 50);
+
+            response(list);
+        },
+        minLength: 1,
+        appendTo: "body",
+        position: {
+            my: "left top",
+            at: "left bottom",
+            collision: "flipfit"
+        },
+        select: function (event, ui) {
+            setTimeout(() => {
+                $("#filterKeyword").val(ui.item.value);
+                mobilePage = 1;
+                applyUnifiedFilter();
+            }, 10);
+        }
+    });
+
+    $keyword.on("focus.keywordAutocomplete", function () {
+        const value = this.value.trim();
+        if (value.length >= 1) {
+            $(this).autocomplete("search", value);
+        }
+    });
+}
+
+$(document).ready(function () {
+    fetch('./data/compare_ws.json', { credentials: "include", cache: "no-store" })
+        .then(res => res.json())
+        .then(data => {
+            // ✅ 서버가 이미 "컬럼명 기반 객체 배열"로 내려줌
+            // ✅ 지원금 컬럼은 로그인 사용자 기준 "최종값"만 내려옴(원본/차감규칙 미노출)
+            // ✅ details.php에서는 계산식은 건드리지 않고, 최종 응답 행만 브랜드 권한 기준으로 한 번 더 필터링
+            worksheetData = filterWorksheetRowsByBrandAccess(Array.isArray(data) ? data : []);
+            initializeKeywordAutocomplete();
+
+            function formatNumberWithCommas(val) {
+                return String(val || "").toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            function uncomma(val) {
+                return String(val || "").replace(/,/g, '');
+            }
+            $("#filterMin, #filterMax").on("input", function () {
+                const raw = uncomma(this.value);
+                if (raw === "" || isNaN(raw)) return;
+                this.value = formatNumberWithCommas(raw);
+            });
+
+            populateDropdowns();
+            $("#filterPeriod").html(`
+                <option value="">전체</option>
+                <option value="방문">방문</option>
+                <option value="셀프">셀프</option>
+            `);
+
+// 2. columns 배열 → Tabulator용 컬럼 정의
+const tabulatorColumns = columns.map((col, i) => {
+    const isLast = (i === columns.length - 1);
+    // 1) 정렬만 할 컬럼
+    if (sortableColumns.includes(col)) {
+        return {
+            title: col,
+            field: col,
+            headerSort: true,
+            ...(isLast ? {} : { width: getColWidth(i + 1, col) }),
+            cssClass: "tabulator-header-sortable",
+            headerHozAlign: "center",
+            // ✅ 지원금/렌탈료 모두 서버에서 최종 문자열로 내려옴(콤마 포함 가능)
+            sorter: function(a, b, aRow, bRow, column, dir) {
+                const colName = column.getField();
+                const aData = aRow.getData();
+                const bData = bRow.getData();
+
+                function getVal(rowData) {
+                    const raw = rowData[colName];
+                    if (raw === undefined || raw === null || String(raw).trim() === "") return null;
+                    const num = parseFloat(String(raw).replace(/,/g, ""));
+                    return isNaN(num) ? null : num;
+                }
+
+                let aVal = getVal(aData);
+                let bVal = getVal(bData);
+
+                if (aVal === null && bVal === null) return 0;
+                if (aVal === null) return dir === "asc" ? 1 : -1;
+                if (bVal === null) return dir === "asc" ? -1 : 1;
+
+                if (aVal === bVal) {
+                    const aName = aData["상품명"] || "";
+                    const bName = bData["상품명"] || "";
+                    return aName.localeCompare(bName, 'ko');
+                }
+
+                return aVal - bVal;
+            }
+        };
+    }
+    // 2) 필터 팝업만 할 컬럼
+    if (filterPopupColumns.includes(col)) {
+        return {
+            title: col,
+            field: col,
+            headerSort: false,
+            ...(isLast ? {} : { width: getColWidth(i + 1, col) }),
+            cssClass: "tabulator-header-filterable",
+            headerHozAlign: "center",
+            headerClick: function(e, column) {
+                // ⭐⭐⭐ 여기서 팝업 띄우기!
+                const colName = column.getDefinition().field.trim();
+
+                currentFilterColumn = colName;
+                const offset = $(column.getElement()).offset();
+                $("#headerFilterPopup").css({
+                    top: offset.top + $(column.getElement()).outerHeight(),
+                    left: offset.left,
+                    display: "block"
+                });
+
+                const allValues = [...new Set(
+                    worksheetData.map(row => (row[colName] ?? "").trim()).filter(v => v !== "")
+                )].sort((a, b) => a.localeCompare(b, 'ko'));
+
+                function getTextWidth(text, font) {
+                    const canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+                    const context = canvas.getContext("2d");
+                    context.font = font || "14px 'cafe', sans-serif";
+                    return context.measureText(text).width;
+                }
+                let maxTextWidth = 0;
+                allValues.forEach(val => {
+                    maxTextWidth = Math.max(maxTextWidth, getTextWidth(val));
+                });
+                const computedWidth = Math.ceil(maxTextWidth + 60); // 체크박스, 여백 포함
+                const popupWidth = Math.max(120, Math.min(computedWidth, 250)); // 최소, 최대
+                $("#headerFilterPopup").css("width", popupWidth + "px");
+
+                const filteredRows = worksheetData.filter(row => {
+                    const baseFiltered = filterRow(row);
+                    const headerFiltered = Object.entries(headerFilterMap)
+                        .filter(([key]) => key !== colName)
+                        .every(([key, allowed]) => allowed.includes((row[key] || "").trim()));
+                    return baseFiltered && headerFiltered;
+                });
+                const availableValues = new Set(filteredRows.map(row => (row[colName] ?? "").trim()));
+
+                const $options = $("#filterOptions").empty();
+                allValues.forEach(val => {
+                    const isAvailable = availableValues.has(val);
+                    const isChecked = (headerFilterMap[colName] || []).includes(val);
+                    const disabled = isAvailable ? "" : 'style="opacity: 0.4;"';
+
+                    $options.append(`
+                        <div ${disabled} title="${val}">
+                            <label style="display:block; margin:0;">
+                                <input type="checkbox" value="${val}" ${isChecked ? "checked" : ""}>
+                                ${val}
+                            </label>
+                        </div>
+                    `);
+                });
+
+                const allChecked = allValues.every(val =>
+                    (headerFilterMap[colName] || []).includes(val)
+                );
+                $("#checkAll").prop("checked", allChecked);
+
+                e.stopPropagation();
+            }
+        };
+    }
+    // 3) 나머지는 둘 다 없음
+    return {
+        title: col,
+        field: col,
+        headerSort: false,
+        ...(isLast ? {} : { width: getColWidth(i + 1, col) }),
+        headerHozAlign: "center",
+    };
+});
+
+            // ✅ Tabulator 컬럼 정의 저장
+            lastTabulatorColumns = tabulatorColumns;
+
+            // ✅ PC용 Tabulator는 여기서 바로 생성(PC에서 "아예 안 뜸" 방지)
+            table = new Tabulator("#dataTable", {
+                data: worksheetData,
+                columns: tabulatorColumns,
+                height: "70vh",
+                layout: "fitColumns",
+                movableColumns: false,
+            });
+
+            table.on("cellClick", function(e, cell){
+                cell.getRow().getElement().classList.toggle("selected-row");
+
+                const text = cell.getValue();
+                const $tooltip = $('#cellTooltip');
+                $tooltip.text(text)
+                    .css({
+                        top: e.pageY + 10 + 'px',
+                        left: e.pageX + 10 + 'px',
+                        display: 'block'
+                    });
+                setTimeout(() => $tooltip.hide(), 3000);
+            });
+
+            // ✅ 최초 1회: 뷰포트에 맞춰 렌더(모바일=카드, PC=Tabulator)
+            applyUnifiedFilter();
+        });
+
+// ✅ 필터 적용 버튼
+$("#applyFilter").on("click", () => {
+    // 🔸 선택된 제품군 값을 전역 변수에 저장
+    window.selectedProducts = $("input[name=productCheckbox]:checked").map(function () {
+        return this.value;
+    }).get();
+
+    const min = parseInt($("#filterMin").val().replace(/,/g, '')) || null;
+    const max = parseInt($("#filterMax").val().replace(/,/g, '')) || null;
+    const contract = $("#filterContract").val();
+
+    if (contract && min && max && min > max) {
+        alert("최소 렌탈료가 최대 렌탈료보다 클 수 없습니다.");
+        return; // ✅ 필터 실행 중단
+    }
+
+    mobilePage = 1;
+    applyUnifiedFilter();
+});
+
+// 제품군 전체선택 체크 동작
+$(document).on("change", "#productCheckAll", function () {
+    const checked = $(this).is(":checked");
+    $("input[name=productCheckbox]").prop("checked", checked);
+});
+
+// 제품군 필터 드롭다운 열기
+$("#productDropdownToggle").on("click", function (e) {
+    populateDropdowns("product");
+    $("#productDropdownPopup").toggle();
+    e.stopPropagation();
+});
+
+// 바깥 클릭 시 닫기 (이것만 남기세요!)
+$(document).on("click", function (e) {
+    if (!$(e.target).closest("#productDropdownPopup, #productDropdownToggle").length) {
+        $("#productDropdownPopup").hide();
+        // 선택값 저장, 텍스트 갱신, renderTable 등은 적용 버튼에서만!
+    }
+});
+
+// 적용 버튼 클릭 시 선택 저장 + 닫기 + 필터 적용
+$("#applyProductFilter").on("click", function () {
+    // 적용할 때만 체크박스 상태 저장
+    window.selectedProducts = $("input[name=productCheckbox]:checked").map(function () {
+        return this.value;
+    }).get();
+
+    const label = window.selectedProducts.length > 0
+        ? `제품군 (${window.selectedProducts.length})`
+        : "전체";
+
+    $("#productDropdownToggle").text(label);
+    $("#productDropdownPopup").hide();
+
+    mobilePage = 1;
+    applyUnifiedFilter();
+});
+
+    // ✅ 키워드 입력 후 Enter 누르면 필터 자동 적용
+$("#filterKeyword").on("keydown", function (e) {
+    if (e.key === "Enter") {
+        e.preventDefault(); // 폼 전송 방지
+
+const min = parseInt($("#filterMin").val().replace(/,/g, '')) || null;
+const max = parseInt($("#filterMax").val().replace(/,/g, '')) || null;
+
+        const contract = $("#filterContract").val();
+
+        if (contract && min && max && min > max) {
+            alert("최소 렌탈료가 최대 렌탈료보다 클 수 없습니다.");
+            return; // ✅ 필터 실행 중단
+        }
+
+        mobilePage = 1;
+        applyUnifiedFilter();
+    }
+});
+
+// ✅ 초기화 버튼 + 옵션 초기화
+    $("#resetFilter").on("click", () => {
+        location.reload();
+    });
+
+    $("#filterPeriod").on("change", () => {
+        populateDropdowns("period");
+        mobilePage = 1;
+        applyUnifiedFilter();
+    });
+
+    $("#resetHeaderFilter").on("click", () => {
+        headerFilterMap = {};
+        updateHeaderFilterStatus();
+        mobilePage = 1;
+        applyUnifiedFilter();
+    });
+
+// ✅ 검색 기능
+$("#headerFilterSearch").on("input", function () {
+    const keyword = $(this).val().toLowerCase();
+    $("#filterOptions div").each(function () {
+        const text = $(this).text().toLowerCase();
+        $(this).toggle(text.includes(keyword));
+    });
+});
+
+// ✅ 전체선택
+$("#checkAll").on("change", function () {
+    $("#filterOptions input[type=checkbox]").prop("checked", this.checked);
+});
+
+// ✅ 필터 적용
+$("#applyHeaderFilter").on("click", function () {
+    const selectedValues = $("#filterOptions input[type=checkbox]:checked").map(function () {
+        return this.value;
+    }).get();
+
+    // ✅ 기존 필터 누적 유지
+    if (selectedValues.length > 0) {
+        headerFilterMap[currentFilterColumn] = selectedValues;
+    } else {
+        delete headerFilterMap[currentFilterColumn];
+    }
+
+    updateHeaderFilterStatus();
+
+    mobilePage = 1;
+    applyUnifiedFilter();
+
+    $("#headerFilterPopup").hide();
+});
+
+// ✅ 외부 클릭 시 팝업 닫기
+$(document).on("click", function (e) {
+    if (!$(e.target).closest("#headerFilterPopup, th.filterable").length) {
+        $("#headerFilterPopup").hide();
+    }
+});
+});
+
+const columnMap = {
+    "제품군": 30, "브랜드": 29, "상품명": 1, "모델명": 2, "규정": 6,
+    "3년 관리": 8, "3년 렌탈료": 9, "3년 지원금": 10,
+    "4년 관리": 12, "4년 렌탈료": 13, "4년 지원금": 14,
+    "5년 관리": 16, "5년 렌탈료": 17, "5년 지원금": 18,
+    "6년 관리": 20, "6년 렌탈료": 21, "6년 지원금": 22,
+    "7년 관리": 24, "7년 렌탈료": 25, "7년 지원금": 26,
+    "9년 관리": 36, "9년 렌탈료": 37, "9년 지원금": 38
+};
+
+let _mobilePopupAnchor = null;
+
+function positionMobileFilterPopupByAnchor(anchorEl) {
+  const $pop = $("#mobileFilterPopup");
+  if (!anchorEl || $pop.length === 0) return;
+
+  const wasHidden = ($pop.css("display") === "none");
+  if (wasHidden) {
+    $pop.css({ visibility: "hidden", display: "block" });
+  }
+
+  const btnRect = anchorEl.getBoundingClientRect();
+  const popRect = $pop[0].getBoundingClientRect();
+
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const margin = 8;
+
+  let top = btnRect.bottom + 6;
+  let left = btnRect.right - popRect.width;
+
+  if (left < margin) left = margin;
+  if (left + popRect.width > vw - margin) left = vw - popRect.width - margin;
+
+  if (top + popRect.height > vh - margin) {
+    top = btnRect.top - popRect.height - 6;
+  }
+  if (top < margin) top = margin;
+
+  const maxH = vh - (margin * 2);
+  $pop.css({
+    top: `${Math.round(top)}px`,
+    left: `${Math.round(left)}px`,
+    maxHeight: `${Math.max(160, Math.floor(maxH))}px`
+  });
+
+  if (wasHidden) {
+    $pop.css({ visibility: "visible" });
+  }
+}
+
+function openMobileFilterPopup(type, anchorEl) {
+  _mobilePopupAnchor = anchorEl || null;
+
+  renderMobileFilterOptions(type);
+
+  const $pop = $("#mobileFilterPopup");
+  $pop.show();
+  positionMobileFilterPopupByAnchor(anchorEl);
+}
+
+$(document).on("click", "#mOpenBrand", function (e) {
+  openMobileFilterPopup("brand", this);
+  e.stopPropagation();
+});
+
+$(document).on("click", "#mOpenRule", function (e) {
+  openMobileFilterPopup("rule", this);
+  e.stopPropagation();
+});
+
+$(document).on("click", "#mOpenManage", function (e) {
+  openMobileFilterPopup("manage", this);
+  e.stopPropagation();
+});
+
+$(document).on("click", "#mPopupClose", function () {
+  $("#mobileFilterPopup").hide();
+  currentMobileFilterKey = null;
+  _mobilePopupAnchor = null;
+});
+
+$(document).on("input", "#mPopupSearch", function () {
+  const q = $(this).val().toLowerCase();
+  $("#mPopupOptions > div").each(function () {
+    $(this).toggle($(this).text().toLowerCase().includes(q));
+  });
+});
+
+$(document).on("change", "#mPopupAll", function () {
+  $("#mPopupOptions input.mPopupChk").prop("checked", this.checked);
+});
+
+$(document).on("click", "#mPopupApply", function () {
+  if (!currentMobileFilterKey) {
+    $("#mobileFilterPopup").hide();
+    return;
+  }
+
+  const sel = $(".mPopupChk:checked").map(function () { return this.value; }).get();
+
+  if (sel.length > 0) {
+    mobileHeaderFilterMap[currentMobileFilterKey] = sel;
+  } else {
+    delete mobileHeaderFilterMap[currentMobileFilterKey];
+  }
+
+  mobilePage = 1;
+  applyUnifiedFilter();
+
+  $("#mobileFilterPopup").hide();
+  currentMobileFilterKey = null;
+  _mobilePopupAnchor = null;
+});
+
+$(window).on("resize", function () {
+  if ($("#mobileFilterPopup").is(":visible") && _mobilePopupAnchor) {
+    positionMobileFilterPopupByAnchor(_mobilePopupAnchor);
+  }
+});
+
+$(document).on("click", function (e) {
+  if (!$(e.target).closest("#mobileFilterPopup, #mOpenBrand, #mOpenRule, #mOpenManage").length) {
+    $("#mobileFilterPopup").hide();
+    currentMobileFilterKey = null;
+    _mobilePopupAnchor = null;
+  }
+});
+
+function getColWidth(idx, col) {
+    if(idx === 1) return 140; // 제품군
+    if(idx === 2) return 60;  // 브랜드
+    if(idx === 3) return 180; // 상품명
+    if(idx === 4) return 140; // 모델명
+    if(idx === 5) return 90;  // 규정
+
+    if([6,9,12,15,18,21].includes(idx)) return 89;
+    if([7,8,10,11,13,14,16,17,19,20,22,23].includes(idx)) return 94;
+
+    return 120;
+}
+
+function filterRow(row) {
+    const selectedProducts = $("input[name=productCheckbox]:checked").map(function () {
+        return this.value;
+    }).get();
+
+    const period = $("#filterPeriod").val();
+    const contract = $("#filterContract").val();
+    const min = parseInt($("#filterMin").val().replace(/,/g, '')) || null;
+    const max = parseInt($("#filterMax").val().replace(/,/g, '')) || null;
+    const keyword = $("#filterKeyword").val().trim().toLowerCase().replace(/[\s-]/g, '');
+
+    if (contract && min && max && min > max) return false;
+
+    const rowProduct = row["제품군"] || "";
+    if (selectedProducts.length > 0 && !selectedProducts.includes(rowProduct)) return false;
+
+    if (period === "셀프") {
+        const allPeriods = [
+            row["3년 관리"], row["4년 관리"], row["5년 관리"],
+            row["6년 관리"], row["7년 관리"], row["9년 관리"]
+        ].join(" ");
+        if (!(allPeriods.includes("셀프") || allPeriods.includes("서비스프리"))) return false;
+    }
+
+    if (period === "방문") {
+        const allPeriods = [
+            row["3년 관리"], row["4년 관리"], row["5년 관리"],
+            row["6년 관리"], row["7년 관리"], row["9년 관리"]
+        ].join(" ");
+        if (allPeriods.includes("셀프") || allPeriods.includes("서비스프리")) return false;
+    }
+
+    if (keyword) {
+        const name = (row["상품명"] || "").toLowerCase().replace(/[\s-]/g, '');
+        const model = (row["모델명"] || "").toLowerCase().replace(/[\s-]/g, '');
+        if (!name.includes(keyword) && !model.includes(keyword)) return false;
+    }
+
+    if (contract && (min || max)) {
+        const feeCol = contract + " 렌탈료";
+        const raw = (row[feeCol] || "").replace(/,/g, '');
+        if (raw === "") return false;
+        const value = parseInt(raw, 10);
+        if (min && value < min) return false;
+        if (max && value > max) return false;
+    }
+
+    const activeHeaderMap = isMobileView() ? mobileHeaderFilterMap : headerFilterMap;
+    const headerFiltered = Object.entries(activeHeaderMap).every(([col, allowed]) => {
+        if (!allowed || allowed.length === 0) return true;
+        return allowed.includes((row[col] || "").trim());
+    });
+    if (!headerFiltered) return false;
+
+    return true;
+}
+
+function populateDropdowns(filterType = null) {
+    const productSet = new Set();
+    const selectedPeriod = $("#filterPeriod").val();
+    const selectedProducts = window.selectedProducts || [];
+
+    worksheetData.forEach(row => {
+        const product = row["제품군"];
+        const allPeriods = [
+            row["3년 관리"], row["4년 관리"], row["5년 관리"],
+            row["6년 관리"], row["7년 관리"], row["9년 관리"]
+        ].join(" ");
+
+        const isSelf = allPeriods.includes("셀프") || allPeriods.includes("서비스프리");
+
+        if (filterType === "period" && selectedPeriod === "셀프" && !isSelf) return;
+        if (filterType === "period" && selectedPeriod === "방문" && isSelf) return;
+
+        productSet.add(product);
+    });
+
+    const $productGroup = $("#filterProductOptions").empty();
+
+    const desiredOrder = [
+        "얼음냉온_데스크(직수)", "얼음냉정_데스크(직수)",
+        "얼음냉온_데스크(탱크)", "얼음냉정_데스크(탱크)",
+        "얼음냉온_스탠드(탱크)", "냉온_데스크(직수)",
+        "냉정_데스크(직수)", "냉온_데스크(탱크)",
+        "냉정_데스크(탱크)", "냉온_스탠드(직수)",
+        "냉정_스탠드(직수)", "냉온_스탠드(탱크)",
+        "온정_데스크(직수)", "정수_데스크(직수)",
+        "정수_데스크(탱크)", "냉온_빌트인", "냉정_빌트인",
+        "정수_빌트인", "커피", "비데", "청정기"
+    ];
+
+    const sortedProducts = [...productSet].sort((a, b) => {
+        if (a === "") return 1;
+        if (b === "") return -1;
+
+        const indexA = desiredOrder.indexOf(a);
+        const indexB = desiredOrder.indexOf(b);
+
+        if (indexA === -1 && indexB === -1) return a.localeCompare(b, 'ko');
+        if (indexA === -1) return 1;
+        if (indexB === -1) return -1;
+
+        return indexA - indexB;
+    });
+
+    $productGroup.append(`
+        <div>
+            <label>
+                <input type="checkbox" id="productCheckAll">
+                전체선택
+            </label>
+        </div>
+    `);
+
+    sortedProducts.forEach(p => {
+        const label = p === "" ? "분류없음" : p;
+        const checked = selectedProducts.includes(p) ? "checked" : "";
+        $productGroup.append(`
+            <div>
+                <label>
+                    <input type="checkbox" name="productCheckbox" value="${p}" ${checked}>
+                    ${label}
+                </label>
+            </div>
+        `);
+    });
+
+    const label = selectedProducts.length > 0 ? `제품군 (${selectedProducts.length})` : "전체";
+    $("#productDropdownToggle").text(label);
+
+    if (filterType !== "period") {
+        let hasSelf = false;
+
+        worksheetData.forEach(row => {
+            const allPeriods = [
+                row["3년 관리"], row["4년 관리"], row["5년 관리"],
+                row["6년 관리"], row["7년 관리"], row["9년 관리"]
+            ].join(" ");
+            if (allPeriods.includes("셀프") || allPeriods.includes("서비스프리")) hasSelf = true;
+        });
+
+        const $periodSelect = $("#filterPeriod");
+        const current = $periodSelect.val();
+        $periodSelect.html('<option value="">전체</option>');
+        if (hasSelf) $periodSelect.append(`<option value="셀프"${current === "셀프" ? " selected" : ""}>셀프</option>`);
+        $periodSelect.append(`<option value="방문"${current === "방문" ? " selected" : ""}>방문</option>`);
+    }
+}
+
+function updateHeaderFilterStatus() {
+    if (!table) return;
+
+    table.getColumns().forEach(col => {
+        const field = col.getField();
+        const colElem = col.getElement();
+        if (filterPopupColumns.includes(field)) {
+            const allValues = [...new Set(worksheetData.map(row => (row[field] ?? "").trim()).filter(v => v !== ""))];
+            const filterArr = headerFilterMap[field] || [];
+            if (filterArr.length > 0 && filterArr.length !== allValues.length) {
+                $(colElem).addClass("filtered");
+            } else {
+                $(colElem).removeClass("filtered");
+            }
+        }
+    });
+}
+
+</script>
+
+<!-- ✅ 셀 클릭 시 보여줄 툴팁 박스 -->
+<div id="cellTooltip" style="
+  position: absolute;
+  display: none;
+  z-index: 9999;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px 8px;
+  font-size: 14px;
+  max-width: 300px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+  white-space: normal;
+  word-break: break-word;
+"></div>
+
+<!-- 🔽 필터 팝업 (공통) -->
+<div id="headerFilterPopup" style="
+  position: absolute;
+  z-index: 9999;
+  display: none;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+  padding: 10px;
+  width: auto;
+  max-width: 250px;
+  min-width: 120px;
+  overflow-y: auto;
+  font-size: 14px;
+">
+  <input type="text" id="headerFilterSearch" class="form-control form-control-sm mb-2" placeholder="검색..." autocomplete="off">
+  <div><label><input type="checkbox" id="checkAll"> 전체선택</label></div>
+  <div id="filterOptions"></div>
+  <button id="applyHeaderFilter" class="btn btn-sm btn-primary w-100 mt-2 btn-animate">적용</button>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+(function () {
+  function stripMobileButtonAnimation(root) {
+    if (!(window.matchMedia && window.matchMedia('(max-width: 768px)').matches)) return;
+
+    const targets = [];
+
+    if (root instanceof Element) {
+      if (root.matches('.btn-animate')) {
+        targets.push(root);
+      }
+      root.querySelectorAll('.btn-animate').forEach(function (el) {
+        targets.push(el);
+      });
+    } else {
+      document.querySelectorAll('.btn-animate').forEach(function (el) {
+        targets.push(el);
+      });
+    }
+
+    targets.forEach(function (btn) {
+      btn.classList.remove('btn-animate');
+
+      if (btn.dataset.mobileAnimBound === '1') return;
+      btn.dataset.mobileAnimBound = '1';
+
+      btn.addEventListener('click', function () {
+        try { btn.blur(); } catch (e) {}
+      }, true);
+
+      btn.addEventListener('touchend', function () {
+        try { btn.blur(); } catch (e) {}
+      }, { passive: true });
+    });
+  }
+
+  window.stripDetailsMobileButtonAnimation = stripMobileButtonAnimation;
+
+  document.addEventListener('DOMContentLoaded', function () {
+    stripMobileButtonAnimation(document.body);
+
+    if (window.MutationObserver) {
+      const observer = new MutationObserver(function (mutations) {
+        if (!(window.matchMedia && window.matchMedia('(max-width: 768px)').matches)) return;
+
+        mutations.forEach(function (mutation) {
+          mutation.addedNodes.forEach(function (node) {
+            if (node instanceof Element) {
+              stripMobileButtonAnimation(node);
+            }
+          });
+        });
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    }
+  });
+
+  window.addEventListener('resize', function () {
+    stripMobileButtonAnimation(document.body);
+  });
+
+  window.addEventListener('load', function () {
+    stripMobileButtonAnimation(document.body);
+  });
+})();
+</script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+</body>
+</html>

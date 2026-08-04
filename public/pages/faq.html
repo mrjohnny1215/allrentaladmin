@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ - ALL & UP</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="./assets/style/button_style.css">
+<link rel="stylesheet" href="./assets/style/button_animation.css">
+<style>body{font-family:'cafe',sans-serif;background:#f5f7fa;} .card-box{background:#fff;border-radius:0.75rem;padding:1.25rem;box-shadow:0 0 30px rgba(0,0,0,0.1);margin-bottom:1rem;}</style>
+</head>
+<body>
+
+<main class="container py-5" style="max-width: 1500px;">
+  <!-- 검색창 (카드 밖) -->
+<div class="card-box mb-4" id="faqSearchCard">
+  <div class="section-head">
+    <div class="section-title">
+      <i class="bi bi-search me-2"></i>검색
+    </div>
+    <div class="section-actions">
+          </div>
+  </div>
+
+  <form id="searchForm" class="search-row" onsubmit="return false;">
+    <div class="faq-search-dropdown">
+      <div class="dropdown">
+        <button
+          id="brandDropdownBtn"
+          class="btn btn-select dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          data-bs-auto-close="outside"
+          aria-expanded="false"
+        >
+          선택하세요
+        </button>
+
+        <div class="dropdown-menu p-3 shadow brand-dd-menu">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="brandAllChk" onchange="toggleBrandAll(this)">
+            <label class="form-check-label" for="brandAllChk">전체</label>
+          </div>
+
+          <div id="brandDropdownList" class="d-grid gap-1"></div>
+
+          <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-primary w-100" type="button" onclick="applyBrandDropdown()">
+              <i class="bi bi-check2 me-1"></i>적용
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="search-input-wrap">
+      <i class="bi bi-funnel"></i>
+      <input type="text" class="form-control search-input" id="searchInput" placeholder="검색어 입력" autocomplete="off">
+    </div>
+
+    <div class="search-actions">
+      <button type="button" class="btn faq-outline-btn faq-search-btn" onclick="performSearch()">
+        <span class="btn-inline-icon-wrap">
+          <img src="./assets/webimage/button/search.png" alt="" class="btn-inline-icon">
+          <span>검색</span>
+        </span>
+      </button>
+
+      <div class="search-actions-divider" aria-hidden="true"></div>
+
+      <button type="button" class="btn faq-outline-btn faq-reset-btn" onclick="resetSearch()">
+        <span class="btn-inline-icon-wrap">
+          <img src="./assets/webimage/button/reset.png" alt="" class="btn-inline-icon">
+          <span>초기화</span>
+        </span>
+      </button>
+    </div>
+  </form>
+
+  <div id="searchResults"></div>
+</div>
+
+  <!-- 좌우 50:50 카드 나눔 -->
+  <div class="row g-4">
+    <!-- 왼쪽: 선택 카드 -->
+    <div class="col-12 col-md-6">
+      <div class="card-box">
+        <div class="section-head">
+          <div class="section-title">
+            <i class="bi bi-diagram-2 me-2"></i>문의
+          </div>
+        </div>
+
+        <div class="tree-wrapper">
+          <div class="tree-column">
+            <div class="tree-head">
+              <span class="tree-head-title">브랜드</span>
+                          </div>
+            <div id="step1" class="tree-buttons"></div>
+          </div>
+
+          <div class="tree-column">
+            <div class="tree-head">
+              <span class="tree-head-title">문의유형</span>
+                          </div>
+            <div id="step2" class="tree-buttons"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 오른쪽: 답변 카드 (모바일에서는 숨김 + Offcanvas 사용) -->
+    <div class="col-12 col-md-6 answer-col-mobile-hide">
+      <div class="card-box">
+        <div class="section-head">
+          <div class="section-title">
+            <i class="bi bi-chat-left-text me-2"></i>답변
+          </div>
+          <div class="section-actions faq-answer-header-actions">
+            <button class="btn faq-outline-btn faq-attach-btn" type="button" id="attachBtn" onclick="openAttachModal()">
+              <span class="btn-inline-icon-wrap">
+                <i class="bi bi-paperclip faq-inline-bi-icon"></i>
+                <span>첨부파일</span>
+              </span>
+              <span class="badge text-bg-secondary ms-2 d-none" id="attachBadge">0</span>
+            </button>
+
+            <button class="btn faq-outline-btn faq-copy-btn" type="button" id="copyBtnPc" onclick="copyCurrentAnswer()">
+              <span class="btn-inline-icon-wrap">
+                <img src="./assets/webimage/button/copy.png" alt="" class="btn-inline-icon">
+                <span>복사</span>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="routeDisplay" class="route-display"></div>
+        <div id="answerDisplay" class="answer-area">문의유형을 선택해 주세요.</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="modal fade" id="attachModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content" style="border-radius:16px;">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title mb-0">첨부파일</h5>
+          <div class="text-muted small" id="attachModalRoute">-</div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div id="attachModalBody" class="text-muted">불러오는 중...</div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn faq-outline-btn" data-bs-dismiss="modal">
+          <span class="btn-inline-icon-wrap">
+            <img src="./assets/webimage/button/close.png" alt="" class="btn-inline-icon">
+            <span>닫기</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ 모바일 답변 Offcanvas (Bottom Sheet) -->
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="answerCanvas"
+     style="height: 78vh; border-top-left-radius:16px; border-top-right-radius:16px;">
+  <div class="offcanvas-header align-items-start">
+    <div class="w-100 pe-2">
+      <div class="text-muted small">선택 경로</div>
+      <div class="fw-bold faq-mobile-route-text" id="routeDisplayMb">-</div>
+    </div>
+    <button type="button" class="btn-close ms-2" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+
+  <div class="offcanvas-body pt-0">
+    <div class="faq-mobile-answer-actions">
+      <button class="btn faq-mobile-answer-action-btn" type="button" id="attachBtnMb" onclick="openAttachModal()">
+        <span class="btn-inline-icon-wrap">
+          <i class="bi bi-paperclip faq-inline-bi-icon"></i>
+          <span>첨부파일</span>
+        </span>
+        <span class="badge text-bg-secondary ms-2 d-none" id="attachBadgeMb">0</span>
+      </button>
+
+      <div class="faq-mobile-answer-actions-divider" aria-hidden="true"></div>
+
+      <button class="btn faq-mobile-answer-action-btn" type="button" id="copyBtnMb" onclick="copyCurrentAnswer()">
+        <span class="btn-inline-icon-wrap">
+          <img src="./assets/webimage/button/copy.png" alt="" class="btn-inline-icon">
+          <span>복사</span>
+        </span>
+      </button>
+    </div>
+
+    <div id="answerDisplayMb" class="answer-area" style="min-height:auto;">답변이 여기에 표시됩니다.</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const IS_MASTER = false;
+const EDIT_MODE = false;
+
+function toggleEditMode() {
+  if (!IS_MASTER) return;
+  const url = new URL(window.location.href);
+  url.searchParams.set("edit", EDIT_MODE ? "0" : "1");
+  window.location.href = url.toString();
+}
+
+let currentRoute = { brand: null, inquiry: null, faqId: null };
+let appliedBrands = [];
+let faqSavedScrollY = 0;
+
+function getFaqScrollY() {
+  return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+}
+
+function saveFaqScroll() {
+  faqSavedScrollY = getFaqScrollY();
+}
+
+function restoreFaqScroll() {
+  window.scrollTo(0, faqSavedScrollY);
+}
+
+function blurActiveFaqElement() {
+  const el = document.activeElement;
+  if (el && typeof el.blur === "function") {
+    el.blur();
+  }
+}
+
+function scrollFaqElementIntoSafeView(el) {
+  if (!el) return;
+
+  const topSafeGap = 78;
+  const bottomSafeGap = 16;
+  const rect = el.getBoundingClientRect();
+  const currentY = getFaqScrollY();
+
+  if (rect.top < topSafeGap || rect.bottom > (window.innerHeight - bottomSafeGap)) {
+    const targetY = currentY + rect.top - topSafeGap;
+    window.scrollTo({
+      top: Math.max(0, targetY),
+      behavior: "smooth"
+    });
+  }
+}
+
+function bindOverlayScrollGuards() {
+  const answerCanvasEl = document.getElementById("answerCanvas");
+  const attachModalEl = document.getElementById("attachModal");
+
+  if (answerCanvasEl) {
+    answerCanvasEl.addEventListener("show.bs.offcanvas", () => {
+      saveFaqScroll();
+      blurActiveFaqElement();
+    });
+
+    answerCanvasEl.addEventListener("shown.bs.offcanvas", () => {
+      restoreFaqScroll();
+    });
+
+    answerCanvasEl.addEventListener("hidden.bs.offcanvas", () => {
+      restoreFaqScroll();
+    });
+  }
+
+  if (attachModalEl) {
+    attachModalEl.addEventListener("show.bs.modal", () => {
+      saveFaqScroll();
+      blurActiveFaqElement();
+    });
+
+    attachModalEl.addEventListener("shown.bs.modal", () => {
+      restoreFaqScroll();
+    });
+
+    attachModalEl.addEventListener("hidden.bs.modal", () => {
+      restoreFaqScroll();
+    });
+  }
+}
+
+window.onload = () => {
+  fetchStep("1", {}).then(html => {
+    document.getElementById("step1").innerHTML = html;
+  });
+
+  loadBrandDropdown();
+  updateAttachButtonUI();
+  bindOverlayScrollGuards();
+};
+
+function fetchStep(step, params) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("ajax", step);
+  for (const key in params) {
+    url.searchParams.set(key, params[key]);
+  }
+  return fetch(url, { credentials: "include" }).then(res => res.text());
+}
+
+async function postAjax(ajax, dataObj) {
+  const form = new URLSearchParams();
+  for (const [k, v] of Object.entries(dataObj)) form.set(k, v);
+
+  const res = await fetch(`?ajax=${encodeURIComponent(ajax)}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+    body: form.toString(),
+    credentials: "include"
+  });
+  const txt = await res.text();
+  if (!res.ok) throw new Error(txt || "요청 실패");
+  return txt;
+}
+
+/* ---------------------------
+   master: 브랜드/문의유형 추가·삭제
+---------------------------- */
+async function addBrand() {
+  if (!EDIT_MODE) return;
+  const name = (prompt("추가할 브랜드명을 입력하세요.") || "").trim();
+  if (!name) return;
+
+  try {
+    await postAjax("add_brand", { brand: name });
+    // 트리/드롭다운 갱신
+    document.getElementById("step1").innerHTML = await fetchStep("1", {});
+    loadBrandDropdown();
+    alert("브랜드가 추가되었습니다.");
+  } catch (e) {
+    alert(e.message);
+  }
+}
+
+async function deleteBrand(brand) {
+  if (!EDIT_MODE) return;
+  if (!confirm(`브랜드 '${brand}' 를 삭제하시겠습니까?\n(해당 브랜드의 모든 FAQ 항목이 함께 삭제됩니다.)`)) return;
+
+  try {
+    await postAjax("delete_brand", { brand });
+    // 화면 초기화 + 갱신
+    currentRoute = { brand: null, inquiry: null, faqId: null };
+    document.getElementById("step2").innerHTML = "";
+    document.getElementById("routeDisplay").textContent = "";
+    document.getElementById("answerDisplay").innerHTML = "브랜드를 선택해 주세요.";
+    updateAttachButtonUI();
+    document.getElementById("step1").innerHTML = await fetchStep("1", {});
+    loadBrandDropdown();
+    alert("삭제되었습니다.");
+  } catch (e) {
+    alert(e.message);
+  }
+}
+
+async function addDraft() {
+  if (!EDIT_MODE) return;
+  if (!currentRoute.brand) {
+    alert("먼저 브랜드를 선택해 주세요.");
+    return;
+  }
+
+  try {
+    await postAjax("add_draft", { brand: currentRoute.brand });
+    document.getElementById("step2").innerHTML = await fetchStep("2", { brand: currentRoute.brand });
+    alert("새 항목(미작성)이 추가되었습니다. ‘미작성(작성중)’을 눌러 내용을 입력하세요.");
+  } catch (e) {
+    alert(e.message);
+  }
+}
+
+async function deleteInquiry(brand, inquiry) {
+  if (!EDIT_MODE) return;
+  const label = (inquiry === "") ? "미작성(작성중)" : `문의유형 '${inquiry}'`;
+  if (!confirm(`${label} 를 삭제하시겠습니까?\n(해당 문의유형의 모든 FAQ 항목이 함께 삭제됩니다.)`)) return;
+
+  try {
+    await postAjax("delete_inquiry", { brand, inquiry });
+    // 리스트 갱신
+    document.getElementById("step2").innerHTML = await fetchStep("2", { brand });
+    document.getElementById("answerDisplay").innerHTML = "문의유형을 선택해 주세요.";
+    document.getElementById("routeDisplay").textContent = brand;
+    currentRoute.inquiry = null;
+    currentRoute.faqId = null;
+    updateAttachButtonUI();
+    alert("삭제되었습니다.");
+  } catch (e) {
+    alert(e.message);
+  }
+}
+
+/* ---------------------------
+   master: 답변/태그 수정·삭제
+---------------------------- */
+async function saveFaq(id) {
+  if (!EDIT_MODE) return;
+
+  const box = document.querySelector(`[data-faq-id="${CSS.escape(id)}"]`);
+  if (!box) return;
+
+  const inquiry = (box.querySelector(".faq-edit-inquiry")?.value ?? "").trim();
+  const answer = box.querySelector(".faq-edit-answer")?.value ?? "";
+  const tags = box.querySelector(".faq-edit-tags")?.value ?? "";
+
+  try {
+    await postAjax("save_faq", { id, inquiry, answer, tags });
+
+    // ✅ 저장 후 라우트 갱신(미작성 -> 실제 문의유형으로 전환)
+    currentRoute.inquiry = inquiry;
+    updateRouteDisplay();
+
+    // ✅ step2 목록 갱신해서 "미작성"이 사라지고, 문의유형 목록에 새 항목이 보이게
+    document.getElementById("step2").innerHTML = await fetchStep("2", { brand: currentRoute.brand });
+    markActive("step2", currentRoute.inquiry);
+
+    // ✅ 답변 다시 로드(새 문의유형 기준)
+    const html = await fetchStep("answer", { brand: currentRoute.brand, inquiry: currentRoute.inquiry });
+
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    if (isMobile) {
+      const aMb = document.getElementById("answerDisplayMb");
+      if (aMb) aMb.innerHTML = html;
+    } else {
+      document.getElementById("answerDisplay").innerHTML = html;
+    }
+
+    syncFaqIdFromAnswer();
+    updateAttachButtonUI();
+
+    alert("저장되었습니다.");
+  } catch (e) {
+    alert(e.message);
+  }
+}
+
+async function deleteFaq(id) {
+  if (!EDIT_MODE) return;
+  if (!confirm("이 답변을 삭제하시겠습니까?")) return;
+
+  try {
+    await postAjax("delete_faq", { id });
+    const html = await fetchStep("answer", { brand: currentRoute.brand, inquiry: currentRoute.inquiry });
+
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    if (isMobile) {
+      const aMb = document.getElementById("answerDisplayMb");
+      if (aMb) aMb.innerHTML = html;
+    } else {
+      document.getElementById("answerDisplay").innerHTML = html;
+    }
+
+    syncFaqIdFromAnswer();
+    updateAttachButtonUI();
+
+    alert("삭제되었습니다.");
+  } catch (e) {
+    alert(e.message);
+  }
+}
+
+/* ---------------------------
+   검색: 브랜드 드롭다운(체크박스)
+---------------------------- */
+function loadBrandDropdown() {
+  fetchStep("brands", {}).then(html => {
+    const list = document.getElementById("brandDropdownList");
+    if (list) list.innerHTML = html;
+
+    syncDropdownChecksFromApplied();
+    updateBrandDropdownBtnLabel();
+  });
+}
+
+function syncDropdownChecksFromApplied() {
+  const allChk = document.getElementById("brandAllChk");
+  const items = document.querySelectorAll(".brand-dd-item");
+  if (!items) return;
+
+  items.forEach(chk => {
+    chk.checked = appliedBrands.includes(chk.value);
+  });
+
+  if (allChk) {
+    const checkedCount = Array.from(items).filter(i => i.checked).length;
+    allChk.checked = (items.length > 0 && checkedCount === items.length);
+  }
+}
+
+function toggleBrandAll(el) {
+  const items = document.querySelectorAll(".brand-dd-item");
+  items.forEach(chk => { chk.checked = el.checked; });
+}
+
+function applyBrandDropdown() {
+  const items = document.querySelectorAll(".brand-dd-item");
+  appliedBrands = Array.from(items).filter(i => i.checked).map(i => i.value);
+  updateBrandDropdownBtnLabel();
+
+  // ✅ 적용은 "선택값 저장"만 하고, 검색은 사용자가 [검색] 버튼 눌렀을 때만 실행
+  // 드롭다운 닫기
+  const btn = document.getElementById("brandDropdownBtn");
+  if (btn && window.bootstrap && bootstrap.Dropdown) {
+    bootstrap.Dropdown.getOrCreateInstance(btn).hide();
+  }
+}
+
+function updateBrandDropdownBtnLabel() {
+  const btn = document.getElementById("brandDropdownBtn");
+  const items = document.querySelectorAll(".brand-dd-item");
+  if (!btn) return;
+
+  const total = items.length;
+  const selected = appliedBrands.length;
+
+  if (selected === 0) {
+    btn.textContent = "선택하세요";
+    return;
+  }
+
+  if (total > 0 && selected === total) {
+    btn.textContent = "전체";
+    return;
+  }
+
+  if (selected === 1) {
+    btn.textContent = appliedBrands[0];
+    return;
+  }
+
+  btn.textContent = `${appliedBrands[0]} 외 ${selected - 1}`;
+}
+
+/* ---------------------------
+   트리: 브랜드 → 문의유형 → 답변
+---------------------------- */
+function markActive(stepId, value) {
+  const buttons = document.querySelectorAll(`#${stepId} button`);
+
+  buttons.forEach(btn => {
+    const compareValue = btn.getAttribute("data-choice-label");
+    const normalizedValue = value == null ? "" : String(value);
+    const isMatch = (compareValue !== null ? compareValue : btn.textContent.trim()) === normalizedValue;
+
+    btn.classList.toggle("active", isMatch);
+    btn.classList.toggle("faq-choice-active", isMatch);
+
+    [...btn.classList].forEach(className => {
+      if (/^btn-(primary|success|danger|dark|warning|info|secondary)$/.test(className)) {
+        btn.classList.remove(className);
+      }
+    });
+  });
+}
+
+function loadStep2(brand) {
+  currentRoute = { brand, inquiry: null, faqId: null };
+
+  fetchStep("2", { brand }).then(html => {
+    document.getElementById("step2").innerHTML = html;
+    document.getElementById("answerDisplay").innerHTML = "문의유형을 선택해 주세요.";
+    markActive("step1", brand);
+    updateRouteDisplay();
+    updateAttachButtonUI();
+
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    if (isMobile) {
+      const el = document.getElementById("step2");
+      scrollFaqElementIntoSafeView(el);
+    }
+  });
+}
+
+function loadAnswerByInquiry(inquiry) {
+  currentRoute.inquiry = inquiry;
+  currentRoute.faqId = null;
+  markActive("step2", inquiry);
+  updateRouteDisplay();
+
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+  fetchStep("answer", {
+    brand: currentRoute.brand,
+    inquiry: currentRoute.inquiry
+  }).then(html => {
+    if (isMobile) {
+      const route = (currentRoute.brand || "") + (currentRoute.inquiry ? (" ▶ " + currentRoute.inquiry) : "");
+      const rMb = document.getElementById("routeDisplayMb");
+      const aMb = document.getElementById("answerDisplayMb");
+
+      if (rMb) rMb.textContent = route || "-";
+      if (aMb) aMb.innerHTML = html;
+
+      const first = aMb ? aMb.querySelector(".answer-card[data-faq-id]") : null;
+      currentRoute.faqId = first ? (first.getAttribute("data-faq-id") || null) : null;
+
+      updateAttachButtonUI();
+
+      const canvasEl = document.getElementById("answerCanvas");
+      if (canvasEl && window.bootstrap && bootstrap.Offcanvas) {
+        saveFaqScroll();
+        bootstrap.Offcanvas.getOrCreateInstance(canvasEl, {
+          backdrop: true,
+          scroll: true
+        }).show();
+      }
+    } else {
+      const box = document.getElementById("answerDisplay");
+      box.innerHTML = html;
+
+      const first = box.querySelector(".answer-card[data-faq-id]");
+      currentRoute.faqId = first ? (first.getAttribute("data-faq-id") || null) : null;
+      updateAttachButtonUI();
+    }
+  });
+}
+
+function copyCurrentAnswer() {
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+  const el = isMobile
+    ? document.getElementById("answerDisplayMb")
+    : document.getElementById("answerDisplay");
+
+  if (!el) return;
+
+  const text = (el.innerText || "").trim();
+  if (!text) return;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).catch(() => {});
+    return;
+  }
+
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand("copy");
+  document.body.removeChild(ta);
+}
+
+function copyMobileAnswer() {
+  copyCurrentAnswer();
+}
+
+function updateRouteDisplay() {
+  const r = currentRoute;
+  let text = "";
+  if (r.brand) text += r.brand;
+  if (r.inquiry) text += " ▶ " + r.inquiry;
+
+  const routeDisplay = document.getElementById("routeDisplay");
+  const routeDisplayMb = document.getElementById("routeDisplayMb");
+
+  if (routeDisplay) {
+    routeDisplay.textContent = text;
+  }
+
+  if (routeDisplayMb) {
+    routeDisplayMb.textContent = text || "-";
+  }
+}
+
+function syncFaqIdFromAnswer() {
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+  if (isMobile) {
+    const aMb = document.getElementById("answerDisplayMb");
+    const first = aMb ? aMb.querySelector(".answer-card[data-faq-id]") : null;
+    currentRoute.faqId = first ? (first.getAttribute("data-faq-id") || null) : null;
+    return;
+  }
+
+  const box = document.getElementById("answerDisplay");
+  const first = box ? box.querySelector(".answer-card[data-faq-id]") : null;
+  currentRoute.faqId = first ? (first.getAttribute("data-faq-id") || null) : null;
+}
+
+function updateAttachButtonUI() {
+  const btnPc = document.getElementById("attachBtn");
+  const badgePc = document.getElementById("attachBadge");
+  const btnMb = document.getElementById("attachBtnMb");
+  const badgeMb = document.getElementById("attachBadgeMb");
+
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+  const root = isMobile ? document.getElementById("answerDisplayMb") : document.getElementById("answerDisplay");
+  const card = root ? root.querySelector(".answer-card[data-faq-id]") : null;
+
+  const allButtons = [btnPc, btnMb].filter(Boolean);
+  const allBadges = [badgePc, badgeMb].filter(Boolean);
+
+  if (!currentRoute.faqId || !card) {
+    allButtons.forEach(btn => {
+      btn.disabled = true;
+      btn.classList.add("opacity-50");
+    });
+
+    allBadges.forEach(badge => {
+      badge.textContent = "0";
+      badge.classList.add("d-none");
+    });
+    return;
+  }
+
+  const cnt = parseInt(card.getAttribute("data-file-count") || "0", 10);
+
+  if (cnt > 0) {
+    allButtons.forEach(btn => {
+      btn.disabled = false;
+      btn.classList.remove("opacity-50");
+    });
+
+    allBadges.forEach(badge => {
+      badge.textContent = String(cnt);
+      badge.classList.remove("d-none");
+    });
+    return;
+  }
+
+  allBadges.forEach(badge => {
+    badge.textContent = "0";
+    badge.classList.add("d-none");
+  });
+
+  if (IS_MASTER) {
+    allButtons.forEach(btn => {
+      btn.disabled = false;
+      btn.classList.remove("opacity-50");
+    });
+  } else {
+    allButtons.forEach(btn => {
+      btn.disabled = true;
+      btn.classList.add("opacity-50");
+    });
+  }
+}
+
+/* ---------------------------
+   검색 실행
+---------------------------- */
+function performSearch() {
+  const keyword = (document.getElementById("searchInput")?.value || "").trim();
+
+  const qs = new URLSearchParams();
+  qs.set("ajax", "search");
+  if (keyword !== "") qs.set("keyword", keyword);
+
+  for (const b of appliedBrands) {
+    qs.append("brands[]", b);
+  }
+
+  fetch("?" + qs.toString(), { credentials: "include" })
+    .then(res => res.text())
+    .then(html => {
+      const box = document.getElementById("searchResults");
+      box.innerHTML = html;
+      box.classList.toggle("mt-3", html.trim() !== "");
+    });
+}
+
+function resetSearch() {
+  const input = document.getElementById("searchInput");
+  if (input) input.value = "";
+
+  appliedBrands = [];
+  const allChk = document.getElementById("brandAllChk");
+  if (allChk) allChk.checked = false;
+
+  const items = document.querySelectorAll(".brand-dd-item");
+  items.forEach(chk => { chk.checked = false; });
+
+  updateBrandDropdownBtnLabel();
+
+  document.getElementById("searchResults").innerHTML = "";
+  document.getElementById("step1").innerHTML = "";
+  document.getElementById("step2").innerHTML = "";
+  document.getElementById("routeDisplay").textContent = "";
+  document.getElementById("answerDisplay").innerHTML = "브랜드를 선택해 주세요.";
+  currentRoute = { brand: null, inquiry: null, faqId: null };
+  updateAttachButtonUI();
+
+  fetchStep("1", {}).then(html => {
+    document.getElementById("step1").innerHTML = html;
+  });
+  loadBrandDropdown();
+}
+
+const searchInput = document.getElementById("searchInput");
+if (searchInput) {
+  searchInput.addEventListener("input", () => {
+    if (searchInput.value.trim() === "") {
+      document.getElementById("searchResults").innerHTML = "";
+    }
+  });
+}
+
+async function openAttachModal() {
+  if (!currentRoute.faqId) {
+    alert("먼저 문의유형(답변)을 선택해 주세요.");
+    return;
+  }
+
+  const routeText = (currentRoute.brand || "") + (currentRoute.inquiry ? (" ▶ " + currentRoute.inquiry) : "");
+  const routeEl = document.getElementById("attachModalRoute");
+  if (routeEl) routeEl.textContent = routeText || "-";
+
+  const body = document.getElementById("attachModalBody");
+  if (body) body.innerHTML = "불러오는 중...";
+
+  const modalEl = document.getElementById("attachModal");
+  if (modalEl && window.bootstrap && bootstrap.Modal) {
+    saveFaqScroll();
+    bootstrap.Modal.getOrCreateInstance(modalEl, {
+      backdrop: true,
+      keyboard: true,
+      focus: false
+    }).show();
+  }
+
+  await loadAttachList();
+}
+
+async function loadAttachList() {
+  if (!currentRoute.faqId) return;
+  const html = await fetchStep("file_list", { faq_id: currentRoute.faqId });
+  const body = document.getElementById("attachModalBody");
+  if (body) body.innerHTML = html;
+  bindAttachNameAutoSave();
+}
+
+function bindAttachNameAutoSave() {
+  const inputs = document.querySelectorAll("#attachModalBody .attach-name");
+  inputs.forEach(inp => {
+    inp.addEventListener("change", async () => {
+      const fileId = inp.getAttribute("data-file-id");
+      const name = (inp.value || "").trim();
+      if (!fileId || !name) return;
+
+      inp.disabled = true;
+      inp.classList.remove("is-valid", "is-invalid");
+      inp.classList.add("is-loading");
+
+      try {
+        await postAjax("file_rename", { file_id: fileId, original_name: name });
+
+        inp.classList.remove("is-loading");
+        inp.classList.add("is-valid");
+
+        setTimeout(() => {
+          inp.classList.remove("is-valid");
+        }, 2000);
+      } catch (e) {
+        inp.classList.remove("is-loading");
+        inp.classList.add("is-invalid");
+        inp.disabled = false;
+
+        alert(e.message);
+        await loadAttachList();
+        return;
+      }
+
+      inp.disabled = false;
+    });
+  });
+}
+
+async function uploadAttachFile() {
+  if (!currentRoute.faqId) return;
+
+  const input = document.getElementById("attachFileInput");
+  if (!input || !input.files || input.files.length === 0) {
+    alert("업로드할 파일을 선택해 주세요.");
+    return;
+  }
+
+  const files = Array.from(input.files);
+  for (const file of files) {
+    const fd = new FormData();
+    fd.append("faq_id", currentRoute.faqId);
+    fd.append("file", file);
+
+    const res = await fetch(`?ajax=file_upload`, {
+      method: "POST",
+      body: fd,
+      credentials: "include"
+    });
+
+    const txt = await res.text();
+    if (!res.ok) {
+      alert(txt || "업로드 실패");
+      return;
+    }
+  }
+
+  input.value = "";
+  await loadAttachList();
+}
+
+async function deleteAttachFile(fileId) {
+  if (!confirm("이 파일을 삭제하시겠습니까?")) return;
+
+  try {
+    await postAjax("file_delete", { file_id: fileId });
+    await loadAttachList();
+  } catch (e) {
+    alert(e.message);
+  }
+}
+</script>
+
+<footer class="custom-footer">
+  <div class="footer-container">
+    <!-- ✅ 모바일: 위아래 구성 + 가운데 정렬 -->
+    <div class="footer-mobile">
+      <p class="fw-bold mb-2">◎ 에러 / 문의 / 건의사항 이용방법</p>
+      <p class="mb-3">
+        <a href="/suggestion_board.php">문의 및 건의사항 게시판</a> 이용
+      </p>
+      <p>© 2026 All rights reserved.</p>
+    </div>
+
+    <!-- ✅ 웹: 전부 한 줄 -->
+<div class="footer-desktop">
+  <div>
+    ◎ 에러 / 문의 / 건의사항 이용방법 &nbsp;&nbsp; | &nbsp;&nbsp;
+    <a href="/suggestion_board.php">문의 및 건의사항 게시판</a> 이용
+  </div>
+  <div style="margin-top: 8px;">
+    © 2026 All rights reserved.
+  </div>
+</div>
+</footer>
+
+<style>
+.custom-footer {
+  background: #ffffff;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  font-size: 14px;
+  color: #333;
+}
+
+.custom-footer a {
+  color: #007bff; /* 원하는 강조 색상으로 바꿔도 됨 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+.footer-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.footer-mobile {
+  display: block;
+}
+
+.footer-desktop {
+  display: none;
+}
+
+.footer-list {
+  list-style-position: inside;
+  padding-left: 0;
+  margin: 0 auto;
+  display: inline-block;
+  text-align: center;
+}
+
+@media (min-width: 992px) {
+  .footer-mobile {
+    display: none;
+  }
+  .footer-desktop {
+    display: block;
+  }
+}
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+</body>
+</html>

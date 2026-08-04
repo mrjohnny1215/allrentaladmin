@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프로모션 - ALL & UP</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="./assets/style/button_style.css">
+<link rel="stylesheet" href="./assets/style/button_animation.css">
+<style>body{font-family:'cafe',sans-serif;background:#f5f7fa;} .card-box{background:#fff;border-radius:0.75rem;padding:1.25rem;box-shadow:0 0 30px rgba(0,0,0,0.1);margin-bottom:1rem;}</style>
+</head>
+<body>
+
+<main class="container-fluid py-4 py-md-5">
+
+<div class="container promo-page-container">
+    <div class="card-box position-relative" style="margin-bottom: 1.6rem;">
+        <h5 class="card-title">검색</h5>
+
+    <div class="sticky-toolbar promo-toolbar">
+      <div class="promo-search-panel">
+        <div class="promo-search-row-top">
+          <div class="promo-keyword-wrap">
+            <input type="text" id="keywordInput" class="form-control promo-keyword-input" placeholder="키워드 입력" autofocus autocomplete="off">
+          </div>
+
+          <div class="promo-help-wrap">
+            <button type="button" class="promo-help-trigger" id="helpToggleBtn" aria-label="사용법 안내" aria-expanded="false">?</button>
+
+            <div class="promo-help-popup" id="helpPopup">
+              <div class="promo-help-title">사용법 안내</div>
+              <ul class="promo-help-list">
+                <li>입력 후 Enter 또는 검색 버튼 클릭</li>
+                <li>이전/다음 버튼으로 검색 결과를 이동</li>
+                <li>모두열기/접기로 전체 한번에 열기/접기</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="promo-search-row-actions" role="toolbar" aria-label="프로모션 검색 도구">
+          <button type="button" class="promo-action-btn" id="prevBtn" title="이전">
+            <span class="promo-action-inner">
+              <img src="./assets/webimage/button/pre.png" alt="" class="promo-action-icon">
+              <span class="promo-action-text">이전</span>
+            </span>
+          </button>
+
+          <button type="button" class="promo-action-btn" id="nextBtn" title="다음">
+            <span class="promo-action-inner">
+              <img src="./assets/webimage/button/next.png" alt="" class="promo-action-icon">
+              <span class="promo-action-text">다음</span>
+            </span>
+          </button>
+
+          <button type="button" class="promo-action-btn" id="searchBtn" title="검색">
+            <span class="promo-action-inner">
+              <img src="./assets/webimage/button/search.png" alt="" class="promo-action-icon">
+              <span class="promo-action-text">검색</span>
+            </span>
+          </button>
+
+          <button type="button" class="promo-action-btn" id="toggleAllBtn" title="모두 열기 또는 모두 접기" data-open-label="모두 열기" data-close-label="모두 접기">
+            <span class="promo-action-inner">
+              <img src="./assets/webimage/button/open.png" alt="" class="promo-action-icon">
+              <span class="promo-action-text">모두 열기</span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-box position-relative mb-3">
+    <h5 class="card-title">프로모션</h5>
+    <div id="promoContainer" class="promo-accordion-wrap"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const input = document.getElementById("keywordInput");
+const searchBtn = document.getElementById("searchBtn");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const toggleAllBtn = document.getElementById("toggleAllBtn");
+const container = document.getElementById("promoContainer");
+const helpToggleBtn = document.getElementById("helpToggleBtn");
+const helpPopup = document.getElementById("helpPopup");
+
+let currentMatchIndex = -1;
+let matches = [];
+let allOpen = false;
+
+const brandLogoBasePath = "./assets/webimage/button/";
+const brandLogoMap = {
+    "청호나이스": "chungho.png",
+    "코웨이": "coway.png",
+    "SK": "sk.png",
+    "쿠쿠": "cuckoo.png",
+    "LG": "lg.png",
+    "웰스": "wells.png",
+    "현대": "hyundai.png",
+    "세스코": "cesco.png"
+};
+
+function escapeRegExp(text) {
+    return String(text).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function escapeHtml(text) {
+    return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+}
+
+function getBrandLogoFilename(brandTitle) {
+    const raw = String(brandTitle || "").trim();
+    if (brandLogoMap[raw]) return brandLogoMap[raw];
+
+    const normalized = raw.replace(/\s+/g, "");
+    const foundKey = Object.keys(brandLogoMap).find(key => key.replace(/\s+/g, "") === normalized);
+
+    return foundKey ? brandLogoMap[foundKey] : "";
+}
+
+function buildBrandLogoHtml(brandTitle) {
+    const filename = getBrandLogoFilename(brandTitle);
+    const safeTitle = escapeHtml(brandTitle);
+
+    if (!filename) {
+        return "";
+    }
+
+    return `
+        <span class="promo-accordion-logo-wrap">
+            <img src="${brandLogoBasePath}${filename}" alt="${safeTitle} 로고" class="promo-accordion-logo">
+        </span>
+    `;
+}
+
+function updateToggleButtonLabel() {
+    const textEl = toggleAllBtn.querySelector(".promo-action-text");
+    const openLabel = toggleAllBtn.dataset.openLabel || "모두 열기";
+    const closeLabel = toggleAllBtn.dataset.closeLabel || "모두 접기";
+
+    if (textEl) {
+        textEl.textContent = allOpen ? closeLabel : openLabel;
+    }
+}
+
+function setAllOpenState(value) {
+    allOpen = !!value;
+    updateToggleButtonLabel();
+}
+
+function syncAccordionToggleState() {
+    const list = Array.from(document.querySelectorAll(".accordion-collapse"));
+    if (list.length === 0) {
+        setAllOpenState(false);
+        return;
+    }
+
+    const openedCount = list.filter(el => el.classList.contains("show")).length;
+    setAllOpenState(openedCount === list.length && list.length > 0);
+}
+
+function resetAllAccordions() {
+    document.querySelectorAll(".accordion-collapse").forEach(el => {
+        const instance = bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
+        instance.hide();
+    });
+    setAllOpenState(false);
+}
+
+function clearHighlights() {
+    document.querySelectorAll(".promo-text").forEach(pre => {
+        const original = pre.dataset.original || "";
+        pre.innerHTML = original;
+    });
+    matches = [];
+    currentMatchIndex = -1;
+}
+
+function highlightAndStore(keyword) {
+    clearHighlights();
+    resetAllAccordions();
+
+    if (!keyword) return;
+
+    const regex = new RegExp(`(${escapeRegExp(keyword)})`, "gi");
+
+    document.querySelectorAll(".accordion-item").forEach(item => {
+        const pre = item.querySelector(".promo-text");
+        if (!pre) return;
+
+        const text = pre.dataset.original || "";
+
+        if (text.toLowerCase().includes(keyword.toLowerCase())) {
+            pre.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
+
+            const collapse = item.querySelector(".accordion-collapse");
+            if (collapse) {
+                const bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapse, { toggle: false });
+                bsCollapse.show();
+            }
+
+            pre.querySelectorAll("span.highlight").forEach(span => matches.push(span));
+        }
+    });
+
+    if (matches.length > 0) {
+        moveToNextMatch();
+    }
+}
+
+function moveToNextMatch() {
+    if (matches.length === 0) return;
+    currentMatchIndex = (currentMatchIndex + 1) % matches.length;
+    scrollToMatch(currentMatchIndex);
+}
+
+function moveToPrevMatch() {
+    if (matches.length === 0) return;
+    currentMatchIndex = (currentMatchIndex - 1 + matches.length) % matches.length;
+    scrollToMatch(currentMatchIndex);
+}
+
+function scrollToMatch(index) {
+    matches.forEach(span => span.classList.remove("active"));
+
+    const target = matches[index];
+    if (!target) return;
+
+    const collapse = target.closest(".accordion-collapse");
+    if (collapse) {
+        const bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapse, { toggle: false });
+        bsCollapse.show();
+    }
+
+    target.classList.add("active");
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function toggleAllAccordions() {
+    const list = Array.from(document.querySelectorAll(".accordion-collapse"));
+    if (list.length === 0) return;
+
+    const nextState = !allOpen;
+
+    list.forEach(el => {
+        const instance = bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
+        if (nextState) {
+            instance.show();
+        } else {
+            instance.hide();
+        }
+    });
+
+    setAllOpenState(nextState);
+}
+
+function closeHelpPopup() {
+    helpPopup.classList.remove("show");
+    helpToggleBtn.setAttribute("aria-expanded", "false");
+}
+
+setAllOpenState(false);
+
+input.addEventListener("input", () => {
+    clearHighlights();
+    resetAllAccordions();
+});
+
+searchBtn.addEventListener("click", () => {
+    const keyword = input.value.trim();
+    highlightAndStore(keyword);
+});
+
+input.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        searchBtn.click();
+    } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        moveToNextMatch();
+    } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        moveToPrevMatch();
+    } else if (e.key === "Escape") {
+        closeHelpPopup();
+    }
+});
+
+prevBtn.addEventListener("click", moveToPrevMatch);
+nextBtn.addEventListener("click", moveToNextMatch);
+toggleAllBtn.addEventListener("click", toggleAllAccordions);
+
+helpToggleBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    const willOpen = !helpPopup.classList.contains("show");
+    helpPopup.classList.toggle("show", willOpen);
+    helpToggleBtn.setAttribute("aria-expanded", willOpen ? "true" : "false");
+});
+
+document.addEventListener("click", e => {
+    if (!e.target.closest(".promo-help-wrap")) {
+        closeHelpPopup();
+    }
+});
+
+document.addEventListener("shown.bs.collapse", e => {
+    if (e.target.classList.contains("accordion-collapse")) {
+        syncAccordionToggleState();
+    }
+});
+
+document.addEventListener("hidden.bs.collapse", e => {
+    if (e.target.classList.contains("accordion-collapse")) {
+        syncAccordionToggleState();
+    }
+});
+
+fetch('./data/promo.json', { credentials: "include", cache: "no-store" })
+    .then(res => res.json())
+    .then(payload => {
+        const promoText = (payload && typeof payload.promo_text === "string") ? payload.promo_text : "";
+
+        if (!promoText) {
+            container.innerHTML = "<p class='promo-empty-text text-center mb-0'>이번 달 주요 프로모션 정보가 없습니다.</p>";
+            return;
+        }
+
+        const sections = promoText
+            .split("--------------------------------------------------------------------")
+            .map(s => s.trim())
+            .filter(Boolean);
+
+        const accordion = document.createElement("div");
+        accordion.className = "accordion promo-accordion";
+        accordion.id = "promoAccordion";
+
+        sections.forEach((section, i) => {
+            const match = section.match(/\u25b6\s*(.+)/);
+            const brandTitle = match ? match[1].trim() : `브랜드 ${i + 1}`;
+            const collapseId = `collapse${i}`;
+            const headingId = `heading${i}`;
+            const safeText = escapeHtml(section);
+            const safeTitle = escapeHtml(brandTitle);
+            const brandLogoHtml = buildBrandLogoHtml(brandTitle);
+
+            accordion.innerHTML += `
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="${headingId}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#${collapseId}" aria-expanded="false" aria-controls="${collapseId}">
+                            ${brandLogoHtml}
+                            <span class="promo-accordion-title">${safeTitle}</span>
+                        </button>
+                    </h2>
+                    <div id="${collapseId}" class="accordion-collapse collapse" aria-labelledby="${headingId}">
+                        <div class="accordion-body promo-accordion-body">
+                            <pre class="promo-text" data-original="${safeText}">${safeText}</pre>
+                        </div>
+                    </div>
+                </div>`;
+        });
+
+        container.innerHTML = "";
+        container.appendChild(accordion);
+        setAllOpenState(false);
+    })
+    .catch(err => {
+        console.error("데이터 로드 실패", err);
+        container.innerHTML = "<p class='promo-empty-text text-center text-danger mb-0'>데이터 로드 실패</p>";
+    });
+</script>
+<footer class="custom-footer">
+  <div class="footer-container">
+    <!-- ✅ 모바일: 위아래 구성 + 가운데 정렬 -->
+    <div class="footer-mobile">
+      <p class="fw-bold mb-2">◎ 에러 / 문의 / 건의사항 이용방법</p>
+      <p class="mb-3">
+        <a href="/suggestion_board.php">문의 및 건의사항 게시판</a> 이용
+      </p>
+      <p>© 2026 All rights reserved.</p>
+    </div>
+
+    <!-- ✅ 웹: 전부 한 줄 -->
+<div class="footer-desktop">
+  <div>
+    ◎ 에러 / 문의 / 건의사항 이용방법 &nbsp;&nbsp; | &nbsp;&nbsp;
+    <a href="/suggestion_board.php">문의 및 건의사항 게시판</a> 이용
+  </div>
+  <div style="margin-top: 8px;">
+    © 2026 All rights reserved.
+  </div>
+</div>
+</footer>
+
+<style>
+.custom-footer {
+  background: #ffffff;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  font-size: 14px;
+  color: #333;
+}
+
+.custom-footer a {
+  color: #007bff; /* 원하는 강조 색상으로 바꿔도 됨 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+.footer-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.footer-mobile {
+  display: block;
+}
+
+.footer-desktop {
+  display: none;
+}
+
+.footer-list {
+  list-style-position: inside;
+  padding-left: 0;
+  margin: 0 auto;
+  display: inline-block;
+  text-align: center;
+}
+
+@media (min-width: 992px) {
+  .footer-mobile {
+    display: none;
+  }
+  .footer-desktop {
+    display: block;
+  }
+}
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+</body>
+</html>
