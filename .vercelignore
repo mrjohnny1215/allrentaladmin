@@ -1,0 +1,5 @@
+# Vercel 배포에서 제외 (원본 allnup.com에서 이미지 직접 로드)
+public/assets/goods_image
+node_modules
+dist
+*.log
