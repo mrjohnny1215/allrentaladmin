@@ -1,0 +1,1228 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>문의 및 건의사항</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style/button_animation.css">
+    <link rel="stylesheet" href="/style/button_style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+@font-face {
+  font-family: 'cafe';
+  src: url('fonts/cafe.woff2') format('woff2'),
+       url('fonts/cafe.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'cafe', sans-serif;
+  background: #ffffff;
+  color: #111827;
+}
+
+.pc-only {
+  display: block !important;
+}
+
+.mobile-only {
+  display: none !important;
+}
+
+.card-box {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  border-radius: 18px;
+  padding: 20px;
+  overflow: visible;
+}
+
+.card-title {
+  position: absolute;
+  top: -0.8em;
+  left: 1.25em;
+  background-color: #fff;
+  padding: 0 0.8em;
+  font-weight: 700;
+  border-radius: 999px;
+  font-size: 1.05rem;
+  margin: 0;
+  color: #111827;
+}
+
+.form-control,
+.form-select {
+  min-height: 42px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  color: #111827;
+  box-shadow: none !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #9ca3af;
+  box-shadow: none !important;
+}
+
+.btn-inline-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.btn-inline-icon {
+  width: 14px;
+  height: 14px;
+  display: block;
+  object-fit: contain;
+  flex: 0 0 14px;
+}
+
+.board-outline-btn,
+.board-outline-btn.btn,
+a.board-outline-btn,
+button.board-outline-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 0 14px !important;
+  border-radius: 12px !important;
+  font-weight: 700;
+  background: #ffffff !important;
+  color: #111827 !important;
+  box-shadow: none !important;
+  transition: all 0.15s ease;
+  border: 1px solid #d1d5db !important;
+  text-decoration: none !important;
+}
+
+.board-outline-btn:hover {
+  transform: translateY(-1px);
+  background: #f8fafc !important;
+  color: #111827 !important;
+  border-color: #9ca3af !important;
+}
+
+.board-outline-btn:focus,
+.board-outline-btn:focus-visible {
+  box-shadow: none !important;
+  color: #111827 !important;
+}
+
+.board-search-shell {
+  margin-bottom: 14px;
+}
+
+.board-content-shell {
+  margin-top: 0;
+}
+
+.board-search-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+
+.board-search-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 420px;
+  min-width: 0;
+}
+
+.board-search-type {
+  flex: 0 0 130px;
+  max-width: 130px;
+}
+
+.board-search-keyword {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.board-search-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 120px));
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.board-search-actions .board-outline-btn {
+  width: 120px !important;
+  min-width: 120px !important;
+}
+
+.board-search-actions-mobile {
+  display: none;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  min-width: 100%;
+  table-layout: fixed;
+  margin-bottom: 0;
+}
+
+.table td,
+.table th {
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.board-post-title-cell {
+  white-space: normal !important;
+  word-break: break-word;
+}
+
+.board-post-link {
+  color: #111827;
+  text-decoration: none;
+}
+
+.board-post-link:hover {
+  color: #111827;
+  text-decoration: none;
+}
+
+.board-new-label {
+  display: inline-block;
+  margin: 0 2px 0 2px;
+  padding: 0 2px 0 3px;
+  font-size: 0.75em;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.035em;
+  line-height: 1.2;
+  vertical-align: middle;
+  background: linear-gradient(90deg, #2563eb 0%, #7c3aed 32%, #06b6d4 50%, #7c3aed 68%, #2563eb 100%);
+  background-size: 260% auto;
+  color: #2563eb;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 7px rgba(37, 99, 235, 0.22);
+  animation: boardNewShine 2.4s linear infinite;
+}
+
+@keyframes boardNewShine {
+  0% {
+    background-position: 220% center;
+  }
+
+  100% {
+    background-position: -220% center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board-new-label {
+    animation: none;
+  }
+}
+
+.board-empty {
+  padding: 28px 12px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.board-mobile-list {
+  display: none;
+}
+
+.board-mobile-card {
+  display: block;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+  padding: 14px;
+  color: #111827;
+  text-decoration: none;
+}
+
+.board-mobile-card:hover {
+  color: #111827;
+  text-decoration: none;
+}
+
+.board-mobile-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.board-mobile-card-title {
+  min-width: 0;
+  font-weight: 800;
+  font-size: 1rem;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.board-mobile-card-date {
+  flex: 0 0 auto;
+  font-size: 0.84rem;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.board-mobile-card-line {
+  font-size: 0.92rem;
+  color: #374151;
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+
+.board-mobile-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: #4b5563;
+}
+
+.board-mobile-card-writer {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.board-mobile-card-count {
+  white-space: nowrap;
+}
+
+.board-pagination-wrap {
+  margin-top: 18px;
+}
+
+.pagination {
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.pagination .page-link {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 0.55rem;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  color: #4b5563;
+  background: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none !important;
+}
+
+.pagination .page-item.active .page-link {
+  background: #ffffff;
+  border-color: #9ca3af;
+  color: #111827;
+  font-weight: 700;
+}
+
+.pagination .page-item.disabled .page-link {
+  background: #f9fafb;
+  color: #9ca3af;
+  border-color: #e5e7eb;
+}
+
+.board-modal-dialog .modal-content {
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+}
+
+.board-modal-dialog .modal-header {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.board-modal-dialog .modal-footer {
+  border-top: 1px solid #e5e7eb;
+}
+
+.board-modal-form .form-control,
+.board-modal-form .form-select,
+.board-modal-form textarea {
+  border-radius: 12px;
+}
+
+.board-modal-footer-actions {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.board-modal-footer-actions.board-modal-footer-split {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.board-modal-footer-actions.board-modal-footer-inline {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.board-modal-footer-divider {
+  display: none;
+}
+
+.board-modal-inline-divider {
+  display: none;
+}
+
+.board-modal-split-btn,
+.board-modal-split-btn.btn,
+a.board-modal-split-btn,
+button.board-modal-split-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 0 14px !important;
+  border-radius: 12px !important;
+  border: 1px solid #d1d5db !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+.board-modal-split-btn:hover {
+  background: #f8fafc !important;
+  color: #111827 !important;
+  border-color: #9ca3af !important;
+}
+
+.board-modal-inline-btn,
+.board-modal-inline-btn.btn,
+a.board-modal-inline-btn,
+button.board-modal-inline-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 0 14px !important;
+  border-radius: 12px !important;
+  border: 1px solid #d1d5db !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+.board-modal-inline-btn:hover {
+  background: #f8fafc !important;
+  color: #111827 !important;
+  border-color: #9ca3af !important;
+}
+
+.board-comment-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fff;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.board-comment-meta {
+  color: #6b7280;
+  font-size: 0.83rem;
+  margin-bottom: 6px;
+}
+
+.board-comment-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.board-comment-btn,
+.board-comment-btn.btn,
+a.board-comment-btn,
+button.board-comment-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 10px !important;
+  border-radius: 10px !important;
+  border: 1px solid #d1d5db !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+.board-comment-btn:hover {
+  background: #f8fafc !important;
+  color: #111827 !important;
+  border-color: #9ca3af !important;
+}
+
+.board-inline-text-btn,
+.board-inline-text-btn.btn,
+a.board-inline-text-btn,
+button.board-inline-text-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #111827 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+
+.board-inline-text-btn:hover {
+  background: transparent !important;
+  color: #111827 !important;
+  transform: none !important;
+  border: 0 !important;
+}
+
+.board-inline-text-btn:focus,
+.board-inline-text-btn:focus-visible {
+  box-shadow: none !important;
+  color: #111827 !important;
+}
+
+#update-form textarea[name="content"] {
+  min-height: 240px;
+}
+
+@media (min-width: 992px) {
+  #update-form textarea[name="content"] {
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 12px !important;
+  }
+
+  .pc-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
+
+  .card-box {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .card-title {
+    left: 14px;
+    font-size: 1rem;
+  }
+
+  .board-search-shell {
+    margin-bottom: 16px;
+  }
+
+  .board-content-shell {
+    margin-top: 0;
+  }
+
+  .board-search-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 0;
+  }
+
+  .board-search-row {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 8px;
+    flex: none;
+  }
+
+  .board-search-type {
+    width: 100%;
+    max-width: none;
+  }
+
+  .board-search-actions {
+    display: none;
+  }
+
+  .board-search-actions-mobile.mobile-only {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+    align-items: stretch;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .board-search-actions-mobile .btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 44px;
+    padding: 0.7rem 0.45rem !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #111827 !important;
+  }
+
+  .board-search-actions-mobile .btn:hover {
+    background: #f8fafc !important;
+    transform: none !important;
+  }
+
+  .board-action-divider {
+    width: 1px;
+    background: #d1d5db;
+    align-self: stretch;
+    margin: 4px 0;
+  }
+
+  .table-responsive {
+    display: none;
+  }
+
+  .board-mobile-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pagination {
+    gap: 0.2rem !important;
+    justify-content: center;
+  }
+
+  .pagination .page-link {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 0.38rem;
+    border-radius: 8px;
+    font-size: 0.78rem;
+  }
+
+  .board-modal-dialog {
+    margin: 0.75rem;
+    max-width: calc(100% - 1.5rem);
+  }
+
+  .board-modal-dialog .modal-content {
+    max-height: calc(92svh - 12px);
+  }
+
+  .board-modal-dialog .modal-body {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .board-modal-footer-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .board-modal-footer-actions.board-modal-footer-split {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr) 1px minmax(0, 1fr);
+    gap: 0;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .board-modal-footer-actions.board-modal-footer-inline {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+    gap: 0;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .board-modal-footer-divider {
+    display: block;
+    width: 1px;
+    background: #d1d5db;
+    align-self: stretch;
+    margin: 4px 0;
+  }
+
+  .board-modal-inline-divider {
+    display: block;
+    width: 1px;
+    background: #d1d5db;
+    align-self: stretch;
+    margin: 4px 0;
+  }
+
+  .board-modal-footer-split .board-modal-split-btn,
+  .board-modal-footer-split .board-modal-split-btn.btn,
+  .board-modal-footer-split a.board-modal-split-btn,
+  .board-modal-footer-split button.board-modal-split-btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 44px !important;
+    padding: 0.7rem 0.45rem !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #111827 !important;
+  }
+
+  .board-modal-footer-split .board-modal-split-btn:hover,
+  .board-modal-footer-split .board-modal-split-btn.btn:hover,
+  .board-modal-footer-split a.board-modal-split-btn:hover,
+  .board-modal-footer-split button.board-modal-split-btn:hover {
+    background: #f8fafc !important;
+    transform: none !important;
+    border: 0 !important;
+  }
+
+  .board-modal-footer-inline .board-modal-inline-btn,
+  .board-modal-footer-inline .board-modal-inline-btn.btn,
+  .board-modal-footer-inline a.board-modal-inline-btn,
+  .board-modal-footer-inline button.board-modal-inline-btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 44px !important;
+    padding: 0.7rem 0.45rem !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #111827 !important;
+  }
+
+  .board-modal-footer-inline .board-modal-inline-btn:hover,
+  .board-modal-footer-inline .board-modal-inline-btn.btn:hover,
+  .board-modal-footer-inline a.board-modal-inline-btn:hover,
+  .board-modal-footer-inline button.board-modal-inline-btn:hover {
+    background: #f8fafc !important;
+    transform: none !important;
+    border: 0 !important;
+  }
+
+  .board-comment-actions {
+    gap: 6px;
+  }
+}
+</style>
+
+</head>
+<body class="container-fluid py-5">
+  <div class="position-relative board-search-shell">
+    <h5 class="card-title pc-only">공지 / 문의 / 건의</h5>
+    <h5 class="card-title mobile-only">검색</h5>
+    <div class="card-box">
+      <form class="board-search-form" method="get" autocomplete="off">
+          <div class="board-search-row">
+              <select name="type" class="form-select board-search-type">
+                  <option value="user_id" >ID</option>
+                  <option value="title" >제목</option>
+                  <option value="content" >내용</option>
+              </select>
+
+              <input
+                  type="text"
+                  name="keyword"
+                  value=""
+                  class="form-control board-search-keyword"
+                  placeholder="검색어를 입력하세요"
+              >
+          </div>
+
+          <div class="board-search-actions pc-only">
+              <button type="submit" class="btn board-outline-btn">
+                  <span class="btn-inline-icon-wrap">
+                      <img src="/webimage/button/search.png" alt="" class="btn-inline-icon">
+                      <span>검색</span>
+                  </span>
+              </button>
+
+              <button type="button" class="btn board-outline-btn" data-bs-toggle="modal" data-bs-target="#writeModal">
+                  <span class="btn-inline-icon-wrap">
+                      <img src="/webimage/button/edit.png" alt="" class="btn-inline-icon">
+                      <span>글쓰기</span>
+                  </span>
+              </button>
+          </div>
+
+          <div class="board-search-actions-mobile mobile-only">
+              <button type="submit" class="btn">
+                  <span class="btn-inline-icon-wrap">
+                      <img src="/webimage/button/search.png" alt="" class="btn-inline-icon">
+                      <span>검색</span>
+                  </span>
+              </button>
+
+              <div class="board-action-divider" aria-hidden="true"></div>
+
+              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#writeModal">
+                  <span class="btn-inline-icon-wrap">
+                      <img src="/webimage/button/edit.png" alt="" class="btn-inline-icon">
+                      <span>글쓰기</span>
+                  </span>
+              </button>
+          </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="board-content-shell">
+    <div class="table-responsive pc-only">
+      <table class="table table-bordered align-middle text-center">
+            <thead>
+                <tr>
+                    <th style="width: 90px;">No</th>
+                    <th style="width: 160px;">작성일</th>
+                    <th style="width: auto;">제목</th>
+                    <th style="width: 160px;">작성자</th>
+                </tr>
+            </thead>
+            <tbody>
+                                                                                    <tr>
+                            <td>3</td>
+                            <td>26-07-30</td>
+                            <td class="text-start board-post-title-cell">
+                                <a href="#" class="view-link board-post-link" data-id="119">
+                                    <span class="badge bg-danger">공지</span>                                     <span class="board-new-label">NEW</span>                                     8월 프로모션 적용 현황                                                                    </a>
+                            </td>
+                            <td>eve****</td>
+                        </tr>
+                                                                    <tr>
+                            <td>2</td>
+                            <td>26-07-20</td>
+                            <td class="text-start board-post-title-cell">
+                                <a href="#" class="view-link board-post-link" data-id="118">
+                                    <span class="badge bg-danger">공지</span>                                                                         📌코웨이 7월 총주문 마감안내📌                                                                    </a>
+                            </td>
+                            <td>eve****</td>
+                        </tr>
+                                                                    <tr>
+                            <td>1</td>
+                            <td>26-06-29</td>
+                            <td class="text-start board-post-title-cell">
+                                <a href="#" class="view-link board-post-link" data-id="114">
+                                    <span class="badge bg-danger">공지</span>                                                                         📌7월 코웨이 프로모션 실시간 본사 공지사항                                                                    </a>
+                            </td>
+                            <td>eve****</td>
+                        </tr>
+                                                </tbody>
+        </table>
+    </div>
+
+    <div class="mobile-only">
+                    <div class="board-mobile-list">
+                                                  <a href="#" class="board-mobile-card view-link" data-id="119">
+                      <div class="board-mobile-card-top">
+                          <div class="board-mobile-card-title">
+                              <span class="badge bg-danger">공지</span>                               <span class="board-new-label">NEW</span>                               8월 프로모션 적용 현황                          </div>
+                          <div class="board-mobile-card-date">26-07-30</div>
+                      </div>
+
+                      <div class="board-mobile-card-meta">
+                          <div class="board-mobile-card-writer">eve****</div>
+                          <div class="board-mobile-card-count">
+                              댓글 없음                          </div>
+                      </div>
+                  </a>
+                                                  <a href="#" class="board-mobile-card view-link" data-id="118">
+                      <div class="board-mobile-card-top">
+                          <div class="board-mobile-card-title">
+                              <span class="badge bg-danger">공지</span>                                                             📌코웨이 7월 총주문 마감안내📌                          </div>
+                          <div class="board-mobile-card-date">26-07-20</div>
+                      </div>
+
+                      <div class="board-mobile-card-meta">
+                          <div class="board-mobile-card-writer">eve****</div>
+                          <div class="board-mobile-card-count">
+                              댓글 없음                          </div>
+                      </div>
+                  </a>
+                                                  <a href="#" class="board-mobile-card view-link" data-id="114">
+                      <div class="board-mobile-card-top">
+                          <div class="board-mobile-card-title">
+                              <span class="badge bg-danger">공지</span>                                                             📌7월 코웨이 프로모션 실시간 본사 공지사항                          </div>
+                          <div class="board-mobile-card-date">26-06-29</div>
+                      </div>
+
+                      <div class="board-mobile-card-meta">
+                          <div class="board-mobile-card-writer">eve****</div>
+                          <div class="board-mobile-card-count">
+                              댓글 없음                          </div>
+                      </div>
+                  </a>
+                          </div>
+            </div>
+
+    <nav class="board-pagination-wrap">
+      <ul class="pagination justify-content-center">
+        <li class="page-item active">
+                        <a class="page-link" href="?page=1&type=&keyword=">1</a>
+                      </li>      </ul>
+    </nav>
+  </div>
+
+
+    <!-- 글쓰기 모달 -->
+    <div class="modal fade" id="writeModal" tabindex="-1">
+        <div class="modal-dialog modal-lg board-modal-dialog">
+            <form method="post" class="modal-content board-modal-form">
+                <div class="modal-header">
+                    <h5 class="modal-title">문의/건의 작성</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="action" value="write">
+
+                    <div class="mb-2">
+                        <label class="form-label">제목</label>
+                        <input type="text" name="title" class="form-control" required autocomplete="off">
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label">연락처</label>
+                        <input type="text" name="contact" class="form-control" autocomplete="off">
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label">이메일</label>
+                        <input type="email" name="email" class="form-control" autocomplete="off">
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label">내용</label>
+                        <textarea name="content" rows="10" class="form-control" required autocomplete="off"></textarea>
+                    </div>
+
+                                    </div>
+                <div class="modal-footer">
+                    <div class="board-modal-footer-actions board-modal-footer-inline">
+                        <button type="submit" class="btn board-modal-inline-btn">
+                            <span class="btn-inline-icon-wrap">
+                                <img src="/webimage/button/add.png" alt="" class="btn-inline-icon">
+                                <span>등록</span>
+                            </span>
+                        </button>
+
+                        <div class="board-modal-inline-divider" aria-hidden="true"></div>
+
+                        <button type="button" class="btn board-modal-inline-btn" data-bs-dismiss="modal">
+                            <span class="btn-inline-icon-wrap">
+                                <img src="/webimage/button/close.png" alt="" class="btn-inline-icon">
+                                <span>닫기</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 상세보기 모달 -->
+    <div class="modal fade" id="viewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg board-modal-dialog">
+            <div class="modal-content" id="viewModalContent">
+                <div class="modal-body text-center p-5">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let CURRENT_POST_ID = null;
+
+// 상세보기 링크 클릭 시 모달 띄우기 및 댓글 스크립트 연결
+document.querySelectorAll('.view-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const postId = this.dataset.id;
+        const modal = new bootstrap.Modal(document.getElementById('viewModal'));
+        const modalContent = document.getElementById('viewModalContent');
+
+        modalContent.innerHTML = `
+            <div class="modal-body text-center p-5">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        `;
+
+        fetch(`suggestion_board_view.php?id=${postId}`)
+            .then(res => res.text())
+            .then(html => {
+                CURRENT_POST_ID = postId; // ✅ 여기서 저장!
+                modalContent.innerHTML = html;
+
+                attachCommentListener();
+                attachReplyButtonListeners();
+            });
+
+        modal.show();
+    });
+});
+
+function attachCommentListener() {
+    const submitBtn = document.getElementById('submit-comment');
+    if (!submitBtn) return;
+    submitBtn.onclick = handleCommentSubmit;
+}
+
+function handleCommentSubmit(e) {
+    const comment = document.querySelector('textarea[name="comment"]').value.trim();
+    const parentId = document.querySelector('input[name="parent_id"]').value;
+
+    if (!comment) {
+        alert('댓글을 입력하세요.');
+        return;
+    }
+
+    fetch('suggestion_comment_ajax.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ post_id: CURRENT_POST_ID, comment, parent_id: parentId })
+    })
+    .then(res => res.text())
+    .then(html => {
+        document.getElementById('comment-list').innerHTML = html;
+        document.querySelector('textarea[name="comment"]').value = '';
+        document.querySelector('input[name="parent_id"]').value = '';
+
+        attachReplyButtonListeners();
+        attachCommentListener();
+    });
+}
+
+function attachReplyButtonListeners() {
+    document.querySelectorAll('.reply-btn').forEach(btn => {
+        btn.onclick = () => {
+            const parentId = btn.dataset.id;
+            const replyBox = document.getElementById('reply-box-' + parentId);
+
+            if (replyBox.innerHTML.trim() !== '') {
+                replyBox.innerHTML = '';
+                return;
+            }
+
+            document.querySelectorAll('.reply-container').forEach(div => div.innerHTML = '');
+
+            replyBox.innerHTML = `
+                <div class="mt-2">
+                    <textarea class="form-control mb-2 reply-input" rows="2" placeholder="답글을 입력하세요"></textarea>
+                    <button type="button" class="btn board-comment-btn submit-reply" data-parent="${parentId}">
+                        <span class="btn-inline-icon-wrap">
+                            <img src="/webimage/button/next.png" alt="" class="btn-inline-icon">
+                            <span>댓글작성</span>
+                        </span>
+                    </button>
+                </div>
+            `;
+
+            replyBox.querySelector('.submit-reply').onclick = function() {
+                const comment = replyBox.querySelector('.reply-input').value.trim();
+                if (!comment) {
+                    alert('내용을 입력하세요');
+                    return;
+                }
+
+                fetch('suggestion_comment_ajax.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        post_id: CURRENT_POST_ID,
+                        comment: comment,
+                        parent_id: parentId
+                    })
+                })
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('comment-list').innerHTML = html;
+                    attachReplyButtonListeners();
+                    attachCommentListener();
+                });
+            };
+        };
+    });
+}
+
+// 모달 닫을 때 전체 페이지 새로고침 (댓글 수 갱신용)
+document.getElementById('viewModal').addEventListener('hidden.bs.modal', () => {
+    location.reload();
+});
+
+// ✅ 삭제 버튼 클릭 시 삭제 처리
+document.addEventListener('click', function (e) {
+    const deleteBtn = e.target.closest('.delete-btn');
+    if (deleteBtn) {
+        const id = deleteBtn.dataset.id;
+
+        if (!confirm('정말 삭제하시겠습니까?')) return;
+
+        fetch('suggestion_comment_delete.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ id })
+        })
+        .then(res => res.text())
+        .then(result => {
+            if (result.trim() === 'ok') {
+                refreshComments(); // ✅ 댓글 목록 갱신
+            } else {
+                alert('삭제 실패: ' + result);
+            }
+        });
+    }
+});
+
+// ✅ 댓글 목록 갱신 함수
+function refreshComments() {
+    if (CURRENT_POST_ID) {
+        fetch('suggestion_comment_ajax.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ post_id: CURRENT_POST_ID })
+        })
+        .then(res => res.text())
+        .then(html => {
+            document.getElementById('comment-list').innerHTML = html;
+            attachReplyButtonListeners();
+            attachCommentListener();
+        });
+    }
+}
+
+
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+</div>
+</body>
+<footer class="custom-footer">
+  <div class="footer-container">
+    <!-- ✅ 모바일: 위아래 구성 + 가운데 정렬 -->
+    <div class="footer-mobile">
+      <p class="fw-bold mb-2">◎ 에러 / 문의 / 건의사항 이용방법</p>
+      <p class="mb-3">
+        <a href="/suggestion_board.php">문의 및 건의사항 게시판</a> 이용
+      </p>
+      <p>© 2026 All rights reserved.</p>
+    </div>
+
+    <!-- ✅ 웹: 전부 한 줄 -->
+<div class="footer-desktop">
+  <div>
+    ◎ 에러 / 문의 / 건의사항 이용방법 &nbsp;&nbsp; | &nbsp;&nbsp;
+    <a href="/suggestion_board.php">문의 및 건의사항 게시판</a> 이용
+  </div>
+  <div style="margin-top: 8px;">
+    © 2026 All rights reserved.
+  </div>
+</div>
+</footer>
+
+<style>
+.custom-footer {
+  background: #ffffff;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  font-size: 14px;
+  color: #333;
+}
+
+.custom-footer a {
+  color: #007bff; /* 원하는 강조 색상으로 바꿔도 됨 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+.footer-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.footer-mobile {
+  display: block;
+}
+
+.footer-desktop {
+  display: none;
+}
+
+.footer-list {
+  list-style-position: inside;
+  padding-left: 0;
+  margin: 0 auto;
+  display: inline-block;
+  text-align: center;
+}
+
+@media (min-width: 992px) {
+  .footer-mobile {
+    display: none;
+  }
+  .footer-desktop {
+    display: block;
+  }
+}
+</style></html>
