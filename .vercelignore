@@ -3,3 +3,4 @@ public/assets/goods_image
 node_modules
 dist
 *.log
+public/data/detail_pages
