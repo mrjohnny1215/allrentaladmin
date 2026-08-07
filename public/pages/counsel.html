@@ -4956,7 +4956,7 @@ outputText += rentalLines.join('\n');
 if (shouldClearOutput && productName) {
     const exactName = document.getElementById("상품명_" + index)?.value || (selectedRow?.[0] || "");
 
-    // 🔧 로컬 호스팅: 모델명 → ../assets/goods_image/<모델>.jpg 존재 확인
+    // 🔧 로컬 호스팅: 모델명 → ./assets/goods_image/<모델>.jpg 존재 확인
     //    (원본은 counsel.php?image=모델&mode=list API를 호출하나, 정적 호스팅이라 로컬 파일로 대체)
     //    로컬 파일은 모델명 기준이므로, 상품명(exactName) + 모델명(selectedRow[1]) 모두 후보로 시도
     //    파일명 안전화: / ( ) 공백 등 → _ (크롤러 safe_name과 동일 규칙)
@@ -4971,7 +4971,7 @@ if (shouldClearOutput && productName) {
 
     (async () => {
         for (const cand of candidates) {
-            const path = '../assets/goods_image/' + encodeURIComponent(cand) + '.jpg';
+            const path = './assets/goods_image/' + encodeURIComponent(String(cand).replace(/[\/\\]/g, '_')) + '.jpg';
             try {
                 const res = await fetch(path, { method: 'HEAD', cache: 'no-store' });
                 if (res.ok) {
@@ -10124,7 +10124,7 @@ function getThumbPreviewHistoryState(){
   };
 }
 
-function buildThumbPreviewImageSrc(path){ const raw = String(path||'./assets/goods_image/no_image.jpg').replace(/^.*goods_image\//,''); return './assets/goods_image/' + raw + (raw.includes('?')?'&':'?') + 't=' + Date.now(); }
+function buildThumbPreviewImageSrc(path){ const raw = String(path||'./assets/goods_image/no_image.jpg').replace(/[\/\\]/g,'_').replace(/^.*goods_image\//,''); return './assets/goods_image/' + raw + (raw.includes('?')?'&':'?') + 't=' + Date.now(); }
 
 function getThumbPreviewEls(){
   return {
