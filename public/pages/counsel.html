@@ -4989,14 +4989,8 @@ $("#keyword").on("keypress", e => {
 });
 $("#searchBtn").on("click", searchProducts);
 $("#filterBrand, #filter1, #filter2").on("change", function () {
-  const keyword = $("#keyword").val().trim();
-
-  if (keyword.length > 0) {
-    searchProducts(); // 이미 내부에서 필터 드롭다운도 재구성함
-  } else {
-    // 🔍 키워드가 없을 땐 전체 기준
-    updateAllFilterDropdowns();
-  }
+  // 🔧 키워드 유무와 상관없이 항상 검색 실행 (브랜드만 선택해도 결과 표시)
+  searchProducts();
 });
 $("#resetBtn").on("click", resetDetailFilters);
 
