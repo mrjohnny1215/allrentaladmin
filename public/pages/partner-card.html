@@ -1,205 +1,148 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>제휴카드 - ALL & UP</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="./assets/style/button_style.css">
-<link rel="stylesheet" href="./assets/style/button_animation.css">
-<style>body{font-family:'cafe',sans-serif;background:#f5f7fa;} .card-box{background:#fff;border-radius:0.75rem;padding:1.25rem;box-shadow:0 0 30px rgba(0,0,0,0.1);margin-bottom:1rem;}</style>
-</head>
-<body>
-
-
-<div class="card-area">
-
-  <div class="text-center mb-4">
-    <div class="card-box d-inline-block position-relative">
-      <div class="d-flex flex-wrap justify-content-center gap-2" id="thumbnailList"></div>
-    </div>
-  </div>
-
-  <div class="slider-wrapper">
-    <button class="slider-btn left-btn" onclick="showPrev()">&#9664;</button>
-    <img id="cardImage" src="" alt="제휴카드 이미지">
-    <button class="slider-btn right-btn" onclick="showNext()">&#9654;</button>
-  </div>
-
-</div> <!-- .card-area 끝 -->
-
-<script>
-const imageList = ["/card/8cescard.jpg?v=86f004e167506159c318b6e48440881c","/card/1cwcard.png?v=9a7f69f71fb058654a8ca610e32e2fcd","/card/2chcard.png?v=1e5d183557d76f36c45b70abbb8f1a83","/card/3skcard.png?v=03e53fdfdafa4a8efc4370c0f941f4b5","/card/4cccard.png?v=28e57d79f5259b3bea31357c4b63f028","/card/5lgcard.png?v=de0cd560d914d8c4815d40f8105cebbc","/card/6wscard.png?v=48992eccbfc31e8ea28d2d401cb07180","/card/7hdcard.png?v=b00f3b1c5248422a610af5653f1fb9ff"];
-let currentIndex = 0;
-
-// ★ 브랜드 버튼 설정: key = 파일명(확장자/쿼리 제외한 앞부분)
-const buttonConfig = [
-  { label: '코웨이', key: '1cwcard' },
-  { label: '청호',  key: '2chcard' },
-  { label: 'SK',    key: '3skcard' },
-  { label: '쿠쿠',  key: '4cccard' },
-  { label: '웰스',  key: '6wscard' },
-  { label: 'LG',    key: '5lgcard' },
-  { label: '현대',  key: '7hdcard' },
-  { label: '세스코', key: '8cescard' },
-];
-
-// ★ URL에서 "파일명(확장자/쿼리 제외)"만 뽑기
-function getBaseName(url) {
-    if (!url) return '';
-    const noQuery = url.split('?')[0]; // ?v= 제거
-    const parts = noQuery.split('/');
-    const file = parts[parts.length - 1] || '';
-    const dotPos = file.lastIndexOf('.');
-    return (dotPos >= 0 ? file.substring(0, dotPos) : file).toLowerCase();
-}
-
-function updateActiveButton() {
-    const buttons = document.querySelectorAll('#thumbnailList .card-btn');
-    buttons.forEach(btn => {
-        const idx = parseInt(btn.dataset.index ?? '-1', 10);
-        if (idx === currentIndex) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
-    });
-}
-
-function updateImage() {
-    const imgEl = document.getElementById("cardImage");
-    if (imageList.length === 0) {
-        imgEl.src = "";
-        imgEl.alt = "이미지를 불러올 수 없습니다.";
-        return;
-    }
-    imgEl.src = imageList[currentIndex % imageList.length];
-}
-
-function showPrev() {
-    if (imageList.length === 0) return;
-    currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
-    updateImage();
-    updateActiveButton();
-}
-
-function showNext() {
-    if (imageList.length === 0) return;
-    currentIndex = (currentIndex + 1) % imageList.length;
-    updateImage();
-    updateActiveButton();
-}
-
-function generateThumbnails() {
-    const container = document.getElementById("thumbnailList");
-    container.innerHTML = ""; // 초기화
-
-    buttonConfig.forEach(cfg => {
-        // imageList에서 해당 key로 시작하는 파일 찾기 (확장자/쿼리 무시)
-        const idx = imageList.findIndex(src =>
-            getBaseName(src).startsWith(cfg.key.toLowerCase())
-        );
-        if (idx === -1) {
-            // 해당 이미지가 없으면 버튼 생성하지 않음
-            return;
-        }
-
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "card-btn";
-        btn.textContent = cfg.label;
-        btn.dataset.index = idx;
-
-        btn.onclick = () => {
-            currentIndex = idx;
-            updateImage();
-            updateActiveButton();
-        };
-
-        container.appendChild(btn);
-    });
-}
-
-window.onload = () => {
-    generateThumbnails(); // 버튼 생성
-    updateImage();        // 초기 큰 이미지 표시
-    updateActiveButton(); // 첫 버튼 active 표시
-};
-
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<footer class="custom-footer">
-  <div class="footer-container">
-    <!-- ✅ 모바일: 위아래 구성 + 가운데 정렬 -->
-    <div class="footer-mobile">
-      <p class="fw-bold mb-2">◎ 에러 / 문의 / 건의사항 이용방법</p>
-      <p class="mb-3">
-        <a href="/suggestion_board.php">문의 및 건의사항 게시판</a> 이용
-      </p>
-      <p>© 2026 All rights reserved.</p>
-    </div>
-
-    <!-- ✅ 웹: 전부 한 줄 -->
-<div class="footer-desktop">
-  <div>
-    ◎ 에러 / 문의 / 건의사항 이용방법 &nbsp;&nbsp; | &nbsp;&nbsp;
-    <a href="/suggestion_board.php">문의 및 건의사항 게시판</a> 이용
-  </div>
-  <div style="margin-top: 8px;">
-    © 2026 All rights reserved.
-  </div>
-</div>
-</footer>
+<meta charset="utf-8">
+<title>제휴카드(임베드)</title>
+<!-- 🔎 모바일에서도 확대 허용 -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
 
 <style>
-.custom-footer {
-  background: #ffffff;
-  padding: 20px;
-  border-top: 1px solid #ccc;
-  font-size: 14px;
-  color: #333;
-}
-
-.custom-footer a {
-  color: #007bff; /* 원하는 강조 색상으로 바꿔도 됨 */
-  text-decoration: none; /* 밑줄 제거 */
-}
-
-.footer-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  text-align: center;
-  line-height: 1.6;
-}
-
-.footer-mobile {
-  display: block;
-}
-
-.footer-desktop {
-  display: none;
-}
-
-.footer-list {
-  list-style-position: inside;
-  padding-left: 0;
-  margin: 0 auto;
-  display: inline-block;
-  text-align: center;
-}
-
-@media (min-width: 992px) {
-  .footer-mobile {
-    display: none;
+  html,body{height:100%;margin:0;background:#fff}
+  /* 이미지가 화면보다 커질 수 있게 스크롤 허용 */
+  .wrap{
+    height:100%;
+    width:100%;
+    overflow:auto;
+    /* ✅ 세로는 위쪽 정렬, 가로만 가운데 정렬 */
+    display:flex; align-items:flex-start; justify-content:center;
+    padding:8px;
+    touch-action: pan-x pan-y;
   }
-  .footer-desktop {
-    display: block;
+
+  #cardImg{
+    display:block;
+    image-rendering:auto;
+    /* ✅ transform 기반 확대 제거 (스크롤 영역 문제 방지) */
+    max-width:none;   /* JS가 width를 직접 제어할 수 있게 */
+    height:auto;      /* 비율 유지 */
   }
-}
+  .empty{
+    color:#6b7280;text-align:center;padding:40px 12px;font-size:.95rem
+  }
+
+  /* 우하단 고정 컨트롤 */
+  .zoom-ctrl{
+    position:fixed; right:12px; bottom:12px;
+    display:flex; gap:6px;
+    z-index:9999;
+  }
+  .zoom-ctrl .btn{
+    border:1px solid #d1d5db; background:#fff; border-radius:8px;
+    padding:6px 10px; font-size:14px; cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,.12);
+  }
+  .zoom-ctrl .btn:active{ transform: translateY(1px); }
+  /* 작은 화면에선 버튼 살짝 키움 */
+  @media (max-width:768px){
+    .zoom-ctrl .btn{ padding:8px 12px; font-size:15px; }
+  }
 </style>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+</head>
+<body>
+  <div class="wrap" id="wrap">
+          <!-- 🔎 컨트롤이 img를 직접 제어할 수 있도록 id 부여 -->
+      <img id="cardImg" src="../assets/card/1cwcard.png" alt="제휴카드">
+      </div>
+
+  <!-- 🔎 확대/축소/맞춤/원본 컨트롤 -->
+    <div class="zoom-ctrl" aria-hidden="false">
+    <button class="btn" id="fitBtn"   title="화면맞춤">맞춤</button>
+    <button class="btn" id="actualBtn" title="원본크기">원본</button>
+    <button class="btn" id="zoomOut" title="축소">−</button>
+    <button class="btn" id="zoomIn"  title="확대">＋</button>
+  </div>
+
+<script>
+(function(){
+  const img  = document.getElementById('cardImg');
+  const wrap = document.getElementById('wrap');
+  if (!img || !wrap) return;
+
+  // ✅ 모드: 'custom'(700px 시작), 'fit'(가로 화면맞춤), 'actual'(원본)
+  let mode = 'custom';
+  let zoom = 1;              // width 배율
+  const START_W = 700;       // 시작 너비(px)
+
+  // 래퍼의 내부 가로폭 계산(패딩 제외)
+  function innerWidth(el){
+    const cs = getComputedStyle(el);
+    return el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  }
+
+  // 현재 모드의 "기준 너비" 계산
+  function baseWidth(){
+    const iw = Math.max(100, innerWidth(wrap));  // 라퍼 내부 폭
+    if (mode === 'fit')    return iw;                            // 화면 가로맞춤
+    if (mode === 'actual') return img.naturalWidth || img.width; // 원본
+    // custom: 600px, 단 화면이 더 좁으면 줄여 시작
+    return Math.min(START_W, iw);
+  }
+
+  function applyWidth(){
+    const w = baseWidth() * zoom;
+    img.style.width = Math.max(100, Math.round(w)) + 'px';
+    img.style.height = 'auto';
+  }
+
+  function setZoom(next){
+    zoom = Math.max(0.5, Math.min(5, next)); // 0.5x ~ 5x
+    applyWidth();
+  }
+
+  // ✅ 초기 적용: 가로 600px / 세로 자동 / 위쪽(세로) + 가운데(가로) 정렬
+  applyWidth();
+
+  // 버튼
+  document.getElementById('fitBtn')?.addEventListener('click', ()=>{
+    mode = 'fit';  zoom = 1; applyWidth();
+  });
+  document.getElementById('actualBtn')?.addEventListener('click', ()=>{
+    mode = 'actual'; zoom = 1; applyWidth(); wrap.scrollTop = 0; wrap.scrollLeft = 0;
+  });
+  document.getElementById('zoomIn')?.addEventListener('click', ()=>{
+    setZoom(zoom * 1.25);
+  });
+  document.getElementById('zoomOut')?.addEventListener('click', ()=>{
+    setZoom(zoom / 1.25);
+  });
+
+  // 데스크톱: Ctrl/⌘ + 휠로 확대/축소
+  wrap.addEventListener('wheel', (e)=>{
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      const factor = (e.deltaY < 0) ? 1.15 : (1/1.15);
+      setZoom(zoom * factor);
+    }
+  }, { passive:false });
+
+  // 더블클릭/더블탭: fit ↔ actual 토글
+  let lastTap = 0;
+  wrap.addEventListener('click', ()=>{
+    const now = Date.now();
+    if (now - lastTap < 350) {
+      mode = (mode === 'fit') ? 'actual' : 'fit';
+      zoom = 1;
+      applyWidth();
+      wrap.scrollTop = 0; wrap.scrollLeft = 0;
+    }
+    lastTap = now;
+  });
+
+  // 화면 크기 변화 시 다시 맞춤
+  window.addEventListener('resize', ()=>{
+    applyWidth();
+  });
+})();
+</script>
 </body>
 </html>
