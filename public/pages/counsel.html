@@ -7612,7 +7612,7 @@ function loadRepresentativeImageForCard(card, query, img){
         return Promise.resolve(bustedFallback);
       }
 
-      const thumbSrc = './assets/goods_image/' + encodeURIComponent(query) + '.jpg?t=' + Date.now();
+      const thumbSrc = './assets/goods_image/' + encodeURIComponent(query).replace(/%2C/g, ',') + '.jpg?t=' + Date.now();
 
       return new Promise((resolve) => {
         img.onload = () => {
@@ -7624,7 +7624,7 @@ function loadRepresentativeImageForCard(card, query, img){
         img.onerror = () => {
           // 🔧 fallback: 상품명으로 한 번 더 시도
           const altQuery = String(brand + ' ' + name).trim();
-          const altSrc = './assets/goods_image/' + encodeURIComponent(altQuery) + '.jpg?t=' + Date.now();
+          const altSrc = './assets/goods_image/' + encodeURIComponent(altQuery).replace(/%2C/g, ',') + '.jpg?t=' + Date.now();
           img.onerror = () => {
             const bustedFallback = fallback + '?t=' + Date.now();
             img.onload = null;
@@ -7683,45 +7683,12 @@ function loadRepresentativeImageForCard(card, query, img){
       return;
     }
 
-    try {
-      const res = await fetch(COUNSEL_THUMB_BATCH_URL, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8'
-        },
-        body: JSON.stringify({ queries })
-      });
-
-      const data = await res.json().catch(() => null);
-
-      if (!res.ok || !data || data.success !== true || !Array.isArray(data.images)) {
-        throw new Error('thumb batch failed');
+    // 🔧 Vercel 정적 호스팅에서는 배치 API 없음 -> 로컬 파일 직접 로드
+    for (const item of items) {
+      if (!item || !item.img || !item.img.isConnected) {
+        continue;
       }
-
-      queries.forEach((query, index) => {
-        const path = String(data.images[index] || fallback).trim() || fallback;
-
-        imageCache.set(query, path);
-
-        (queryMap.get(query) || []).forEach(item => {
-          if (!item.img || !item.img.isConnected) {
-            return;
-          }
-
-          item.img.src = addBust(path);
-        });
-      });
-    } catch (err) {
-      console.error('썸네일 일괄 로드 실패', err);
-
-      for (const item of items) {
-        if (!item || !item.img || !item.img.isConnected) {
-          continue;
-        }
-
-        await loadRepresentativeImageForCard(item.card, item.query, item.img);
-      }
+      await loadRepresentativeImageForCard(item.card, item.query, item.img);
     }
   }
 
