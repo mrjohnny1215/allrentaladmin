@@ -7622,11 +7622,17 @@ function loadRepresentativeImageForCard(card, query, img){
         };
 
         img.onerror = () => {
-          const bustedFallback = fallback + '?t=' + Date.now();
-          img.onload = null;
-          img.onerror = null;
-          img.src = bustedFallback;
-          resolve(bustedFallback);
+          // 🔧 fallback: 상품명으로 한 번 더 시도
+          const altQuery = String(brand + ' ' + name).trim();
+          const altSrc = './assets/goods_image/' + encodeURIComponent(altQuery) + '.jpg?t=' + Date.now();
+          img.onerror = () => {
+            const bustedFallback = fallback + '?t=' + Date.now();
+            img.onload = null;
+            img.onerror = null;
+            img.src = bustedFallback;
+            resolve(bustedFallback);
+          };
+          img.src = altSrc;
         };
 
         img.src = thumbSrc;
@@ -8186,7 +8192,7 @@ function loadRepresentativeImageForCard(card, query, img){
         renderCardPriceArea(row, defaultMgmt);
       }
 
-      card.dataset.imgq = name || model || '';
+      card.dataset.imgq = model || name || '';
       pendingThumbItems.push({
         card: card,
         img: img,
