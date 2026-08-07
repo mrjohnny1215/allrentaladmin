@@ -13,7 +13,7 @@ const MENUS = [
   { key: 'settlement_manage', label: '정산관리', icon: 'settlement_manage', type: 'static', file: 'settlement_manage' },
   { key: 'customer_apply_manage', label: '고객신청', icon: 'order', type: 'static', file: 'customer_apply_manage' },
   { key: 'promotions', label: '프로모션', icon: 'promotion', type: 'static', file: 'promotions' },
-  { key: 'creditcard', label: '제휴카드', icon: 'card', type: 'static', file: 'creditcard' },
+  { key: 'creditcard', label: '제휴카드', icon: 'card', type: 'static', file: 'partner-card' },
   { key: 'suggestion_board', label: '제안게시판', icon: 'board', type: 'static', file: 'suggestion_board' },
   { key: 'business_card', label: '명함', icon: 'business_card', type: 'static', file: 'business_card' },
   { key: 'faq', label: 'FAQ', icon: 'faq', type: 'static', file: 'faq' },
