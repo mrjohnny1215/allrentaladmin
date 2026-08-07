@@ -3755,7 +3755,6 @@ document.addEventListener("DOMContentLoaded", applyBrandPermissionUi);
 </script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 <script>
 function showTutorialModal() {
   const modalEl = document.getElementById("tutorialModal");
@@ -5007,7 +5006,6 @@ $("#filterBrand, #filter1, #filter2").on("change", function () {
 });
 $("#resetBtn").on("click", resetDetailFilters);
 
-fetchData();
 
 const savedCheckState = localStorage.getItem("consultCheck");
 if (savedCheckState !== null && document.getElementById("consultCheck")) {
@@ -13178,6 +13176,22 @@ document.addEventListener('click', function (e) {
 </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script>
+$(function(){
+  // jquery-ui 로드 완료 후 데이터 로드 + 자동완성 초기화
+  if (typeof worksheetData === 'undefined' || worksheetData.length <= 1) {
+    fetchData();
+  } else if (typeof $.fn.autocomplete === 'function' && typeof initializeAutocomplete === 'function') {
+    initializeAutocomplete();
+  }
+  // 키워드 입력창 클릭 시 자동완성 강제 오픈 (원본 동작)
+  $('#keyword').on('click focus', function(){
+    if (typeof $.fn.autocomplete === 'function') $(this).autocomplete('search', $(this).val() || '');
+  });
+});
+</script>
 </body>
 </html>
