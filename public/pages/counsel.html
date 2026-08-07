@@ -4960,11 +4960,15 @@ if (shouldClearOutput && productName) {
     // 🔧 로컬 호스팅: 모델명 → ../assets/goods_image/<모델>.jpg 존재 확인
     //    (원본은 counsel.php?image=모델&mode=list API를 호출하나, 정적 호스팅이라 로컬 파일로 대체)
     //    로컬 파일은 모델명 기준이므로, 상품명(exactName) + 모델명(selectedRow[1]) 모두 후보로 시도
+    //    파일명 안전화: / ( ) 공백 등 → _ (크롤러 safe_name과 동일 규칙)
+    const safeName = (s) => String(s || '').replace(/[\/\\()\s]/g, '_').replace(/_+/g, '_').replace(/^_+|_+$/g, '');
     const candidates = [];
     if (exactName) candidates.push(exactName);
     if (selectedRow && selectedRow[1]) candidates.push(selectedRow[1]);   // 모델명
     const cleaned = String(exactName || "").replace(/\s+/g, '').replace(/[\/\\]/g, '');
     if (cleaned && !candidates.includes(cleaned)) candidates.push(cleaned);
+    // 파일명 안전화 버전도 후보로 추가
+    candidates.forEach(c => { const sn = safeName(c); if (sn && !candidates.includes(sn)) candidates.push(sn); });
 
     (async () => {
         for (const cand of candidates) {
