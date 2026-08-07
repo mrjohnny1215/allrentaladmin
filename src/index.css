@@ -87,3 +87,9 @@ button { font-family: inherit; cursor: pointer; }
   width: 100%;
 }
 .input-x:focus { outline: 2px solid var(--cobalt); outline-offset: -1px; }
+
+/* ===== 모바일: 사이드바 오버레이 + 햄버거 토글 ===== */
+@media (max-width: 768px) {
+  .hamburger-btn { display: block !important; }
+  .app-sidebar { width: 220px !important; }
+}

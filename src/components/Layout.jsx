@@ -22,17 +22,40 @@ const MENUS = [
 
 export default function Layout() {
   const [active, setActive] = useState(MENUS[0])
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  const selectMenu = (m) => {
+    setActive(m)
+    setSidebarOpen(false) // 모바일에서 메뉴 선택 시 사이드바 닫음
+  }
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
-      {/* 사이드바 */}
-      <aside style={{ width: 210, background: 'var(--navy)', color: '#fff', flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
+      {/* 사이드바 (모바일: 오버레이 토글) */}
+      <aside
+        className="app-sidebar"
+        style={{
+          width: 210,
+          background: 'var(--navy)',
+          color: '#fff',
+          flexShrink: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          zIndex: 1000,
+          transform: sidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
+          transition: 'transform 0.25s ease',
+        }}
+      >
         <div style={{ padding: '1.25rem 1rem', fontWeight: 800, fontSize: '1.1rem', letterSpacing: '-0.5px' }}>ALL &amp; UP</div>
         <nav style={{ flex: 1, overflowY: 'auto' }}>
           {MENUS.map(m => (
             <div
               key={m.key}
-              onClick={() => setActive(m)}
+              onClick={() => selectMenu(m)}
               className={active.key === m.key ? 'side-item active' : 'side-item'}
               style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0.75rem 1rem', color: '#cfd6e0', cursor: 'pointer' }}
             >
@@ -43,9 +66,24 @@ export default function Layout() {
         </nav>
       </aside>
 
+      {/* 사이드바 열렸을 때 배경 dim (모바일) */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 999 }}
+        />
+      )}
+
       {/* 메인 영역 */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, marginLeft: 0 }}>
         <header style={{ height: 56, background: 'var(--navy)', color: '#fff', display: 'flex', alignItems: 'center', padding: '0 1.25rem', gap: 12 }}>
+          {/* 햄버거 버튼 (모바일에서만 보임) */}
+          <button
+            onClick={() => setSidebarOpen(v => !v)}
+            aria-label="메뉴 열기"
+            style={{ display: 'none', background: 'transparent', border: 'none', color: '#fff', fontSize: '1.4rem', cursor: 'pointer', padding: 0, marginRight: 4 }}
+            className="hamburger-btn"
+          >☰</button>
           <span style={{ fontWeight: 700 }}>WEB&amp;ON + 상담</span>
           <span style={{ marginLeft: 'auto', fontSize: '0.85rem', opacity: 0.8 }}>{active.label}</span>
         </header>
