@@ -4585,7 +4585,7 @@ function loadRepresentativeImageForCard(card, query, img){
         return Promise.resolve(bustedFallback);
       }
 
-      const thumbSrc = 'https://allnup.com/counsel.php?image=' + encodeURIComponent(query) + '&mode=thumb&t=' + Date.now();
+      const thumbSrc = './assets/goods_image/' + encodeURIComponent(query) + '.jpg?t=' + Date.now();
 
       return new Promise((resolve) => {
         img.onload = () => {
@@ -7155,7 +7155,7 @@ function getThumbPreviewHistoryState(){
   };
 }
 
-function buildThumbPreviewImageSrc(path){ const raw = String(path||'goods_image/no_image.jpg').replace(/^.*goods_image\//,''); return 'https://allnup.com/counsel.php?image=' + encodeURIComponent(raw) + '&mode=thumb&t=' + Date.now(); }
+function buildThumbPreviewImageSrc(path){ const raw = String(path||'goods_image/no_image.jpg').replace(/^.*goods_image\//,''); return './assets/goods_image/' + raw + (raw.includes('?')?'&':'?') + 't=' + Date.now(); }
 
 function getThumbPreviewEls(){
   return {
