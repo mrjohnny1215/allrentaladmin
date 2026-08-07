@@ -2,146 +2,156 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>제휴카드(임베드)</title>
-<!-- 🔎 모바일에서도 확대 허용 -->
+<title>제휴카드</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
 
 <style>
-  html,body{height:100%;margin:0;background:#fff}
-  /* 이미지가 화면보다 커질 수 있게 스크롤 허용 */
+  html,body{height:100%;margin:0;background:#fff;font-family:'cafe',-apple-system,'Malgun Gothic',sans-serif}
+  *{box-sizing:border-box}
+
+  /* 모바일 최적화 래퍼 */
   .wrap{
-    height:100%;
+    min-height:100%;
     width:100%;
     overflow:auto;
-    /* ✅ 세로는 위쪽 정렬, 가로만 가운데 정렬 */
     display:flex; align-items:flex-start; justify-content:center;
-    padding:8px;
+    padding:10px;
     touch-action: pan-x pan-y;
   }
 
+  /* ✅ 기본: 가로 100% 맞춤 (모바일 잘림 방지) */
   #cardImg{
     display:block;
+    width:100%;          /* 화면 가로에 맞춤 */
+    max-width:100%;
+    height:auto;
     image-rendering:auto;
-    /* ✅ transform 기반 확대 제거 (스크롤 영역 문제 방지) */
-    max-width:none;   /* JS가 width를 직접 제어할 수 있게 */
-    height:auto;      /* 비율 유지 */
-  }
-  .empty{
-    color:#6b7280;text-align:center;padding:40px 12px;font-size:.95rem
+    border-radius:10px;
+    box-shadow:0 2px 12px rgba(0,0,0,.08);
   }
 
-  /* 우하단 고정 컨트롤 */
+  .empty{ color:#6b7280;text-align:center;padding:40px 12px;font-size:.95rem }
+
+  /* 썸네일 리스트 (여러 카드) */
+  .thumb-list{
+    display:flex; gap:8px; overflow-x:auto; padding:8px;
+    position:sticky; top:0; background:#fff; z-index:5;
+    border-bottom:1px solid #eee;
+  }
+  .thumb-list img{
+    width:64px; height:auto; border-radius:6px; border:2px solid transparent; cursor:pointer;
+  }
+  .thumb-list img.active{ border-color:#2f66ff; }
+
+  /* 우하단 확대/축소 컨트롤 */
   .zoom-ctrl{
     position:fixed; right:12px; bottom:12px;
-    display:flex; gap:6px;
-    z-index:9999;
+    display:flex; gap:6px; z-index:9999;
   }
   .zoom-ctrl .btn{
     border:1px solid #d1d5db; background:#fff; border-radius:8px;
-    padding:6px 10px; font-size:14px; cursor:pointer;
+    padding:8px 12px; font-size:15px; cursor:pointer;
     box-shadow:0 2px 8px rgba(0,0,0,.12);
   }
-  .zoom-ctrl .btn:active{ transform: translateY(1px); }
-  /* 작은 화면에선 버튼 살짝 키움 */
-  @media (max-width:768px){
-    .zoom-ctrl .btn{ padding:8px 12px; font-size:15px; }
-  }
+  .zoom-ctrl .btn:active{ transform:translateY(1px); }
 </style>
 </head>
 <body>
-  <div class="wrap" id="wrap">
-          <!-- 🔎 컨트롤이 img를 직접 제어할 수 있도록 id 부여 -->
-      <img id="cardImg" src="../assets/card/1cwcard.png" alt="제휴카드">
-      </div>
+  <!-- 썸네일 (1장이면 단일 표시) -->
+  <div class="thumb-list" id="thumbList"></div>
 
-  <!-- 🔎 확대/축소/맞춤/원본 컨트롤 -->
-    <div class="zoom-ctrl" aria-hidden="false">
-    <button class="btn" id="fitBtn"   title="화면맞춤">맞춤</button>
+  <div class="wrap" id="wrap">
+    <img id="cardImg" src="./assets/card/1cwcard.png" alt="제휴카드">
+  </div>
+
+  <div class="zoom-ctrl" aria-hidden="false">
+    <button class="btn" id="fitBtn"    title="화면맞춤">맞춤</button>
     <button class="btn" id="actualBtn" title="원본크기">원본</button>
-    <button class="btn" id="zoomOut" title="축소">−</button>
-    <button class="btn" id="zoomIn"  title="확대">＋</button>
+    <button class="btn" id="zoomOut"   title="축소">−</button>
+    <button class="btn" id="zoomIn"    title="확대">＋</button>
   </div>
 
 <script>
 (function(){
   const img  = document.getElementById('cardImg');
   const wrap = document.getElementById('wrap');
+  const thumbList = document.getElementById('thumbList');
   if (!img || !wrap) return;
 
-  // ✅ 모드: 'custom'(700px 시작), 'fit'(가로 화면맞춤), 'actual'(원본)
-  let mode = 'custom';
-  let zoom = 1;              // width 배율
-  const START_W = 700;       // 시작 너비(px)
+  // 카드 이미지 목록 (필요시 여기에 추가)
+  const CARDS = ['1cwcard'];
 
-  // 래퍼의 내부 가로폭 계산(패딩 제외)
+  // 썸네일 렌더
+  if (thumbList && CARDS.length > 1) {
+    CARDS.forEach((key, i) => {
+      const t = document.createElement('img');
+      t.src = './assets/card/' + key + '.png';
+      t.className = i === 0 ? 'active' : '';
+      t.addEventListener('click', () => {
+        img.src = './assets/card/' + key + '.png';
+        thumbList.querySelectorAll('img').forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        fitMode();
+      });
+      thumbList.appendChild(t);
+    });
+  } else if (thumbList) {
+    thumbList.style.display = 'none';
+  }
+
+  let mode = 'fit';   // 모바일 기본: 화면맞춤
+  let zoom = 1;
+  const START_FIT = true;
+
   function innerWidth(el){
     const cs = getComputedStyle(el);
     return el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
   }
 
-  // 현재 모드의 "기준 너비" 계산
   function baseWidth(){
-    const iw = Math.max(100, innerWidth(wrap));  // 라퍼 내부 폭
-    if (mode === 'fit')    return iw;                            // 화면 가로맞춤
-    if (mode === 'actual') return img.naturalWidth || img.width; // 원본
-    // custom: 600px, 단 화면이 더 좁으면 줄여 시작
-    return Math.min(START_W, iw);
+    const iw = Math.max(100, innerWidth(wrap));
+    if (mode === 'fit')    return iw;
+    if (mode === 'actual') return img.naturalWidth || img.width;
+    return Math.min(700, iw);
   }
 
   function applyWidth(){
     const w = baseWidth() * zoom;
-    img.style.width = Math.max(100, Math.round(w)) + 'px';
+    img.style.width = Math.max(80, Math.round(w)) + 'px';
     img.style.height = 'auto';
   }
 
-  function setZoom(next){
-    zoom = Math.max(0.5, Math.min(5, next)); // 0.5x ~ 5x
-    applyWidth();
-  }
+  function fitMode(){ mode='fit'; zoom=1; applyWidth(); wrap.scrollTop=0; wrap.scrollLeft=0; }
+  function setZoom(next){ zoom = Math.max(0.5, Math.min(5, next)); applyWidth(); }
 
-  // ✅ 초기 적용: 가로 600px / 세로 자동 / 위쪽(세로) + 가운데(가로) 정렬
-  applyWidth();
+  // 초기: 모바일 기준 화면맞춤
+  fitMode();
 
-  // 버튼
-  document.getElementById('fitBtn')?.addEventListener('click', ()=>{
-    mode = 'fit';  zoom = 1; applyWidth();
-  });
-  document.getElementById('actualBtn')?.addEventListener('click', ()=>{
-    mode = 'actual'; zoom = 1; applyWidth(); wrap.scrollTop = 0; wrap.scrollLeft = 0;
-  });
-  document.getElementById('zoomIn')?.addEventListener('click', ()=>{
-    setZoom(zoom * 1.25);
-  });
-  document.getElementById('zoomOut')?.addEventListener('click', ()=>{
-    setZoom(zoom / 1.25);
-  });
+  document.getElementById('fitBtn')?.addEventListener('click', fitMode);
+  document.getElementById('actualBtn')?.addEventListener('click', ()=>{ mode='actual'; zoom=1; applyWidth(); wrap.scrollTop=0; wrap.scrollLeft=0; });
+  document.getElementById('zoomIn')?.addEventListener('click', ()=> setZoom(zoom*1.25));
+  document.getElementById('zoomOut')?.addEventListener('click', ()=> setZoom(zoom/1.25));
 
-  // 데스크톱: Ctrl/⌘ + 휠로 확대/축소
   wrap.addEventListener('wheel', (e)=>{
-    if (e.ctrlKey || e.metaKey) {
+    if (e.ctrlKey || e.metaKey){
       e.preventDefault();
-      const factor = (e.deltaY < 0) ? 1.15 : (1/1.15);
-      setZoom(zoom * factor);
+      setZoom(zoom * (e.deltaY < 0 ? 1.15 : 1/1.15));
     }
-  }, { passive:false });
+  }, {passive:false});
 
-  // 더블클릭/더블탭: fit ↔ actual 토글
+  // 더블탭: fit ↔ actual
   let lastTap = 0;
   wrap.addEventListener('click', ()=>{
     const now = Date.now();
-    if (now - lastTap < 350) {
+    if (now - lastTap < 350){
       mode = (mode === 'fit') ? 'actual' : 'fit';
-      zoom = 1;
-      applyWidth();
-      wrap.scrollTop = 0; wrap.scrollLeft = 0;
+      zoom = 1; applyWidth(); wrap.scrollTop=0; wrap.scrollLeft=0;
     }
     lastTap = now;
   });
 
-  // 화면 크기 변화 시 다시 맞춤
-  window.addEventListener('resize', ()=>{
-    applyWidth();
-  });
+  window.addEventListener('resize', applyWidth);
+  img.addEventListener('load', applyWidth);
 })();
 </script>
 </body>
