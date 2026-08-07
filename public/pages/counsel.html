@@ -1466,6 +1466,12 @@ function updateAllFilterDropdowns() {
     if (mgmtMatch) mgmtRawList.forEach(v => mgmtSet.add(v));
   });
 
+  // ✅ 기본 옵션 보장 (데이터가 비어있어도 하드코딩 옵션 유지)
+  const RULE_DEFAULTS = ["신규","보상","결합","특가","신규/후결합","보상/후결합","신규/동시구매","보상/동시구매","PKG","단체"];
+  const MGMT_DEFAULTS = ["셀프","셀프(12개월)","1개월","2개월","3개월","4개월","6개월","8개월"];
+  RULE_DEFAULTS.forEach(v => ruleSet.add(v));
+  MGMT_DEFAULTS.forEach(v => mgmtSet.add(v));
+
   // ✅ 드롭다운 재구성 함수
   function rebuildSelect(selectId, values, defaultLabel) {
     const select = document.getElementById(selectId);
