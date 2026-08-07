@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-ALL&UP 클론 - 실제 제조사 상품 이미지 크롤러
-- counselSalesRankMap (counsel.html 내장) 또는 counsel_ws.json에서 각 모델의 detail_url 추출
-- 제조사 사이트(코웨이/청호/SK/쿠쿠/웰스/LG/현대/세스코) 상세페이지에서 실제 상품 이미지 URL 크롤링
-- public/assets/goods_image/<모델>.jpg 로 저장 (기존 플레이스홀더 덮어씀)
+ALL&UP 클론 - 실제 제조사 상품 이미지 크롤러 (v2: 제조사별 정확 추출 + 차원 검증)
+- counsel_ws.json 에서 모델명 + 상세페이지(detail_url) 추출
+- 제조사별 이미지 URL 패턴 우선순위 적용
+- 다운로드 후 실제 JPEG/PNG + 10KB 이상 + 차원 100px 이상 검증
+- public/assets/goods_image/<safe_model>.jpg 로 저장
 """
-import json, os, re, sys, time, urllib.request, urllib.error
+import json, os, re, sys, time, urllib.request, urllib.error, struct
 from html.parser import HTMLParser
+from urllib.parse import urlparse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GOODS_DIR = os.path.join(ROOT, "public", "assets", "goods_image")
@@ -25,20 +27,28 @@ class ImgExtractor(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if tag == "img":
             d = dict(attrs)
-            src = d.get("src") or d.get("data-src") or d.get("data-original") or d.get("data-lazy")
-            if src:
-                self.imgs.append(src)
+            for k in ["src", "data-src", "data-original", "data-lazy", "data-img"]:
+                src = d.get(k)
+                if src:
+                    self.imgs.append(src)
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
 
-def fetch(url, timeout=20):
+def fetch(url, timeout=20, redirects=5):
+    if redirects <= 0:
+        return None, url
     req = urllib.request.Request(url, headers=HEADERS)
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return resp.read().decode("utf-8", errors="replace"), resp.geturl()
     except urllib.error.HTTPError as e:
         if e.code in (301, 302, 303, 307, 308) and e.headers.get("Location"):
-            return fetch(e.headers["Location"], timeout)
+            loc = e.headers["Location"]
+            if loc.startswith("/"):
+                p = urlparse(url); loc = f"{p.scheme}://{p.netloc}{loc}"
+            return fetch(loc, timeout, redirects-1)
         return None, url
-    except Exception as e:
+    except Exception:
         return None, url
 
 def abs_url(src, base):
@@ -47,26 +57,88 @@ def abs_url(src, base):
     if src.startswith("http"):
         return src
     if src.startswith("/"):
-        from urllib.parse import urlparse
         p = urlparse(base)
         return f"{p.scheme}://{p.netloc}{src}"
     return base.rsplit("/", 1)[0] + "/" + src
 
-def pick_product_image(imgs, base):
-    """제조사별 실제 상품 이미지 필터"""
-    candidates = []
+def brand_of(url):
+    u = url.lower()
+    if "coway" in u: return "coway"
+    if "chungho" in u: return "chungho"
+    if "skmagic" in u or "sk.com" in u: return "sk"
+    if "cuckoo" in u: return "cuckoo"
+    if "kyowonwells" in u or "wells" in u: return "wells"
+    if "lg" in u or "lge" in u: return "lg"
+    if "hdquming" in u or "hyundai" in u: return "hyundai"
+    if "cesco" in u: return "cesco"
+    return "etc"
+
+# 제조사별 이미지 URL 우선순위 (정규식, 순서대로 매칭)
+BRAND_PATTERNS = {
+    "coway":    [r"upload/product/product/[^\"'\s]+\.jpg", r"attimg_org\.(?:jpg|png)", r"product/[^”'\s]+\.(?:jpg|png)"],
+    "chungho":  [r"/web/product/big/[^\"'\s]+\.(?:jpg|png)", r"/web/product/[^\"'\s]+_org\.(?:jpg|png)"],
+    "sk":       [r"/goods/[^\"'\s]+\.(?:jpg|png)", r"goodsView[^\"'\s]*\.(?:jpg|png)"],
+    "cuckoo":   [r"/productView[^\"'\s]*\.(?:jpg|png)", r"/upload/[^\"'\s]+\.(?:jpg|png)"],
+    "wells":    [r"/Product/[^\"'\s]+\.(?:jpg|png)", r"/upload/[^\"'\s]+\.(?:jpg|png)"],
+    "lg":       [r"/care-solutions/[^\"'\s]+\.(?:jpg|png)"],
+    "hyundai":  [r"/rental[^\"'\s]*\.(?:jpg|png)"],
+    "cesco":    [r"/products/[^\"'\s]+\.(?:jpg|png)"],
+}
+
+def pick_image(imgs, brand):
+    # 절대 URL만, 제조사 호스트거나 upload/product 경로
+    urls = []
     for src in imgs:
         s = src.lower()
-        # 제외: 로고, 아이콘, 버튼, 배너, ui, common, resources, ico
-        if any(k in s for k in ["logo", "icon", "btn", "banner", "ico_", "/ui/", "common", "resources/web", "kakao", "naver", "close", "arrow", "bg_", "temp/"]):
+        if not any(s.endswith(e) for e in [".jpg", ".jpeg", ".png", ".webp"]):
             continue
-        if any(s.endswith(ext) for ext in [".jpg", ".jpeg", ".png", ".webp"]):
-            candidates.append(src)
-    # 우선순위: product/img/upload 경로
-    for c in candidates:
-        if any(k in c.lower() for k in ["product", "upload", "attimg", "goods", "item"]):
-            return c
-    return candidates[0] if candidates else None
+        if any(k in s for k in ["logo", "icon", "btn", "banner", "kakao", "naver", "login", "arrow", "bg_", "/ui/", "common", "resources/web", "talk_", "r-banner"]):
+            continue
+        urls.append(src)
+    # 브랜드별 패턴 우선
+    pats = BRAND_PATTERNS.get(brand, [])
+    for pat in pats:
+        for u in urls:
+            if re.search(pat, u, re.I):
+                return u
+    # 폴백: product/upload 포함
+    for u in urls:
+        if any(k in u.lower() for k in ["product", "upload", "goods", "attimg", "item"]):
+            return u
+    return urls[0] if urls else None
+
+def valid_image(data):
+    """JPEG/PNG 시그니처 + 최소 크기 + 차원 검증"""
+    if len(data) < 10000:
+        return False
+    # JPEG: FF D8 FF
+    if data[:3] == b"\xff\xd8\xff":
+        # 차원 추출 (SOF0~SOF15 중 C0~CF, 단 C4/C8/CC 제외)
+        i = 2
+        try:
+            while i < len(data) - 9:
+                if data[i] != 0xFF:
+                    i += 1; continue
+                marker = data[i+1]
+                if 0xC0 <= marker <= 0xCF and marker not in (0xC4, 0xC8, 0xCC):
+                    h = int.from_bytes(data[i+5:i+7], "big")
+                    w = int.from_bytes(data[i+7:i+9], "big")
+                    return h >= 100 and w >= 100
+                seglen = int.from_bytes(data[i+2:i+4], "big")
+                i += 2 + seglen
+                if seglen == 0: break
+        except Exception:
+            return len(data) > 15000
+        return len(data) > 15000
+    # PNG: 89 50 4E 47
+    if data[:4] == b"\x89PNG":
+        try:
+            w = int.from_bytes(data[16:20], "big")
+            h = int.from_bytes(data[20:24], "big")
+            return h >= 100 and w >= 100
+        except Exception:
+            return len(data) > 15000
+    return False
 
 def crawl_model(model_name, detail_url):
     if not detail_url:
@@ -76,18 +148,18 @@ def crawl_model(model_name, detail_url):
         return False, "fetch failed"
     parser = ImgExtractor()
     parser.feed(html)
-    img = pick_product_image(parser.imgs, final_url)
+    brand = brand_of(final_url)
+    img = pick_image(parser.imgs, brand)
     if not img:
         return False, "no image found"
     img_url = abs_url(img, final_url)
-    # 다운로드
     try:
         req = urllib.request.Request(img_url, headers=HEADERS)
         with urllib.request.urlopen(req, timeout=20) as resp:
             data = resp.read()
-        if len(data) < 2000:  # 너무 작으면 플레이스홀더/실패
-            return False, f"too small ({len(data)} bytes)"
-        out = os.path.join(GOODS_DIR, f"{model_name}.jpg")
+        if not valid_image(data):
+            return False, f"invalid image ({len(data)} bytes, brand={brand})"
+        out = os.path.join(GOODS_DIR, f"{safe_name(model_name)}.jpg")
         with open(out, "wb") as f:
             f.write(data)
         return True, f"{len(data)} bytes"
@@ -95,15 +167,11 @@ def crawl_model(model_name, detail_url):
         return False, f"download err: {e}"
 
 def safe_name(model):
-    """파일명 안전화: / ( ) 공백 한글 등 → _ """
-    import re
     s = re.sub(r'[/\\()\s]', '_', model)
     s = re.sub(r'_+', '_', s).strip('_')
     return s
 
 def load_model_map():
-    """counsel_ws.json 에서 모델명 + 상세페이지 추출 (전체 4190개)"""
-    import json, os
     path = os.path.join(ROOT, "public", "data", "counsel_ws.json")
     if not os.path.exists(path):
         return {}
@@ -128,16 +196,14 @@ def main():
     model_map = load_model_map()
     print(f"모델맵 로드: {len(model_map)}개")
     if not model_map:
-        print("모델맵 추출 실패")
         sys.exit(1)
 
-    # 이미 실제 이미지가 있으면 스킵 (크기 기준: 30KB 이상이면 실제라고 가정, 플레이스홀더는 32KB)
-    # 플레이스홀더는 32545바이트 고정 → 이건 덮어씀
-    success = 0; fail = 0; skip = 0
+    success = fail = skip = 0
     total = len(model_map)
     for idx, (model, url) in enumerate(model_map.items(), 1):
         out = os.path.join(GOODS_DIR, f"{safe_name(model)}.jpg")
-        if os.path.exists(out) and os.path.getsize(out) != 32545:
+        # 이미 실제 이미지(10KB+) 있으면 스킵
+        if os.path.exists(out) and os.path.getsize(out) >= 10000:
             skip += 1
             continue
         ok, msg = crawl_model(model, url)
@@ -145,11 +211,11 @@ def main():
             success += 1
         else:
             fail += 1
-            if fail <= 20:
-                print(f"  FAIL {model}: {msg}")
-        if idx % 25 == 0:
+            if fail <= 30:
+                print(f"  FAIL {model} ({brand_of(url)}): {msg}")
+        if idx % 50 == 0:
             print(f"진행 {idx}/{total} 성공={success} 실패={fail} 스킵={skip}")
-        time.sleep(0.3)  # 제조사 서버 부하 방지
+        time.sleep(0.3)
     print(f"\n완료: 총={total} 성공={success} 실패={fail} 스킵={skip}")
 
 if __name__ == "__main__":
