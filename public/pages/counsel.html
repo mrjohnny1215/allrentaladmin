@@ -7612,7 +7612,8 @@ function loadRepresentativeImageForCard(card, query, img){
         return Promise.resolve(bustedFallback);
       }
 
-      const thumbSrc = './assets/goods_image/' + encodeURIComponent(query).replace(/%2C/g, ',') + '.jpg?t=' + Date.now();
+      const q1 = String(query).replace(/[\/\\]/g, '_');
+      const thumbSrc = './assets/goods_image/' + encodeURIComponent(q1).replace(/%2C/g, ',') + '.jpg?t=' + Date.now();
 
       return new Promise((resolve) => {
         img.onload = () => {
@@ -7624,7 +7625,8 @@ function loadRepresentativeImageForCard(card, query, img){
         img.onerror = () => {
           // 🔧 fallback: 상품명으로 한 번 더 시도
           const altQuery = String(brand + ' ' + name).trim();
-          const altSrc = './assets/goods_image/' + encodeURIComponent(altQuery).replace(/%2C/g, ',') + '.jpg?t=' + Date.now();
+          const q2 = String(altQuery).replace(/[\/\\]/g, '_');
+      const altSrc = './assets/goods_image/' + encodeURIComponent(q2).replace(/%2C/g, ',') + '.jpg?t=' + Date.now();
           img.onerror = () => {
             const bustedFallback = fallback + '?t=' + Date.now();
             img.onload = null;
