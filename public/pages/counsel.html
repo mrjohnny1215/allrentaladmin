@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>상담 페이지</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <link rel="stylesheet" href="./assets/style/button_animation.css">
-    <link rel="stylesheet" href="./assets/style/button_style.css">
+    <link rel="stylesheet" href="/assets/style/button_animation.css">
+    <link rel="stylesheet" href="/assets/style/button_style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js/minified/introjs.min.css">
@@ -3492,21 +3492,21 @@ body {
     <div class="md-action-row">
       <button id="mShareBtn" type="button" class="btn md-segment-btn">
         <span class="md-segment-btn-wrap">
-          <img src="./assets/webimage/button/shar.png" alt="" class="md-segment-btn-icon" onerror="this.onerror=null;this.src='./assets/webimage/button/share.png';">
+          <img src="/assets/webimage/button/shar.png" alt="" class="md-segment-btn-icon" onerror="this.onerror=null;this.src='/assets/webimage/button/share.png';">
           <span>공유</span>
         </span>
       </button>
 
       <button id="mCopyImageBtn" type="button" class="btn md-segment-btn">
         <span class="md-segment-btn-wrap">
-          <img src="./assets/webimage/button/copy.png" alt="" class="md-segment-btn-icon">
+          <img src="/assets/webimage/button/copy.png" alt="" class="md-segment-btn-icon">
           <span>이미지 복사</span>
         </span>
       </button>
 
       <button id="mCopyTextBtn" type="button" class="btn md-segment-btn">
         <span class="md-segment-btn-wrap">
-          <img src="./assets/webimage/button/copy.png" alt="" class="md-segment-btn-icon">
+          <img src="/assets/webimage/button/copy.png" alt="" class="md-segment-btn-icon">
           <span>렌탈료 복사</span>
         </span>
       </button>
@@ -3515,14 +3515,14 @@ body {
     <div class="md-action-row">
       <button id="mBackBtn" type="button" class="btn md-segment-btn">
         <span class="md-segment-btn-wrap">
-          <img src="./assets/webimage/button/open.png" alt="" class="md-segment-btn-icon">
+          <img src="/assets/webimage/button/open.png" alt="" class="md-segment-btn-icon">
           <span>목록으로</span>
         </span>
       </button>
 
       <button type="button" id="mEstimateBtn" class="btn md-segment-btn">
         <span class="md-segment-btn-wrap">
-          <img src="./assets/webimage/button/register.png" alt="" class="md-segment-btn-icon">
+          <img src="/assets/webimage/button/register.png" alt="" class="md-segment-btn-icon">
           <span>견적서</span>
         </span>
       </button>
@@ -3555,7 +3555,7 @@ body {
     <div class="md-card-panel">
       <button id="mCreditCardBtn" type="button" class="btn md-segment-btn md-card-segment">
         <span class="md-segment-btn-wrap">
-          <img src="./assets/webimage/button/card.png" alt="" class="md-segment-btn-icon">
+          <img src="/assets/webimage/button/card.png" alt="" class="md-segment-btn-icon">
           <span>제휴카드</span>
         </span>
       </button>
@@ -3597,14 +3597,14 @@ body {
     <div class="md-card-panel">
       <button id="mDetailPageBtn" type="button" class="btn md-primary-action-btn">
         <span class="md-segment-btn-wrap">
-          <img src="./assets/webimage/button/open.png" alt="" class="md-segment-btn-icon">
+          <img src="/assets/webimage/button/open.png" alt="" class="md-segment-btn-icon">
           <span>상세페이지</span>
         </span>
       </button>
 
       <button id="mReceiveBtn" type="button" class="btn md-primary-action-btn">
         <span class="md-segment-btn-wrap">
-          <img src="./assets/webimage/button/consent.png" alt="" class="md-segment-btn-icon">
+          <img src="/assets/webimage/button/consent.png" alt="" class="md-segment-btn-icon">
           <span>접수</span>
         </span>
       </button>
@@ -8499,13 +8499,13 @@ function loadRepresentativeImageForCard(card, query, img){
 
     if (hasNewBadge) {
       container.appendChild(
-        createStatusBadgeIcon('./assets/webimage/button/new.png', 'NEW', 'new-badge-icon', false)
+        createStatusBadgeIcon('/assets/webimage/button/new.png', 'NEW', 'new-badge-icon', false)
       );
     }
 
     if (isBestRow(row)) {
       container.appendChild(
-        createStatusBadgeIcon('./assets/webimage/button/best.png', 'BEST', 'best-badge-icon', hasNewBadge)
+        createStatusBadgeIcon('/assets/webimage/button/best.png', 'BEST', 'best-badge-icon', hasNewBadge)
       );
     }
   }
@@ -8642,7 +8642,7 @@ function getAirCapacityIconNameFromRow(row){
       slot.className = 'thumb-icon-slot' + (isAirIconMode ? ' thumb-icon-slot-air' : '');
 
       const img = document.createElement('img');
-      img.src = './assets/webimage/button/' + iconName + '.png';
+      img.src = '/assets/webimage/button/' + iconName + '.png';
       img.alt = iconName;
       img.loading = 'lazy';
       img.decoding = 'async';
@@ -10168,7 +10168,7 @@ function renderThumbPreviewActions(row){
     typeof bestBadgeApi.createStatusBadgeIcon === 'function'
   ) {
     leftBox.appendChild(
-      bestBadgeApi.createStatusBadgeIcon('./assets/webimage/button/new.png', 'NEW', 'new-badge-icon', false)
+      bestBadgeApi.createStatusBadgeIcon('/assets/webimage/button/new.png', 'NEW', 'new-badge-icon', false)
     );
   }
 
@@ -10179,7 +10179,7 @@ function renderThumbPreviewActions(row){
     bestBadgeApi.isBestRow(row)
   ) {
     leftBox.appendChild(
-      bestBadgeApi.createStatusBadgeIcon('./assets/webimage/button/best.png', 'BEST', 'best-badge-icon', hasNewBadge)
+      bestBadgeApi.createStatusBadgeIcon('/assets/webimage/button/best.png', 'BEST', 'best-badge-icon', hasNewBadge)
     );
   }
 
@@ -11962,7 +11962,7 @@ document.addEventListener('click', function (e) {
       </div>
       <div class="modal-footer">
         <button type="button" class="favorite-modal-close-btn" data-bs-dismiss="modal">
-          <img src="./assets/webimage/button/close.png" alt="" class="favorite-modal-close-icon">
+          <img src="/assets/webimage/button/close.png" alt="" class="favorite-modal-close-icon">
           <span>닫기</span>
         </button>
       </div>
@@ -12747,7 +12747,7 @@ document.addEventListener('click', function (e) {
         +     '</div>'
         +     '<button type="button" class="favorite-action-btn favorite-icon-btn" data-fav-move="up" data-fav-id="' + String(item.id) + '"' + (index === 0 ? ' disabled' : '') + ' title="위로 이동" aria-label="위로 이동">▲</button>'
         +     '<button type="button" class="favorite-action-btn favorite-icon-btn" data-fav-move="down" data-fav-id="' + String(item.id) + '"' + (index === items.length - 1 ? ' disabled' : '') + ' title="아래로 이동" aria-label="아래로 이동">▼</button>'
-        +     '<button type="button" class="favorite-action-btn favorite-delete-btn" data-fav-delete="1" data-fav-id="' + String(item.id) + '" title="삭제" aria-label="삭제"><img src="./assets/webimage/button/delete.png" alt="" class="favorite-icon-image"><span class="visually-hidden">삭제</span></button>'
+        +     '<button type="button" class="favorite-action-btn favorite-delete-btn" data-fav-delete="1" data-fav-id="' + String(item.id) + '" title="삭제" aria-label="삭제"><img src="/assets/webimage/button/delete.png" alt="" class="favorite-icon-image"><span class="visually-hidden">삭제</span></button>'
         +   '</div>'
         + '</div>';
     }).join('');

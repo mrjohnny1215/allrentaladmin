@@ -61,7 +61,7 @@
   <div class="thumb-list" id="thumbList"></div>
 
   <div class="wrap" id="wrap">
-    <img id="cardImg" src="./assets/card/1cwcard.png" alt="제휴카드">
+    <img id="cardImg" src="/assets/card/1cwcard.png" alt="제휴카드">
   </div>
 
   <div class="zoom-ctrl" aria-hidden="false">
@@ -85,10 +85,10 @@
   if (thumbList && CARDS.length > 1) {
     CARDS.forEach((key, i) => {
       const t = document.createElement('img');
-      t.src = './assets/card/' + key + '.png';
+      t.src = '/assets/card/' + key + '.png';
       t.className = i === 0 ? 'active' : '';
       t.addEventListener('click', () => {
-        img.src = './assets/card/' + key + '.png';
+        img.src = '/assets/card/' + key + '.png';
         thumbList.querySelectorAll('img').forEach(x=>x.classList.remove('active'));
         t.classList.add('active');
         fitMode();
