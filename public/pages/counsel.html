@@ -7686,8 +7686,16 @@ function loadRepresentativeImageForCard(card, query, img){
     }
 
     // 🔧 Vercel 정적 호스팅에서는 배치 API 없음 -> 로컬 파일 직접 로드
+    // 이미 appendCards에서 즉시 src 세팅했으므로, 캐시 체크 없이 모델명 경로로 보강만 수행
     for (const item of items) {
       if (!item || !item.img || !item.img.isConnected) {
+        continue;
+      }
+      const q = String(item.query || '').trim();
+      if (!q) continue;
+      // 이미 올바른 모델명 이미지가 박혀있으면 건드리지 않음
+      const cur = (item.img.getAttribute('src') || '').split('?')[0];
+      if (cur.includes('/assets/goods_image/') && cur !== '/assets/goods_image/no_image.jpg') {
         continue;
       }
       await loadRepresentativeImageForCard(item.card, item.query, item.img);
@@ -7827,10 +7835,21 @@ function loadRepresentativeImageForCard(card, query, img){
       t.className = 'thumb-square';
 
       const img = document.createElement('img');
-      img.src = '/assets/goods_image/no_image.jpg';
+      const initialModel = (model || name || '').replace(/[\/\\]/g, '_');
+      img.src = initialModel ? ('/assets/goods_image/' + encodeURIComponent(initialModel).replace(/%2C/g, ',') + '.jpg?t=' + Date.now()) : '/assets/goods_image/no_image.jpg';
       img.alt = name || model || '상품 이미지';
       img.loading = 'lazy';
       img.decoding = 'async';
+      img.onerror = function(){
+        const altQuery = String((brand||'') + ' ' + (name||'')).trim().replace(/[\/\\]/g, '_');
+        if (altQuery && altQuery !== initialModel) {
+          img.onerror = function(){ img.onerror = null; img.src = '/assets/goods_image/no_image.jpg?t=' + Date.now(); };
+          img.src = '/assets/goods_image/' + encodeURIComponent(altQuery).replace(/%2C/g, ',') + '.jpg?t=' + Date.now();
+        } else {
+          img.onerror = null;
+          img.src = '/assets/goods_image/no_image.jpg?t=' + Date.now();
+        }
+      };
 
       const thumbActions = document.createElement('div');
       thumbActions.className = 'thumb-square-actions';
