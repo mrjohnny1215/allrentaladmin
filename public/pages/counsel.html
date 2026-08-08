@@ -10124,7 +10124,16 @@ function getThumbPreviewHistoryState(){
   };
 }
 
-function buildThumbPreviewImageSrc(path){ const raw = String(path||'/assets/goods_image/no_image.jpg').replace(/[\/\\]/g,'_').replace(/^.*goods_image\//,''); return '/assets/goods_image/' + raw + (raw.includes('?')?'&':'?') + 't=' + Date.now(); }
+function buildThumbPreviewImageSrc(path){
+  const p = String(path||'/assets/goods_image/no_image.jpg');
+  // 경로 슬래시는 유지, 모델명(파일명) 내 슬래시만 _ 로 치환
+  let base = p;
+  let q = '';
+  const qi = p.indexOf('?');
+  if (qi >= 0) { base = p.slice(0, qi); q = p.slice(qi); }
+  const raw = base.replace(/^.*goods_image\//, '').replace(/[\/\\]/g, '_');
+  return '/assets/goods_image/' + raw + (q || ('?t=' + Date.now()));
+}
 
 function getThumbPreviewEls(){
   return {
