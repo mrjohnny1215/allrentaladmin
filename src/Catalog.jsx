@@ -260,7 +260,9 @@ export default function Catalog() {
   const [brand, setBrand] = useState('')
   const [limit, setLimit] = useState(PAGE)
   const [sel, setSel] = useState(null)
+  const [showMode, setShowMode] = useState('fee') // 'fee' 월 렌탈료 | 'commission' 수수료
   const detailRef = useRef(null)
+  const veilRef = useRef(null)
 
   useEffect(() => {
     fetch('/data/products.json', { cache: 'no-store' })
@@ -285,15 +287,22 @@ export default function Catalog() {
 
   useEffect(() => { setLimit(PAGE) }, [q, cat, brand])
 
-  const pick = useCallback((p) => {
-    setSel(p)
-    // 페이지 이동 없이 하단 상세 섹션으로 부드럽게 스크롤
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }, 60)
-    })
-  }, [])
+  // 모달 열기: 인라인 스크롤 대신 별도 창
+  const open = useCallback((p) => setSel(p), [])
+  const close = useCallback(() => setSel(null), [])
+
+  // ESC 닫기 + 배경 스크롤 잠금
+  useEffect(() => {
+    if (!sel) return
+    const onKey = (e) => { if (e.key === 'Escape') close() }
+    document.addEventListener('keydown', onKey)
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prev
+    }
+  }, [sel, close])
 
   if (err) {
     return (
@@ -340,6 +349,13 @@ export default function Catalog() {
               onClick={() => setBrand(brand === b ? '' : b)}>{b}</button>
           ))}
         </div>
+        <div className="chip-row">
+          <span className="label">카드 표시</span>
+          <div className="fee-toggle">
+            <button className={showMode === 'fee' ? 'on' : ''} onClick={() => setShowMode('fee')}>월 렌탈료</button>
+            <button className={showMode === 'commission' ? 'on' : ''} onClick={() => setShowMode('commission')}>수수료</button>
+          </div>
+        </div>
       </div>
 
       {shown.length === 0 ? (
@@ -349,17 +365,17 @@ export default function Catalog() {
           <div className="cat-grid">
             {shown.map((p) => (
               <button key={p.id} className={`pcard ${sel?.id === p.id ? 'selected' : ''}`}
-                onClick={() => pick(p)}>
+                onClick={() => open(p)}>
                 <CardSlideshow images={p.images} alt={p.name} active={sel?.id === p.id} />
                 {p.promotions?.plan?.product && <span className="badge-promo">PROMO</span>}
                 <div className="pcard-body">
                   <div className="pcard-brand">{p.brand}</div>
                   <div className="pcard-name">{p.name}</div>
-                  <div className="pcard-model">{p.model_code || '\u00a0'}</div>
-                  <div className="pcard-fee">
-                    <span className="from">월</span>
-                    <span className="val">{won(p.min_monthly_fee)}</span>
-                    <span className="won">원~</span>
+                  <div className="pcard-model">{p.model_code || ' '}</div>
+                  <div className={`pcard-fee ${showMode === 'commission' ? 'is-commission' : 'is-fee'}`}>
+                    <span className="tag">{showMode === 'commission' ? '수수료' : '월'}</span>
+                    <span className="val">{won(showMode === 'commission' ? p.max_commission : p.min_monthly_fee)}</span>
+                    <span className="won">{showMode === 'commission' ? '원' : '원~'}</span>
                   </div>
                 </div>
               </button>
@@ -373,8 +389,23 @@ export default function Catalog() {
         </>
       )}
 
-      <div ref={detailRef}>
-        {sel && <DetailSection p={sel} />}
+      <div ref={detailRef} aria-hidden={!!sel}>
+        {/* 별도 창(모달)으로 표시 — 페이지 스크롤 없이 오버레이 */}
+        {sel && (
+          <div className="modal-veil" ref={veilRef}
+            onClick={(e) => { if (e.target === veilRef.current) close() }}>
+            <div className="modal-card">
+              <button className="modal-close" onClick={close} aria-label="닫기">×</button>
+              <div className="modal-hint">
+                <span>📋 상품 상세</span>
+                <b>{sel.brand} · {sel.name}</b>
+              </div>
+              <div className="modal-body">
+                <DetailSection p={sel} />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
