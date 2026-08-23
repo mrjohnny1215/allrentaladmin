@@ -6,3 +6,6 @@ dist
 .env
 .env.*
 .vercel
+.venv/
+__pycache__/
+detail_shot.png

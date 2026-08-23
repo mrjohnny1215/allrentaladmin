@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
 
 // 14개 메뉴 (원본 layout.php?page=XXX 기준)
 // type: 'static' = public/pages/<file>.html 을 iframe으로, 'react' = React 라우트

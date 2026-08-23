@@ -1,0 +1,22 @@
+import json, collections
+ps = json.load(open('/opt/data/allnup-clone/public/data/products.json', encoding='utf-8'))
+p = [x for x in ps if '아이콘3' in x['name'] and x['category'] == '정수기'][0]
+print('id        :', p['id'])
+print('brand/cat :', p['brand'], '/', p['category'])
+print('name/model:', p['name'], '/', p['model_code'])
+print('colors    :', p['colors'])
+print('specs     :', p['specs'])
+print('images    :', len(p['images']), p['images'][:3])
+print('thumbnail :', p['thumbnail'])
+print('min fee   :', p['min_monthly_fee'], 'max comm:', p['max_commission'])
+print('sellpoints:', p['selling_points']['points'][:4])
+print('filters   :', p['selling_points']['filters'][:3])
+print('promo upd :', p['promotions']['updated'])
+print('matrix n  :', len(p['pricing_matrix']))
+for m in p['pricing_matrix'][:6]:
+    print('   ', m)
+print()
+print('mgmt    :', collections.Counter(m['mgmt'] for x in ps for m in x['pricing_matrix']))
+print('contract:', collections.Counter(m['contract'] for x in ps for m in x['pricing_matrix']))
+print('years   :', collections.Counter(m['years'] for x in ps for m in x['pricing_matrix']))
+print('no-image products:', sum(1 for x in ps if not x['images']))

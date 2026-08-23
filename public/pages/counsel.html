@@ -1031,6 +1031,9 @@ body {
 #mobileLayout .p-fee .label{ color:#7b8794; }
 #mobileLayout .p-fee .value{ color:#2f66ff; font-weight:800; }
 #mobileLayout .p-fee .hint{ color:#8b95a1; font-size:.86rem; }
+#mobileLayout .p-fee .fee-line{ display:inline-flex; align-items:baseline; gap:3px; background:#eef3ff; border:1px solid #dbe5ff; border-radius:6px; padding:1px 7px; margin:2px 0; }
+#mobileLayout .p-fee .fee-line b{ color:#2f66ff; font-size:.82rem; }
+#mobileLayout .p-fee .fee-line .value{ color:#1f3aa8; font-weight:800; }
 
 /* 최상단 이동 버튼 (검색 CTA와 안 겹치게 오른쪽 하단) */
 #mobileLayout .scroll-top{
@@ -3254,6 +3257,7 @@ body {
             <label class="price-year-option"><input type="checkbox" value="5년">5년</label>
             <label class="price-year-option"><input type="checkbox" value="6년">6년</label>
             <label class="price-year-option"><input type="checkbox" value="7년">7년</label>
+            <label class="price-year-option"><input type="checkbox" value="8년">8년</label>
             <label class="price-year-option"><input type="checkbox" value="9년">9년</label>
           </div>
         </div>
@@ -3435,6 +3439,7 @@ body {
                   <label class="price-year-option"><input type="checkbox" value="5년">5년</label>
                   <label class="price-year-option"><input type="checkbox" value="6년">6년</label>
                   <label class="price-year-option"><input type="checkbox" value="7년">7년</label>
+                  <label class="price-year-option"><input type="checkbox" value="8년">8년</label>
                   <label class="price-year-option"><input type="checkbox" value="9년">9년</label>
                 </div>
               </div>
@@ -7033,7 +7038,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return document.querySelector(`#${containerId} .chip.active`)?.dataset.value || "";
   }
 
-  const PRICE_YEAR_OPTIONS = ['3년', '4년', '5년', '6년', '7년', '9년'];
+  const PRICE_YEAR_OPTIONS = ['3년', '4년', '5년', '6년', '7년', '8년', '9년'];
 
   function getPriceYearValues(containerId){
     const box = document.getElementById(containerId);
@@ -7362,6 +7367,7 @@ document.addEventListener('DOMContentLoaded', function () {
     '5년': '5년_프로모션',
     '6년': '6년_프로모션',
     '7년': '7년_프로모션',
+    '8년': '8년_프로모션',
     '9년': '9년_프로모션'
   };
 
@@ -7383,7 +7389,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function getSelectedPricePlanYears(containerId){
     const values = getPriceYearValues(containerId);
-    const allowedYears = ['3년', '4년', '5년', '6년', '7년', '9년'];
+    const allowedYears = ['3년', '4년', '5년', '6년', '7년', '8년', '9년'];
     const selectedYears = values.filter(v => allowedYears.includes(v));
 
     return selectedYears.length ? selectedYears : allowedYears;
@@ -7449,6 +7455,29 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     return best;
+  }
+
+  // ✅ 약정별 수수료 전부 추출 (3년/4년/5년/6년/7년/8년/9년) — 수수료 ON 시 카드에 전부 표시
+  function getAllCommissions(row){
+    const representativeMgmt = PLAN_COLS
+      .map(p => (row[p.mgmt] || "").toString().split(',')[0].trim())
+      .find(v => v) || "";
+
+    const list = [];
+    PLAN_COLS.forEach(p=>{
+      const mgmtVal = (row[p.mgmt] || "").toString().split(',')[0].trim();
+      const priceText = (row[p.price] || "").toString().trim();
+      const n = _moneyToInt(row[p.extra]);
+      if (mgmtVal !== representativeMgmt) return;
+      if (!priceText) return;
+      if (n <= 0) return;
+      list.push({ year: p.y, amount: n, mgmt: representativeMgmt });
+    });
+
+    // 연차 순(3→9) 정렬
+    const order = {'3년':0,'4년':1,'5년':2,'6년':3,'7년':4,'8년':5,'9년':6};
+    list.sort((a,b)=> (order[a.year]??99) - (order[b.year]??99));
+    return list;
   }
 
   function getRepresentativeMgmtLabel(row){
@@ -8064,20 +8093,25 @@ function loadRepresentativeImageForCard(card, query, img){
           plansBox.appendChild(kv);
         });
 
-        const best = (pcExpandCardMode && targetMgmt)
-          ? getBestCommissionForMgmt(targetRow, targetMgmt)
-          : getBestCommission(targetRow);
+        const allComm = getAllCommissions(targetRow);
+        const feeBox = fee;
 
-        if (best.amount > 0) {
-          fee.dataset.hasFee = '1';
-          fee.style.display = listFeeVisible ? 'flex' : 'none';
-          fee.querySelector('.value').textContent = best.amount.toLocaleString() + '원';
-          fee.querySelector('.basis').textContent = `— ${best.label} 기준`;
+        if (allComm.length > 0) {
+          feeBox.dataset.hasFee = '1';
+          feeBox.style.display = listFeeVisible ? 'flex' : 'none';
+
+          // 라벨 + 약정별 수수료 여러 줄
+          let html = '<span class="label">예상수수료</span>';
+          allComm.forEach(c => {
+            html += `<span class="fee-line"><b>${c.year}</b> <span class="value">${c.amount.toLocaleString()}원</span></span>`;
+          });
+          html += '<span class="hint">(VAT별도)</span>';
+          html += `<span class="hint basis">— ${allComm[0].mgmt} 기준</span>`;
+          feeBox.innerHTML = html;
         } else {
-          fee.dataset.hasFee = '0';
-          fee.style.display = 'none';
-          fee.querySelector('.value').textContent = '';
-          fee.querySelector('.basis').textContent = '';
+          feeBox.dataset.hasFee = '0';
+          feeBox.style.display = 'none';
+          feeBox.innerHTML = '<span class="label">예상수수료</span><span class="value"></span><span class="hint">(VAT별도)</span><span class="hint basis"></span>';
         }
       }
 
