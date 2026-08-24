@@ -134,12 +134,9 @@ function CardSlideshow({ images, alt, active }) {
         />
       ))}
       {list.length > 1 && (
-        <>
-          <span className="badge-imgs">📷 {images.length}</span>
-          <div className="thumb-dots">
-            {list.map((_, i) => <i key={i} className={i === idx ? 'on' : ''} />)}
-          </div>
-        </>
+        <div className="thumb-dots">
+          {list.map((_, i) => <i key={i} className={i === idx ? 'on' : ''} />)}
+        </div>
       )}
     </div>
   )
@@ -262,7 +259,7 @@ function Calculator({ matrix }) {
 }
 
 /* ============ 상세 섹션 ============ */
-function DetailSection({ p }) {
+function DetailSection({ p, commissionOn, setCommissionOn }) {
   if (!p) return null
   const sp = p.selling_points || { points: [], filters: [] }
   const promo = p.promotions || {}
@@ -275,6 +272,18 @@ function DetailSection({ p }) {
           {p.model_code || '모델명 미등록'}
           {promo.updated ? ` · 업데이트 ${promo.updated}` : ''}
         </p>
+
+        {/* 상세 페이지 내 수수료 ON/OFF 토글 (메인에서 이동됨) */}
+        <div className="detail-fee-toggle">
+          <span className="detail-fee-label">표시 기준</span>
+          <button
+            className={`detail-fee-btn ${commissionOn ? 'on' : ''}`}
+            onClick={() => setCommissionOn && setCommissionOn((v) => !v)}
+          >
+            {commissionOn ? '수수료 ON' : '수수료 OFF'}
+          </button>
+          <span className="detail-fee-hint">{commissionOn ? '수수료(사은혜택) 표시 중' : '월 렌탈료 표시 중'}</span>
+        </div>
 
         <div className="detail-cols">
           <div>
@@ -414,7 +423,7 @@ export default function Catalog() {
     return sorted
   }, [all, q, cat, brand, brandFilter, funcFilter, typeFilter, methodFilter, priceFilter, areaFilter, airFuncFilter, mattressTypeFilter, sort])
 
-  useEffect(() => { setLimit(PAGE) }, [q, cat, brand, brandFilter, funcFilter, typeFilter, methodFilter, priceFilter, areaFilter, airFuncFilter, mattressTypeFilter])
+  useEffect(() => { setLimit(PAGE) }, [q, cat, brand, brandFilter, funcFilter, typeFilter, methodFilter, priceFilter, areaFilter, airFuncFilter, mattressTypeFilter, sort])
 
   // 모달 열기: 별도 창
   const open = useCallback((p) => setSel(p), [])
@@ -546,29 +555,22 @@ export default function Catalog() {
         {sel && (
           <div className="modal-veil" ref={veilRef}
             onClick={(e) => { if (e.target === veilRef.current) close() }}>
-            <div className="modal-card">
-              <button className="modal-close" onClick={close} aria-label="닫기">×</button>
-              <div className="modal-hint">
-                <span>📋 상품 상세</span>
-                <b>{sel.brand} · {sel.name}</b>
+            <div className="modal-card fullscreen">
+              <div className="modal-topbar">
+                <button className="modal-back" onClick={close} aria-label="뒤로가기">← 뒤로</button>
+                <div className="modal-topbar-title">{sel.brand} · {sel.name}</div>
+                <button className="modal-close" onClick={close} aria-label="닫기">×</button>
               </div>
               <div className="modal-body">
-                <DetailSection p={sel} />
+                <DetailSection p={sel} commissionOn={commissionOn} setCommissionOn={setCommissionOn} />
               </div>
             </div>
           </div>
         )}
       </div>
 
-      {/* ===== 우측 하단 플로팅: 수수료 ON/OFF (위) + 맨 위로 가기 (아래) ===== */}
+      {/* ===== 우측 하단 플로팅: 맨 위로 가기 ===== */}
       <div className="float-actions">
-        <button
-          className={`float-btn fee-btn ${commissionOn ? 'on' : ''}`}
-          onClick={() => setCommissionOn((v) => !v)}
-          title={commissionOn ? '수수료 표시 중 — 클릭해 끄기' : '수수료 숨김 — 클릭해 켜기'}
-        >
-          {commissionOn ? '수수료 ON' : '수수료 OFF'}
-        </button>
         <button
           className="float-btn top-btn"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

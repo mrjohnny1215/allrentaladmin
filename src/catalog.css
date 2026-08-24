@@ -227,16 +227,6 @@
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(239, 68, 68, .35);
 }
-.badge-imgs {
-  position: absolute;
-  top: 7px; right: 7px;
-  background: rgba(15, 23, 42, .62);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 6px;
-  border-radius: 6px;
-}
 .pcard-body { padding: 9px 10px 11px; display: flex; flex-direction: column; gap: 3px; }
 .pcard-brand { font-size: 10px; font-weight: 800; color: var(--blue); letter-spacing: .3px; }
 .pcard-name {
@@ -252,6 +242,21 @@
 
 /* ---------- Detail Section ---------- */
 .detail-wrap { background: #fff; border-top: 3px solid var(--blue); }
+/* 상세 페이지 내 수수료 ON/OFF 토글 (메인에서 이동) */
+.detail-fee-toggle {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin: 14px 0 4px; padding: 12px 14px;
+  background: #fff7f2; border: 1.5px solid #ffd9c2; border-radius: 12px;
+}
+.detail-fee-label { font-size: 13px; font-weight: 800; color: #9a3412; }
+.detail-fee-btn {
+  border: none; cursor: pointer; border-radius: 999px;
+  padding: 9px 18px; font-size: 13px; font-weight: 800;
+  background: #e8590c; color: #fff; transition: all .15s ease;
+}
+.detail-fee-btn.on { background: #1d4ed8; }
+.detail-fee-btn:hover { filter: brightness(1.05); }
+.detail-fee-hint { font-size: 11.5px; color: #9a3412; font-weight: 600; }
 .detail-inner { max-width: 1180px; margin: 0 auto; padding: 22px 16px 60px; }
 .detail-eyebrow {
   display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
@@ -393,42 +398,56 @@
 .pcard-fee.is-commission .tag { background: #fff0e6; color: #e8590c; }
 .pcard-fee.is-fee .tag { background: var(--blue-50); color: var(--blue-dark); }
 
-/* ===================== 상세 모달 (별도 창) ===================== */
+/* ===================== 상세 모달 (풀 스크린 뷰) ===================== */
 .modal-veil {
   position: fixed; inset: 0; z-index: 1000;
   background: rgba(17, 24, 39, .62); backdrop-filter: blur(3px);
-  display: flex; justify-content: center; align-items: center;
-  padding: 24px 14px; overflow-y: auto;
+  display: flex; justify-content: center; align-items: stretch;
   animation: veilIn .18s ease;
 }
 @keyframes veilIn { from { opacity: 0; } to { opacity: 1; } }
 .modal-card {
-  width: 100%; max-width: 1200px; max-height: 94vh; background: #fff;
+  width: 100%; max-width: 1200px; background: #fff;
   border-radius: 18px; box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
   animation: modalIn .24s cubic-bezier(.2, .8, .3, 1);
   position: relative; overflow: hidden;
   display: flex; flex-direction: column;
 }
+/* 풀 스크린: 화면 전체를 꽉 채움 */
+.modal-card.fullscreen {
+  max-width: 100%; width: 100%; height: 100vh; max-height: 100vh;
+  border-radius: 0;
+}
 @keyframes modalIn { from { transform: translateY(18px) scale(.98); opacity: .6; } to { transform: none; opacity: 1; } }
+.modal-topbar {
+  position: sticky; top: 0; z-index: 6;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.15);
+}
+.modal-topbar-title {
+  flex: 1; min-width: 0; font-size: 14px; font-weight: 800;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.modal-back {
+  flex: 0 0 auto; border: none; cursor: pointer;
+  background: rgba(255,255,255,.18); color: #fff;
+  font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 999px;
+  transition: background .15s ease;
+}
+.modal-back:hover { background: rgba(255,255,255,.32); }
 .modal-close {
-  position: absolute; top: 13px; right: 13px; z-index: 5;
+  position: static; flex: 0 0 auto;
   width: 38px; height: 38px; border-radius: 50%; border: none; cursor: pointer;
-  background: rgba(255, 255, 255, .9); color: var(--gray-800);
-  font-size: 19px; font-weight: 900; box-shadow: var(--shadow);
+  background: rgba(255, 255, 255, .18); color: #fff;
+  font-size: 19px; font-weight: 900;
   display: grid; place-items: center; transition: all .15s ease;
 }
-.modal-close:hover { background: #fff; color: #e8590c; transform: rotate(90deg); }
-.modal-body { flex: 1; overflow-y: auto; max-height: calc(92vh - 44px); }
+.modal-close:hover { background: rgba(255,255,255,.32); color: #fff; transform: rotate(90deg); }
+.modal-body { flex: 1; overflow-y: auto; }
 .modal-body .detail-cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; }
 /* 모달 내부는 outline 테두리 제거 (독립 창 느낌) */
-.modal-body .detail-wrap { border-top: none; }
-.modal-hint {
-  position: sticky; top: 0; z-index: 4; margin: 0; padding: 8px 16px;
-  font-size: 11.5px; font-weight: 700; color: #fff;
-  background: linear-gradient(135deg, #1d4ed8, #2563eb);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.modal-hint b { font-weight: 900; }
+.modal-body .detail-wrap { border-top: none; }.modal-hint b { font-weight: 900; }
 
 /* ===== 스마트 필터 (allrental-xi 스타일 이식) ===== */
 .smart-filter-box {
@@ -506,17 +525,6 @@
   transition: all .18s ease;
   font-family: inherit;
 }
-.fee-btn {
-  background: var(--gray-400);
-  color: #fff;
-  font-size: 13px;
-  padding: 11px 16px;
-}
-.fee-btn.on {
-  background: #10b981;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, .35);
-}
-.fee-btn:hover { transform: translateY(-2px); }
 .top-btn {
   background: #111827;
   color: #fff;
@@ -530,5 +538,5 @@
   .filter-label { min-width: 44px; font-size: 11px; padding: 4px 6px; }
   .fchip { font-size: 11px; padding: 5px 10px; }
   .float-actions { right: 10px; bottom: 14px; }
-  .fee-btn, .top-btn { font-size: 12px; padding: 9px 13px; }
+  .top-btn { font-size: 12px; padding: 9px 13px; }
 }
