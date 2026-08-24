@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import './catalog.css'
+import { KAKAO_CHANNEL_URL, COMPANY } from './config'
 
 const CATEGORIES = ['정수기', '공기청정기', '비데', '매트리스', '안마의자']
 const BRANDS = ['코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', '웰스', '세스코']
@@ -274,92 +275,169 @@ function Calculator({ matrix, colors = [], commissionOn }) {
   )
 }
 
-/* ============ 상세 섹션 ============ */
-function DetailSection({ p, commissionOn, setCommissionOn }) {
+/* ============ 상세 섹션 (쇼핑몰 레퍼런스 스타일 전면 개편) ============ */
+const BRAND_EN = {
+  '코웨이': 'coway', '청호나이스': 'chungho', '쿠쿠': 'cuckoo', 'SK매직': 'skmagic',
+  '현대큐밍': 'hyundai', '웰스': 'wells', '세스코': 'sesco',
+}
+const CATEGORY_EN = {
+  '정수기': 'Water Purifier', '공기청정기': 'Air Purifier', '비데': 'Bidet',
+  '매트리스': 'Mattress', '안마의자': 'Massage Chair',
+}
+
+function DetailSection({ p, commissionOn }) {
   if (!p) return null
   const sp = p.selling_points || { points: [], filters: [] }
   const promo = p.promotions || {}
+  const matrix = p.pricing_matrix || []
+  const brandEn = BRAND_EN[p.brand] || p.brand
+  const catEn = CATEGORY_EN[p.category] || p.category
+  const descImgs = Array.isArray(p.detail_description_images) ? p.detail_description_images : []
+
+  // 대표 렌탈료/수수료 (matrix 첫 행 기준)
+  const rep = matrix[0] || {}
   return (
     <div className="detail-wrap">
       <div className="detail-inner">
-        <span className="detail-eyebrow">{p.brand} · {p.category}</span>
-        <h2 className="detail-title">{p.name}</h2>
-        <p className="detail-sub">
-          {p.model_code || '모델명 미등록'}
-          {promo.updated ? ` · 업데이트 ${promo.updated}` : ''}
-        </p>
-
-        {/* 상세 페이지 내 수수료 ON/OFF 토글 (메인에서 이동됨) */}
-        <div className="detail-fee-toggle">
-          <span className="detail-fee-label">표시 기준</span>
-          <button
-            className={`detail-fee-btn ${commissionOn ? 'on' : ''}`}
-            onClick={() => setCommissionOn && setCommissionOn((v) => !v)}
-          >
-            {commissionOn ? '수수료 ON' : '수수료 OFF'}
-          </button>
-          <span className="detail-fee-hint">{commissionOn ? '수수료(사은혜택) 표시 중' : '월 렌탈료 표시 중'}</span>
-        </div>
+        {/* Breadcrumb */}
+        <nav className="breadcrumb">
+          <a onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>HOME</a>
+          <span>›</span>
+          <a>{catEn}</a>
+          <span>›</span>
+          <a>{p.category}</a>
+          <span>›</span>
+          <span className="cur">[{p.brand}] {p.name}</span>
+        </nav>
 
         <div className="detail-cols">
+          {/* 좌: 갤러리 + 상세본문이미지 */}
           <div>
             <Gallery images={p.images} name={p.name} />
-            {sp.points?.length > 0 && (
-              <div className="info-block">
-                <h4>✨ 특장점</h4>
-                <div className="pt-list">
-                  {sp.points.map((t, i) => <span key={i}>{t}</span>)}
-                </div>
+
+            {/* 제품 상세 본문 (크롤링 상세 설명 이미지) */}
+            {descImgs.length > 0 ? (
+              <div className="detail-desc">
+                {descImgs.map((src, i) => (
+                  <img key={i} src={src} alt={`${p.name} 상세설명 ${i + 1}`} loading="lazy"
+                    onError={(e) => { e.currentTarget.style.display = 'none' }} />
+                ))}
               </div>
-            )}
-            {sp.filters?.length > 0 && (
-              <div className="info-block">
-                <h4>🧪 필터 / 관리 주기</h4>
-                <ul className="filter-list">
-                  {sp.filters.map((t, i) => <li key={i}>{t}</li>)}
-                </ul>
+            ) : (
+              <div className="detail-desc fallback">
+                {sp.points?.length > 0 && (
+                  <div className="info-block">
+                    <h4>✨ 특장점</h4>
+                    <div className="pt-list">{sp.points.map((t, i) => <span key={i}>{t}</span>)}</div>
+                  </div>
+                )}
+                {sp.filters?.length > 0 && (
+                  <div className="info-block">
+                    <h4>🧪 필터 / 관리 주기</h4>
+                    <ul className="filter-list">{sp.filters.map((t, i) => <li key={i}>{t}</li>)}</ul>
+                  </div>
+                )}
               </div>
             )}
           </div>
 
+          {/* 우: 메타 + 가격카드 + 옵션 + 매트릭스 */}
           <div>
-            <Calculator matrix={p.pricing_matrix || []} colors={p.colors || []} commissionOn={commissionOn} />
-
-            <div className="info-block">
-              <h4>📐 제품 스펙</h4>
-              <table className="spec-table">
-                <tbody>
-                  <tr><th>브랜드</th><td>{p.brand}</td></tr>
-                  <tr><th>카테고리</th><td>{p.category}{p.product_group ? ` (${p.product_group})` : ''}</td></tr>
-                  <tr><th>모델명</th><td>{p.model_code || '-'}</td></tr>
-                  {p.specs?.capacity && <tr><th>용량</th><td>{p.specs.capacity}</td></tr>}
-                  {p.specs?.size && <tr><th>규격</th><td>{p.specs.size}</td></tr>}
-                  <tr><th>최저 월료</th><td><b>{won(p.min_monthly_fee)}원</b> 부터</td></tr>
-                  <tr><th>최대 수수료</th><td>{won(p.max_commission)}원</td></tr>
-                </tbody>
-              </table>
+            {/* 메타 헤더 */}
+            <div className="brand-logo">{brandEn}</div>
+            <h2 className="detail-title">{p.name}</h2>
+            <div className="meta-row">
+              <span><b>브랜드</b> {p.brand}</span>
+              <span><b>모델명</b> {p.model_code || '-'}</span>
+              <span><b>제품종류</b> {p.category}{p.product_group ? ` (${p.product_group})` : ''}</span>
+              <span><b>AS기간</b> 렌탈기간내</span>
             </div>
 
-            {p.colors?.length > 0 && (
-              <div className="info-block">
-                <h4>🎨 색상 ({p.colors.length})</h4>
-                <div className="color-list">
-                  {p.colors.map((c) => <span key={c}>{c}</span>)}
+            {/* 가격 카드 (연하늘색) */}
+            <div className="price-card">
+              <div className="pc-line">
+                <span className="pc-k">월 렌탈료</span>
+                <span className="pc-v">{won(p.min_monthly_fee)}<small>원</small></span>
+              </div>
+              {!commissionOn && (
+                <>
+                  <div className="pc-line comm">
+                    <span className="pc-k">내 수수료 (약정 · 관리방식)</span>
+                    <span className="pc-v green">{won(p.max_commission)}<small>원</small></span>
+                  </div>
+                  <div className="pc-line comm">
+                    <span className="pc-k">예상 수수료</span>
+                    <span className="pc-v green">{won(p.max_commission)}<small>원</small></span>
+                  </div>
+                </>
+              )}
+              {rep.monthly_fee && (
+                <div className="pc-line discount">
+                  <span className="pc-k">할인적용</span>
+                  <span className="pc-v red">{won(rep.monthly_fee)}<small>원</small></span>
                 </div>
+              )}
+            </div>
+
+            {/* 옵션 선택 (드롭다운 + 버튼그룹) */}
+            <Calculator matrix={matrix} colors={p.colors || []} commissionOn={commissionOn} />
+
+            {/* 진행 중인 프로모션 배너 */}
+            {(promo.plan?.product || promo.monthly) && (
+              <div className="promo-banner">
+                <div className="pb-title">🎁 진행 중인 프로모션</div>
+                <pre className="pb-body">{[promo.plan?.product, promo.monthly].filter(Boolean).join('\n')}</pre>
               </div>
             )}
 
-            {(promo.plan?.product || promo.monthly) && (
+            {/* 제휴카드 안내 */}
+            <div className="aff-card">
+              <div className="aff-thumb">CARD</div>
+              <div className="aff-info">
+                <div className="aff-name">제휴카드 안내</div>
+                <div className="aff-desc">렌탈료 할인 및 무이자 혜택을 확인하세요.</div>
+              </div>
+              <button className="aff-more">자세히 보기</button>
+            </div>
+
+            {/* 렌탈료 매트릭스 표 */}
+            {matrix.length > 0 && (
               <div className="info-block">
-                <h4>🎁 프로모션 {promo.updated ? `(${promo.updated} 기준)` : ''}</h4>
-                <pre className="promo-pre">
-                  {[promo.plan?.product, promo.plan?.['3년'], promo.plan?.['5년'], promo.monthly]
-                    .filter(Boolean).join('\n\n')}
-                </pre>
+                <h4>📋 {p.name} 렌탈료 및 프로모션</h4>
+                <div className="table-scroll">
+                  <table className="matrix-table">
+                    <thead>
+                      <tr><th>관리방법</th><th>관리주기</th><th>약정기간</th><th>월 렌탈료</th><th>수수료</th></tr>
+                    </thead>
+                    <tbody>
+                      {matrix.map((r, i) => (
+                        <tr key={i}>
+                          <td>{r.mgmt || '-'}</td>
+                          <td>{r.mgmt_cycle || '-'}</td>
+                          <td>{r.years || '-'}</td>
+                          <td><b>{won(r.monthly_fee)}원</b></td>
+                          <td className={commissionOn ? 'hide' : ''}>{commissionOn ? '' : won(r.commission) + '원'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
           </div>
         </div>
+
+        {/* 카톡 상담신청 CTA */}
+        <a className="kakao-cta" href={KAKAO_CHANNEL_URL} target="_blank" rel="noopener noreferrer">
+          💬 카톡 상담신청
+        </a>
+
+        {/* 추천 상품 / 푸터 */}
+        <footer className="site-footer">
+          <div className="foot-row"><b>{COMPANY.name}</b> · {COMPANY.phone}</div>
+          <div className="foot-row">{COMPANY.address}</div>
+          <div className="foot-row copy">© {new Date().getFullYear()} {COMPANY.name}. All rights reserved.</div>
+        </footer>
       </div>
     </div>
   )
@@ -436,6 +514,7 @@ export default function Catalog() {
     if (sort === 'commission_desc') sorted.sort((a, b) => (b.max_commission || 0) - (a.max_commission || 0))
     else if (sort === 'price_desc') sorted.sort((a, b) => (b.min_monthly_fee || 0) - (a.min_monthly_fee || 0))
     else if (sort === 'price_asc') sorted.sort((a, b) => (a.min_monthly_fee || 0) - (b.min_monthly_fee || 0))
+    else if (sort === 'latest') sorted.reverse()
     return sorted
   }, [all, q, cat, brand, brandFilter, funcFilter, typeFilter, methodFilter, priceFilter, areaFilter, airFuncFilter, mattressTypeFilter, sort])
 
@@ -498,6 +577,7 @@ export default function Catalog() {
           <option value="commission_desc">수수료 많은순</option>
           <option value="price_desc">렌탈료 높은순</option>
           <option value="price_asc">렌탈료 낮은순</option>
+          <option value="latest">최신순</option>
         </select>
       </div>
 
@@ -585,15 +665,26 @@ export default function Catalog() {
         )}
       </div>
 
-      {/* ===== 우측 하단 플로팅: 맨 위로 가기 ===== */}
+      {/* ===== 우측 하단 3단 플로팅 원형 버튼 ===== */}
       <div className="float-actions">
         <button
-          className="float-btn top-btn"
+          className="fab fab-kakao"
+          onClick={() => window.open(KAKAO_CHANNEL_URL, '_blank', 'noopener')}
+          title="카카오톡 상담"
+          aria-label="카카오톡 상담"
+        >💬</button>
+        <button
+          className={`fab fab-fee ${commissionOn ? 'on' : ''}`}
+          onClick={() => setCommissionOn((v) => !v)}
+          title={commissionOn ? '수수료 표시 중 (클릭 시 숨김)' : '숨김 중 (클릭 시 표시)'}
+          aria-label="수수료 시크릿 토글"
+        >{commissionOn ? '💰' : '🚫'}</button>
+        <button
+          className="fab fab-top"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           title="위로 올라가기"
-        >
-          ↑ 맨위로
-        </button>
+          aria-label="위로 올라가기"
+        >↑</button>
       </div>
     </div>
   )
