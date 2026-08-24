@@ -457,27 +457,12 @@ export default function Catalog() {
       <div className="cat-toolbar">
         <input className="cat-search" value={q} onChange={(e) => setQ(e.target.value)}
           placeholder="상품명 · 모델명 · 태그 검색 (예: 아이콘3, CHP-7220N)" />
-        <div className="chip-row">
-          <span className="label">분류</span>
-          <button className={`chip ${!cat ? 'active' : ''}`} onClick={() => { setCat(''); resetFilters() }}>전체</button>
-          {CATEGORIES.map((c) => (
-            <button key={c} className={`chip ${cat === c ? 'active' : ''}`}
-              onClick={() => { setCat(cat === c ? '' : c); resetFilters() }}>{c}</button>
-          ))}
-        </div>
-        <div className="chip-row">
-          <span className="label">브랜드</span>
-          <button className={`chip ${!brand ? 'active' : ''}`} onClick={() => setBrand('')}>전체</button>
-          {BRANDS.map((b) => (
-            <button key={b} className={`chip ${brand === b ? 'active' : ''}`}
-              onClick={() => setBrand(brand === b ? '' : b)}>{b}</button>
-          ))}
-        </div>
       </div>
 
       {/* ===== 스마트 필터 (allrental-xi 스타일) ===== */}
       <div className="smart-filter-box">
         <div className="smart-filter-title">🔍 스마트 필터</div>
+        <FilterChips label="분류" options={CATEGORIES} value={cat === '' ? 'all' : cat} onChange={(v) => { setCat(v === 'all' ? '' : v); resetFilters() }} />
         <FilterChips label="렌탈사" options={BRANDS} value={brandFilter} onChange={setBrandFilter} />
         {cat === '정수기' && (
           <>
