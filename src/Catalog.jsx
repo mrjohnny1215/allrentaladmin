@@ -356,6 +356,8 @@ export default function Catalog() {
   const [mattressTypeFilter, setMattressTypeFilter] = useState('all')
   // 수수료 ON/OFF (플로팅 버튼)
   const [commissionOn, setCommissionOn] = useState(false)
+  // 정렬 (수수료 많은순 기본)
+  const [sort, setSort] = useState('commission_desc')
   const detailRef = useRef(null)
   const veilRef = useRef(null)
 
@@ -401,7 +403,12 @@ export default function Catalog() {
       }
       return true
     })
-  }, [all, q, cat, brand, brandFilter, funcFilter, typeFilter, methodFilter, priceFilter, areaFilter, airFuncFilter, mattressTypeFilter])
+    const sorted = [...filtered]
+    if (sort === 'commission_desc') sorted.sort((a, b) => (b.max_commission || 0) - (a.max_commission || 0))
+    else if (sort === 'price_desc') sorted.sort((a, b) => (b.min_monthly_fee || 0) - (a.min_monthly_fee || 0))
+    else if (sort === 'price_asc') sorted.sort((a, b) => (a.min_monthly_fee || 0) - (b.min_monthly_fee || 0))
+    return sorted
+  }, [all, q, cat, brand, brandFilter, funcFilter, typeFilter, methodFilter, priceFilter, areaFilter, airFuncFilter, mattressTypeFilter, sort])
 
   useEffect(() => { setLimit(PAGE) }, [q, cat, brand, brandFilter, funcFilter, typeFilter, methodFilter, priceFilter, areaFilter, airFuncFilter, mattressTypeFilter])
 
@@ -457,6 +464,12 @@ export default function Catalog() {
       <div className="cat-toolbar">
         <input className="cat-search" value={q} onChange={(e) => setQ(e.target.value)}
           placeholder="상품명 · 모델명 · 태그 검색 (예: 아이콘3, CHP-7220N)" />
+        <select className="cat-sort" value={sort} onChange={(e) => setSort(e.target.value)}
+          aria-label="정렬 기준">
+          <option value="commission_desc">수수료 많은순</option>
+          <option value="price_desc">렌탈료 높은순</option>
+          <option value="price_asc">렌탈료 낮은순</option>
+        </select>
       </div>
 
       {/* ===== 스마트 필터 (allrental-xi 스타일) ===== */}

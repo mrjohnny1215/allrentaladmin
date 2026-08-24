@@ -66,9 +66,13 @@
   position: sticky;
   top: 74px;
   z-index: 30;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 .cat-search {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   box-sizing: border-box;
   padding: 11px 14px;
   border: 1.5px solid var(--gray-200);
@@ -81,6 +85,19 @@
   border-color: var(--blue);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
 }
+.cat-sort {
+  flex: 0 0 auto;
+  padding: 11px 12px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  background: #fff;
+  color: var(--gray-800);
+  outline: none;
+  cursor: pointer;
+}
+.cat-sort:focus { border-color: var(--blue); }
 .chip-row {
   display: flex;
   gap: 6px;
@@ -141,6 +158,8 @@
     gap: 10px;
     padding: 12px 10px 30px;
   }
+  .cat-toolbar { flex-direction: column; align-items: stretch; gap: 8px; }
+  .cat-sort { width: 100%; }
 }
 
 .pcard {
