@@ -450,7 +450,7 @@ export default function Catalog() {
   return (
     <div className="cat-root">
       <header className="cat-header">
-        <h1>ALL렌탈 <span className="count">{list.length.toLocaleString()}개</span></h1>
+        <h1>ALL렌탈</h1>
         <div className="sub">PREMIUM RENTAL</div>
       </header>
 
