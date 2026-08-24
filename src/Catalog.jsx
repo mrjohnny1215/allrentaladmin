@@ -293,6 +293,8 @@ function DetailSection({ p, commissionOn }) {
   const brandEn = BRAND_EN[p.brand] || p.brand
   const catEn = CATEGORY_EN[p.category] || p.category
   const descImgs = Array.isArray(p.detail_description_images) ? p.detail_description_images : []
+  const [tableOpen, setTableOpen] = useState(false)
+  const [cardModal, setCardModal] = useState(false)
 
   // 대표 렌탈료/수수료 (matrix 첫 행 기준)
   const rep = matrix[0] || {}
@@ -344,7 +346,7 @@ function DetailSection({ p, commissionOn }) {
           {/* 우: 메타 + 가격카드 + 옵션 + 매트릭스 */}
           <div>
             {/* 메타 헤더 */}
-            <div className="brand-logo">{brandEn}</div>
+            <div className="brand-logo">{p.brand}</div>
             <h2 className="detail-title">{p.name}</h2>
             <div className="meta-row">
               <span><b>브랜드</b> {p.brand}</span>
@@ -397,17 +399,17 @@ function DetailSection({ p, commissionOn }) {
                 <div className="aff-name">제휴카드 안내</div>
                 <div className="aff-desc">렌탈료 할인 및 무이자 혜택을 확인하세요.</div>
               </div>
-              <button className="aff-more">자세히 보기</button>
+              <button className="aff-more" onClick={() => setCardModal(true)}>자세히 보기</button>
             </div>
 
-            {/* 렌탈료 매트릭스 표 */}
+            {/* 렌탈료 매트릭스 표 (축소/펼치기) */}
             {matrix.length > 0 && (
               <div className="info-block">
                 <h4>📋 {p.name} 렌탈료 및 프로모션</h4>
-                <div className="table-scroll">
+                <div className={`table-scroll ${tableOpen ? '' : 'collapsed'}`}>
                   <table className="matrix-table">
                     <thead>
-                      <tr><th>관리방법</th><th>관리주기</th><th>약정기간</th><th>월 렌탈료</th><th>수수료</th></tr>
+                      <tr><th>관리방법</th><th>관리주기</th><th>약정기간</th><th>월 렌탈료</th><th className={commissionOn ? 'hide' : ''}>수수료</th></tr>
                     </thead>
                     <tbody>
                       {matrix.map((r, i) => (
@@ -421,6 +423,27 @@ function DetailSection({ p, commissionOn }) {
                       ))}
                     </tbody>
                   </table>
+                </div>
+                <button className="table-toggle" onClick={() => setTableOpen((v) => !v)}>
+                  {tableOpen ? '접기 ▲' : `자세히 보기 (${matrix.length}개 약정) ▼`}
+                </button>
+              </div>
+            )}
+
+            {/* 제휴카드 모달 */}
+            {cardModal && (
+              <div className="modal-veil card-modal-veil" onClick={(e) => { if (e.target === e.currentTarget) setCardModal(false) }}>
+                <div className="card-modal">
+                  <div className="card-modal-head">
+                    <span>제휴카드 혜택</span>
+                    <button className="card-modal-close" onClick={() => setCardModal(false)}>×</button>
+                  </div>
+                  <div className="card-modal-body">
+                    <p>아래 ALL&UP 제휴 카드 혜택을 확인하세요.</p>
+                    <a className="card-link" href="https://allnup.com/layout.php?page=creditcard.php" target="_blank" rel="noopener noreferrer">
+                      💳 제휴카드 혜택 자세히 보기 (allnup)
+                    </a>
+                  </div>
                 </div>
               </div>
             )}
@@ -478,7 +501,7 @@ export default function Catalog() {
   const list = useMemo(() => {
     if (!all) return []
     const kw = q.trim().toLowerCase()
-    return all.filter((p) => {
+    const filtered = all.filter((p) => {
       if (cat && p.category !== cat) return false
       // 브랜드: 스마트 필터 렌탈사
       const b = extractBrand(p)
@@ -665,20 +688,24 @@ export default function Catalog() {
         )}
       </div>
 
-      {/* ===== 우측 하단 3단 플로팅 원형 버튼 ===== */}
+      {/* ===== 우측 하단 플로팅 버튼 (노출 분기) ===== */}
       <div className="float-actions">
-        <button
-          className="fab fab-kakao"
-          onClick={() => window.open(KAKAO_CHANNEL_URL, '_blank', 'noopener')}
-          title="카카오톡 상담"
-          aria-label="카카오톡 상담"
-        >💬</button>
-        <button
-          className={`fab fab-fee ${commissionOn ? 'on' : ''}`}
-          onClick={() => setCommissionOn((v) => !v)}
-          title={commissionOn ? '수수료 표시 중 (클릭 시 숨김)' : '숨김 중 (클릭 시 표시)'}
-          aria-label="수수료 시크릿 토글"
-        >{commissionOn ? '💰' : '🚫'}</button>
+        {sel ? (
+          <>
+            <button
+              className="fab fab-kakao"
+              onClick={() => window.open(KAKAO_CHANNEL_URL, '_blank', 'noopener')}
+              title="카카오톡 상담"
+              aria-label="카카오톡 상담"
+            >💬</button>
+            <button
+              className={`fab fab-fee ${commissionOn ? 'on' : ''}`}
+              onClick={() => setCommissionOn((v) => !v)}
+              title={commissionOn ? '수수료 표시 중 (클릭 시 숨김)' : '숨김 중 (클릭 시 표시)'}
+              aria-label="수수료 시크릿 토글"
+            >{commissionOn ? '💰' : '🚫'}</button>
+          </>
+        ) : null}
         <button
           className="fab fab-top"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

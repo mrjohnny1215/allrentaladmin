@@ -606,3 +606,18 @@
 .fab-fee { background: #9ca3af; color: #fff; }      /* 회색(숨김) */
 .fab-fee.on { background: #16a34a; color: #fff; }   /* 녹색(표시) */
 @media (max-width: 640px) { .float-actions { right: 12px; bottom: 14px; gap: 10px; } .fab { width: 46px; height: 46px; font-size: 19px; } }
+
+/* ===================== 테이블 축소/펼치기 ===================== */
+.table-scroll.collapsed { max-height: 220px; overflow: hidden; position: relative; }
+.table-scroll.collapsed::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 48px; background: linear-gradient(transparent, #fff); }
+.table-toggle { display: block; width: 100%; margin-top: 8px; padding: 10px; border: 1.5px solid var(--gray-200); background: #fff; color: var(--blue); font-weight: 800; font-size: 12.5px; border-radius: 9px; cursor: pointer; }
+.table-toggle:hover { background: var(--blue-50); }
+
+/* ===================== 제휴카드 모달 ===================== */
+.card-modal-veil { background: rgba(17,24,39,.55); z-index: 1100; align-items: center; }
+.card-modal { width: 92%; max-width: 420px; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+.card-modal-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; font-weight: 800; font-size: 14px; }
+.card-modal-close { width: 32px; height: 32px; border: none; border-radius: 50%; background: rgba(255,255,255,.2); color: #fff; font-size: 18px; font-weight: 900; cursor: pointer; }
+.card-modal-body { padding: 18px 16px; font-size: 13px; color: var(--gray-700); line-height: 1.6; }
+.card-link { display: block; margin-top: 12px; padding: 12px; background: var(--blue-50); color: var(--blue-dark); font-weight: 800; text-align: center; border-radius: 9px; text-decoration: none; }
+.card-link:hover { background: var(--blue-100); }
