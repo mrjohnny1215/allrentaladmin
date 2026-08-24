@@ -17,9 +17,13 @@ const won = (n) => (n ? n.toLocaleString('ko-KR') : '0')
    ============================================================ */
 const parsePrice = (s) => parseInt(String(s || '0').replace(/[^0-9]/g, ''), 10) || 0
 
-function extractBrand(name = '') {
-  for (const b of BRANDS) if (name.includes(b)) return b
-  return '기타'
+function extractBrand(p = {}) {
+  // name 필드엔 브랜드명이 없는 경우가 많아 brand 필드를 우선 사용
+  const b = p.brand || ''
+  if (BRANDS.includes(b)) return b
+  // name에서 추론 시도 (fallback)
+  for (const x of BRANDS) if ((p.name || '').includes(x)) return x
+  return b || '기타'
 }
 function classifyFunc(d = '') {
   if (d.includes('얼음')) return '얼음냉온'
@@ -373,8 +377,8 @@ export default function Catalog() {
     const kw = q.trim().toLowerCase()
     return all.filter((p) => {
       if (cat && p.category !== cat) return false
-      // 브랜드: 툴바 브랜드 칩 or 스마트 필터 렌탈사
-      const b = extractBrand(p.name)
+      // 브랜드: 스마트 필터 렌탈사
+      const b = extractBrand(p)
       const brandOk = brand ? p.brand === brand : true
       const brandFilterOk = brandFilter === 'all' ? true : b === brandFilter
       if (!brandOk || !brandFilterOk) return false
