@@ -401,3 +401,105 @@
   display: flex; align-items: center; justify-content: space-between;
 }
 .modal-hint b { font-weight: 900; }
+
+/* ===== 스마트 필터 (allrental-xi 스타일 이식) ===== */
+.smart-filter-box {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px 14px;
+  margin: 0 12px 14px;
+}
+.smart-filter-title {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--blue-dark);
+  margin-bottom: 10px;
+}
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.filter-chips:last-child { margin-bottom: 0; }
+.filter-label {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--blue-dark);
+  background: var(--blue-50);
+  border: 1px solid var(--blue-100);
+  border-radius: 8px;
+  padding: 5px 8px;
+  text-align: center;
+  min-width: 52px;
+}
+.fchip {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray-600);
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: 999px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all .15s ease;
+  white-space: nowrap;
+}
+.fchip:hover { border-color: var(--blue); color: var(--blue); }
+.fchip.on {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, .25);
+}
+
+/* ===== 우측 하단 플로팅 액션 (수수료 ON/OFF + 맨위로) ===== */
+.float-actions {
+  position: fixed;
+  right: 16px;
+  bottom: 20px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+.float-btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  font-weight: 800;
+  box-shadow: var(--shadow-lg);
+  transition: all .18s ease;
+  font-family: inherit;
+}
+.fee-btn {
+  background: var(--gray-400);
+  color: #fff;
+  font-size: 13px;
+  padding: 11px 16px;
+}
+.fee-btn.on {
+  background: #10b981;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, .35);
+}
+.fee-btn:hover { transform: translateY(-2px); }
+.top-btn {
+  background: #111827;
+  color: #fff;
+  font-size: 13px;
+  padding: 11px 16px;
+}
+.top-btn:hover { background: #374151; transform: translateY(-2px); }
+
+@media (max-width: 640px) {
+  .smart-filter-box { margin: 0 8px 12px; padding: 10px; }
+  .filter-label { min-width: 44px; font-size: 11px; padding: 4px 6px; }
+  .fchip { font-size: 11px; padding: 5px 10px; }
+  .float-actions { right: 10px; bottom: 14px; }
+  .fee-btn, .top-btn { font-size: 12px; padding: 9px 13px; }
+}
