@@ -310,6 +310,8 @@
 .seg button.on { background: var(--blue); border-color: var(--blue); color: #fff; }
 .seg button:disabled { opacity: .32; cursor: not-allowed; }
 .seg.years button { min-width: 0; }
+.seg.colors button.color-chip { flex: 0 1 auto; min-width: 0; padding: 8px 14px; }
+.seg.colors button.color-chip.on { background: #c2410c; border-color: #c2410c; color: #fff; }
 
 .result-box {
   margin-top: 14px; border-radius: 12px; overflow: hidden;

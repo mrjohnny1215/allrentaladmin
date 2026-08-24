@@ -177,7 +177,7 @@ function Gallery({ images, name }) {
 }
 
 /* ============ 인터랙티브 렌탈료/수수료 계산기 ============ */
-function Calculator({ matrix }) {
+function Calculator({ matrix, colors = [], commissionOn }) {
   const avail = useMemo(() => {
     const m = { mgmt: new Set(), contract: new Set(), years: new Set() }
     matrix.forEach((r) => {
@@ -191,13 +191,15 @@ function Calculator({ matrix }) {
   const [mgmt, setMgmt] = useState('')
   const [contract, setContract] = useState('')
   const [years, setYears] = useState('')
+  const [color, setColor] = useState('')
 
   useEffect(() => {
     const first = matrix[0]
     setMgmt(first?.mgmt || '')
     setContract(first?.contract || '')
     setYears(first?.years || '')
-  }, [matrix])
+    setColor(colors[0] || '')
+  }, [matrix, colors])
 
   const rows = useMemo(
     () => matrix.filter((r) =>
@@ -232,6 +234,18 @@ function Calculator({ matrix }) {
       <Seg cap="계약 유형" opts={CONTRACTS} val={contract} set={setContract} kind="contract" />
       <Seg cap="약정 기간" opts={YEARS} val={years} set={setYears} kind="years" cls="years" />
 
+      {colors.length > 0 && (
+        <div className="calc-row">
+          <span className="cap">색상</span>
+          <div className="seg colors">
+            {colors.map((c) => (
+              <button key={c} className={`color-chip ${color === c ? 'on' : ''}`}
+                onClick={() => setColor(c)}>{c}</button>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="result-box">
         {hit ? (
           <>
@@ -239,10 +253,12 @@ function Calculator({ matrix }) {
               <span className="k">월 렌탈료</span>
               <span className="v">{won(hit.monthly_fee)}<small>원</small></span>
             </div>
-            <div className="result-line comm">
-              <span className="k">지급 수수료 (사은 혜택)</span>
-              <span className="v">{won(hit.commission)}<small>원</small></span>
-            </div>
+            {!commissionOn && (
+              <div className="result-line comm">
+                <span className="k">지급 수수료 (사은 혜택)</span>
+                <span className="v">{won(hit.commission)}<small>원</small></span>
+              </div>
+            )}
             <div className="result-meta">
               {hit.plan_label || `${hit.years} ${hit.contract}`}
               {hit.mgmt_cycle ? ` · 관리주기 ${hit.mgmt_cycle}` : ''}
@@ -307,7 +323,7 @@ function DetailSection({ p, commissionOn, setCommissionOn }) {
           </div>
 
           <div>
-            <Calculator matrix={p.pricing_matrix || []} />
+            <Calculator matrix={p.pricing_matrix || []} colors={p.colors || []} commissionOn={commissionOn} />
 
             <div className="info-block">
               <h4>📐 제품 스펙</h4>
