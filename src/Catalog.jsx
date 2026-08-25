@@ -176,7 +176,7 @@ function Gallery({ images, name }) {
 }
 
 /* ============ 인터랙티브 렌탈료/수수료 계산기 ============ */
-function Calculator({ matrix, colors = [], commissionOn, onPick }) {
+function Calculator({ matrix, colors = [], commissionOn, onPick, discount = 0, setDiscount }) {
   const avail = useMemo(() => {
     const m = { mgmt: new Set(), contract: new Set(), years: new Set() }
     matrix.forEach((r) => {
@@ -234,6 +234,15 @@ function Calculator({ matrix, colors = [], commissionOn, onPick }) {
       <Seg cap="계약 유형" opts={CONTRACTS} val={contract} set={(o) => { setContract(o); onPick && onPick({ mgmt, contract: o, years }) }} kind="contract" />
       <Seg cap="약정 기간" opts={YEARS} val={years} set={(o) => { setYears(o); onPick && onPick({ mgmt, contract, years: o }) }} kind="years" cls="years" />
 
+      <div className="calc-row discount-row">
+        <span className="cap">카드할인</span>
+        <div className="seg discount-ctrl">
+          <button className="disc-btn" onClick={() => setDiscount((d) => Math.max(0, d - 1000))} type="button">▼</button>
+          <input type="number" inputMode="numeric" value={discount} onChange={(e) => setDiscount(Math.max(0, parseInt(e.target.value || '0', 10)))} />
+          <button className="disc-btn" onClick={() => setDiscount((d) => d + 1000)} type="button">▲</button>
+        </div>
+      </div>
+
       {colors.length > 0 && (
         <div className="calc-row">
           <span className="cap">색상</span>
@@ -249,10 +258,6 @@ function Calculator({ matrix, colors = [], commissionOn, onPick }) {
       <div className="result-box">
         {hit ? (
           <>
-            <div className="result-line fee">
-              <span className="k">월 렌탈료</span>
-              <span className="v">{won(hit.monthly_fee)}<small>원</small></span>
-            </div>
             {commissionOn && (
               <div className="result-line comm">
                 <span className="k">지급 수수료 (사은 혜택)</span>
@@ -293,6 +298,7 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
   const [selMgmt, setSelMgmt] = useState('')
   const [selContract, setSelContract] = useState('')
   const [selYears, setSelYears] = useState('')
+  const [discount, setDiscount] = useState(0)
   useEffect(() => {
     const f = matrix[0]
     setSelMgmt(f?.mgmt || '')
@@ -374,6 +380,12 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
                 <span className="pc-k">월 렌탈료</span>
                 <span className="pc-v">{won(effMonthly)}<small>원</small></span>
               </div>
+              {discount > 0 && (
+                <div className="pc-line disc">
+                  <span className="pc-k">할인적용</span>
+                  <span className="pc-v red">{won(Math.max(0, effMonthly - discount))}<small>원</small></span>
+                </div>
+              )}
               {commissionOn && (
                 <>
                   <div className="pc-line comm">
@@ -389,6 +401,7 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
             </div>
 
             <Calculator matrix={matrix} colors={p.colors || []} commissionOn={commissionOn}
+              discount={discount} setDiscount={setDiscount}
               onPick={({ mgmt, contract, years }) => { setSelMgmt(mgmt); setSelContract(contract); setSelYears(years) }} />
 
             {(promo.plan?.product || promo.monthly) && (
@@ -457,8 +470,8 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
           </div>
         </div>
 
-        {/* 하단: 상세 설명 본문 이미지 제거 (사용자 요청) - 특장점/필터 정보블록만 유지 */}
-        <div className="detail-desc fallback">
+        {/* 하단: 상세 설명 본문 이미지 */}
+        <div className="detail-desc">
             {sp.points?.length > 0 && (
               <div className="info-block">
                 <h4>✨ 특장점</h4>
@@ -469,6 +482,13 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
               <div className="info-block">
                 <h4>🧪 필터 / 관리 주기</h4>
                 <ul className="filter-list">{sp.filters.map((t, i) => <li key={i}>{t}</li>)}</ul>
+              </div>
+            )}
+            {descImgs.length > 0 && (
+              <div className="info-block desc-images">
+                {descImgs.map((src, i) => (
+                  <img key={i} src={src} alt={`${p.name} 상세 ${i + 1}`} loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                ))}
               </div>
             )}
         </div>
