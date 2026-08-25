@@ -417,8 +417,14 @@
 }
 /* 풀 스크린: 화면 전체를 꽉 채움 */
 .modal-card.fullscreen {
-  max-width: 100%; width: 100%; height: 100vh; max-height: 100vh;
+  max-width: 100%; width: 100%;
+  height: 100vh; max-height: 100vh;
   border-radius: 0;
+}
+@media (max-width: 640px) {
+  .modal-card.fullscreen {
+    height: 100dvh; max-height: 100dvh;
+  }
 }
 @keyframes modalIn { from { transform: translateY(18px) scale(.98); opacity: .6; } to { transform: none; opacity: 1; } }
 .modal-topbar {
@@ -541,8 +547,20 @@
   .fchip { font-size: 11px; padding: 5px 10px; }
   .float-actions { right: 10px; bottom: 14px; }
 
-  /* ===== 상세 페이지 모바일 컴팩트 (2번째 사진 스타일) ===== */
-  /* 2열 쪼갬 제거 → 단일 컬럼 */
+  /* 상단 헤더/툴바 모바일 최적화 */
+  .cat-header { padding: 12px 14px 10px; }
+  .cat-header h1 { font-size: 20px; }
+  .cat-header .sub { font-size: 10px; letter-spacing: 2px; }
+  .cat-toolbar { padding: 10px 12px; top: 66px; }
+
+  /* 상품 그리드 모바일 2열 */
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 12px 10px 30px; }
+  .pcard-body { padding: 8px 9px 10px; }
+  .pcard-name { font-size: 12px; min-height: 30px; }
+  .pcard-fee .val { font-size: 15px; }
+  .load-more { font-size: 13px; padding: 11px 22px; }
+
+  /* 모달 상세 */
   .detail-cols { grid-template-columns: 1fr !important; gap: 14px; }
   .detail-inner { padding: 14px 12px 48px; }
   .breadcrumb { font-size: 11px; margin-bottom: 10px; }
@@ -589,9 +607,12 @@
 
   /* 상세 모달 내부 패딩 */
   .modal-body .detail-cols { gap: 14px; }
-  .modal-card.fullscreen { height: 100vh; }
+  .modal-card.fullscreen { height: 100dvh; max-height: 100dvh; }
   .modal-topbar { padding: 10px 12px; }
   .modal-topbar-title { font-size: 13px; }
+
+  /* 모바일에서 topbar 고정시 스크롤 영역 보정 */
+  .modal-body { padding-bottom: env(safe-area-inset-bottom, 0px); }
 }
 
 /* ===================== 상세 페이지 전면 개편 (쇼핑몰 레퍼런스) ===================== */
