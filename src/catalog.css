@@ -21,6 +21,7 @@
   font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
   color: var(--gray-800);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* ---------- Header ---------- */
@@ -455,7 +456,9 @@
 .modal-body { flex: 1; overflow-y: auto; overflow-x: hidden; }
 .modal-body .detail-cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; }
 /* 모달 내부는 outline 테두리 제거 (독립 창 느낌) */
-.modal-body .detail-wrap { border-top: none; }.modal-hint b { font-weight: 900; }
+.modal-body .detail-wrap { border-top: none; }
+/* 모달 카드 뷰포트 오버플로 방지 */
+.modal-card.fullscreen { box-sizing: border-box; }
 
 /* ===== 스마트 필터 (allrental-xi 스타일 이식) ===== */
 .smart-filter-box {
