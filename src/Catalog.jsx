@@ -557,7 +557,7 @@ export default function Catalog() {
       // 브랜드: 스마트 필터 렌탈사
       const b = extractBrand(p)
       const brandOk = brand ? p.brand === brand : true
-      const brandFilterOk = brandFilter === '전부' ? true : b === brandFilter
+      const brandFilterOk = brandFilter === '전체' ? true : b === brandFilter
       if (!brandOk || !brandFilterOk) return false
       if (kw) {
         const hay = `${p.name} ${p.model_code} ${p.brand} ${(p.tags || []).join(' ')}`.toLowerCase()
