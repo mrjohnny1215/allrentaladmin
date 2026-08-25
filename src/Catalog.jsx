@@ -297,6 +297,21 @@ function DetailSection({ p, commissionOn }) {
   const [cardModal, setCardModal] = useState(false)
   const [cardImg, setCardImg] = useState(null)
 
+  // 현재 상품 브랜드에 맞는 제휴카드 이미지 1장
+  const BRAND_CARD = {
+    '코웨이': '/pages/cards/coway.png',
+    '청호나이스': '/pages/cards/chungho.png',
+    'SK매직': '/pages/cards/sk.png',
+    '쿠쿠': '/pages/cards/cuckoo.png',
+    '웰스': '/pages/cards/wells.png',
+    'LG': '/pages/cards/lg.png',
+    '현대큐밍': '/pages/cards/hyundai.png',
+    '세스코': '/pages/cards/sesko.png'
+  }
+  const currentBrand = sel?.brand || ''
+  const currentCardSrc = BRAND_CARD[currentBrand] || null
+  const currentCardName = currentBrand || '제휴카드'
+
   // 대표 렌탈료/수수료 (matrix 첫 행 기준)
   const rep = matrix[0] || {}
   return (
@@ -440,30 +455,13 @@ function DetailSection({ p, commissionOn }) {
                     <button className="card-modal-close" onClick={() => setCardModal(false)}>×</button>
                   </div>
                   <div className="card-modal-body">
-                    <p>아래 ALL&UP 제휴카드 혜택을 확인하세요.</p>
-                    {!cardImg ? (
-                      <div className="card-brand-grid">
-                        {[
-                          {key:'cwcard', name:'코웨이', src:'/pages/cards/coway.png'},
-                          {key:'chcard', name:'청호', src:'/pages/cards/chungho.png'},
-                          {key:'skcard', name:'SK매직', src:'/pages/cards/sk.png'},
-                          {key:'cccard', name:'쿠쿠', src:'/pages/cards/cuckoo.png'},
-                          {key:'wscard', name:'웰스', src:'/pages/cards/wells.png'},
-                          {key:'lgcard', name:'LG', src:'/pages/cards/lg.png'},
-                          {key:'hdcard', name:'현대', src:'/pages/cards/hyundai.png'},
-                          {key:'cescard', name:'세스코', src:'/pages/cards/sesko.png'}
-                        ].map((item)=>(
-                          <div key={item.key} className="card-brand-item" onClick={()=>setCardImg(item)}>
-                            <img src={item.src} alt={item.name} loading="lazy" />
-                            <span>{item.name}</span>
-                          </div>
-                        ))}
+                    <p>아래 {currentCardName} 제휴카드 혜택을 확인하세요.</p>
+                    {currentCardSrc ? (
+                      <div className="card-brand-detail">
+                        <img src={currentCardSrc} alt={currentCardName} />
                       </div>
                     ) : (
-                      <div className="card-brand-detail">
-                        <img src={cardImg.src} alt={cardImg.name} />
-                        <button className="card-brand-back" onClick={()=>setCardImg(null)}>← 목록</button>
-                      </div>
+                      <div className="fallback-msg">해당 브랜드의 제휴카드 이미지가 준비 중입니다.</div>
                     )}
                   </div>
                 </div>
