@@ -540,6 +540,58 @@
   .filter-label { min-width: 44px; font-size: 11px; padding: 4px 6px; }
   .fchip { font-size: 11px; padding: 5px 10px; }
   .float-actions { right: 10px; bottom: 14px; }
+
+  /* ===== 상세 페이지 모바일 컴팩트 (2번째 사진 스타일) ===== */
+  /* 2열 쪼갬 제거 → 단일 컬럼 */
+  .detail-cols { grid-template-columns: 1fr !important; gap: 14px; }
+  .detail-inner { padding: 14px 12px 48px; }
+  .breadcrumb { font-size: 11px; margin-bottom: 10px; }
+  .brand-logo { font-size: 18px; }
+  .detail-title { font-size: 18px; margin-bottom: 8px; }
+  .meta-row { gap: 4px 10px; font-size: 11.5px; margin-bottom: 10px; }
+
+  /* 카드형 모듈 간격 축소 */
+  .price-card { padding: 12px 13px; margin-bottom: 12px; border-radius: 10px; }
+  .pc-line { padding: 5px 0; }
+  .pc-v { font-size: 18px; }
+
+  /* 계산기/옵션 카드 조밀화 */
+  .calc { padding: 12px; border-radius: 10px; }
+  .calc h3 { font-size: 13.5px; margin-bottom: 10px; }
+  .calc-row { margin-bottom: 10px; }
+  .calc-row > .cap { font-size: 11px; margin-bottom: 5px; }
+  .seg button { padding: 8px 8px; font-size: 12px; min-width: 0; }
+  .seg.colors button.color-chip { padding: 7px 11px; font-size: 12px; }
+
+  /* 정보 블록 여백 축소 */
+  .info-block { margin-top: 14px; }
+  .info-block h4 { font-size: 13px; margin: 0 0 7px; }
+  .pt-list span, .color-list span { font-size: 11.5px; padding: 4px 9px; }
+
+  /* 프로모션/제휴카드 컴팩트 */
+  .promo-banner { padding: 10px 12px; margin-bottom: 12px; border-radius: 10px; }
+  .pb-title { font-size: 12px; }
+  .pb-body { font-size: 11px; }
+  .aff-card { padding: 10px 12px; margin-bottom: 12px; border-radius: 10px; gap: 10px; }
+  .aff-name { font-size: 12px; }
+  .aff-desc { font-size: 10.5px; }
+  .aff-more { font-size: 11px; padding: 6px 10px; }
+
+  /* 매트릭스 표 카드 */
+  .info-block h4 { margin-top: 4px; }
+  .matrix-table th, .matrix-table td { padding: 6px 6px; font-size: 11px; }
+
+  /* 본문 설명 이미지 */
+  .detail-desc { gap: 3px; margin-top: 12px; }
+
+  /* 카톡 CTA */
+  .kakao-cta { font-size: 15px; padding: 14px; margin: 16px 0 6px; border-radius: 10px; }
+
+  /* 상세 모달 내부 패딩 */
+  .modal-body .detail-cols { gap: 14px; }
+  .modal-card.fullscreen { height: 100vh; }
+  .modal-topbar { padding: 10px 12px; }
+  .modal-topbar-title { font-size: 13px; }
 }
 
 /* ===================== 상세 페이지 전면 개편 (쇼핑몰 레퍼런스) ===================== */
