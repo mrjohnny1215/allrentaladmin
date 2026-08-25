@@ -474,13 +474,14 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
             <ul className="filter-list">{sp.filters.map((t, i) => <li key={i}>{t}</li>)}</ul>
           </div>
         )}
-        {descImgs.length > 0 && (
+        {/* 상세 설명 이미지 노출 일시 중단 */}
+        {/* {descImgs.length > 0 && (
           <div className="detail-desc">
             {descImgs.map((src, i) => (
               <img key={i} src={src} alt={`${p.name} 상세 ${i + 1}`} loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
             ))}
           </div>
-        )}
+        )} */}
 
         <a className="kakao-cta" href={KAKAO_CHANNEL_URL} target="_blank" rel="noopener noreferrer">
           <img className="cta-kakao-ico" src="/images/kakao-icon.png" alt="카카오톡" />
