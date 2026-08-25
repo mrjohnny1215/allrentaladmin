@@ -257,20 +257,12 @@ function Calculator({ matrix, colors = [], commissionOn, onPick, discount = 0, s
 
       <div className="result-box">
         {hit ? (
-          <>
-            {commissionOn && (
-              <div className="result-line comm">
-                <span className="k">지급 수수료 (사은 혜택)</span>
-                <span className="v">{won(hit.commission)}<small>원</small></span>
-              </div>
-            )}
-            <div className="result-meta">
-              {hit.plan_label || `${hit.years} ${hit.contract}`}
-              {hit.mgmt_cycle ? ` · 관리주기 ${hit.mgmt_cycle}` : ''}
-              {hit.rule_raw ? ` · 규정 ${hit.rule_raw}` : ''}
-              {rows.length > 1 ? ` · 동일조건 ${rows.length}건 중 대표` : ''}
-            </div>
-          </>
+          <div className="result-meta">
+            {hit.plan_label || `${hit.years} ${hit.contract}`}
+            {hit.mgmt_cycle ? ` · 관리주기 ${hit.mgmt_cycle}` : ''}
+            {hit.rule_raw ? ` · 규정 ${hit.rule_raw}` : ''}
+            {rows.length > 1 ? ` · 동일조건 ${rows.length}건 중 대표` : ''}
+          </div>
         ) : (
           <div className="result-empty">선택한 조건의 렌탈료 정보가 없습니다.</div>
         )}
