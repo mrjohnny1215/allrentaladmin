@@ -481,16 +481,16 @@
   .modal-body .table-scroll,
   .modal-body .detail-desc { overflow: hidden; }
 
-  /* 가격/텍스트 줄바꿈 허용 */
+  /* 가격/텍스트 줄바꿈 허용 + 금액 잘림 방지 */
   .modal-body .pc-line,
   .modal-body .meta-row,
   .modal-body .detail-title,
   .modal-body .breadcrumb,
   .modal-body .result-line { overflow-wrap: anywhere; }
 
-  /* 가격/버튼 최대 폭 제한 */
+  /* 가격/버튼 최대 폭 제한 + 숫자 축소 방지 */
   .modal-body .pc-v,
-  .modal-body .seg button { max-width: 100%; }
+  .modal-body .seg button { max-width: 100%; min-width: 0; }
 
   /* 계산기 결과/버튼 더 컴팩트 */
   .modal-body .result-line { padding: 10px 12px; }
