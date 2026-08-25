@@ -503,9 +503,12 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
         </div>
 
         <footer className="site-footer">
-          <div className="foot-row"><b>{COMPANY.name}</b> · {COMPANY.phone}</div>
-          <div className="foot-row">{COMPANY.address}</div>
-          <div className="foot-row copy">© {new Date().getFullYear()} {COMPANY.name}. All rights reserved.</div>
+          <div className="foot-row">올(AII)렌탈</div>
+          <div className="foot-row">주식회사 올(AII)렌탈 | 대표이사 : 김성훈</div>
+          <div className="foot-row">사업자등록번호 : 764-36-01626</div>
+          <div className="foot-row">업태 : 서비스업 | 종목 : 정수기, 청정기, 비데, 안마의자 렌탈</div>
+          <div className="foot-row">주소 : 301ho, 27 Daejukseoro 16beon-gil, Muan-gun, Gwangju-metropolitan Autonomous City, Republic of Korea</div>
+          <div className="foot-row copy">Copyright 2026 주식회사 올(AII)렌탈 All rights reserved</div>
         </footer>
       </div>
     </div>
@@ -748,7 +751,7 @@ export default function Catalog() {
             <div className="modal-card fullscreen">
               <div className="modal-topbar">
                 <button className="modal-back" onClick={close} aria-label="뒤로가기">← 뒤로</button>
-                <div className="modal-topbar-title">{sel.brand} · {sel.name}</div>
+                <div className="modal-topbar-title">{sel.brand} · {sel.name} · {sel.category}</div>
                 <button className="modal-close" onClick={close} aria-label="닫기">×</button>
               </div>
               <div className="modal-body" ref={modalBodyRef}>
