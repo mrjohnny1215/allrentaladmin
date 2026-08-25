@@ -94,8 +94,6 @@ function FilterChips({ label, options, value, onChange }) {
   return (
     <div className="filter-chips">
       <span className="filter-label">{label}</span>
-      <button onClick={() => onChange('all')}
-        className={`fchip ${value === 'all' ? 'on' : ''}`}>전체</button>
       {options.map((opt) => (
         <button key={opt} onClick={() => onChange(opt)}
           className={`fchip ${value === opt ? 'on' : ''}`}>{opt}</button>
@@ -178,7 +176,7 @@ function Gallery({ images, name }) {
 }
 
 /* ============ 인터랙티브 렌탈료/수수료 계산기 ============ */
-function Calculator({ matrix, colors = [], commissionOn }) {
+function Calculator({ matrix, colors = [], commissionOn, onPick }) {
   const avail = useMemo(() => {
     const m = { mgmt: new Set(), contract: new Set(), years: new Set() }
     matrix.forEach((r) => {
@@ -199,8 +197,9 @@ function Calculator({ matrix, colors = [], commissionOn }) {
     setMgmt(first?.mgmt || '')
     setContract(first?.contract || '')
     setYears(first?.years || '')
-    setColor(colors[0] || '')
-  }, [matrix, colors])
+    setColor((prev) => prev || colors[0] || '')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [matrix])
 
   const rows = useMemo(
     () => matrix.filter((r) =>
@@ -231,9 +230,9 @@ function Calculator({ matrix, colors = [], commissionOn }) {
   return (
     <div className="calc">
       <h3>🧮 렌탈료 / 수수료 계산기</h3>
-      <Seg cap="관리 방식" opts={MGMTS} val={mgmt} set={setMgmt} kind="mgmt" />
-      <Seg cap="계약 유형" opts={CONTRACTS} val={contract} set={setContract} kind="contract" />
-      <Seg cap="약정 기간" opts={YEARS} val={years} set={setYears} kind="years" cls="years" />
+      <Seg cap="관리 방식" opts={MGMTS} val={mgmt} set={(o) => { setMgmt(o); onPick && onPick({ mgmt: o, contract, years }) }} kind="mgmt" />
+      <Seg cap="계약 유형" opts={CONTRACTS} val={contract} set={(o) => { setContract(o); onPick && onPick({ mgmt, contract: o, years }) }} kind="contract" />
+      <Seg cap="약정 기간" opts={YEARS} val={years} set={(o) => { setYears(o); onPick && onPick({ mgmt, contract, years: o }) }} kind="years" cls="years" />
 
       {colors.length > 0 && (
         <div className="calc-row">
@@ -254,7 +253,7 @@ function Calculator({ matrix, colors = [], commissionOn }) {
               <span className="k">월 렌탈료</span>
               <span className="v">{won(hit.monthly_fee)}<small>원</small></span>
             </div>
-            {!commissionOn && (
+            {commissionOn && (
               <div className="result-line comm">
                 <span className="k">지급 수수료 (사은 혜택)</span>
                 <span className="v">{won(hit.commission)}<small>원</small></span>
@@ -285,11 +284,28 @@ const CATEGORY_EN = {
   '매트리스': 'Mattress', '안마의자': 'Massage Chair',
 }
 
-function DetailSection({ p, commissionOn }) {
+function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
   if (!p) return null
   const sp = p.selling_points || { points: [], filters: [] }
   const promo = p.promotions || {}
   const matrix = p.pricing_matrix || []
+  // 계산기 선택 상태를 상단 price-card와 공유
+  const [selMgmt, setSelMgmt] = useState('')
+  const [selContract, setSelContract] = useState('')
+  const [selYears, setSelYears] = useState('')
+  useEffect(() => {
+    const f = matrix[0]
+    setSelMgmt(f?.mgmt || '')
+    setSelContract(f?.contract || '')
+    setSelYears(f?.years || '')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [matrix])
+  const matched = matrix.find((r) =>
+    (!selMgmt || r.mgmt === selMgmt) &&
+    (!selContract || r.contract === selContract) &&
+    (!selYears || r.years === selYears)) || matrix[0] || {}
+  const effCommission = matched.commission ?? p.max_commission
+  const effMonthly = matched.monthly_fee ?? p.min_monthly_fee
   const brandEn = BRAND_EN[p.brand] || p.brand
   const catEn = CATEGORY_EN[p.category] || p.category
 
@@ -356,29 +372,24 @@ function DetailSection({ p, commissionOn }) {
             <div className="price-card">
               <div className="pc-line">
                 <span className="pc-k">월 렌탈료</span>
-                <span className="pc-v">{won(p.min_monthly_fee)}<small>원</small></span>
+                <span className="pc-v">{won(effMonthly)}<small>원</small></span>
               </div>
               {commissionOn && (
                 <>
                   <div className="pc-line comm">
                     <span className="pc-k">내 수수료 (약정 · 관리방식)</span>
-                    <span className="pc-v green">{won(p.max_commission)}<small>원</small></span>
+                    <span className="pc-v green">{won(effCommission)}<small>원</small></span>
                   </div>
                   <div className="pc-line comm">
                     <span className="pc-k">예상 수수료</span>
-                    <span className="pc-v green">{won(p.max_commission)}<small>원</small></span>
+                    <span className="pc-v green">{won(effCommission)}<small>원</small></span>
                   </div>
                 </>
               )}
-              {rep.monthly_fee && (
-                <div className="pc-line discount">
-                  <span className="pc-k">할인적용</span>
-                  <span className="pc-v red">{won(rep.monthly_fee)}<small>원</small></span>
-                </div>
-              )}
             </div>
 
-            <Calculator matrix={matrix} colors={p.colors || []} commissionOn={commissionOn} />
+            <Calculator matrix={matrix} colors={p.colors || []} commissionOn={commissionOn}
+              onPick={({ mgmt, contract, years }) => { setSelMgmt(mgmt); setSelContract(contract); setSelYears(years) }} />
 
             {(promo.plan?.product || promo.monthly) && (
               <div className="promo-banner">
@@ -446,16 +457,8 @@ function DetailSection({ p, commissionOn }) {
           </div>
         </div>
 
-        {/* 하단: 상세 설명 본문 이미지 - 반드시 price/options 아래 */}
-        {descImgs.length > 0 ? (
-          <div className="detail-desc">
-            {descImgs.map((src, i) => (
-              <img key={i} src={src} alt={`${p.name} 상세설명 ${i + 1}`} loading="lazy"
-                onError={(e) => { e.currentTarget.style.display = 'none' }} />
-            ))}
-          </div>
-        ) : (
-          <div className="detail-desc fallback">
+        {/* 하단: 상세 설명 본문 이미지 제거 (사용자 요청) - 특장점/필터 정보블록만 유지 */}
+        <div className="detail-desc fallback">
             {sp.points?.length > 0 && (
               <div className="info-block">
                 <h4>✨ 특장점</h4>
@@ -468,12 +471,28 @@ function DetailSection({ p, commissionOn }) {
                 <ul className="filter-list">{sp.filters.map((t, i) => <li key={i}>{t}</li>)}</ul>
               </div>
             )}
-          </div>
-        )}
+        </div>
 
         <a className="kakao-cta" href={KAKAO_CHANNEL_URL} target="_blank" rel="noopener noreferrer">
-          💬 카톡 상담신청
+          <img className="cta-kakao-ico" src="/images/kakao-icon.png" alt="카카오톡" />
+          <span className="cta-txt">카톡 상담신청</span>
         </a>
+
+        {/* 우측 하단 플로팅 버튼 3개 (상세 모달용) */}
+        <div className="detail-fab-wrap">
+          <a className="detail-fab fab-kakao" href={KAKAO_CHANNEL_URL} target="_blank" rel="noopener noreferrer" title="카카오톡 상담">
+            <img className="fab-kakao-ico" src="/images/kakao-icon.png" alt="카카오톡" />
+            <span className="fab-txt">상담</span>
+          </a>
+          <button className={`detail-fab fab-fee ${commissionOn ? 'on' : ''}`} onClick={() => setCommissionOn && setCommissionOn((v) => !v)} title={commissionOn ? '수수료 표시 중 (클릭 시 숨김)' : '숨김 중 (클릭 시 표시)'}>
+            <span className="fab-ico fab-fee-txt">{commissionOn ? 'on' : 'off'}</span>
+            <span className="fab-txt">on/off</span>
+          </button>
+          <button className="detail-fab fab-top" onClick={() => { if (scrollRef && scrollRef.current) scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' }); }} title="맨 위로">
+            <span className="fab-ico">↑</span>
+            <span className="fab-txt">위로</span>
+          </button>
+        </div>
 
         <footer className="site-footer">
           <div className="foot-row"><b>{COMPANY.name}</b> · {COMPANY.phone}</div>
@@ -490,12 +509,12 @@ export default function Catalog() {
   const [all, setAll] = useState(null)
   const [err, setErr] = useState('')
   const [q, setQ] = useState('')
-  const [cat, setCat] = useState('')
+  const [cat, setCat] = useState(CATEGORIES[0])
   const [brand, setBrand] = useState('')
   const [limit, setLimit] = useState(PAGE)
   const [sel, setSel] = useState(null)
   // 스마트 필터 상태 (allrental-xi 스타일)
-  const [brandFilter, setBrandFilter] = useState('all')
+  const [brandFilter, setBrandFilter] = useState(BRANDS[0])
   const [funcFilter, setFuncFilter] = useState('all')
   const [typeFilter, setTypeFilter] = useState('all')
   const [methodFilter, setMethodFilter] = useState('all')
@@ -509,6 +528,7 @@ export default function Catalog() {
   const [sort, setSort] = useState('commission_desc')
   const detailRef = useRef(null)
   const veilRef = useRef(null)
+  const modalBodyRef = useRef(null)
 
   useEffect(() => {
     fetch('/data/products.json', { cache: 'no-store' })
@@ -595,10 +615,34 @@ export default function Catalog() {
   }
   if (!all) {
     return (
-      <div className="splash"><div className="box">
-        <div className="logo">A</div>
-        <p>상품 데이터를 불러오는 중...</p>
-      </div></div>
+      <div className="splash">
+        <div className="box splash-anim">
+          <div className="splash-stage">
+            <div className="splash-ring splash-ring-1" />
+            <div className="splash-ring splash-ring-2" />
+            <div className="splash-shine" />
+            <svg className="splash-logo" viewBox="0 0 100 100" width="76" height="76" aria-hidden="true">
+              <defs>
+                <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#fde68a"/>
+                  <stop offset="45%" stopColor="#f59e0b"/>
+                  <stop offset="100%" stopColor="#d97706"/>
+                </linearGradient>
+                <linearGradient id="sg2" x1="0" y1="1" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#fbbf24"/>
+                  <stop offset="100%" stopColor="#fcd34d"/>
+                </linearGradient>
+              </defs>
+              <path fill="none" stroke="url(#sg)" strokeWidth="6.5" strokeLinecap="round"
+                d="M28 36 C12 36 12 64 28 64 C44 64 44 36 28 36 C12 36 12 64 28 64 M72 36 C56 36 56 64 72 64 C88 64 88 36 72 36 C56 36 56 64 72 64"/>
+              <circle cx="50" cy="50" r="3" fill="url(#sg2)" />
+            </svg>
+          </div>
+          <div className="splash-brand">ALLRENTAL</div>
+          <div className="splash-bar"><span /></div>
+          <p>렌탈 상담 포털을 준비하는 중...</p>
+        </div>
+      </div>
     )
   }
 
@@ -616,7 +660,7 @@ export default function Catalog() {
           placeholder="상품명 · 모델명 · 태그 검색 (예: 아이콘3, CHP-7220N)" />
         <select className="cat-sort" value={sort} onChange={(e) => setSort(e.target.value)}
           aria-label="정렬 기준">
-          <option value="commission_desc">수수료 많은순</option>
+          <option value="commission_desc">판매량 많은순</option>
           <option value="price_desc">렌탈료 높은순</option>
           <option value="price_asc">렌탈료 낮은순</option>
           <option value="latest">최신순</option>
@@ -671,10 +715,10 @@ export default function Catalog() {
                   <div className="pcard-brand">{p.brand}</div>
                   <div className="pcard-name">{p.name}</div>
                   <div className="pcard-model">{p.model_code || ' '}</div>
-                  <div className={`pcard-fee ${commissionOn ? 'is-commission' : 'is-fee'}`}>
-                    <span className="tag">{commissionOn ? '수수료' : '월'}</span>
-                    <span className="val">{won(commissionOn ? p.max_commission : p.min_monthly_fee)}</span>
-                    <span className="won">{commissionOn ? '원' : '원~'}</span>
+                  <div className="pcard-fee is-fee">
+                    <span className="tag">월</span>
+                    <span className="val">{won(p.min_monthly_fee)}</span>
+                    <span className="won">원~</span>
                   </div>
                 </div>
               </button>
@@ -699,8 +743,8 @@ export default function Catalog() {
                 <div className="modal-topbar-title">{sel.brand} · {sel.name}</div>
                 <button className="modal-close" onClick={close} aria-label="닫기">×</button>
               </div>
-              <div className="modal-body">
-                <DetailSection p={sel} commissionOn={commissionOn} setCommissionOn={setCommissionOn} />
+              <div className="modal-body" ref={modalBodyRef}>
+                <DetailSection p={sel} commissionOn={commissionOn} setCommissionOn={setCommissionOn} scrollRef={modalBodyRef} />
               </div>
             </div>
           </div>
