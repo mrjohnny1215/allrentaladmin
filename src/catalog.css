@@ -462,18 +462,48 @@
 
 /* ===== 모바일: 모달 상세 전용 오버라이드 ===== */
 @media (max-width: 640px) {
+  /* 모달 내부 기본: 뷰포트 폭 기준으로 제한 */
+  .modal-body { overflow-x: clip; }
+  .modal-card.fullscreen { overflow: hidden; }
+
+  /* 상세 2열 → 1열 강제 */
   .modal-body .detail-cols {
     grid-template-columns: 1fr !important;
     gap: 14px !important;
   }
-  .modal-body .price-card { padding: 12px 13px; }
-  .modal-body .pc-v { font-size: 17px !important; }
-  .modal-body .pc-k { font-size: 12px; }
-  .modal-body .calc { padding: 12px; }
-  .modal-body .calc h3 { font-size: 13px; }
-  .modal-body .seg button { min-width: 0; padding: 8px 10px; font-size: 12px; }
-  .modal-body .matrix-table { font-size: 11px; }
-  .modal-body .kakao-cta { font-size: 15px; padding: 14px; }
+
+  /* 우측 패널 개별 요소 넘침 방지 */
+  .modal-body .price-card,
+  .modal-body .calc,
+  .modal-body .info-block,
+  .modal-body .promo-banner,
+  .modal-body .aff-card,
+  .modal-body .table-scroll,
+  .modal-body .detail-desc { overflow: hidden; }
+
+  /* 가격/텍스트 줄바꿈 허용 */
+  .modal-body .pc-line,
+  .modal-body .meta-row,
+  .modal-body .detail-title,
+  .modal-body .breadcrumb,
+  .modal-body .result-line { overflow-wrap: anywhere; }
+
+  /* 가격/버튼 최대 폭 제한 */
+  .modal-body .pc-v,
+  .modal-body .seg button { max-width: 100%; }
+
+  /* 갤러리 넘침 방지 */
+  .modal-body .gal-main img { max-width: 100%; }
+  .modal-body .gal-thumbs { overflow-x: auto; }
+  .modal-body .gal-thumbs button { flex: 0 0 auto; }
+
+  /* 표는 가로 스크롤 허용, 최소폭 축소 */
+  .modal-body .matrix-table { min-width: 0; font-size: 11px; }
+  .modal-body .matrix-table th,
+  .modal-body .matrix-table td { padding: 6px 5px; }
+
+  /* 제휴카드 모달도 모바일 안전 */
+  .modal-body .card-modal { width: 94%; }
 }
 
 /* ===== 스마트 필터 (allrental-xi 스타일 이식) ===== */
