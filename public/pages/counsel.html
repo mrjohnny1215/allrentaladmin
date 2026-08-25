@@ -11467,22 +11467,36 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   #cardOverlay .sheet{position:absolute;inset:2.5vh 2.5vw;background:#fff;border-radius:16px;
     box-shadow:0 10px 40px rgba(0,0,0,.25);display:flex;flex-direction:column;overflow:hidden}
-  #cardOverlay .bar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid #e5e7eb}
-  #cardOverlay .bar .title{font-weight:600}
-  #cardOverlay iframe{width:100%;height:100%;border:0;flex:1 1 auto}
+  #cardOverlay .bar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%);color:#fff}
+  #cardOverlay .bar .title{font-size:18px;font-weight:700;color:#fff}
+  #cardOverlay .bar .subtitle{font-size:13px;color:rgba(255,255,255,.85);margin-top:2px}
+  #cardOverlay .bar-actions{display:flex;align-items:center;gap:8px}
+  #cardOverlay .btn-close{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 14px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600}
+  #cardOverlay .btn-close:hover{background:rgba(255,255,255,.25)}
+  #cardOverlay .btn-allnup{background:#fff;color:#7c3aed;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+  #cardOverlay .btn-allnup:hover{background:#f3f0ff}
+  #cardOverlay .sheet-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:#fff}
+  #cardOverlay .sheet-body img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
+  #cardOverlay .fallback-msg{color:#888;font-size:14px;text-align:center;padding:24px}
+  #cardOverlay iframe{display:none}
   @media (max-width:768px){#cardOverlay .sheet{inset:0}}
 </style>
 
 <div id="cardOverlay" aria-hidden="true">
-  <div class="sheet" role="dialog" aria-label="제휴카드">
+  <div class="sheet" role="dialog" aria-label="제휴카드 혜택">
     <div class="bar">
-      <div class="title">제휴카드</div>
       <div>
-        <button type="button" id="cardPopOut" class="btn btn-sm btn-outline-secondary">새창</button>
-        <button type="button" id="cardCloseBtn" class="btn btn-sm btn-outline-dark">닫기 ✕</button>
+        <div class="title">💳 제휴카드 혜택</div>
+        <div class="subtitle">아래 ALL&UP 제휴카드 혜택을 확인하세요.</div>
+      </div>
+      <div class="bar-actions">
+        <a class="btn-allnup" href="https://allnup.com" target="_blank" rel="noopener">🎁 제휴카드 혜택 자세히 보기 (allnup)</a>
+        <button type="button" class="btn-close" id="cardCloseBtn">닫기 ✕</button>
       </div>
     </div>
-    <iframe id="cardFrame" src=""></iframe>
+    <div class="sheet-body" id="cardBody">
+      <img id="cardImg" alt="제휴카드 안내" src="">
+    </div>
   </div>
 </div>
 
@@ -11873,19 +11887,35 @@ const CARD_KEY_MAP = {
 
 function openCardOverlay(url){
   const ov = document.getElementById('cardOverlay');
-  const fr = document.getElementById('cardFrame');
-  if (!ov || !fr) return;
+  const img = document.getElementById('cardImg');
+  if (!ov || !img) return;
 
   // 항상 body 맨 뒤로 이동 → 어떤 레이아웃 위에서도 최상단
   if (ov.parentElement !== document.body) {
     document.body.appendChild(ov);
   }
 
-  fr.src = url;
+  // url에서 key 추출하여 해당 브랜드 이미지 표시
+  const key = (url.split('key=')[1] || '').trim();
+  const BRAND_IMG = {
+    cwcard: 'pages/cards/coway.png',
+    chcard: 'pages/cards/chungho.png',
+    skcard: 'pages/cards/sk.png',
+    cccard: 'pages/cards/cuckoo.png',
+    wscard: 'pages/cards/wells.png',
+    lgcard: 'pages/cards/lg.png',
+    hdcard: 'pages/cards/hyundai.png',
+    cescard: 'pages/cards/sesko.png'
+  };
+  img.src = BRAND_IMG[key] || '';
+  if (!img.src) {
+    document.getElementById('cardBody').innerHTML = '<div class="fallback-msg">해당 브랜드의 제휴카드 이미지가 준비 중입니다.</div>';
+  } else {
+    document.getElementById('cardBody').innerHTML = '<img id="cardImg" alt="제휴카드 안내" src="' + img.src + '">';
+  }
+
   ov.style.display = 'block';
   document.body.style.overflow = 'hidden';
-
-  // 모바일에서 위치 꼬임 방지 (상단으로 정렬)
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
@@ -11902,10 +11932,10 @@ function getCardBrandFor(mode){
 
 function closeCardOverlay(){
   const ov = document.getElementById('cardOverlay');
-  const fr = document.getElementById('cardFrame');
+  const img = document.getElementById('cardImg');
   if (ov) ov.style.display = 'none';
   document.body.style.overflow = '';
-  if (fr) fr.src = 'about:blank';
+  if (img) img.src = '';
 }
 
 // 제휴카드 버튼 클릭 (PC 출력영역)
