@@ -314,6 +314,19 @@
 .seg.colors button.color-chip { flex: 0 1 auto; min-width: 0; padding: 8px 14px; }
 .seg.colors button.color-chip.on { background: #c2410c; border-color: #c2410c; color: #fff; }
 
+.discount-ctrl { display: flex; align-items: center; gap: 6px; }
+.discount-ctrl input { width: 110px; text-align: right; font-weight: 900; padding: 8px 10px; border-radius: 8px; border: 1.5px solid var(--gray-200); background: #fff; color: var(--gray-900); font-size: 13px; }
+.disc-btn { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 34px; border-radius: 8px; border: 1.5px solid var(--gray-200); background: #fff; color: var(--gray-700); font-weight: 900; cursor: pointer; }
+.disc-btn:hover { border-color: #93c5fd; color: var(--blue); }
+
+.result-line.discount { background: #fff0f0; }
+.result-line.discount .v.red { color: #dc2626; }
+
+/* 상단 가격카드 할인 라인 */
+.pc-line.disc { background: #fff0f0; margin: 6px -16px -8px; padding: 10px 16px; }
+.pc-line.disc + .pc-line.comm { margin-top: 8px; }
+.pc-v.red { color: #dc2626; }
+
 .result-box {
   margin-top: 14px; border-radius: 12px; overflow: hidden;
   border: 1.5px solid var(--blue-100); background: #fff;
@@ -742,7 +755,7 @@
 .breadcrumb a:hover { color: var(--blue); }
 .breadcrumb .cur { color: var(--gray-800); font-weight: 700; }
 
-.brand-logo { font-size: 22px; font-weight: 900; letter-spacing: 1px; color: var(--blue); text-transform: lowercase; margin-bottom: 4px; }
+.brand-logo { font-size: 22px; font-weight: 900; letter-spacing: 1px; color: var(--blue); text-transform: none; margin-bottom: 4px; }
 .detail-title { font-size: 22px; font-weight: 900; color: var(--gray-900); margin: 0 0 10px; }
 .meta-row { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; color: var(--gray-600); margin-bottom: 14px; }
 .meta-row b { color: var(--gray-800); margin-right: 3px; }
