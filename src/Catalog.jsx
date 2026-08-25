@@ -308,7 +308,7 @@ function DetailSection({ p, commissionOn }) {
     '현대큐밍': '/pages/cards/hyundai.png',
     '세스코': '/pages/cards/sesko.png'
   }
-  const currentBrand = sel?.brand || ''
+  const currentBrand = p?.brand || ''
   const currentCardSrc = BRAND_CARD[currentBrand] || null
   const currentCardName = currentBrand || '제휴카드'
 
