@@ -492,6 +492,17 @@
   .modal-body .pc-v,
   .modal-body .seg button { max-width: 100%; }
 
+  /* 계산기 결과/버튼 더 컴팩트 */
+  .modal-body .result-line { padding: 10px 12px; }
+  .modal-body .result-line .k { font-size: 11px; }
+  .modal-body .result-line .v { font-size: 17px !important; }
+  .modal-body .calc h3 { font-size: 13px; margin-bottom: 8px; }
+  .modal-body .calc-row { margin-bottom: 8px; }
+  .modal-body .calc-row > .cap { font-size: 10.5px; margin-bottom: 4px; }
+  .modal-body .seg { gap: 5px; }
+  .modal-body .seg button { padding: 7px 6px !important; font-size: 11px !important; min-width: 0 !important; border-radius: 7px; }
+  .modal-body .seg.years button { min-width: 0 !important; }
+
   /* 갤러리 넘침 방지 */
   .modal-body .gal-main img { max-width: 100%; }
   .modal-body .gal-thumbs { overflow-x: auto; }
