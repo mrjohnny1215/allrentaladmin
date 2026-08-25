@@ -3,7 +3,7 @@ import './catalog.css'
 import { KAKAO_CHANNEL_URL, COMPANY } from './config'
 
 const CATEGORIES = ['정수기', '공기청정기', '비데', '매트리스', '안마의자']
-const BRANDS = ['전부', '코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', '웰스', '세스코']
+const BRANDS = ['전부', '코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', '웰스', '세스코', 'LG']
 const MGMTS = ['방문관리', '셀프관리']
 const CONTRACTS = ['신규', '신규/후결합', '신규/동시구매', '보상', '보상/후결합', '보상/동시구매']
 const YEARS = ['3년', '4년', '5년', '6년', '7년', '9년']
