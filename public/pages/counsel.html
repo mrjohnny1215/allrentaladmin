@@ -11490,7 +11490,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="subtitle">아래 ALL&UP 제휴카드 혜택을 확인하세요.</div>
       </div>
       <div class="bar-actions">
-        <a class="btn-allnup" href="https://allnup.com" target="_blank" rel="noopener">🎁 제휴카드 혜택 자세히 보기 (allnup)</a>
+        <a class="btn-allnup" href="#" id="btnCardDetail" onclick="return false;">🎁 제휴카드 혜택 자세히 보기</a>
         <button type="button" class="btn-close" id="cardCloseBtn">닫기 ✕</button>
       </div>
     </div>
@@ -11888,14 +11888,13 @@ const CARD_KEY_MAP = {
 function openCardOverlay(url){
   const ov = document.getElementById('cardOverlay');
   const img = document.getElementById('cardImg');
+  const body = document.getElementById('cardBody');
   if (!ov || !img) return;
 
-  // 항상 body 맨 뒤로 이동 → 어떤 레이아웃 위에서도 최상단
   if (ov.parentElement !== document.body) {
     document.body.appendChild(ov);
   }
 
-  // url에서 key 추출하여 해당 브랜드 이미지 표시
   const key = (url.split('key=')[1] || '').trim();
   const BRAND_IMG = {
     cwcard: 'pages/cards/coway.png',
@@ -11907,17 +11906,37 @@ function openCardOverlay(url){
     hdcard: 'pages/cards/hyundai.png',
     cescard: 'pages/cards/sesko.png'
   };
-  img.src = BRAND_IMG[key] || '';
-  if (!img.src) {
-    document.getElementById('cardBody').innerHTML = '<div class="fallback-msg">해당 브랜드의 제휴카드 이미지가 준비 중입니다.</div>';
-  } else {
-    document.getElementById('cardBody').innerHTML = '<img id="cardImg" alt="제휴카드 안내" src="' + img.src + '">';
-  }
+  const benefitSrc = BRAND_IMG[key] || '';
+  const cardSrc = 'creditcard_embed.html?key=' + key;
+
+  // 기본: 혜택 이미지 표시
+  window._cardDetailSrc = cardSrc;
+  window._cardBenefitSrc = benefitSrc;
+  window._cardCurrentMode = 'benefit';
+  renderCardImage(benefitSrc);
 
   ov.style.display = 'block';
   document.body.style.overflow = 'hidden';
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
+
+function renderCardImage(src){
+  const body = document.getElementById('cardBody');
+  if (!body) return;
+  if (!src) {
+    body.innerHTML = '<div class="fallback-msg">해당 브랜드의 제휴카드 이미지가 준비 중입니다.</div>';
+    return;
+  }
+  body.innerHTML = '<img id="cardImg" alt="제휴카드 안내" src="' + src + '" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:8px">';
+}
+
+document.getElementById('btnCardDetail')?.addEventListener('click', function(e){
+  e.preventDefault();
+  if (window._cardDetailSrc) {
+    window._cardCurrentMode = 'detail';
+    renderCardImage(window._cardDetailSrc);
+  }
+});
 
 // 🔹 브랜드 선택 공통 함수 (PC/모바일)
 function getCardBrandFor(mode){
