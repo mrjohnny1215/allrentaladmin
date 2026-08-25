@@ -387,16 +387,10 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
                 </div>
               )}
               {commissionOn && (
-                <>
-                  <div className="pc-line comm">
-                    <span className="pc-k">내 수수료 (약정 · 관리방식)</span>
-                    <span className="pc-v green">{won(effCommission)}<small>원</small></span>
-                  </div>
-                  <div className="pc-line comm">
-                    <span className="pc-k">예상 수수료</span>
-                    <span className="pc-v green">{won(effCommission)}<small>원</small></span>
-                  </div>
-                </>
+                <div className="pc-line comm">
+                  <span className="pc-k">내 수수료 (약정 · 관리방식)</span>
+                  <span className="pc-v green">{won(p.max_commission)}<small>원</small></span>
+                </div>
               )}
             </div>
 
