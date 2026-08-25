@@ -3,7 +3,7 @@ import './catalog.css'
 import { KAKAO_CHANNEL_URL, COMPANY } from './config'
 
 const CATEGORIES = ['정수기', '공기청정기', '비데', '매트리스', '안마의자']
-const BRANDS = ['코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', '웰스', '세스코']
+const BRANDS = ['전부', '코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', '웰스', '세스코']
 const MGMTS = ['방문관리', '셀프관리']
 const CONTRACTS = ['신규', '신규/후결합', '신규/동시구매', '보상', '보상/후결합', '보상/동시구매']
 const YEARS = ['3년', '4년', '5년', '6년', '7년', '9년']
@@ -526,7 +526,7 @@ export default function Catalog() {
   const [limit, setLimit] = useState(PAGE)
   const [sel, setSel] = useState(null)
   // 스마트 필터 상태 (allrental-xi 스타일)
-  const [brandFilter, setBrandFilter] = useState(BRANDS[0])
+  const [brandFilter, setBrandFilter] = useState('전부')
   const [funcFilter, setFuncFilter] = useState('all')
   const [typeFilter, setTypeFilter] = useState('all')
   const [methodFilter, setMethodFilter] = useState('all')
@@ -557,7 +557,7 @@ export default function Catalog() {
       // 브랜드: 스마트 필터 렌탈사
       const b = extractBrand(p)
       const brandOk = brand ? p.brand === brand : true
-      const brandFilterOk = brandFilter === 'all' ? true : b === brandFilter
+      const brandFilterOk = brandFilter === '전부' ? true : b === brandFilter
       if (!brandOk || !brandFilterOk) return false
       if (kw) {
         const hay = `${p.name} ${p.model_code} ${p.brand} ${(p.tags || []).join(' ')}`.toLowerCase()
