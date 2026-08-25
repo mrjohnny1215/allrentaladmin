@@ -292,12 +292,21 @@ function DetailSection({ p, commissionOn }) {
   const matrix = p.pricing_matrix || []
   const brandEn = BRAND_EN[p.brand] || p.brand
   const catEn = CATEGORY_EN[p.category] || p.category
-  const descImgs = Array.isArray(p.detail_description_images) ? p.detail_description_images : []
+
+  const rawDescImgs = Array.isArray(p.detail_description_images) ? p.detail_description_images : []
+  const descImgs = rawDescImgs.filter((src) => {
+    const s = String(src || '')
+    if (!s) return false
+    const lower = s.toLowerCase()
+    if (/(promo|banner|gift|event|eventbanner|coupon|이벤트|사은품|증정|쿠폰)/.test(lower)) return false
+    if (/(goods_image|item_product|editor|rentalworld|speedycdn|tlpartner)/.test(lower)) return true
+    return true
+  })
+
   const [tableOpen, setTableOpen] = useState(false)
   const [cardModal, setCardModal] = useState(false)
   const [cardImg, setCardImg] = useState(null)
 
-  // 현재 상품 브랜드에 맞는 제휴카드 이미지 1장
   const BRAND_CARD = {
     '코웨이': '/pages/cards/coway.png',
     '청호나이스': '/pages/cards/chungho.png',
@@ -312,7 +321,6 @@ function DetailSection({ p, commissionOn }) {
   const currentCardSrc = BRAND_CARD[currentBrand] || null
   const currentCardName = currentBrand || '제휴카드'
 
-  // 대표 렌탈료/수수료 (matrix 첫 행 기준)
   const rep = matrix[0] || {}
   return (
     <div className="detail-wrap">
@@ -329,39 +337,13 @@ function DetailSection({ p, commissionOn }) {
         </nav>
 
         <div className="detail-cols">
-          {/* 좌: 갤러리 + 상세본문이미지 */}
+          {/* 좌: 대표 갤러리만 */}
           <div>
             <Gallery images={p.images} name={p.name} />
-
-            {/* 제품 상세 본문 (크롤링 상세 설명 이미지) */}
-            {descImgs.length > 0 ? (
-              <div className="detail-desc">
-                {descImgs.map((src, i) => (
-                  <img key={i} src={src} alt={`${p.name} 상세설명 ${i + 1}`} loading="lazy"
-                    onError={(e) => { e.currentTarget.style.display = 'none' }} />
-                ))}
-              </div>
-            ) : (
-              <div className="detail-desc fallback">
-                {sp.points?.length > 0 && (
-                  <div className="info-block">
-                    <h4>✨ 특장점</h4>
-                    <div className="pt-list">{sp.points.map((t, i) => <span key={i}>{t}</span>)}</div>
-                  </div>
-                )}
-                {sp.filters?.length > 0 && (
-                  <div className="info-block">
-                    <h4>🧪 필터 / 관리 주기</h4>
-                    <ul className="filter-list">{sp.filters.map((t, i) => <li key={i}>{t}</li>)}</ul>
-                  </div>
-                )}
-              </div>
-            )}
           </div>
 
           {/* 우: 메타 + 가격카드 + 옵션 + 매트릭스 */}
           <div>
-            {/* 메타 헤더 */}
             <div className="brand-logo">{p.brand}</div>
             <h2 className="detail-title">{p.name}</h2>
             <div className="meta-row">
@@ -371,13 +353,12 @@ function DetailSection({ p, commissionOn }) {
               <span><b>AS기간</b> 렌탈기간내</span>
             </div>
 
-            {/* 가격 카드 (연하늘색) */}
             <div className="price-card">
               <div className="pc-line">
                 <span className="pc-k">월 렌탈료</span>
                 <span className="pc-v">{won(p.min_monthly_fee)}<small>원</small></span>
               </div>
-              {!commissionOn && (
+              {commissionOn && (
                 <>
                   <div className="pc-line comm">
                     <span className="pc-k">내 수수료 (약정 · 관리방식)</span>
@@ -397,10 +378,8 @@ function DetailSection({ p, commissionOn }) {
               )}
             </div>
 
-            {/* 옵션 선택 (드롭다운 + 버튼그룹) */}
             <Calculator matrix={matrix} colors={p.colors || []} commissionOn={commissionOn} />
 
-            {/* 진행 중인 프로모션 배너 */}
             {(promo.plan?.product || promo.monthly) && (
               <div className="promo-banner">
                 <div className="pb-title">🎁 진행 중인 프로모션</div>
@@ -408,7 +387,6 @@ function DetailSection({ p, commissionOn }) {
               </div>
             )}
 
-            {/* 제휴카드 안내 */}
             <div className="aff-card">
               <div className="aff-thumb">CARD</div>
               <div className="aff-info">
@@ -418,14 +396,13 @@ function DetailSection({ p, commissionOn }) {
               <button className="aff-more" onClick={() => setCardModal(true)}>자세히 보기</button>
             </div>
 
-            {/* 렌탈료 매트릭스 표 (축소/펼치기) */}
             {matrix.length > 0 && (
               <div className="info-block">
                 <h4>📋 {p.name} 렌탈료 및 프로모션</h4>
                 <div className={`table-scroll ${tableOpen ? '' : 'collapsed'}`}>
                   <table className="matrix-table">
                     <thead>
-                      <tr><th>관리방법</th><th>관리주기</th><th>약정기간</th><th>월 렌탈료</th><th className={commissionOn ? 'hide' : ''}>수수료</th></tr>
+                      <tr><th>관리방법</th><th>관리주기</th><th>약정기간</th><th>월 렌탈료</th><th className={!commissionOn ? 'hide' : ''}>수수료</th></tr>
                     </thead>
                     <tbody>
                       {matrix.map((r, i) => (
@@ -434,7 +411,7 @@ function DetailSection({ p, commissionOn }) {
                           <td>{r.mgmt_cycle || '-'}</td>
                           <td>{r.years || '-'}</td>
                           <td><b>{won(r.monthly_fee)}원</b></td>
-                          <td className={commissionOn ? 'hide' : ''}>{commissionOn ? '' : won(r.commission) + '원'}</td>
+                          <td className={!commissionOn ? 'hide' : ''}>{won(r.commission)}원</td>
                         </tr>
                       ))}
                     </tbody>
@@ -446,7 +423,6 @@ function DetailSection({ p, commissionOn }) {
               </div>
             )}
 
-            {/* 제휴카드 모달 */}
             {cardModal && (
               <div className="modal-veil card-modal-veil" onClick={(e) => { if (e.target === e.currentTarget) setCardModal(false) }}>
                 <div className="card-modal">
@@ -470,12 +446,35 @@ function DetailSection({ p, commissionOn }) {
           </div>
         </div>
 
-        {/* 카톡 상담신청 CTA */}
+        {/* 하단: 상세 설명 본문 이미지 - 반드시 price/options 아래 */}
+        {descImgs.length > 0 ? (
+          <div className="detail-desc">
+            {descImgs.map((src, i) => (
+              <img key={i} src={src} alt={`${p.name} 상세설명 ${i + 1}`} loading="lazy"
+                onError={(e) => { e.currentTarget.style.display = 'none' }} />
+            ))}
+          </div>
+        ) : (
+          <div className="detail-desc fallback">
+            {sp.points?.length > 0 && (
+              <div className="info-block">
+                <h4>✨ 특장점</h4>
+                <div className="pt-list">{sp.points.map((t, i) => <span key={i}>{t}</span>)}</div>
+              </div>
+            )}
+            {sp.filters?.length > 0 && (
+              <div className="info-block">
+                <h4>🧪 필터 / 관리 주기</h4>
+                <ul className="filter-list">{sp.filters.map((t, i) => <li key={i}>{t}</li>)}</ul>
+              </div>
+            )}
+          </div>
+        )}
+
         <a className="kakao-cta" href={KAKAO_CHANNEL_URL} target="_blank" rel="noopener noreferrer">
           💬 카톡 상담신청
         </a>
 
-        {/* 추천 상품 / 푸터 */}
         <footer className="site-footer">
           <div className="foot-row"><b>{COMPANY.name}</b> · {COMPANY.phone}</div>
           <div className="foot-row">{COMPANY.address}</div>
