@@ -482,7 +482,6 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
         <div className="detail-fab-wrap">
           <a className="detail-fab fab-kakao" href={KAKAO_CHANNEL_URL} target="_blank" rel="noopener noreferrer" title="카카오톡 상담">
             <img className="fab-kakao-ico" src="/images/kakao-icon.png" alt="카카오톡" />
-            <span className="fab-txt">상담</span>
           </a>
           <button className={`detail-fab fab-fee ${commissionOn ? 'on' : ''}`} onClick={() => setCommissionOn && setCommissionOn((v) => !v)} title={commissionOn ? '수수료 표시 중 (클릭 시 숨김)' : '숨김 중 (클릭 시 표시)'}>
             <span className="fab-ico fab-fee-txt">{commissionOn ? 'on' : 'off'}</span>

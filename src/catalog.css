@@ -908,8 +908,8 @@
 .detail-fab:active { transform: scale(.94); }
 .detail-fab .fab-ico { font-size: 20px; line-height: 1; }
 .detail-fab .fab-txt { font-size: 10px; font-weight: 800; margin-top: 2px; }
-.detail-fab.fab-kakao { background: #fee500; color: #3c1e1e; padding: 0; box-shadow: 0 4px 12px rgba(254,229,0,.4); }
-.detail-fab.fab-kakao .fab-kakao-ico { width: 28px; height: 28px; display: block; margin: 0 auto; }
+.detail-fab.fab-kakao { background: #fee500; color: #3c1e1e; padding: 0; box-shadow: 0 4px 12px rgba(254,229,0,.4); display: grid; place-items: center; }
+.detail-fab.fab-kakao .fab-kakao-ico { width: 28px; height: 28px; display: block; }
 .detail-fab.fab-kakao .fab-txt { color: #3c1e1e; }
 .detail-fab.fab-fee { background: #cbd5e1; color: #475569; }
 .detail-fab.fab-fee.on { background: #16a34a; color: #fff; }
