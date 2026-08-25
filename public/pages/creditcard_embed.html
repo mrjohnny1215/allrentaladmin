@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>제휴카드</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 100%; height: 100%; background: #fff; font-family: -apple-system, "Malgun Gothic", sans-serif; }
@@ -17,19 +17,26 @@
   <img id="cardImg" alt="제휴카드" onerror="handleErr()">
 </div>
 <script>
-  // 🔹 Vercel 정적 호스팅용: creditcard_embed.php 대체본
-  //   URL: creditcard_embed.html?key=cwcard
-  //   → public/assets/card/<key>.png 를 표시 (없으면 1cwcard.png 폴백)
+  // allrentaladmin: 브랜드별 allnup 공식 제휴카드 이미지
+  const CARD_URL_MAP = {
+    cwcard: 'https://allnup.com/card/1cwcard.png?v=8a179766544efaf313dbbf3d0db2d26a',
+    chcard: 'https://allnup.com/card/2chcard.png?v=1e5d183557d76f36c45b70abbb8f1a83',
+    skcard: 'https://allnup.com/card/3skcard.png?v=03e53fdfdafa4a8efc4370c0f941f4b5',
+    cccard: 'https://allnup.com/card/4cccard.png?v=28e57d79f5259b3bea31357c4b63f028',
+    wscard: 'https://allnup.com/card/6wscard.png?v=48992eccbfc31e8ea28d2d401cb07180',
+    lgcard: 'https://allnup.com/card/5lgcard.png?v=de0cd560d914d8c4815d40f8105cebbc',
+    hdcard: 'https://allnup.com/card/7hdcard.png?v=b00f3b1c5248422a610af5653f1fb9ff',
+    cescard: 'https://allnup.com/card/8cescard.jpg?v=86f004e167506159c318b6e48440881c'
+  };
   (function () {
     const params = new URLSearchParams(location.search);
     const key = (params.get('key') || 'cwcard').trim();
     const img = document.getElementById('cardImg');
     const candidates = [
+      CARD_URL_MAP[key],
       '/assets/card/' + key + '.png',
-      'assets/card/' + key + '.png',
-      '/assets/card/1cwcard.png',
-      'assets/card/1cwcard.png'
-    ];
+      'assets/card/' + key + '.png'
+    ].filter(Boolean);
     let idx = 0;
     function tryNext() {
       if (idx >= candidates.length) {
