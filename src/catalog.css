@@ -460,6 +460,22 @@
 /* 모달 카드 뷰포트 오버플로 방지 */
 .modal-card.fullscreen { box-sizing: border-box; }
 
+/* ===== 모바일: 모달 상세 전용 오버라이드 ===== */
+@media (max-width: 640px) {
+  .modal-body .detail-cols {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .modal-body .price-card { padding: 12px 13px; }
+  .modal-body .pc-v { font-size: 17px !important; }
+  .modal-body .pc-k { font-size: 12px; }
+  .modal-body .calc { padding: 12px; }
+  .modal-body .calc h3 { font-size: 13px; }
+  .modal-body .seg button { min-width: 0; padding: 8px 10px; font-size: 12px; }
+  .modal-body .matrix-table { font-size: 11px; }
+  .modal-body .kakao-cta { font-size: 15px; padding: 14px; }
+}
+
 /* ===== 스마트 필터 (allrental-xi 스타일 이식) ===== */
 .smart-filter-box {
   background: #f5f7fb;
