@@ -295,6 +295,7 @@ function DetailSection({ p, commissionOn }) {
   const descImgs = Array.isArray(p.detail_description_images) ? p.detail_description_images : []
   const [tableOpen, setTableOpen] = useState(false)
   const [cardModal, setCardModal] = useState(false)
+  const [cardImg, setCardImg] = useState(null)
 
   // 대표 렌탈료/수수료 (matrix 첫 행 기준)
   const rep = matrix[0] || {}
@@ -439,10 +440,31 @@ function DetailSection({ p, commissionOn }) {
                     <button className="card-modal-close" onClick={() => setCardModal(false)}>×</button>
                   </div>
                   <div className="card-modal-body">
-                    <p>아래 ALL&UP 제휴 카드 혜택을 확인하세요.</p>
-                    <a className="card-link" href="https://allnup.com/layout.php?page=creditcard.php" target="_blank" rel="noopener noreferrer">
-                      💳 제휴카드 혜택 자세히 보기 (allnup)
-                    </a>
+                    <p>아래 ALL&UP 제휴카드 혜택을 확인하세요.</p>
+                    {!cardImg ? (
+                      <div className="card-brand-grid">
+                        {[
+                          {key:'cwcard', name:'코웨이', src:'/pages/cards/coway.png'},
+                          {key:'chcard', name:'청호', src:'/pages/cards/chungho.png'},
+                          {key:'skcard', name:'SK매직', src:'/pages/cards/sk.png'},
+                          {key:'cccard', name:'쿠쿠', src:'/pages/cards/cuckoo.png'},
+                          {key:'wscard', name:'웰스', src:'/pages/cards/wells.png'},
+                          {key:'lgcard', name:'LG', src:'/pages/cards/lg.png'},
+                          {key:'hdcard', name:'현대', src:'/pages/cards/hyundai.png'},
+                          {key:'cescard', name:'세스코', src:'/pages/cards/sesko.png'}
+                        ].map((item)=>(
+                          <div key={item.key} className="card-brand-item" onClick={()=>setCardImg(item)}>
+                            <img src={item.src} alt={item.name} loading="lazy" />
+                            <span>{item.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="card-brand-detail">
+                        <img src={cardImg.src} alt={cardImg.name} />
+                        <button className="card-brand-back" onClick={()=>setCardImg(null)}>← 목록</button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

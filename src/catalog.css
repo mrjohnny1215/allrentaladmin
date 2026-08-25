@@ -673,3 +673,64 @@
 .card-modal-body { padding: 18px 16px; font-size: 13px; color: var(--gray-700); line-height: 1.6; }
 .card-link { display: block; margin-top: 12px; padding: 12px; background: var(--blue-50); color: var(--blue-dark); font-weight: 800; text-align: center; border-radius: 9px; text-decoration: none; }
 .card-link:hover { background: var(--blue-100); }
+
+/* 제휴카드 브랜드 그리드 */
+.card-brand-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+.card-brand-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 10px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.card-brand-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+.card-brand-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+.card-brand-item span {
+  font-size: 11px;
+  color: #374151;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* 제휴카드 이미지 상세 */
+.card-brand-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.card-brand-detail img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.card-brand-back {
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  color: #374151;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.card-brand-back:hover {
+  background: #f3f4f6;
+}
