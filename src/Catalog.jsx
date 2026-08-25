@@ -388,8 +388,13 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
               )}
               {commissionOn && (
                 <div className="pc-line comm">
-                  <span className="pc-k">내 수수료 (약정 · 관리방식)</span>
-                  <span className="pc-v green">{won(p.max_commission)}<small>원</small></span>
+                  <div>
+                    <span className="pc-k">지급 수수료 (사은 혜택)</span>
+                    <span className="pc-sub">
+                      {[selYears, selContract, selMgmt].filter(Boolean).join(' · ') || '기본 조건'}
+                    </span>
+                  </div>
+                  <span className="pc-v green">{won(effCommission)}<small>원</small></span>
                 </div>
               )}
             </div>
