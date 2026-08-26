@@ -1,8 +1,8 @@
 {
   "name": "ALL렌탈 어드민",
   "short_name": "ALL렌탈",
-  "start_url": "/",
-  "display": "standalone",
+  "start_url": "/index.html",
+  "display": "browser",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
   "icons": [
