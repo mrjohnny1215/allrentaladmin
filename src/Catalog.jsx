@@ -359,7 +359,8 @@ function buildAndSendKakao(p, mgmt, contract, years, color, discount, matched, m
 
 function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
   if (!p) return null
-  const { user } = useAuth()
+  const _auth = useAuth();
+  const { user } = _auth || {};
   const rate = user?.rate ?? 1.0
   const sp = p.selling_points || { points: [], filters: [] }
   const promo = p.promotions || {}
@@ -597,7 +598,8 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
 
 /* ============ 메인 카탈로그 ============ */
 export default function Catalog() {
-  const { user } = useAuth()
+  const _auth = useAuth();
+  const { user } = _auth || {};
   const rate = user?.rate ?? 1.0
   const [all, setAll] = useState(null)
   const [err, setErr] = useState('')
