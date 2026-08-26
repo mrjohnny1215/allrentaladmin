@@ -1,5 +1,5 @@
 
-import { useAuth, applyFeeRate } from './lib/auth.jsx'
+import { useAuth, applyFeeRate } from './auth.jsx'
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import './catalog.css'
 import { KAKAO_CHANNEL_URL, COMPANY } from './config'
