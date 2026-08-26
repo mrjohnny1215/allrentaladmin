@@ -312,6 +312,8 @@ function buildAndSendKakao(p, mgmt, contract, years, color, discount, matched, m
 
 function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
   if (!p) return null
+  const { user } = useAuth()
+  const rate = user?.rate ?? 1.0
   const sp = p.selling_points || { points: [], filters: [] }
   const promo = p.promotions || {}
   const matrix = p.pricing_matrix || []
@@ -332,7 +334,7 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
     (!selMgmt || r.mgmt === selMgmt) &&
     (!selContract || r.contract === selContract) &&
     (!selYears || r.years === selYears)) || matrix[0] || {}
-  const effCommission = matched.commission ?? p.max_commission
+  const effCommission = applyFeeRate(matched.commission ?? p.max_commission, rate)
   const effMonthly = matched.monthly_fee ?? p.min_monthly_fee
   const brandEn = BRAND_EN[p.brand] || p.brand
   const catEn = CATEGORY_EN[p.category] || p.category
@@ -456,7 +458,7 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
                           <td>{r.mgmt_cycle || '-'}</td>
                           <td>{r.years || '-'}</td>
                           <td><b>{won(r.monthly_fee)}원</b></td>
-                          <td className={!commissionOn ? 'hide' : ''}>{won(r.commission)}원</td>
+                          <td className={!commissionOn ? 'hide' : ''}>{won(applyFeeRate(r.commission, rate))}원</td>
                         </tr>
                       ))}
                     </tbody>
