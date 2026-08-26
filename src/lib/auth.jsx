@@ -1,6 +1,5 @@
 import { useState, createContext, useContext } from 'react'
 
-const AUTH_TEST_12345 = true;
 const ACCOUNTS = {
   all001: { pw: '1234', rate: 1.0 },
   all002: { pw: '1234', rate: 0.9 },
