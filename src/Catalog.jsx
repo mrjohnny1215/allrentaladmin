@@ -1,58 +1,11 @@
 
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState, useCallback } from 'react'
 
-// AUTH INLINE
-const ACCOUNTS = {
-  all001: { pw: '1234', rate: 1.0 },
-  all002: { pw: '1234', rate: 0.9 },
-  all003: { pw: '1234', rate: 0.82 },
-  all004: { pw: '1234', rate: 0.76 },
-}
-
-const AuthCtx = createContext(null)
-export const useAuth = () => {
-  const ctx = useContext(AuthCtx);
-  if (!ctx) return { user: null, login: () => false, logout: () => {} };
-  return ctx;
-}
-
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    try {
-      const raw = localStorage.getItem('allrental_auth')
-      return raw ? JSON.parse(raw) : null
-    } catch { return null }
-  })
-
-  const login = (id, pw) => {
-    const acc = ACCOUNTS[id]
-    if (!acc || acc.pw !== pw) return false
-    const session = { id, rate: acc.rate }
-    localStorage.setItem('allrental_auth', JSON.stringify(session))
-    setUser(session)
-    return true
-  }
-
-  const logout = () => {
-    localStorage.removeItem('allrental_auth')
-    setUser(null)
-  }
-
-  return (
-    <AuthCtx.Provider value={{ user, login, logout }}>
-      {children}
-    </AuthCtx.Provider>
-  )
-}
-
-export function applyFeeRate(value, rate) {
-  if (!value || !rate) return value
-  return Math.floor(value * rate)
-}
 
 
 import './catalog.css'
 import { KAKAO_CHANNEL_URL, COMPANY } from './config'
+import { useAuth, applyFeeRate } from './auth.jsx'
 
 const CATEGORIES = ['정수기', '공기청정기', '비데', '매트리스', '안마의자']
 const BRANDS = ['전체', '코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', 'LG', '웰스', '세스코']
@@ -477,6 +430,7 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
 
             <Calculator matrix={matrix} colors={p.colors || []} commissionOn={commissionOn}
               discount={discount} setDiscount={setDiscount}
+              rate={rate}
               onPick={({ mgmt, contract, years, color }) => { setSelMgmt(mgmt); setSelContract(contract); setSelYears(years); if (color) setSelColor(color) }} />
 
             {(promo.plan?.product || promo.monthly) && (
