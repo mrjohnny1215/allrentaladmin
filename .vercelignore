@@ -13,4 +13,3 @@ scripts
 *.jsonl
 crawl_error_*.json
 products_with_details.json
-public/images
