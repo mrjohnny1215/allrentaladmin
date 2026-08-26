@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAuth } from './lib/auth.jsx'
+import { useAuth } from './auth.jsx'
 
 export function LoginGate({ children }) {
   const { user, login, logout } = useAuth()
@@ -11,6 +11,7 @@ export function LoginGate({ children }) {
     return (
       <>
         <div className="auth-header">
+          <span>로그인: <b>{user.id}</b></span>
           <button className="logout-btn" onClick={logout}>로그아웃</button>
         </div>
         {children}
