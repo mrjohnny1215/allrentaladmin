@@ -177,7 +177,7 @@ function Gallery({ images, name }) {
 }
 
 /* ============ 인터랙티브 렌탈료/수수료 계산기 ============ */
-function Calculator({ matrix, colors = [], commissionOn, onPick, discount = 0, setDiscount }) {
+function Calculator({ matrix, colors = [], commissionOn, onPick, discount = 0, setDiscount, rate = 1.0 }) {
   const avail = useMemo(() => {
     const m = { mgmt: new Set(), contract: new Set(), years: new Set() }
     matrix.forEach((r) => {
@@ -202,14 +202,15 @@ function Calculator({ matrix, colors = [], commissionOn, onPick, discount = 0, s
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matrix])
 
-  const rows = useMemo(
-    () => matrix.filter((r) =>
-      (!mgmt || r.mgmt === mgmt) &&
-      (!contract || r.contract === contract) &&
-      (!years || r.years === years)),
-    [matrix, mgmt, contract, years]
-  )
-  const hit = rows[0]
+  const rows = useMemo(() => {
+    return matrix.filter((r) => {
+      if (mgmt && r.mgmt !== mgmt) return false
+      if (contract && r.contract !== contract) return false
+      if (years && r.years !== years) return false
+      return true
+    })
+  }, [matrix, mgmt, contract, years])
+  const hit = rows[0] || matrix[0] || null
 
   const canPick = (kind, val) => matrix.some((r) =>
     (kind === 'mgmt' ? r.mgmt === val : (!mgmt || r.mgmt === mgmt)) &&
