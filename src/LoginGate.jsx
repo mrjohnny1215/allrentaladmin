@@ -33,7 +33,7 @@ export function LoginGate({ children }) {
           <input
             className="login-input"
             type="text"
-            placeholder="아이디 (all001~all004)"
+            placeholder="아이디"
             value={id}
             onChange={(e) => setId(e.target.value)}
             autoFocus
@@ -41,7 +41,7 @@ export function LoginGate({ children }) {
           <input
             className="login-input"
             type="password"
-            placeholder="비밀번호 (1234)"
+            placeholder="비밀번호"
             value={pw}
             onChange={(e) => setPw(e.target.value)}
           />
