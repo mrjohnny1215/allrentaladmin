@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAuth } from './auth'
+import { useAuth } from './auth-logic.jsx'
 
 export function LoginGate({ children }) {
   const { user, login, logout } = useAuth()
