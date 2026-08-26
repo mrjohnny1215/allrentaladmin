@@ -9,11 +9,13 @@ export function LoginGate({ children }) {
 
   if (user) {
     return (
-      <div className="auth-header">
-        <span>로그인: <b>{user.id}</b> (수수료 반영률 {(user.rate * 100).toFixed(0)}%)</span>
-        <button className="logout-btn" onClick={logout}>로그아웃</button>
+      <>
+        <div className="auth-header">
+          <span>로그인: <b>{user.id}</b> (수수료 반영률 {(user.rate * 100).toFixed(0)}%)</span>
+          <button className="logout-btn" onClick={logout}>로그아웃</button>
+        </div>
         {children}
-      </div>
+      </>
     )
   }
 

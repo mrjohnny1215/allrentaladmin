@@ -754,7 +754,6 @@ export default function Catalog() {
               <button key={p.id} className={`pcard ${sel?.id === p.id ? 'selected' : ''}`}
                 onClick={() => open(p)}>
                 <CardSlideshow images={p.images} alt={p.name} active={sel?.id === p.id} />
-                {p.promotions?.plan?.product && <span className="badge-promo">PROMO</span>}
                 <div className="pcard-body">
                   <div className="pcard-brand">{p.brand}</div>
                   <div className="pcard-name">{p.name}</div>
