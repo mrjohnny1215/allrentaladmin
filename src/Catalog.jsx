@@ -10,7 +10,11 @@ const ACCOUNTS = {
 }
 
 const AuthCtx = createContext(null)
-export const useAuth = () => useContext(AuthCtx)
+export const useAuth = () => {
+  const ctx = useContext(AuthCtx);
+  if (!ctx) return { user: null, login: () => false, logout: () => {} };
+  return ctx;
+}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
