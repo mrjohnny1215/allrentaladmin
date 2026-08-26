@@ -1,3 +1,4 @@
+import { useAuth, applyFeeRate } from './auth'
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import './catalog.css'
 import { KAKAO_CHANNEL_URL, COMPANY } from './config'
@@ -546,6 +547,8 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
 
 /* ============ 메인 카탈로그 ============ */
 export default function Catalog() {
+  const { user } = useAuth()
+  const rate = user?.rate ?? 1.0
   const [all, setAll] = useState(null)
   const [err, setErr] = useState('')
   const [q, setQ] = useState('')
@@ -554,7 +557,7 @@ export default function Catalog() {
   const [limit, setLimit] = useState(PAGE)
   const [sel, setSel] = useState(null)
   // 스마트 필터 상태 (allrental-xi 스타일)
-  const [brandFilter, setBrandFilter] = useState('전체')
+  const [brandFilter, setBrandFilter] = useState(BRANDS[0])
   const [funcFilter, setFuncFilter] = useState('all')
   const [typeFilter, setTypeFilter] = useState('all')
   const [methodFilter, setMethodFilter] = useState('all')
