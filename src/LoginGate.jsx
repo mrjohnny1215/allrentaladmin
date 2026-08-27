@@ -44,7 +44,13 @@ export function LoginGate({ children }) {
     e.preventDefault()
     setErr('')
     const ok = login(id, pw)
-    if (!ok) setErr('아이디 또는 비밀번호가 올바르지 않습니다.')
+    if (!ok) {
+      setErr('아이디 또는 비밀번호가 올바르지 않습니다.')
+      return
+    }
+    if (id.trim() === 'admin') {
+      window.location.href = '/admin'
+    }
   }
 
   const submitReg = (e) => {
