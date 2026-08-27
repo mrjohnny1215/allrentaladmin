@@ -976,7 +976,7 @@
 .admin-toolbar .seg { display: flex; gap: 8px; }
 .admin-toolbar .seg button { padding: 7px 12px; border-radius: 999px; border: 1.5px solid #e2e8f0; background: #fff; color: #334155; font-size: 12.5px; font-weight: 800; cursor: pointer; }
 .admin-toolbar .seg button.on { background: #0f172a; color: #fff; border-color: #0f172a; }
-.admin-table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; min-width: 640px; }
 .admin-table th, .admin-table td { border: 1px solid #e2e8f0; padding: 10px; text-align: center; }
 .admin-table th { background: #f1f5f9; font-weight: 900; color: #334155; position: sticky; top: 0; }
 .admin-table td:first-child { font-weight: 800; color: #0f172a; }
@@ -984,7 +984,7 @@
 .admin-table .empty { padding: 28px; color: #94a3b8; font-weight: 700; }
 
 @media (max-width: 640px) {
-  .admin-table { font-size: 11px; }
+  .admin-table { font-size: 11px; min-width: 560px; }
   .admin-table th, .admin-table td { padding: 7px 5px; }
   .admin-header { padding: 12px; gap: 8px; }
   .admin-header h1 { font-size: 16px; }
