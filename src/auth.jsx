@@ -1,11 +1,5 @@
 import { useState, createContext, useContext } from 'react'
-
-const ACCOUNTS = {
-  all001: { pw: '1234', rate: 1.0 },
-  all002: { pw: '1234', rate: 0.9 },
-  all003: { pw: '1234', rate: 0.82 },
-  all004: { pw: '1234', rate: 0.76 },
-}
+import { getUsers, getFeeGrade } from './lib/users.js'
 
 const AuthCtx = createContext(null)
 export const useAuth = () => useContext(AuthCtx)
@@ -19,9 +13,15 @@ export function AuthProvider({ children }) {
   })
 
   const login = (id, pw) => {
-    const acc = ACCOUNTS[id]
-    if (!acc || acc.pw !== pw) return false
-    const session = { id, rate: acc.rate }
+    const users = getUsers()
+    const acc = users.find((u) => u.id === id && u.pw === pw)
+    if (!acc) return false
+    if (acc.status === 'PENDING') {
+      alert('관리자 승인 대기 중인 계정입니다. 승인 후 이용 가능합니다.')
+      return false
+    }
+    const fee = getFeeGrade(acc.feeGrade || '100%')
+    const session = { id: acc.id, name: acc.name, rate: fee.rate, feeGrade: acc.feeGrade, status: acc.status }
     localStorage.setItem('allrental_auth', JSON.stringify(session))
     setUser(session)
     return true

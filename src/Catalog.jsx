@@ -769,7 +769,7 @@ export default function Catalog() {
                   <div className="pcard-model">{p.model_code || ' '}</div>
                   <div className="pcard-fee is-fee">
                     <span className="tag">월</span>
-                    <span className="val">{won(p.min_monthly_fee)}</span>
+                    <span className="val">{won(applyFeeRate(p.min_monthly_fee, rate))}</span>
                     <span className="won">원~</span>
                   </div>
                 </div>
