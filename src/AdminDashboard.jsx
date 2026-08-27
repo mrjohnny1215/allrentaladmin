@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from './auth.jsx'
-import { useUsers, getFeeGrade } from './lib/users.js'
+import { useUsers } from './lib/users.js'
 
 export default function AdminDashboard() {
   const { user, logout } = useAuth()
+  const navigate = useNavigate()
   const { users, updateUser, removeUser, refresh } = useUsers()
   const [filterStatus, setFilterStatus] = useState('ALL')
 
-  if (!user || user.id !== 'admin') return null
+  useEffect(() => {
+    if (!user || user.id !== 'admin') {
+      navigate('/')
+    }
+  }, [user, navigate])
 
   const list = users.filter((u) => filterStatus === 'ALL' ? true : u.status === filterStatus)
 

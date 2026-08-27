@@ -9,7 +9,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<LoginGate><Catalog /></LoginGate>} />
-      <Route path="/admin" element={<LoginGate><AdminDashboard /></LoginGate>} />
+      <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/admin/*" element={<Layout />} />
     </Routes>
   )

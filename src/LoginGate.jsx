@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useAuth } from './auth.jsx'
 import { getUsers, useUsers } from './lib/users.js'
 
@@ -10,12 +10,6 @@ export function LoginGate({ children }) {
   const [err, setErr] = useState('')
   const [regOpen, setRegOpen] = useState(false)
   const [findOpen, setFindOpen] = useState(false)
-
-  useEffect(() => {
-    if (user && user.id === 'admin') {
-      window.location.href = '/admin'
-    }
-  }, [user])
 
   // 회원가입 상태
   const [rPw, setRPw] = useState('')
