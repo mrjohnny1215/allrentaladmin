@@ -72,10 +72,6 @@ export function useUsers() {
 function initDefaults() {
   const defaults = [
     { id: 'admin', pw: 'admin', name: '관리자', birth: '', phone: '', email: '', status: 'APPROVED', feeGrade: '100%', createdAt: new Date().toISOString() },
-    { id: 'all001', pw: '1234', name: '직원1', birth: '', phone: '', email: '', status: 'APPROVED', feeGrade: '100%', createdAt: new Date().toISOString() },
-    { id: 'all002', pw: '1234', name: '직원2', birth: '', phone: '', email: '', status: 'APPROVED', feeGrade: '10%', createdAt: new Date().toISOString() },
-    { id: 'all003', pw: '1234', name: '직원3', birth: '', phone: '', email: '', status: 'APPROVED', feeGrade: '18%', createdAt: new Date().toISOString() },
-    { id: 'all004', pw: '1234', name: '직원4', birth: '', phone: '', email: '', status: 'APPROVED', feeGrade: '24%', createdAt: new Date().toISOString() },
   ]
   safeSetUsers(defaults)
   return defaults
