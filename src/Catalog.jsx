@@ -340,7 +340,7 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
     (!selContract || r.contract === selContract) &&
     (!selYears || r.years === selYears)) || matrix[0] || {}
   const effCommission = applyFeeRate(matched.commission ?? p.max_commission, rate)
-  const effMonthly = matched.monthly_fee ?? p.min_monthly_fee
+  const effMonthly = applyFeeRate(matched.monthly_fee ?? p.min_monthly_fee, rate)
   const brandEn = BRAND_EN[p.brand] || p.brand
   const catEn = CATEGORY_EN[p.category] || p.category
 
