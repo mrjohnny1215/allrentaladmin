@@ -12,16 +12,23 @@ export function AuthProvider({ children }) {
     } catch { return null }
   })
 
-  const login = (id, pw) => {
-    const users = getUsers()
+  const login = async (id, pw) => {
+    let users
+    try {
+      users = await getUsers()
+    } catch (e) {
+      console.error('[Auth] 사용자 조회 실패:', e)
+      return false
+    }
+
     const acc = users.find((u) => u.id === id && u.pw === pw)
     if (!acc) return false
     if (acc.status === 'PENDING') {
       alert('관리자 승인 대기 중인 계정입니다. 승인 후 이용 가능합니다.')
       return false
     }
-    const fee = getFeeGrade(acc.feeGrade || '100%')
-    const session = { id: acc.id, name: acc.name, rate: fee.rate, feeGrade: acc.feeGrade, status: acc.status }
+    const fee = getFeeGrade(acc.fee_grade || '100%')
+    const session = { id: acc.id, name: acc.name, rate: fee.rate, feeGrade: acc.fee_grade, status: acc.status }
     localStorage.setItem('allrental_auth', JSON.stringify(session))
     setUser(session)
     return true

@@ -22,14 +22,14 @@ export default function AdminDashboard() {
   const list = users.filter((u) => filterStatus === 'ALL' ? true : u.status === filterStatus)
 
   const approve = (u) => {
-    const grade = u.feeGrade || '100%'
-    updateUser(u.id, { status: 'APPROVED', feeGrade: grade })
+    const grade = u.fee_grade || '100%'
+    updateUser(u.id, { status: 'APPROVED', fee_grade: grade })
     alert('승인 완료')
     refresh()
   }
 
   const saveGrade = (id, grade) => {
-    updateUser(id, { feeGrade: grade })
+    updateUser(id, { fee_grade: grade })
     refresh()
   }
 
@@ -87,7 +87,7 @@ export default function AdminDashboard() {
                   <span className={`badge ${u.status === 'APPROVED' ? 'ok' : 'warn'}`}>{statusLabel(u.status)}</span>
                 </td>
                 <td>
-                  <select value={u.feeGrade || '100%'} onChange={(e) => saveGrade(u.id, e.target.value)}>
+                  <select value={u.fee_grade || '100%'} onChange={(e) => saveGrade(u.id, e.target.value)}>
                     <option value="100%">수수료 100%</option>
                     <option value="10%">수수료 10% 제외</option>
                     <option value="18%">수수료 18% 제외</option>
