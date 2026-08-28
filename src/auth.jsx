@@ -13,14 +13,7 @@ export function AuthProvider({ children }) {
   })
 
   const login = async (id, pw) => {
-    let users
-    try {
-      users = await getUsers()
-    } catch (e) {
-      console.error('[Auth] 사용자 조회 실패:', e)
-      return false
-    }
-
+    const users = await getUsers()
     const acc = users.find((u) => u.id === id && u.pw === pw)
     if (!acc) return false
     if (acc.status === 'PENDING') {

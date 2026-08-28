@@ -14,12 +14,12 @@ const FEE_GRADES = {
 function fallbackGetUsers() {
   try {
     const raw = localStorage.getItem(FALLBACK_KEY)
-    if (!raw) return null
+    if (!raw) return []
     const arr = JSON.parse(raw)
-    if (!Array.isArray(arr)) return null
+    if (!Array.isArray(arr)) return []
     return arr
   } catch {
-    return null
+    return []
   }
 }
 
@@ -50,16 +50,8 @@ async function dbDeleteUser(id) {
   if (error) throw error
 }
 
-export async function getUsers() {
-  try {
-    const data = await dbFetchUsers()
-    fallbackSetUsers(data)
-    return data
-  } catch {
-    const fb = fallbackGetUsers() ?? []
-    fallbackSetUsers(fb)
-    return fb
-  }
+export function getUsers() {
+  return fallbackGetUsers()
 }
 
 export function getFeeGrade(gradeKey) {
@@ -67,7 +59,7 @@ export function getFeeGrade(gradeKey) {
 }
 
 export function useUsers() {
-  const [users, setUsers] = useState(() => getUsers())
+  const [users, setUsers] = useState([])
 
   const refresh = useCallback(async () => {
     try {
@@ -75,7 +67,7 @@ export function useUsers() {
       setUsers(data)
       fallbackSetUsers(data)
     } catch {
-      setUsers(getUsers())
+      setUsers(fallbackGetUsers())
     }
   }, [])
 
@@ -134,7 +126,7 @@ export async function initDefaults() {
     fallbackSetUsers(list)
     return list
   } catch {
-    const local = fallbackGetUsers() ?? []
+    const local = fallbackGetUsers()
     fallbackSetUsers(local)
     return local
   }
