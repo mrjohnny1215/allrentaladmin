@@ -561,6 +561,7 @@ export default function Catalog() {
   const rate = user?.rate ?? 1.0
   const [all, setAll] = useState(null)
   const [err, setErr] = useState('')
+  const [ready, setReady] = useState(false)
   const [q, setQ] = useState('')
   const [cat, setCat] = useState(CATEGORIES[0])
   const [brand, setBrand] = useState('')
@@ -586,7 +587,10 @@ export default function Catalog() {
   useEffect(() => {
     fetch('/data/products.json', { cache: 'no-store' })
       .then((r) => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json() })
-      .then(setAll)
+      .then((data) => {
+        setAll(data)
+        setTimeout(() => setReady(true), 5000)
+      })
       .catch((e) => setErr(String(e)))
   }, [])
 
@@ -666,7 +670,7 @@ export default function Catalog() {
       </div></div>
     )
   }
-  if (!all) {
+  if (!all || !ready) {
     return (
       <div className="splash">
         <div className="box splash-anim">
