@@ -15,6 +15,10 @@ export default function AdminDashboard() {
     }
   }, [user, navigate])
 
+  useEffect(() => {
+    refresh()
+  }, [refresh])
+
   const list = users.filter((u) => filterStatus === 'ALL' ? true : u.status === filterStatus)
 
   const approve = (u) => {

@@ -73,7 +73,7 @@ export function LoginGate({ children }) {
     }
     addUser({ id: _id, pw: rpw, name, birth, phone, email, status: 'PENDING', feeGrade: '100%' })
     setRegMsg('가입 신청이 완료되었습니다. 관리자 승인 후 이용 가능합니다.')
-    setRName(''); setRBirth(''); setRPhone(''); setREmail(''); setRPw('')
+    setRName(''); setRBirth(''); setRPhone(''); setREmail(''); setRPw(''); setId('')
   }
 
   const submitFind = async (e) => {
