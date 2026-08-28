@@ -6,10 +6,12 @@ const AUTH_KEY = 'allrental_auth'
 
 const FEE_GRADES = {
   '100%': { label: '수수료 100%', rate: 1.0 },
-  '10%': { label: '수수료 10% 제외', rate: 0.90 },
-  '18%': { label: '수수료 18% 제외', rate: 0.82 },
-  '24%': { label: '수수료 24% 제외', rate: 0.76 },
+  '90%': { label: '수수료 90%', rate: 0.90 },
+  '82%': { label: '수수료 82%', rate: 0.82 },
+  '24%': { label: '수수료 24%', rate: 0.76 },
 }
+
+const LEGACY_MAP = { '10%': '90%', '18%': '82%' }
 
 function fallbackGetUsers() {
   try {
@@ -55,7 +57,8 @@ export function getUsers() {
 }
 
 export function getFeeGrade(gradeKey) {
-  return FEE_GRADES[gradeKey] || FEE_GRADES['100%']
+  const k = LEGACY_MAP[gradeKey] || gradeKey
+  return FEE_GRADES[k] || FEE_GRADES['100%']
 }
 
 export function useUsers() {

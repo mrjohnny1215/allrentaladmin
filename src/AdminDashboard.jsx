@@ -89,9 +89,9 @@ export default function AdminDashboard() {
                 <td>
                   <select value={u.fee_grade || '100%'} onChange={(e) => saveGrade(u.id, e.target.value)}>
                     <option value="100%">수수료 100%</option>
-                    <option value="10%">수수료 10% 제외</option>
-                    <option value="18%">수수료 18% 제외</option>
-                    <option value="24%">수수료 24% 제외</option>
+                    <option value="90%">수수료 90%</option>
+                    <option value="82%">수수료 82%</option>
+                    <option value="24%">수수료 24%</option>
                   </select>
                 </td>
                 <td className="actions">
