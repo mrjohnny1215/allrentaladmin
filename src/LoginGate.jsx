@@ -53,34 +53,33 @@ export function LoginGate({ children }) {
     }
   }
 
-  const submitReg = (e) => {
+  const submitReg = async (e) => {
     e.preventDefault()
     setRegMsg('')
     const _id = id.trim()
-    const _pw = pw.trim()
+    const rpw = rPw.trim()
     const name = rName.trim()
     const birth = rBirth.trim()
     const phone = rPhone.trim()
     const email = rEmail.trim()
-    const rpw = rPw.trim()
-    if (!_id || !_pw || !name || !birth || !phone || !email) {
+    if (!_id || !rpw || !name || !birth || !phone || !email) {
       setRegMsg('모든 항목을 입력해 주세요.')
       return
     }
-    const users = getUsers()
+    const users = await getUsers()
     if (users.some((u) => u.id === _id)) {
       setRegMsg('이미 존재하는 아이디입니다.')
       return
     }
-    addUser({ id: _id, pw: _pw, name, birth, phone, email, status: 'PENDING', feeGrade: '100%' })
+    addUser({ id: _id, pw: rpw, name, birth, phone, email, status: 'PENDING', feeGrade: '100%' })
     setRegMsg('가입 신청이 완료되었습니다. 관리자 승인 후 이용 가능합니다.')
     setRName(''); setRBirth(''); setRPhone(''); setREmail(''); setRPw('')
   }
 
-  const submitFind = (e) => {
+  const submitFind = async (e) => {
     e.preventDefault()
     setFindMsg('')
-    const users = getUsers()
+    const users = await getUsers()
     const found = users.find((u) => u.id === fId.trim() && u.name === fName.trim() && (u.phone === fPhone.trim() || u.email === fEmail.trim()))
     if (!found) {
       setFindMsg('일치하는 계정을 찾을 수 없습니다.')
@@ -132,7 +131,7 @@ export function LoginGate({ children }) {
               <input className="login-input" placeholder="아이디" value={id} onChange={(e) => setId(e.target.value)} />
               <input className="login-input" type="password" placeholder="비밀번호" value={rPw} onChange={(e) => setRPw(e.target.value)} />
               <input className="login-input" placeholder="이름" value={rName} onChange={(e) => setRName(e.target.value)} />
-              <input className="login-input" placeholder="생년월일 (예: 1990-01-01)" value={rBirth} onChange={(e) => setRBirth(e.target.value)} />
+              <input className="login-input" type="date" placeholder="생년월일" value={rBirth} onChange={(e) => setRBirth(e.target.value)} />
               <input className="login-input" placeholder="전화번호" value={rPhone} onChange={(e) => setRPhone(e.target.value)} />
               <input className="login-input" placeholder="이메일" value={rEmail} onChange={(e) => setREmail(e.target.value)} />
               {regMsg && <div className="login-info">{regMsg}</div>}
