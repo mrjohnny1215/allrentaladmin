@@ -93,3 +93,29 @@ button { font-family: inherit; cursor: pointer; }
   .hamburger-btn { display: block !important; }
   .app-sidebar { width: 220px !important; }
 }
+
+/* ===== 로그인 실패 Shake 효과 ===== */
+@keyframes login-shake {
+  0%,100% { transform: translateX(0); }
+  10%,50%,90% { transform: translateX(-6px); }
+  30%,70% { transform: translateX(6px); }
+}
+.login-card.shake {
+  animation: login-shake .5s ease-in-out;
+}
+.login-error {
+  color: #dc2626;
+  font-size: 12.5px;
+  font-weight: 800;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin: 6px 0 10px;
+  text-align: center;
+  animation: fadeIn .2s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

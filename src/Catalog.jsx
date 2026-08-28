@@ -41,6 +41,7 @@ function classifyFunc(d = '') {
   return '정수전용'
 }
 function classifyType(d = '') {
+  if (d.includes('데스크') || d.includes('탁상')) return '데스크형'
   if (d.includes('빌트인') || d.includes('매립')) return '빌트인'
   if (d.includes('스탠드')) return '스탠드형'
   if (d.includes('하프') || d.includes('언더') || d.includes('캐비닛')) return '하프형'
@@ -665,7 +666,7 @@ export default function Catalog() {
 
   // 카테고리/브랜드 전환 시 세부 필터 초기화
   const resetFilters = useCallback(() => {
-    setBrandFilter('all'); setFuncFilter('all'); setTypeFilter('all'); setMethodFilter('all')
+    setBrandFilter('전체'); setFuncFilter('all'); setTypeFilter('all'); setMethodFilter('all')
     setPriceFilter('all'); setAreaFilter('all'); setAirFuncFilter('all'); setMattressTypeFilter('all')
   }, [])
 
@@ -739,7 +740,7 @@ export default function Catalog() {
         {cat === '정수기' && (
           <>
             <FilterChips label="기능" options={['냉수전용', '냉온전용', '얼음냉온', '정수전용']} value={funcFilter} onChange={setFuncFilter} />
-            <FilterChips label="타입" options={['빌트인', '스탠드형', '하프형']} value={typeFilter} onChange={setTypeFilter} />
+            <FilterChips label="타입" options={['빌트인', '스탠드형', '하프형', '데스크형']} value={typeFilter} onChange={setTypeFilter} />
             <FilterChips label="방식" options={['탱크형', '직수형']} value={methodFilter} onChange={setMethodFilter} />
             <FilterChips label="렌탈료" options={['1만원이하', '1만원대', '2만원대', '3만원대', '4~10만원']} value={priceFilter} onChange={setPriceFilter} />
           </>

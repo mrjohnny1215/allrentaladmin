@@ -8,6 +8,7 @@ export function LoginGate({ children }) {
   const [id, setId] = useState('')
   const [pw, setPw] = useState('')
   const [err, setErr] = useState('')
+  const [shake, setShake] = useState(false)
   const [regOpen, setRegOpen] = useState(false)
   const [findOpen, setFindOpen] = useState(false)
 
@@ -40,12 +41,15 @@ export function LoginGate({ children }) {
     )
   }
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault()
     setErr('')
-    const ok = login(id, pw)
+    setShake(false)
+    const ok = await login(id, pw)
     if (!ok) {
-      setErr('아이디 또는 비밀번호가 올바르지 않습니다.')
+      setErr('아이디 또는 비밀번호가 일치하지 않습니다. 다시 확인해 주세요.')
+      setShake(true)
+      setTimeout(() => setShake(false), 600)
       return
     }
     if (id.trim() === 'admin') {
@@ -104,7 +108,7 @@ export function LoginGate({ children }) {
 
   return (
     <div className="splash">
-      <div className="box login-card">
+      <div className={`box login-card ${shake ? 'shake' : ''}`}>
         <div className="login-logo">ALL렌탈</div>
         <p className="login-sub">렌탈 상담 포털</p>
         <form onSubmit={submit}>
