@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom'
 import Catalog from './Catalog.jsx'
 import Layout from './components/Layout.jsx'
 import { LoginGate } from './LoginGate.jsx'
-import AdminDashboard from './AdminDashboard.jsx'
 import Main from './Main.jsx'
 import EstimateForm from './EstimateForm.jsx'
 import Counsel from './Counsel.jsx'
@@ -17,7 +16,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<LoginGate><Catalog /></LoginGate>} />
-      <Route path="/admin" element={<AdminDashboard />} />
+      <Route path="/admin" element={<Layout><Main /></Layout>} />
       <Route path="/admin/counsel" element={<Layout><Counsel /></Layout>} />
       <Route path="/admin/main" element={<Layout><Main /></Layout>} />
       <Route path="/admin/details" element={<Layout><Details /></Layout>} />
@@ -32,7 +31,6 @@ export default function App() {
       <Route path="/admin/business_card" element={<Layout><Counsel /></Layout>} />
       <Route path="/admin/faq" element={<Layout><Counsel /></Layout>} />
       <Route path="/admin/howto" element={<Layout><Counsel /></Layout>} />
-      <Route path="/admin/" element={<Layout><Main /></Layout>} />
     </Routes>
   )
 }
