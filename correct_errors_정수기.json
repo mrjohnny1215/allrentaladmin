@@ -1,0 +1,412 @@
+[
+ {
+  "id": "chungho-wi-37c90720n",
+  "brand": "청호나이스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "chungho-wp-45c90020m",
+  "brand": "청호나이스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "chungho-wp-31s90010n",
+  "brand": "청호나이스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpu-gbc102",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpu-pbc204s",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpu-9100c",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpumac306",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpujac104",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpujac104-2",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpujac104-3",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpujcc104",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpujac115",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpujac115-2",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpujac125",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpu-iac414s",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpu-iac425",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpu-iac425-2",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpu-iac506s",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpu-iac606s",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wputdc104",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wputdf104",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wputdc114",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wputdf114",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wputdc10r",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpu-b600f",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpu-b610f",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpu-b700",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpu-b710",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "skmagic-wpu-ic110f",
+  "brand": "SK매직",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wp610",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wq652",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wt652",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wk370",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wk470",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wm071",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wm371",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wp270",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wp270-2",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wq171",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wq271",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wq672",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-ws672",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-ws674",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wt672",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wq672-bt150-ap107",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wq672-bt150",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wr872-bt150",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "wells-wr872",
+  "brand": "웰스",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cp-ss101hw",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cp-ss100h",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cp-ss100h-2",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cp-ajs801sw",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cp-abs100gwh-gp",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cp-abs100gwh-gp-2",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cp-aas100ulw-ulds",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cp-ae502hw",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cp-x501hw",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cp-w601hw",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cp-x501sw",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cp-w601sw",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cp-ak011eg-ep-gb",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "cuckoo-cws-ao201w",
+  "brand": "쿠쿠",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "hyundai-hqps11c",
+  "brand": "현대큐밍",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "hyundai-hqpm15c",
+  "brand": "현대큐밍",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wd724r-k-h-e",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wd722r-k-h-e",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wd723r-k-e",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wu923a-c-w-n-b-b-as",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wu823as",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wu523a-c-w-b",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wu523as",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wd524v-c-h-s",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wd523v-c-h-s-p-m",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wd323a-c-w-b",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wd520vc",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wd525ahb-acb-agb-as",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wd325as",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wd120m-c-n-b",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-ws513sh",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-ws511sh",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wd520acb",
+  "brand": "LG",
+  "reason": "no_imgs"
+ },
+ {
+  "id": "lg-wd523acb",
+  "brand": "LG",
+  "reason": "no_imgs"
+ }
+]
