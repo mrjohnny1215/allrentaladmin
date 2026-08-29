@@ -359,8 +359,10 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
     const s = String(src || '')
     if (!s) return false
     const lower = s.toLowerCase()
+    // 이벤트/프로모션/사은품 배너 제외
     if (/(promo|banner|gift|event|eventbanner|coupon|이벤트|사은품|증정|쿠폰)/.test(lower)) return false
-    if (/(goods_image|item_product|editor|rentalworld|speedycdn|tlpartner)/.test(lower)) return true
+    // 썸네일 치수 접미사(_480x480, _244x244 등) 제외 — 상세본문 고화질만 노출
+    if (/_\d+x\d+\.(jpg|jpeg|png|webp)/.test(lower)) return false
     return true
   })
 
@@ -522,14 +524,22 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
             <ul className="filter-list">{sp.filters.map((t, i) => <li key={i}>{t}</li>)}</ul>
           </div>
         )}
-        {/* 상세 설명 이미지 노출 일시 중단 */}
-        {/* {descImgs.length > 0 && (
-          <div className="detail-desc">
+        {/* 상세 설명 본문 이미지 (카톡 상담신청 버튼 바로 위) */}
+        {descImgs.length > 0 && (
+          <div className="detail-desc w-full max-w-4xl mx-auto">
             {descImgs.map((src, i) => (
-              <img key={i} src={src} alt={`${p.name} 상세 ${i + 1}`} loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+              <img
+                key={i}
+                src={src}
+                alt={`${p.name} 상세 ${i + 1}`}
+                className="w-full h-auto block"
+                loading="lazy"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              />
             ))}
           </div>
-        )} */}
+        )}
+
 
         <a className="kakao-cta" href={KAKAO_CHANNEL_URL} target="_blank" rel="noopener noreferrer" onClick={(e) => { e.preventDefault(); buildAndSendKakao(p, selMgmt, selContract, selYears, selColor, discount, matched, matrix); }}>
           <img className="cta-kakao-ico" src="/images/kakao-icon.png" alt="카카오톡" />
