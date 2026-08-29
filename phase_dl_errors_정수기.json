@@ -1,0 +1,12 @@
+[
+ {
+  "id": "cuckoo-cp-ad011ugw",
+  "reason": "no_detail_body_after_filter",
+  "orig_count": 5
+ },
+ {
+  "id": "cuckoo-cp-u011w-b",
+  "reason": "no_detail_body_after_filter",
+  "orig_count": 5
+ }
+]

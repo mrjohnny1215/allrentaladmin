@@ -9,3 +9,4 @@ dist
 .venv/
 __pycache__/
 detail_shot.png
+.env*
