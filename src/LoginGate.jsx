@@ -56,7 +56,7 @@ export function LoginGate({ children }) {
                 <div className="profile-menu">
                   <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/settlement_manage' }}>정산서</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/counsel' }}>상담</button>
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/main' }}>접수</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/reception' }}>접수</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/estimate_form' }}>견적서</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/submission_list' }}>접수내역</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/customer_apply_manage' }}>접수링크</button>

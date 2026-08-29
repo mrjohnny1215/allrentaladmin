@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Catalog from './Catalog.jsx'
 import Layout from './components/Layout.jsx'
 import { LoginGate } from './LoginGate.jsx'
+import AdminDashboard from './AdminDashboard.jsx'
 import Main from './Main.jsx'
 import EstimateForm from './EstimateForm.jsx'
 import Counsel from './Counsel.jsx'
@@ -16,9 +17,9 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<LoginGate><Catalog /></LoginGate>} />
-      <Route path="/admin" element={<Layout><Main /></Layout>} />
+      <Route path="/admin" element={<LoginGate><AdminDashboard /></LoginGate>} />
       <Route path="/admin/counsel" element={<Layout><Counsel /></Layout>} />
-      <Route path="/admin/main" element={<Layout><Main /></Layout>} />
+      <Route path="/admin/reception" element={<Layout><Main /></Layout>} />
       <Route path="/admin/details" element={<Layout><Details /></Layout>} />
       <Route path="/admin/estimate_form" element={<Layout><EstimateForm /></Layout>} />
       <Route path="/admin/submission_list" element={<Layout><SubmissionList /></Layout>} />
