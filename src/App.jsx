@@ -32,7 +32,7 @@ export default function App() {
       <Route path="/admin/business_card" element={<Layout><Counsel /></Layout>} />
       <Route path="/admin/faq" element={<Layout><Counsel /></Layout>} />
       <Route path="/admin/howto" element={<Layout><Counsel /></Layout>} />
-      <Route path="/admin/*" element={<Layout />} />
+      <Route path="/admin/" element={<Layout><Main /></Layout>} />
     </Routes>
   )
 }
