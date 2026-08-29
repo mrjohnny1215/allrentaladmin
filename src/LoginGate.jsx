@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAuth } from './auth.jsx'
 import { getUsers, useUsers } from './lib/users.js'
 
@@ -11,6 +11,8 @@ export function LoginGate({ children }) {
   const [shake, setShake] = useState(false)
   const [regOpen, setRegOpen] = useState(false)
   const [findOpen, setFindOpen] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
+  const profileRef = useRef(null)
 
   // 회원가입 상태
   const [rPw, setRPw] = useState('')
@@ -29,12 +31,39 @@ export function LoginGate({ children }) {
   const [foundUser, setFoundUser] = useState(null)
   const [findMsg, setFindMsg] = useState('')
 
+  // 외부 클릭 시 프로필 드롭다운 닫기
+  useEffect(() => {
+    const handler = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) setProfileOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
   if (user) {
     return (
       <>
         <div className="auth-header">
-          <span>로그인: <b>{user.id}</b></span>
-          <button className="logout-btn" onClick={logout}>로그아웃</button>
+          <div className="auth-left">
+            <span className="brand-mark">ALL렌탈</span>
+          </div>
+          <div className="auth-right">
+            <div className="profile" ref={profileRef}>
+              <button className="profile-id-btn" onClick={() => setProfileOpen((v) => !v)}>
+                {user.id} ▾
+              </button>
+              {profileOpen && (
+                <div className="profile-menu">
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); alert('정산서 기능은 준비 중입니다.') }}>정산서</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); alert('상담 기능은 준비 중입니다.') }}>상담</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); alert('접수 기능은 준비 중입니다.') }}>접수</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); alert('견적서 기능은 준비 중입니다.') }}>견적서</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); alert('현황통계 기능은 준비 중입니다.') }}>현황통계</button>
+                </div>
+              )}
+            </div>
+            <button className="logout-btn" onClick={logout}>로그아웃</button>
+          </div>
         </div>
         {children}
       </>
@@ -49,7 +78,6 @@ export function LoginGate({ children }) {
     if (!ok) {
       setErr('아이디 또는 비밀번호가 일치하지 않습니다. 다시 확인해 주세요.')
       setShake(true)
-      setTimeout(() => setShake(false), 600)
       return
     }
     if (id.trim() === 'admin') {
@@ -108,7 +136,7 @@ export function LoginGate({ children }) {
 
   return (
     <div className="splash">
-      <div className={`box login-card ${shake ? 'shake' : ''}`}>
+      <div className="box login-card">
         <div className="login-logo">ALL렌탈</div>
         <p className="login-sub">렌탈 상담 포털</p>
         <form onSubmit={submit}>

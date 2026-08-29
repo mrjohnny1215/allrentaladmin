@@ -977,7 +977,14 @@
 
 /* ===================== 로그인 게이트 ===================== */
 .auth-header { position: sticky; top: 0; z-index: 900; display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,.85); backdrop-filter: saturate(140%) blur(8px); border-bottom: 1px solid #e5e7eb; }
-.auth-header span { font-size: 12px; color: #374151; }
+.auth-header .auth-left { display: flex; align-items: center; gap: 8px; }
+.auth-header .brand-mark { font-size: 15px; font-weight: 900; letter-spacing: 1.5px; background: linear-gradient(135deg, #1d4ed8, #3b82f6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.auth-header .auth-right { display: flex; align-items: center; gap: 10px; }
+.profile { position: relative; }
+.profile-id-btn { font-size: 12px; padding: 6px 10px; border-radius: 8px; border: 1px solid #e5e7eb; background: #fff; color: #374151; cursor: pointer; font-weight: 700; }
+.profile-menu { position: absolute; right: 0; top: calc(100% + 6px); min-width: 180px; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 12px 30px rgba(0,0,0,.12); overflow: hidden; z-index: 950; }
+.profile-item { width: 100%; text-align: left; padding: 10px 12px; background: transparent; border: none; font-size: 13px; color: #374151; cursor: pointer; }
+.profile-item:hover { background: #f3f4f6; }
 .logout-btn { font-size: 12px; padding: 6px 10px; border-radius: 8px; border: 1px solid #e5e7eb; background: #fff; color: #374151; cursor: pointer; }
 .login-card { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 32px 22px; background: #fff; border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,.35); width: min(92vw, 360px); }
 .login-logo { font-size: 26px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, #1d4ed8, #3b82f6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
