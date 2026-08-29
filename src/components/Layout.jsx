@@ -1,31 +1,33 @@
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
-// 14개 메뉴 (원본 layout.php?page=XXX 기준)
-// type: 'static' = public/pages/<file>.html 을 iframe으로, 'react' = React 라우트
 const MENUS = [
   { key: 'counsel', label: '상담', icon: 'counsel', type: 'react' },
   { key: 'main', label: '메인', icon: 'roadview', type: 'static', file: 'main' },
-  { key: 'details', label: '상세', icon: 'details', type: 'static', file: 'details' },
+  { key: 'details', label: '제품비교', icon: 'details', type: 'static', file: 'details' },
   { key: 'estimate_form', label: '견적서', icon: 'estimate', type: 'static', file: 'estimate_form' },
-  { key: 'submission_list', label: '접수목록', icon: 'list', type: 'static', file: 'submission_list' },
-  { key: 'progress', label: '진행현황', icon: 'progress', type: 'static', file: 'progress' },
-  { key: 'settlement_manage', label: '정산관리', icon: 'settlement_manage', type: 'static', file: 'settlement_manage' },
-  { key: 'customer_apply_manage', label: '고객신청', icon: 'order', type: 'static', file: 'customer_apply_manage' },
+  { key: 'submission_list', label: '접수내역', icon: 'list', type: 'static', file: 'submission_list' },
+  { key: 'progress', label: '현황통계', icon: 'progress', type: 'static', file: 'progress' },
+  { key: 'settlement_manage', label: '정산서', icon: 'settlement_manage', type: 'static', file: 'settlement_manage' },
+  { key: 'customer_apply_manage', label: '접수링크', icon: 'order', type: 'static', file: 'customer_apply_manage' },
   { key: 'promotions', label: '프로모션', icon: 'promotion', type: 'static', file: 'promotions' },
   { key: 'creditcard', label: '제휴카드', icon: 'card', type: 'static', file: 'partner-card' },
-  { key: 'suggestion_board', label: '제안게시판', icon: 'board', type: 'static', file: 'suggestion_board' },
+  { key: 'suggestion_board', label: '공지문의', icon: 'board', type: 'static', file: 'suggestion_board' },
   { key: 'business_card', label: '명함', icon: 'business_card', type: 'static', file: 'business_card' },
   { key: 'faq', label: 'FAQ', icon: 'faq', type: 'static', file: 'faq' },
   { key: 'howto', label: '사용법', icon: 'howto', type: 'static', file: 'howto' },
 ]
 
 export default function Layout() {
-  const [active, setActive] = useState(MENUS[0])
+  const location = useLocation()
+  const pathKey = location.pathname.replace(/^\/admin\/?/, '').split('/')[0] || MENUS[0].key
+  const [active, setActive] = useState(MENUS.find(m => m.key === pathKey) || MENUS[0])
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const selectMenu = (m) => {
     setActive(m)
-    setSidebarOpen(false) // 모바일에서 메뉴 선택 시 사이드바 닫음
+    window.location.href = '/admin/' + m.key
+    setSidebarOpen(false)
   }
 
   return (

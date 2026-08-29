@@ -54,11 +54,11 @@ export function LoginGate({ children }) {
               </button>
               {profileOpen && (
                 <div className="profile-menu">
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); alert('정산서 기능은 준비 중입니다.') }}>정산서</button>
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); alert('상담 기능은 준비 중입니다.') }}>상담</button>
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); alert('접수 기능은 준비 중입니다.') }}>접수</button>
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); alert('견적서 기능은 준비 중입니다.') }}>견적서</button>
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); alert('현황통계 기능은 준비 중입니다.') }}>현황통계</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/settlement_manage' }}>정산서</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/counsel' }}>상담</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/main' }}>접수</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/estimate_form' }}>견적서</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/progress' }}>현황통계</button>
                 </div>
               )}
             </div>
