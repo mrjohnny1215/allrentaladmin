@@ -41,10 +41,12 @@ function classifyFunc(d = '') {
   return '정수전용'
 }
 function classifyType(d = '') {
-  if (d.includes('데스크') || d.includes('탁상')) return '데스크형'
-  if (d.includes('빌트인') || d.includes('매립')) return '빌트인'
-  if (d.includes('스탠드')) return '스탠드형'
-  if (d.includes('하프') || d.includes('언더') || d.includes('캐비닛')) return '하프형'
+  // 데스크형 키워드 우선 (스탠드와 혼동 방지)
+  if (/데스크|탁상|미니|카운터탑|냉온_데스크|냉온직수_데스크|desk/i.test(d)) return '데스크형'
+  if (/빌트인|매립/.test(d)) return '빌트인'
+  if (/스탠드/.test(d)) return '스탠드형'
+  if (/하프|언더|캐비닛/.test(d)) return '하프형'
+  // 데스크/스탠드 판단 불가 시 기본값은 스탠드형 (대부분 스탠드)
   return '스탠드형'
 }
 function classifyMethod(d = '') {
