@@ -70,7 +70,19 @@
   "min_monthly_fee": 31900,
   "max_commission": 297900,
   "id": "chungho-wi-53c9600m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WI-53C9600M/01.jpg",
+   "/images/details/chungho/WI-53C9600M/02.jpg",
+   "/images/details/chungho/WI-53C9600M/03.jpg",
+   "/images/details/chungho/WI-53C9600M/04.jpg",
+   "/images/details/chungho/WI-53C9600M/05.jpg",
+   "/images/details/chungho/WI-53C9600M/06.jpg",
+   "/images/details/chungho/WI-53C9600M/07.jpg",
+   "/images/details/chungho/WI-53C9600M/08.jpg",
+   "/images/details/chungho/WI-53C9600M/09.jpg",
+   "/images/details/chungho/WI-53C9600M/10.jpg",
+   "/images/details/chungho/WI-53C9600M/11.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -141,7 +153,22 @@
   "min_monthly_fee": 29900,
   "max_commission": 280800,
   "id": "chungho-wi-53c8600m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WI-53C8600M/01.jpg",
+   "/images/details/chungho/WI-53C8600M/02.jpg",
+   "/images/details/chungho/WI-53C8600M/03.jpg",
+   "/images/details/chungho/WI-53C8600M/04.jpg",
+   "/images/details/chungho/WI-53C8600M/05.jpg",
+   "/images/details/chungho/WI-53C8600M/06.jpg",
+   "/images/details/chungho/WI-53C8600M/07.jpg",
+   "/images/details/chungho/WI-53C8600M/08.jpg",
+   "/images/details/chungho/WI-53C8600M/09.jpg",
+   "/images/details/chungho/WI-53C8600M/10.jpg",
+   "/images/details/chungho/WI-53C8600M/11.jpg",
+   "/images/details/chungho/WI-53C8600M/12.jpg",
+   "/images/details/chungho/WI-53C8600M/13.jpg",
+   "/images/details/chungho/WI-53C8600M/14.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -562,7 +589,11 @@
   "min_monthly_fee": 59900,
   "max_commission": 520200,
   "id": "chungho-wi-15c7500",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WI-15C7500/01.jpg",
+   "/images/details/chungho/WI-15C7500/02.jpg",
+   "/images/details/chungho/WI-15C7500/03.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -888,7 +919,18 @@
   "min_monthly_fee": 40900,
   "max_commission": 453825,
   "id": "chungho-wi-55s9p510m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WI-55S9P510M/01.jpg",
+   "/images/details/chungho/WI-55S9P510M/02.jpg",
+   "/images/details/chungho/WI-55S9P510M/03.jpg",
+   "/images/details/chungho/WI-55S9P510M/04.jpg",
+   "/images/details/chungho/WI-55S9P510M/05.jpg",
+   "/images/details/chungho/WI-55S9P510M/06.jpg",
+   "/images/details/chungho/WI-55S9P510M/07.jpg",
+   "/images/details/chungho/WI-55S9P510M/08.jpg",
+   "/images/details/chungho/WI-55S9P510M/09.jpg",
+   "/images/details/chungho/WI-55S9P510M/10.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -1097,7 +1139,18 @@
   "min_monthly_fee": 39900,
   "max_commission": 437287,
   "id": "chungho-wi-55s90510m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WI-55S90510M/01.jpg",
+   "/images/details/chungho/WI-55S90510M/02.jpg",
+   "/images/details/chungho/WI-55S90510M/03.jpg",
+   "/images/details/chungho/WI-55S90510M/04.jpg",
+   "/images/details/chungho/WI-55S90510M/05.jpg",
+   "/images/details/chungho/WI-55S90510M/06.jpg",
+   "/images/details/chungho/WI-55S90510M/07.jpg",
+   "/images/details/chungho/WI-55S90510M/08.jpg",
+   "/images/details/chungho/WI-55S90510M/09.jpg",
+   "/images/details/chungho/WI-55S90510M/10.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -1300,7 +1353,10 @@
   "min_monthly_fee": 43900,
   "max_commission": 559530,
   "id": "chungho-wi-70s90010m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WI-70S90010M/01.jpg",
+   "/images/details/chungho/WI-70S90010M/02.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -1504,7 +1560,10 @@
   "min_monthly_fee": 44900,
   "max_commission": 484312,
   "id": "chungho-wi-70s9p010m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WI-70S9P010M/01.jpg",
+   "/images/details/chungho/WI-70S9P010M/02.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -1717,7 +1776,10 @@
   "min_monthly_fee": 47900,
   "max_commission": 524700,
   "id": "chungho-wi-80s9p510m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WI-80S9P510M/01.jpg",
+   "/images/details/chungho/WI-80S9P510M/02.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -1929,7 +1991,20 @@
   "min_monthly_fee": 38900,
   "max_commission": 418770,
   "id": "chungho-wi-60c90511m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WI-60C90511M/01.jpg",
+   "/images/details/chungho/WI-60C90511M/02.jpg",
+   "/images/details/chungho/WI-60C90511M/03.jpg",
+   "/images/details/chungho/WI-60C90511M/04.jpg",
+   "/images/details/chungho/WI-60C90511M/05.jpg",
+   "/images/details/chungho/WI-60C90511M/06.jpg",
+   "/images/details/chungho/WI-60C90511M/07.jpg",
+   "/images/details/chungho/WI-60C90511M/08.jpg",
+   "/images/details/chungho/WI-60C90511M/09.jpg",
+   "/images/details/chungho/WI-60C90511M/10.jpg",
+   "/images/details/chungho/WI-60C90511M/11.jpg",
+   "/images/details/chungho/WI-60C90511M/12.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -2137,7 +2212,20 @@
   "min_monthly_fee": 37900,
   "max_commission": 419760,
   "id": "chungho-wi-60c80511m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WI-60C80511M/01.jpg",
+   "/images/details/chungho/WI-60C80511M/02.jpg",
+   "/images/details/chungho/WI-60C80511M/03.jpg",
+   "/images/details/chungho/WI-60C80511M/04.jpg",
+   "/images/details/chungho/WI-60C80511M/05.jpg",
+   "/images/details/chungho/WI-60C80511M/06.jpg",
+   "/images/details/chungho/WI-60C80511M/07.jpg",
+   "/images/details/chungho/WI-60C80511M/08.jpg",
+   "/images/details/chungho/WI-60C80511M/09.jpg",
+   "/images/details/chungho/WI-60C80511M/10.jpg",
+   "/images/details/chungho/WI-60C80511M/11.jpg",
+   "/images/details/chungho/WI-60C80511M/12.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -2428,7 +2516,26 @@
   "min_monthly_fee": 39900,
   "max_commission": 486900,
   "id": "chungho-wi-36c90620n",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WI-36C90620N/01.jpg",
+   "/images/details/chungho/WI-36C90620N/01.png",
+   "/images/details/chungho/WI-36C90620N/02.png",
+   "/images/details/chungho/WI-36C90620N/03.jpg",
+   "/images/details/chungho/WI-36C90620N/03.png",
+   "/images/details/chungho/WI-36C90620N/04.png",
+   "/images/details/chungho/WI-36C90620N/05.png",
+   "/images/details/chungho/WI-36C90620N/06.png",
+   "/images/details/chungho/WI-36C90620N/07.png",
+   "/images/details/chungho/WI-36C90620N/08.png",
+   "/images/details/chungho/WI-36C90620N/09.png",
+   "/images/details/chungho/WI-36C90620N/10.png",
+   "/images/details/chungho/WI-36C90620N/11.png",
+   "/images/details/chungho/WI-36C90620N/12.png",
+   "/images/details/chungho/WI-36C90620N/13.png",
+   "/images/details/chungho/WI-36C90620N/14.png",
+   "/images/details/chungho/WI-36C90620N/15.png",
+   "/images/details/chungho/WI-36C90620N/16.png"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -2613,7 +2720,24 @@
   "min_monthly_fee": 39900,
   "max_commission": 406890,
   "id": "chungho-wi-36c80620n",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WI-36C80620N/01.jpg",
+   "/images/details/chungho/WI-36C80620N/02.png",
+   "/images/details/chungho/WI-36C80620N/03.png",
+   "/images/details/chungho/WI-36C80620N/04.png",
+   "/images/details/chungho/WI-36C80620N/05.png",
+   "/images/details/chungho/WI-36C80620N/06.png",
+   "/images/details/chungho/WI-36C80620N/07.png",
+   "/images/details/chungho/WI-36C80620N/08.png",
+   "/images/details/chungho/WI-36C80620N/09.png",
+   "/images/details/chungho/WI-36C80620N/10.png",
+   "/images/details/chungho/WI-36C80620N/11.png",
+   "/images/details/chungho/WI-36C80620N/12.png",
+   "/images/details/chungho/WI-36C80620N/13.png",
+   "/images/details/chungho/WI-36C80620N/14.png",
+   "/images/details/chungho/WI-36C80620N/15.png",
+   "/images/details/chungho/WI-36C80620N/16.png"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -2872,7 +2996,9 @@
   "min_monthly_fee": 19900,
   "max_commission": 166050,
   "id": "chungho-wp-30s50010n",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-30S50010N/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -2999,7 +3125,9 @@
   "min_monthly_fee": 21900,
   "max_commission": 207000,
   "id": "chungho-wp-35c90010n",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-35C90010N/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -3192,7 +3320,11 @@
   "min_monthly_fee": 25900,
   "max_commission": 348300,
   "id": "chungho-wp-60c90520m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-60C90520M/01.jpg",
+   "/images/details/chungho/WP-60C90520M/02.jpg",
+   "/images/details/chungho/WP-60C90520M/03.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -3383,7 +3515,11 @@
   "min_monthly_fee": 25900,
   "max_commission": 356400,
   "id": "chungho-wp-60c90520m-2",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-60C90520M/01.jpg",
+   "/images/details/chungho/WP-60C90520M/02.jpg",
+   "/images/details/chungho/WP-60C90520M/03.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -3864,7 +4000,10 @@
   "min_monthly_fee": 20900,
   "max_commission": 274950,
   "id": "chungho-wp-50s90010m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-50S90010M/01.jpg",
+   "/images/details/chungho/WP-50S90010M/02.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -4232,7 +4371,24 @@
   "min_monthly_fee": 26900,
   "max_commission": 421200,
   "id": "chungho-wp-50c90621n",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-50C90621N/01.jpg",
+   "/images/details/chungho/WP-50C90621N/02.jpg",
+   "/images/details/chungho/WP-50C90621N/03.jpg",
+   "/images/details/chungho/WP-50C90621N/04.jpg",
+   "/images/details/chungho/WP-50C90621N/05.jpg",
+   "/images/details/chungho/WP-50C90621N/06.jpg",
+   "/images/details/chungho/WP-50C90621N/07.jpg",
+   "/images/details/chungho/WP-50C90621N/08.jpg",
+   "/images/details/chungho/WP-50C90621N/09.jpg",
+   "/images/details/chungho/WP-50C90621N/10.jpg",
+   "/images/details/chungho/WP-50C90621N/11.jpg",
+   "/images/details/chungho/WP-50C90621N/12.jpg",
+   "/images/details/chungho/WP-50C90621N/13.jpg",
+   "/images/details/chungho/WP-50C90621N/14.jpg",
+   "/images/details/chungho/WP-50C90621N/15.jpg",
+   "/images/details/chungho/WP-50C90621N/16.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -4438,7 +4594,10 @@
   "min_monthly_fee": 28900,
   "max_commission": 394200,
   "id": "chungho-wp-46s90510m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-46S90510M/01.jpg",
+   "/images/details/chungho/WP-46S90510M/02.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -4641,7 +4800,10 @@
   "min_monthly_fee": 30900,
   "max_commission": 402300,
   "id": "chungho-wp-46s90510n",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-46S90510N/01.jpg",
+   "/images/details/chungho/WP-46S90510N/02.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -4847,7 +5009,10 @@
   "min_monthly_fee": 30900,
   "max_commission": 415800,
   "id": "chungho-wp-46s9p510m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-46S9P510M/01.jpg",
+   "/images/details/chungho/WP-46S9P510M/02.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -5058,7 +5223,10 @@
   "min_monthly_fee": 39900,
   "max_commission": 496800,
   "id": "chungho-wp-80s9p510m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-80S9P510M/01.jpg",
+   "/images/details/chungho/WP-80S9P510M/02.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -5267,7 +5435,11 @@
   "min_monthly_fee": 27900,
   "max_commission": 368550,
   "id": "chungho-wp-60c90511m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-60C90511M/01.jpg",
+   "/images/details/chungho/WP-60C90511M/02.jpg",
+   "/images/details/chungho/WP-60C90511M/03.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -5645,7 +5817,16 @@
   "min_monthly_fee": 32900,
   "max_commission": 356400,
   "id": "chungho-wp-45s9p010m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-45S9P010M/01.jpg",
+   "/images/details/chungho/WP-45S9P010M/02.jpg",
+   "/images/details/chungho/WP-45S9P010M/03.jpg",
+   "/images/details/chungho/WP-45S9P010M/04.jpg",
+   "/images/details/chungho/WP-45S9P010M/05.jpg",
+   "/images/details/chungho/WP-45S9P010M/06.jpg",
+   "/images/details/chungho/WP-45S9P010M/07.jpg",
+   "/images/details/chungho/WP-45S9P010M/08.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -5751,7 +5932,9 @@
   "min_monthly_fee": 24900,
   "max_commission": 288000,
   "id": "chungho-wp-30c9560bn",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-30C9560BN/01.png"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -5836,7 +6019,9 @@
   "min_monthly_fee": 19900,
   "max_commission": 99000,
   "id": "chungho-wp-30c9460bn",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-30C9460BN/01.png"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -6073,7 +6258,23 @@
   "min_monthly_fee": 26900,
   "max_commission": 288000,
   "id": "chungho-wp-50c80621n",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-50C80621N/01.jpg",
+   "/images/details/chungho/WP-50C80621N/03.jpg",
+   "/images/details/chungho/WP-50C80621N/04.jpg",
+   "/images/details/chungho/WP-50C80621N/05.jpg",
+   "/images/details/chungho/WP-50C80621N/06.jpg",
+   "/images/details/chungho/WP-50C80621N/07.jpg",
+   "/images/details/chungho/WP-50C80621N/08.jpg",
+   "/images/details/chungho/WP-50C80621N/09.jpg",
+   "/images/details/chungho/WP-50C80621N/10.jpg",
+   "/images/details/chungho/WP-50C80621N/11.jpg",
+   "/images/details/chungho/WP-50C80621N/12.jpg",
+   "/images/details/chungho/WP-50C80621N/13.jpg",
+   "/images/details/chungho/WP-50C80621N/14.jpg",
+   "/images/details/chungho/WP-50C80621N/15.jpg",
+   "/images/details/chungho/WP-50C80621N/16.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -6258,7 +6459,11 @@
   "min_monthly_fee": 25900,
   "max_commission": 348975,
   "id": "chungho-wp-60c80511m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-60C80511M/01.jpg",
+   "/images/details/chungho/WP-60C80511M/02.jpg",
+   "/images/details/chungho/WP-60C80511M/03.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -6340,7 +6545,9 @@
   "min_monthly_fee": 17900,
   "max_commission": 90000,
   "id": "chungho-wp-30c8460n",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-30C8460N/01.png"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -6463,7 +6670,10 @@
   "min_monthly_fee": 13900,
   "max_commission": 175500,
   "id": "chungho-wp-40c60000m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-40C60000M/01.jpg",
+   "/images/details/chungho/WP-40C60000M/02.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -6589,7 +6799,9 @@
   "min_monthly_fee": 15900,
   "max_commission": 207900,
   "id": "chungho-wp-43c60000m",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/WP-43C60000M/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -7556,7 +7768,27 @@
   "min_monthly_fee": 16900,
   "max_commission": 151200,
   "id": "chungho-bs-35d50",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/BS-35D50/01.jpg",
+   "/images/details/chungho/BS-35D50/02.jpg",
+   "/images/details/chungho/BS-35D50/03.jpg",
+   "/images/details/chungho/BS-35D50/04.jpg",
+   "/images/details/chungho/BS-35D50/05.jpg",
+   "/images/details/chungho/BS-35D50/06.jpg",
+   "/images/details/chungho/BS-35D50/07.jpg",
+   "/images/details/chungho/BS-35D50/08.jpg",
+   "/images/details/chungho/BS-35D50/09.jpg",
+   "/images/details/chungho/BS-35D50/10.jpg",
+   "/images/details/chungho/BS-35D50/11.jpg",
+   "/images/details/chungho/BS-35D50/12.jpg",
+   "/images/details/chungho/BS-35D50/13.jpg",
+   "/images/details/chungho/BS-35D50/14.jpg",
+   "/images/details/chungho/BS-35D50/15.jpg",
+   "/images/details/chungho/BS-35D50/16.jpg",
+   "/images/details/chungho/BS-35D50/17.jpg",
+   "/images/details/chungho/BS-35D50/18.jpg",
+   "/images/details/chungho/BS-35D50/19.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -7650,7 +7882,9 @@
   "min_monthly_fee": 12900,
   "max_commission": 106200,
   "id": "chungho-bd-35d51",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/BD-35D51/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -8241,7 +8475,9 @@
   "min_monthly_fee": 12900,
   "max_commission": 185400,
   "id": "chungho-bd-35d72",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/BD-35D72/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -8375,7 +8611,9 @@
   "min_monthly_fee": 15900,
   "max_commission": 185400,
   "id": "chungho-bd-35d50r",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/BD-35D50R/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -8670,7 +8908,9 @@
   "min_monthly_fee": 10900,
   "max_commission": 132300,
   "id": "chungho-bd-40d60",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/BD-40D60/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -8786,7 +9026,9 @@
   "min_monthly_fee": 25900,
   "max_commission": 244800,
   "id": "chungho-ah-12h6050",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/AH-12H6050/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -8976,7 +9218,9 @@
   "min_monthly_fee": 24900,
   "max_commission": 302400,
   "id": "chungho-ap-20h7560",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/AP-20H7560/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -9144,7 +9388,9 @@
   "min_monthly_fee": 25900,
   "max_commission": 252000,
   "id": "chungho-ap-15h5170",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/AP-15H5170/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -9329,7 +9575,12 @@
   "min_monthly_fee": 39900,
   "max_commission": 446400,
   "id": "chungho-ap-30h8220",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/AP-30H8220/01.jpg",
+   "/images/details/chungho/AP-30H8220/02.jpg",
+   "/images/details/chungho/AP-30H8220/03.jpg",
+   "/images/details/chungho/AP-30H8220/04.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -9514,7 +9765,12 @@
   "min_monthly_fee": 41900,
   "max_commission": 459000,
   "id": "chungho-ap-40h8220",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/AP-40H8220/01.jpg",
+   "/images/details/chungho/AP-40H8220/02.jpg",
+   "/images/details/chungho/AP-40H8220/03.jpg",
+   "/images/details/chungho/AP-40H8220/04.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -9974,7 +10230,11 @@
   "min_monthly_fee": 23900,
   "max_commission": 239850,
   "id": "chungho-ap-10h4052",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/AP-10H4052/01.jpg",
+   "/images/details/chungho/AP-10H4052/02.jpg",
+   "/images/details/chungho/AP-10H4052/03.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -10095,7 +10355,10 @@
   "thumbnail": "/assets/goods_detail/제습공기청정기 AD150.jpg",
   "min_monthly_fee": 22900,
   "max_commission": 293400,
-  "id": "chungho-ad-10h7050"
+  "id": "chungho-ad-10h7050",
+  "detail_description_images": [
+   "/images/details/chungho/AD-10H7050/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -10617,7 +10880,9 @@
   "min_monthly_fee": 16900,
   "max_commission": 239400,
   "id": "chungho-ap-10h4553",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/AP-10H4553/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -10935,7 +11200,11 @@
   "min_monthly_fee": 18900,
   "max_commission": 264600,
   "id": "chungho-ap-15h5174",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/AP-15H5174/01.jpg",
+   "/images/details/chungho/AP-15H5174/02.jpg",
+   "/images/details/chungho/AP-15H5174/03.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -11047,7 +11316,9 @@
   "min_monthly_fee": 29900,
   "max_commission": 189540,
   "id": "chungho-av-06h3050",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/chungho/AV-06H3050/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
@@ -11120,7 +11391,10 @@
   "thumbnail": "/assets/goods_detail/제습공기청정기 릴리.jpg",
   "min_monthly_fee": 20900,
   "max_commission": 183600,
-  "id": "chungho-chdh-120ja"
+  "id": "chungho-chdh-120ja",
+  "detail_description_images": [
+   "/images/details/chungho/CHDH-120JA/01.jpg"
+  ]
  },
  {
   "brand": "청호나이스",
