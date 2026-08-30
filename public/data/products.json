@@ -117798,7 +117798,9 @@
   "min_monthly_fee": 9900,
   "max_commission": 247500,
   "id": "wells-wp610",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/wells/WP610/01.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -118074,7 +118076,9 @@
   "min_monthly_fee": 17900,
   "max_commission": 274500,
   "id": "wells-wt652",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/wells/WT652/01.png"
+  ]
  },
  {
   "brand": "웰스",
@@ -118560,7 +118564,9 @@
   "min_monthly_fee": 36900,
   "max_commission": 373500,
   "id": "wells-wp270-2",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/wells/WP270/01.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -119392,7 +119398,9 @@
   "min_monthly_fee": 19900,
   "max_commission": 292500,
   "id": "wells-wt672",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/wells/WT672/01.png"
+  ]
  },
  {
   "brand": "웰스",
@@ -119606,7 +119614,8 @@
   "thumbnail": "/assets/goods_detail/인버터 제습기 21L.jpg",
   "min_monthly_fee": 8900,
   "max_commission": 225000,
-  "id": "wells-dt921"
+  "id": "wells-dt921",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -120956,7 +120965,9 @@
   "min_monthly_fee": 18900,
   "max_commission": 279000,
   "id": "wells-bt762",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/wells/BT762/01.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -122084,7 +122095,9 @@
   "min_monthly_fee": 27900,
   "max_commission": 337500,
   "id": "wells-wq672-bt150",
-  "detail_description_images": []
+  "detail_description_images": [
+   "/images/details/wells/WQ672+BT150/01.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -122331,7 +122344,8 @@
   "thumbnail": "/assets/goods_detail/미니- 인수형.jpg",
   "min_monthly_fee": 29900,
   "max_commission": 153000,
-  "id": "wells-gp106"
+  "id": "wells-gp106",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -122376,7 +122390,8 @@
   "thumbnail": "/assets/goods_detail/미니- 반납형.jpg",
   "min_monthly_fee": 22900,
   "max_commission": 135000,
-  "id": "wells-gp106-2"
+  "id": "wells-gp106-2",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -122421,7 +122436,10 @@
   "thumbnail": "/assets/goods_detail/슬림- 리퍼형(채소).jpg",
   "min_monthly_fee": 23900,
   "max_commission": 72000,
-  "id": "wells-kw-g01w1-r"
+  "id": "wells-kw-g01w1-r",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -122466,7 +122484,8 @@
   "thumbnail": "/assets/goods_detail/슬림- 반납형(채소).jpg",
   "min_monthly_fee": 27900,
   "max_commission": 153000,
-  "id": "wells-kw-g01w1-r-2"
+  "id": "wells-kw-g01w1-r-2",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -122511,7 +122530,11 @@
   "thumbnail": "/assets/goods_detail/슬림- 인수형(채소).jpg",
   "min_monthly_fee": 35900,
   "max_commission": 180000,
-  "id": "wells-kw-g01w1-r-3"
+  "id": "wells-kw-g01w1-r-3",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -122556,7 +122579,8 @@
   "thumbnail": "/assets/goods_detail/와이드- 리퍼형(채소).jpg",
   "min_monthly_fee": 32900,
   "max_commission": 108000,
-  "id": "wells-kw-g01w1-r-4"
+  "id": "wells-kw-g01w1-r-4",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -122601,7 +122625,11 @@
   "thumbnail": "/assets/goods_detail/와이드- 반납형(채소).jpg",
   "min_monthly_fee": 36900,
   "max_commission": 216000,
-  "id": "wells-kw-g01w1-r-5"
+  "id": "wells-kw-g01w1-r-5",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -122646,7 +122674,8 @@
   "thumbnail": "/assets/goods_detail/와이드- 인수형(채소).jpg",
   "min_monthly_fee": 43900,
   "max_commission": 252000,
-  "id": "wells-kw-g01w1-r-6"
+  "id": "wells-kw-g01w1-r-6",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -122691,7 +122720,8 @@
   "thumbnail": "/assets/goods_detail/슬림- 리퍼형(이유식).jpg",
   "min_monthly_fee": 23900,
   "max_commission": 72000,
-  "id": "wells-kw-g01w1-r-7"
+  "id": "wells-kw-g01w1-r-7",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -122736,7 +122766,11 @@
   "thumbnail": "/assets/goods_detail/슬림- 반납형(이유식).jpg",
   "min_monthly_fee": 27900,
   "max_commission": 153000,
-  "id": "wells-kw-g01w1-r-8"
+  "id": "wells-kw-g01w1-r-8",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -122781,7 +122815,11 @@
   "thumbnail": "/assets/goods_detail/슬림- 인수형(이유식).jpg",
   "min_monthly_fee": 35900,
   "max_commission": 180000,
-  "id": "wells-kw-g01w1-r-9"
+  "id": "wells-kw-g01w1-r-9",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -122826,7 +122864,11 @@
   "thumbnail": "/assets/goods_detail/와이드- 리퍼형(이유식).jpg",
   "min_monthly_fee": 32900,
   "max_commission": 108000,
-  "id": "wells-kw-g01w1-r-10"
+  "id": "wells-kw-g01w1-r-10",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -122871,7 +122913,11 @@
   "thumbnail": "/assets/goods_detail/와이드- 반납형(이유식).jpg",
   "min_monthly_fee": 36900,
   "max_commission": 216000,
-  "id": "wells-kw-g01w1-r-11"
+  "id": "wells-kw-g01w1-r-11",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -122916,7 +122962,8 @@
   "thumbnail": "/assets/goods_detail/와이드- 인수형(이유식).jpg",
   "min_monthly_fee": 43900,
   "max_commission": 252000,
-  "id": "wells-kw-g01w1-r-12"
+  "id": "wells-kw-g01w1-r-12",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -122961,7 +123008,11 @@
   "thumbnail": "/assets/goods_detail/슬림- 리퍼형(샐러드).jpg",
   "min_monthly_fee": 23900,
   "max_commission": 72000,
-  "id": "wells-kw-g01w1-r-13"
+  "id": "wells-kw-g01w1-r-13",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -123006,7 +123057,8 @@
   "thumbnail": "/assets/goods_detail/슬림- 반납형(샐러드).jpg",
   "min_monthly_fee": 27900,
   "max_commission": 153000,
-  "id": "wells-kw-g01w1-r-14"
+  "id": "wells-kw-g01w1-r-14",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -123051,7 +123103,11 @@
   "thumbnail": "/assets/goods_detail/슬림- 인수형(샐러드).jpg",
   "min_monthly_fee": 35900,
   "max_commission": 180000,
-  "id": "wells-kw-g01w1-r-15"
+  "id": "wells-kw-g01w1-r-15",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -123096,7 +123152,11 @@
   "thumbnail": "/assets/goods_detail/와이드- 리퍼형(샐러드).jpg",
   "min_monthly_fee": 32900,
   "max_commission": 108000,
-  "id": "wells-kw-g01w1-r-16"
+  "id": "wells-kw-g01w1-r-16",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -123141,7 +123201,11 @@
   "thumbnail": "/assets/goods_detail/와이드- 반납형(샐러드).jpg",
   "min_monthly_fee": 36900,
   "max_commission": 216000,
-  "id": "wells-kw-g01w1-r-17"
+  "id": "wells-kw-g01w1-r-17",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -123186,7 +123250,11 @@
   "thumbnail": "/assets/goods_detail/와이드- 인수형(샐러드).jpg",
   "min_monthly_fee": 43900,
   "max_commission": 252000,
-  "id": "wells-kw-g01w1-r-18"
+  "id": "wells-kw-g01w1-r-18",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -123231,7 +123299,11 @@
   "thumbnail": "/assets/goods_detail/슬림- 리퍼형(건강밥상).jpg",
   "min_monthly_fee": 23900,
   "max_commission": 72000,
-  "id": "wells-kw-g01w1-r-19"
+  "id": "wells-kw-g01w1-r-19",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -123276,7 +123348,8 @@
   "thumbnail": "/assets/goods_detail/슬림- 반납형(건강밥상).jpg",
   "min_monthly_fee": 27900,
   "max_commission": 153000,
-  "id": "wells-kw-g01w1-r-20"
+  "id": "wells-kw-g01w1-r-20",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -123321,7 +123394,11 @@
   "thumbnail": "/assets/goods_detail/슬림- 인수형(건강밥상).jpg",
   "min_monthly_fee": 35900,
   "max_commission": 180000,
-  "id": "wells-kw-g01w1-r-21"
+  "id": "wells-kw-g01w1-r-21",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -123366,7 +123443,8 @@
   "thumbnail": "/assets/goods_detail/와이드- 리퍼형(건강밥상).jpg",
   "min_monthly_fee": 32900,
   "max_commission": 108000,
-  "id": "wells-kw-g01w1-r-22"
+  "id": "wells-kw-g01w1-r-22",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -123411,7 +123489,8 @@
   "thumbnail": "/assets/goods_detail/와이드- 반납형(건강밥상).jpg",
   "min_monthly_fee": 36900,
   "max_commission": 216000,
-  "id": "wells-kw-g01w1-r-23"
+  "id": "wells-kw-g01w1-r-23",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -123456,7 +123535,11 @@
   "thumbnail": "/assets/goods_detail/와이드- 인수형(건강밥상).jpg",
   "min_monthly_fee": 43900,
   "max_commission": 252000,
-  "id": "wells-kw-g01w1-r-24"
+  "id": "wells-kw-g01w1-r-24",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -123501,7 +123584,8 @@
   "thumbnail": "/assets/goods_detail/슬림- 리퍼형(항암).jpg",
   "min_monthly_fee": 25900,
   "max_commission": 81000,
-  "id": "wells-kw-g01w1-r-25"
+  "id": "wells-kw-g01w1-r-25",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -123546,7 +123630,11 @@
   "thumbnail": "/assets/goods_detail/슬림- 반납형(항암).jpg",
   "min_monthly_fee": 29900,
   "max_commission": 162000,
-  "id": "wells-kw-g01w1-r-26"
+  "id": "wells-kw-g01w1-r-26",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -123591,7 +123679,8 @@
   "thumbnail": "/assets/goods_detail/슬림- 인수형(항암).jpg",
   "min_monthly_fee": 35900,
   "max_commission": 180000,
-  "id": "wells-kw-g01w1-r-27"
+  "id": "wells-kw-g01w1-r-27",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -123636,7 +123725,11 @@
   "thumbnail": "/assets/goods_detail/와이드- 리퍼형(항암).jpg",
   "min_monthly_fee": 34900,
   "max_commission": 117000,
-  "id": "wells-kw-g01w1-r-28"
+  "id": "wells-kw-g01w1-r-28",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -123681,7 +123774,8 @@
   "thumbnail": "/assets/goods_detail/와이드- 반납형(항암).jpg",
   "min_monthly_fee": 38900,
   "max_commission": 234000,
-  "id": "wells-kw-g01w1-r-29"
+  "id": "wells-kw-g01w1-r-29",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -123726,7 +123820,11 @@
   "thumbnail": "/assets/goods_detail/와이드- 인수형(항암).jpg",
   "min_monthly_fee": 43900,
   "max_commission": 252000,
-  "id": "wells-kw-g01w1-r-30"
+  "id": "wells-kw-g01w1-r-30",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -123771,7 +123869,8 @@
   "thumbnail": "/assets/goods_detail/슬림- 리퍼형(숙면).jpg",
   "min_monthly_fee": 25900,
   "max_commission": 81000,
-  "id": "wells-kw-g01w1-r-31"
+  "id": "wells-kw-g01w1-r-31",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -123816,7 +123915,8 @@
   "thumbnail": "/assets/goods_detail/슬림- 반납형(숙면).jpg",
   "min_monthly_fee": 29900,
   "max_commission": 162000,
-  "id": "wells-kw-g01w1-r-32"
+  "id": "wells-kw-g01w1-r-32",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -123861,7 +123961,11 @@
   "thumbnail": "/assets/goods_detail/슬림- 인수형(숙면).jpg",
   "min_monthly_fee": 35900,
   "max_commission": 180000,
-  "id": "wells-kw-g01w1-r-33"
+  "id": "wells-kw-g01w1-r-33",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -123906,7 +124010,8 @@
   "thumbnail": "/assets/goods_detail/와이드- 리퍼형(숙면).jpg",
   "min_monthly_fee": 34900,
   "max_commission": 117000,
-  "id": "wells-kw-g01w1-r-34"
+  "id": "wells-kw-g01w1-r-34",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -123951,7 +124056,11 @@
   "thumbnail": "/assets/goods_detail/와이드- 반납형(숙면).jpg",
   "min_monthly_fee": 38900,
   "max_commission": 234000,
-  "id": "wells-kw-g01w1-r-35"
+  "id": "wells-kw-g01w1-r-35",
+  "detail_description_images": [
+   "/images/details/wells/KW-G01W1-R/01.jpg",
+   "/images/details/wells/KW-G01W1-R/02.jpg"
+  ]
  },
  {
   "brand": "웰스",
@@ -123996,7 +124105,8 @@
   "thumbnail": "/assets/goods_detail/와이드- 인수형(숙면).jpg",
   "min_monthly_fee": 43900,
   "max_commission": 252000,
-  "id": "wells-kw-g01w1-r-36"
+  "id": "wells-kw-g01w1-r-36",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -124041,7 +124151,8 @@
   "thumbnail": "/assets/goods_detail/통증케어기.jpg",
   "min_monthly_fee": 46900,
   "max_commission": 558000,
-  "id": "wells-cm-7000tg"
+  "id": "wells-cm-7000tg",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -124096,7 +124207,8 @@
   "thumbnail": "/assets/goods_detail/물방울 리프팅기.jpg",
   "min_monthly_fee": 23900,
   "max_commission": 405000,
-  "id": "wells-moduwave"
+  "id": "wells-moduwave",
+  "detail_description_images": []
  },
  {
   "brand": "웰스",
@@ -148423,7 +148535,8 @@
   "thumbnail": "/assets/goods_detail/더카페 큐밍블랙.jpg",
   "min_monthly_fee": 29900,
   "max_commission": 216000,
-  "id": "hyundai-c-b300b0b"
+  "id": "hyundai-c-b300b0b",
+  "detail_description_images": []
  },
  {
   "brand": "현대큐밍",
@@ -148490,7 +148603,8 @@
   "thumbnail": "/assets/goods_detail/커피머신(XO-7).jpg",
   "min_monthly_fee": 28600,
   "max_commission": 216000,
-  "id": "hyundai-hdc9300b0f"
+  "id": "hyundai-hdc9300b0f",
+  "detail_description_images": []
  },
  {
   "brand": "현대큐밍",
@@ -148565,7 +148679,8 @@
   "thumbnail": "/assets/goods_detail/더카페 큐밍 오리진.jpg",
   "min_monthly_fee": 29900,
   "max_commission": 261000,
-  "id": "hyundai-hqcc300b0g"
+  "id": "hyundai-hqcc300b0g",
+  "detail_description_images": []
  },
  {
   "brand": "현대큐밍",
