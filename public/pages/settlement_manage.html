@@ -5255,14 +5255,22 @@ async function loadInvoiceList() {
       const cq = (f.customer_q || '').trim();
       if (cq) u.searchParams.set('customer_q', cq);
 
-    const res = await fetch(u);
+    const res = await fetch(u.toString());
     const j   = await res.json();
     if (!j.success) throw new Error(j.message || '정산서 목록 로딩 오류');
 
     renderInvoiceTable(j.data || [], j.facets || null);
   } catch (e) {
-    console.error(e);
-    alert('정산서 데이터를 불러오지 못했습니다.');
+    console.error('[loadInvoiceList]', e);
+    // localStorage 기반 데이터가 비어있거나 가로채기 실패 시
+    // 경고 대신 빈 상태로 정상 화면을 보여준다 (legacy-api.js가 가로채기 담당)
+    const db = window.AllRentalStore ? window.AllRentalStore.read() : { settlements: [] };
+    const rows = Array.isArray(db.settlements) ? db.settlements : [];
+    if (rows.length === 0) {
+      renderInvoiceTable([], null);
+    } else {
+      alert('정산서 데이터를 불러오지 못했습니다.');
+    }
   }
 }
 
