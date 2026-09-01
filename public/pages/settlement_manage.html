@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="./assets/style/button_style.css">
 <link rel="stylesheet" href="./assets/style/button_animation.css">
 <style>body{font-family:'cafe',sans-serif;background:#f5f7fa;} .card-box{background:#fff;border-radius:0.75rem;padding:1.25rem;box-shadow:0 0 30px rgba(0,0,0,0.1);margin-bottom:1rem;}</style>
+<script src="/pages/legacy-api.js"></script>
 </head>
 <body>
 
@@ -1089,8 +1090,8 @@
 
 <script>
 (() => {
-  const USER_ROLE        = 'seller';
-  const CURRENT_BUSINESS = '렌탈숲';
+  const USER_ROLE        = 'master';
+  const CURRENT_BUSINESS = 'ALL렌탈';
   const ANALYSIS_API_URL = 'settlement_manage_data.php';
 
   let ANALYSIS_BOOTING = true;
@@ -3734,10 +3735,10 @@ const apiUrl = 'settlement_manage_data.php';
 
 // PHP에서 역할 플래그 주입
 const USER_ROLE        = 'seller';
-const IS_MASTER        = false;
-const CAN_ADMIN_TAB    = false;
+const IS_MASTER        = true;
+const CAN_ADMIN_TAB    = true;
 const CAN_INVOICE_TAB  = true;
-const CURRENT_USER_ID  = 'sunghoon';
+const CURRENT_USER_ID  = 'admin';
 const CURRENT_BUSINESS = '렌탈숲';  // ★ 추가
 const DEFAULT_GROUP_MONTH = ''; // ★ 정산조회 기본 정산월
 const DEFAULT_INVOICE_MONTH_BASE = ''; // ★ 정산서 기본 월 베이스(예: 25-11)
