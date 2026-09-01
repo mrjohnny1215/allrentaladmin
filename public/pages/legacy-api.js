@@ -86,6 +86,36 @@
     let db = read();
 
     if (path === 'save_json.php') {
+      // 고객 접수 링크 제출 처리
+      if ((data.action === 'customer_submit' || data._source === 'customer_apply') && data.token) {
+        const link = db.applyLinks.find(x => x.token === data.token);
+        if (!link) return json({ success: false, message: '유효하지 않은 링크입니다.' });
+        if (link.status === '취소') return json({ success: false, message: '취소된 링크입니다.' });
+        if (link.status === '사용완료') return json({ success: false, message: '이미 접수가 완료된 링크입니다.' });
+        const customerPayload = typeof data.payload === 'string' ? JSON.parse(data.payload) : data.payload;
+        const row = Object.assign({}, customerPayload, { id: uid('sub'), created_at: now(), source: '고객접수', apply_token: data.token });
+        db.submissions.unshift(row);
+        productsOf(row).forEach((p, idx) => {
+          const rentalFee = Number(String(p.rental_fee || p.렌탈료 || '').replace(/[^0-9.-]/g, '') || 0);
+          const commissionRate = Number(p.commission_rate || p.commission || p.수수료 || 0);
+          const commission = Math.round(rentalFee * commissionRate);
+          db.settlements.unshift({
+            id: uid('set'), created_at: now(), settlement_month: (row.created_at || '').slice(0, 7),
+            partner_name: p.brand || p.브랜드 || row.brand || '', manager_name: row.manager || '',
+            brand: p.brand || p.브랜드 || row.brand || '', customer_name: row.customer_name || '',
+            customer_number: '', product_name: p.name || p.상품명 || '', model_name: p.model || p.모델명 || '',
+            regulation: p.regulation || p.규정 || '', contract: p.contract || p.약정 || '',
+            management: p.management || p.관리 || '', rental_fee: rentalFee, commission: commission,
+            commission_rate: commissionRate, product_seq: idx, application_id: row.id,
+            settlement_for: '관리자', is_finalized: false,
+          });
+        });
+        link.status = '사용완료';
+        link.events = link.events || [];
+        link.events.push({ type: 'submit', at: now(), payload: customerPayload });
+        write(db);
+        return json({ success: true, inserted: { brand: row.brand, customer_name: row.customer_name, contact: row.contact, product_name: (productsOf(row)[0] || {}).name || '' } });
+      }
       const row = Object.assign({}, data, { id: data.id || uid('sub'), created_at: now(), source: u.searchParams.get('_source') || '저장' });
       db.submissions.unshift(row);
       // ✅ 접수 저장 시 정산서에도 자동 동기화 (접수→정산 자동 반영)

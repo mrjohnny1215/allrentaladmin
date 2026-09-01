@@ -15,6 +15,7 @@
     { "source": "/assets/(.*)", "destination": "/assets/$1" },
     { "source": "/data/(.*)", "destination": "/data/$1" },
     { "source": "/pages/(.*)", "destination": "/pages/$1" },
+    { "source": "/apply/:token*", "destination": "/pages/apply.html" },
     { "source": "/((?!.*\\.).*)", "destination": "/index.html" }
   ]
 }
