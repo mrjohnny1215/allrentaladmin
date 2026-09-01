@@ -87,7 +87,36 @@
 
     if (path === 'save_json.php') {
       const row = Object.assign({}, data, { id: data.id || uid('sub'), created_at: now(), source: u.searchParams.get('_source') || '저장' });
-      db.submissions.unshift(row); write(db);
+      db.submissions.unshift(row);
+      // ✅ 접수 저장 시 정산서에도 자동 동기화 (접수→정산 자동 반영)
+      productsOf(row).forEach((p, idx) => {
+        const rentalFee = Number(String(p.rental_fee || p.렌탈료 || '').replace(/[^0-9.-]/g, '') || 0);
+        const commissionRate = Number(p.commission_rate || p.commission || p.수수료 || 0);
+        const commission = Math.round(rentalFee * commissionRate);
+        db.settlements.unshift({
+          id: uid('set'),
+          created_at: now(),
+          settlement_month: (row.created_at || '').slice(0, 7),
+          partner_name: p.brand || p.브랜드 || row.brand || '',
+          manager_name: row.manager || '',
+          brand: p.brand || p.브랜드 || row.brand || '',
+          customer_name: row.customer_name || '',
+          customer_number: '',
+          product_name: p.name || p.상품명 || '',
+          model_name: p.model || p.모델명 || '',
+          regulation: p.regulation || p.규정 || '',
+          contract: p.contract || p.약정 || '',
+          management: p.management || p.관리 || '',
+          rental_fee: rentalFee,
+          commission: commission,
+          commission_rate: commissionRate,
+          product_seq: idx,
+          application_id: row.id,
+          settlement_for: '관리자',
+          is_finalized: false,
+        });
+      });
+      write(db);
       const first = productsOf(row)[0] || {};
       return json({ success: true, inserted: { brand: row.brand, customer_name: row.customer_name, contact: row.contact, product_name: first.name || '' } });
     }

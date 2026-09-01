@@ -985,13 +985,13 @@ const promotionHeaderMap = {
 };
 
 const contractColumnMap = {
-    '3년': { contract: 6, management: 7, rentalFee: 8 },
-    '4년': { contract: 10, management: 11, rentalFee: 12 },
-    '5년': { contract: 14, management: 15, rentalFee: 16 },
-    '6년': { contract: 18, management: 19, rentalFee: 20 },
-    '7년': { contract: 22, management: 23, rentalFee: 24 },
-    '8년': { contract: 30, management: 31, rentalFee: 32 },
-    '9년': { contract: 34, management: 35, rentalFee: 36 }
+    '3년': { contract: 6, management: 7, rentalFee: 8, commission: 9 },
+    '4년': { contract: 10, management: 11, rentalFee: 12, commission: 13 },
+    '5년': { contract: 14, management: 15, rentalFee: 16, commission: 17 },
+    '6년': { contract: 18, management: 19, rentalFee: 20, commission: 21 },
+    '7년': { contract: 22, management: 23, rentalFee: 24, commission: 25 },
+    '8년': { contract: 30, management: 31, rentalFee: 32, commission: 33 },
+    '9년': { contract: 34, management: 35, rentalFee: 36, commission: 37 }
 };
 
 function getSelectedBrandValue() {
@@ -1415,6 +1415,7 @@ function caPrefillClearProductInfo(container) {
     container.find('.contract').val('');
     container.find('.management').val('');
     container.find('.rental-fee').val('');
+    container.find('.commission-rate').val('');
 
     container.find('.promotion-request-yes').prop('checked', false);
     container.find('.promotion-request-no').prop('checked', true);
@@ -1432,6 +1433,21 @@ function caPrefillApplyProductInfo(container, data, matchedRow) {
     const rentalFee = caPrefillValue(data.rental_fee);
     const promotionText = caPrefillValue(data.promotion_text);
 
+    // ✅ 수수료율: 상담에서 전달받았으면 사용, 없으면 worksheet에서 찾기
+    let commissionRate = parseFloat(data.commission_rate) || 0.90;
+    if (matchedRow && worksheetData && worksheetData[0]) {
+        const yearKey = extractContractYear(contract);
+        const pairInfo = contractColumnMap[yearKey];
+        if (pairInfo && pairInfo.commission !== undefined && matchedRow[pairInfo.commission]) {
+            const commStr = String(matchedRow[pairInfo.commission]).replace(/[^0-9.]/g, '');
+            if (commStr) commissionRate = parseFloat(commStr);
+        }
+    }
+    // ✅ 수수료율을 hidden 필드에 저장 (저장 시 productObj에 포함)
+    if (!container.find('.commission-rate').length) {
+        container.append('<input type="hidden" class="commission-rate" name="commission_rate">');
+    }
+
     container.find('.product').val(product);
     updateModelName(container, product);
     container.find('.model').val(model);
@@ -1448,6 +1464,7 @@ function caPrefillApplyProductInfo(container, data, matchedRow) {
 
     updateRentalFeeAutocomplete(container, product, regulation, contract, management);
     container.find('.rental-fee').val(rentalFee);
+    container.find('.commission-rate').val(commissionRate);
 
     const promoYes = container.find('.promotion-request-yes');
     const promoNo = container.find('.promotion-request-no');
@@ -2642,6 +2659,7 @@ document.addEventListener("DOMContentLoaded", function () {
             promotion_request: promotionRequest || "없음",
             promotion: promo,
             rental_fee: fee,
+            commission_rate: parseFloat(group.querySelector(".commission-rate")?.value || group.querySelector(".commission_rate")?.value) || 0.90,
             pre_visit: !!preVisit,
             hard_construction: !!hardConstruction,
             product_collect: !!productCollect,
@@ -3457,6 +3475,7 @@ if (baseGroup.length === 0) {
         container.find(".contract").val(data.contract || "").trigger("change");
         container.find(".management").val(data.management || "").trigger("change");
         container.find(".rental-fee").val(data.rental_fee || "");
+        container.find(".commission-rate").val(data.commission_rate || "");
 
         // 프로모션
         const promoYes = container.find(".promotion-request-yes");
