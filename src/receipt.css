@@ -1,0 +1,426 @@
+/* ============================================================
+   접수 (Receipt) 페이지 스타일
+   ============================================================ */
+
+.receipt-root {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.receipt-root h2 {
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 24px;
+  color: #111827;
+}
+
+/* 레이아웃: 메인 필드 + 우측 미리보기 */
+.receipt-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .receipt-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 섹션 */
+.receipt-section {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #374151;
+}
+
+/* 필드 */
+.field-group {
+  margin-bottom: 12px;
+}
+
+.field-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.field-label.required::after {
+  content: ' *';
+  color: #ef4444;
+}
+
+.field-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 640px) {
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.input-x {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.input-x:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 237, 0.15);
+}
+
+.input-x[readOnly] {
+  background: #f9fafb;
+}
+
+/* 버튼 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 16px;
+  transition: all 0.2s ease;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary-x {
+  background: #2563eb;
+  color: #fff;
+}
+
+.btn-primary-x:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.btn-ghost-x {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+
+.btn-ghost-x:hover {
+  background: #e5e7eb;
+}
+
+.btn-outline-x {
+  background: transparent;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+}
+
+.btn-outline-x:hover {
+  background: #eff6ff;
+}
+
+/* 레이아웃 버튼 영역 */
+.receipt-actions,
+.receipt-submit {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.receipt-submit {
+  margin-top: 24px;
+}
+
+/* 이메일 입력 */
+.email-input {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.email-input span {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* 주소 검색 */
+.address-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.find-address-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* 제품 검색 */
+.product-search {
+  position: relative;
+}
+
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 100;
+  margin-top: 2px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.search-result-item {
+  width: 100%;
+  padding: 8px 12px;
+  text-align: left;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.search-result-item:hover {
+  background: #f3f4f6;
+}
+
+.search-name {
+  display: block;
+  font-weight: 700;
+  color: #111827;
+}
+
+.search-model {
+  display: block;
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+/* 제품 정보 카드 */
+.product-info-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+  margin-top: 12px;
+}
+
+.product-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.product-remove-btn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.product-info-grid {
+  display: grid;
+  gap: 10px;
+  font-size: 14px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.product-info-grid div {
+  display: block;
+}
+
+.add-product-btn {
+  margin-top: 12px;
+  padding: 10px 16px;
+  border: 1px dashed #93c5fd;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+}
+
+.add-product-btn:hover {
+  background: #dbeafe;
+}
+
+/* 색상 선택 */
+.color-selector {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.color-selector button {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.color-selector button.on {
+  border-color: #2563eb;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+/* 라디오 / 체크박스 */
+.radio-group,
+.checkbox-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 8px;
+}
+
+.radio-item,
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* 미리보기 */
+.receipt-preview {
+  position: sticky;
+  top: 24px;
+  height: fit-content;
+}
+
+.preview-container {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.preview-title {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #374151;
+}
+
+.preview-text {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #374151;
+  white-space: pre-wrap;
+  word-break: keep-all;
+  margin: 0;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  min-height: 200px;
+}
+
+/* 모달 (공통) */
+.modal-veil {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.modal-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.modal-topbar-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #374151;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.modal-close:hover {
+  color: #6b7280;
+}
+
+.modal-body {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* 모바일 */
+@media (max-width: 768px) {
+  .receipt-root { padding: 16px; }
+  .receipt-layout { grid-template-columns: 1fr; }
+  .receipt-preview { position: static; }
+}

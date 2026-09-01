@@ -1,85 +1,399 @@
-import React, { useState, useEffect } from 'react'
+/* ============================================================
+   상담 (Counsel) 페이지
+   - allnup.com 상담 기능 분석 결과 재구현
+   - 상품 DB에서 실제 검색 → 상품 목록 → 상세 모달 → 접수 버튼
+   - allnup에서 확인한 UI/UX 흐름을 복제하되
+     기존 프로젝트의 디자인 시스템(catalog.css)을 유지
+   ============================================================ */
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
+import './catalog.css'
 
-const BRANDS = ['코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', 'LG', '웰스', '세스코']
-const ESTIMATE_KEY = 'allrental_estimate_drafts'
+const CATEGORIES = ['전체', '정수기', '공기청정기', '비데', '매트리스', '안마의자']
+const BRANDS = ['전체', '코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', 'LG', '웰스', '세스코']
+const CONTRACTS = ['전체', '신규', '보상', '신규/후결합', '보상/후결합', '신규/동시구매', '보상/동시구매']
+const MGMT_TYPES = ['전체', '방문관리', '셀프관리', '자가관리']
+const YEARS = ['전체', '3년', '4년', '5년', '6년', '7년', '9년', '10년']
 
-export default function Counsel() {
-  const [mode, setMode] = useState('simple')
-  const [brand, setBrand] = useState('')
-  const [keyword, setKeyword] = useState('')
-  const [list, setList] = useState([])
-  const [form, setForm] = useState({ name: '', phone: '', brand: '', memo: '' })
-  const [cart, setCart] = useState([])
+const NO_IMG = '/assets/goods_image/no_image.jpg'
+const won = (n) => (n ? Number(n).toLocaleString('ko-KR') : '0')
 
+/* 상품명/모델명에서 브랜드 추출 */
+function extractBrand(p = {}) {
+  const b = p.brand || ''
+  if (BRANDS.includes(b)) return b
+  for (const x of BRANDS) if (x !== '전체' && (p.name || '').includes(x)) return x
+  return b || '기타'
+}
+
+/* 가격 파싱 */
+function parsePrice(s) {
+  return parseInt(String(s || '0').replace(/[^0-9]/g, ''), 10) || 0
+}
+
+/* 대표 렌탈료 (신규/5년 우선) */
+function representativeFee(matrix = []) {
+  if (!matrix || !matrix.length) return 0
+  const pick = matrix.find(r => r.contract === '신규' && r.years === '5년')
+  return pick ? (pick.monthly_fee || 0) : (matrix[0]?.monthly_fee || 0)
+}
+
+/* ======================== 카드 썸네일 ======================== */
+function CardSlideshow({ images, alt, active }) {
+  const list = images && images.length ? images.slice(0, 6) : [NO_IMG]
+  const [idx, setIdx] = useState(0)
+  const [hover, setHover] = useState(false)
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem('allrental_counsel')
-      if (raw) setList(JSON.parse(raw))
-    } catch {}
-  }, [])
+    if (list.length < 2) return
+    const delay = hover || active ? 900 : 1800
+    const t = setInterval(() => setIdx((i) => (i + 1) % list.length), delay)
+    return () => clearInterval(t)
+  }, [list.length, hover, active])
+  return (
+    <div
+      className="pcard-thumb"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      {list.map((src, i) => (
+        <img
+          key={src + i}
+          src={src}
+          alt={`${alt} ${i + 1}`}
+          className={i === idx ? 'on' : ''}
+          loading={i === 0 ? 'eager' : 'lazy'}
+          decoding="async"
+          onError={(e) => { e.currentTarget.src = NO_IMG }}
+        />
+      ))}
+      {list.length > 1 && (
+        <div className="thumb-dots">
+          {list.map((_, i) => <i key={i} className={i === idx ? 'on' : ''} />)}
+        </div>
+      )}
+    </div>
+  )
+}
 
-  const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
-  const add = (e) => {
-    e.preventDefault()
-    if (!form.name || !form.phone) return alert('이름과 전화번호는 필수입니다.')
-    if (brand && form.brand !== brand) return alert('브랜드가 일치하지 않습니다.')
-    const item = { ...form, id: Date.now().toString(), createdAt: new Date().toISOString() }
-    const next = [item, ...list]
-    setList(next)
-    localStorage.setItem('allrental_counsel', JSON.stringify(next))
-    setForm({ name: '', phone: '', brand: '', memo: '' })
-  }
-  const pushEstimate = (item) => {
-    const draft = { customer: item.name, phone: item.phone, brand: item.brand, items: [], createdAt: new Date().toISOString() }
-    const next = [draft, ...cart]
-    setCart(next)
-    localStorage.setItem(ESTIMATE_KEY, JSON.stringify(next))
-    alert('견적서에 담았습니다.')
-  }
+/* ======================== 상담 상세 모달 ======================== */
+function CounselDetailModal({ p, onClose, onReceive, commissionOn }) {
+  if (!p) return null
+  const matrix = p.pricing_matrix || []
+  const rep = matrix[0] || {}
+  const effMonthly = rep.monthly_fee || p.min_monthly_fee || 0
 
-  const filtered = list.filter((item) => {
-    if (brand && item.brand !== brand) return false
-    if (!keyword) return true
-    const hay = `${item.name} ${item.phone} ${item.memo}`.toLowerCase()
-    return hay.includes(keyword.toLowerCase())
-  })
+  // 렌탈 옵션 그룹화 (규정 · 관리 조합)
+  const optionGroups = useMemo(() => {
+    const groups = {}
+    matrix.forEach((r, i) => {
+      const key = `${r.rule_raw || r.contract || ''} · ${r.mgmt_cycle || r.mgmt || ''}`
+      if (!groups[key]) groups[key] = []
+      groups[key].push({ ...r, _idx: i })
+    })
+    return groups
+  }, [matrix])
 
   return (
-    <div style={{ padding: 24 }}>
-      <h2>상담</h2>
-      <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
-        <button onClick={() => setMode('simple')}>간단 모드</button>
-        <button onClick={() => setMode('detail')}>상세 모드</button>
+    <div className="modal-veil" onClick={onClose}>
+      <div className="modal-card fullscreen" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-topbar">
+          <button className="modal-back" onClick={onClose}>← 뒤로</button>
+          <div className="modal-topbar-title">{p.brand} · {p.name} · {p.model_code}</div>
+          <button className="modal-close" onClick={onClose}>×</button>
+        </div>
+        <div className="modal-body" style={{ overflowY: 'auto', padding: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 16, maxWidth: 1000, margin: '0 auto' }}>
+            {/* 좌: 이미지 + 기본 정보 */}
+            <div>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                {p.images && p.images.length > 0 ? p.images.map((img, i) => (
+                  <img
+                    key={i}
+                    src={img}
+                    alt={`${p.name} ${i + 1}`}
+                    style={{ width: 80, height: 80, objectFit: 'contain', borderRadius: 8, border: '1px solid #e5e7eb' }}
+                  />
+                )) : <img src={NO_IMG} alt={p.name} style={{ width: 80, height: 80, objectFit: 'contain', borderRadius: 8 }} />}
+              </div>
+            </div>
+
+            {/* 메타 정보 */}
+            <div style={{ display: 'grid', gap: 8, fontSize: 14 }}>
+              <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+                <div><b style={{ color: '#6b7280' }}>브랜드</b> {p.brand}</div>
+                <div><b style={{ color: '#6b7280' }}>상품명</b> {p.name}</div>
+                <div><b style={{ color: '#6b7280' }}>모델명</b> {p.model_code || '-'}</div>
+                <div><b style={{ color: '#6b7280' }}>제품종류</b> {p.category || '-'}</div>
+                {p.colors && p.colors.length > 1 && (
+                  <div><b style={{ color: '#6b7280' }}>색상</b> {p.colors.join(', ')}</div>
+                )}
+              </div>
+
+              {/* 가격 카드 */}
+              <div style={{
+                background: '#eff6ff', border: '1px solid #dbeafe', borderRadius: 12,
+                padding: '14px 16px', marginTop: 8
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: '#64748b' }}>
+                  <span>월 렌탈료</span>
+                  <span>수수료 (사은)</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
+                  <span style={{ fontSize: 24, fontWeight: 900, color: '#1d4ed8' }}>{won(effMonthly)}<small style={{ fontSize: 13, fontWeight: 700, color: '#64748b' }}>원</small></span>
+                  {commissionOn && rep.commission && (
+                    <span style={{ fontSize: 24, fontWeight: 900, color: '#ea580c' }}>{won(rep.commission)}<small style={{ fontSize: 13, fontWeight: 700, color: '#64748b' }}>원</small></span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* 렌탈 옵션 테이블 */}
+            {matrix.length > 0 && (
+              <div style={{ marginTop: 8 }}>
+                <h4 style={{ margin: '0 0 8px', fontSize: 14, fontWeight: 800 }}>렌탈료 정보</h4>
+                <div style={{ overflowX: 'auto' }}>
+                  <table className="matrix-table" style={{ fontSize: 12.5 }}>
+                    <thead>
+                      <tr>
+                        <th>규정</th><th>계약</th><th>관리주기</th>
+                        <th>약정기간</th><th>월 렌탈료</th>
+                        {commissionOn && <th>수수료</th>}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {matrix.map((r, i) => (
+                        <tr key={i}>
+                          <td>{r.rule_raw || r.contract || '-'}</td>
+                          <td>{r.contract || '-'}</td>
+                          <td>{r.mgmt || '-'}</td>
+                          <td>{r.mgmt_cycle || '-'}</td>
+                          <td><b>{won(r.monthly_fee)}원</b></td>
+                          {commissionOn && <td>{r.commission ? won(r.commission) + '원' : '-'}</td>}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* 접수 버튼 */}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: 8 }}>
+              <button className="btn btn-ghost-x" onClick={onClose} style={{ flex: 1, maxWidth: 120 }}>취소</button>
+              <button
+                className="btn btn-primary-x"
+                style={{ flex: 1, maxWidth: 200 }}
+                onClick={() => onReceive(p)}
+              >접수</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
-        <select value={brand} onChange={(e) => setBrand(e.target.value)}>
-          <option value="">브랜드 전체</option>
-          {BRANDS.map((b) => <option key={b} value={b}>{b}</option>)}
+    </div>
+  )
+}
+
+/* ======================== 메인 상담 페이지 ======================== */
+export default function Counsel() {
+  const navigate = useNavigate()
+  const [all, setAll] = useState(null)
+  const [err, setErr] = useState('')
+  const [q, setQ] = useState('')
+  const [cat, setCat] = useState('전체')
+  const [brand, setBrand] = useState('전체')
+  const [contract, setContract] = useState('전체')
+  const [mgmt, setMgmt] = useState('전체')
+  const [year, setYear] = useState('전체')
+  const [priceMin, setPriceMin] = useState('')
+  const [priceMax, setPriceMax] = useState('')
+  const [sel, setSel] = useState(null)
+  const [commissionOn, setCommissionOn] = useState(false)
+
+  useEffect(() => {
+    fetch('/data/products.json', { cache: 'no-store' })
+      .then((r) => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json() })
+      .then((data) => setAll(data))
+      .catch((e) => setErr(String(e)))
+  }, [])
+
+  const list = useMemo(() => {
+    if (!all) return []
+    const kw = q.trim().toLowerCase()
+    return all.filter((p) => {
+      // 카테고리
+      if (cat !== '전체' && p.category !== cat) return false
+      // 브랜드
+      const b = extractBrand(p)
+      if (brand !== '전체' && b !== brand) return false
+      // 계약
+      if (contract !== '전체' && !(p.pricing_matrix || []).some(r => r.contract === contract)) return false
+      // 관리
+      if (mgmt !== '전체' && !(p.pricing_matrix || []).some(r => (r.mgmt || '') === mgmt)) return false
+      // 약정기간
+      if (year !== '전체' && !(p.pricing_matrix || []).some(r => r.years === year)) return false
+      // 가격 범위
+      const price = representativeFee(p.pricing_matrix) || parsePrice(p.min_monthly_fee)
+      if (priceMin && price < parseInt(priceMin, 10)) return false
+      if (priceMax && price > parseInt(priceMax, 10)) return false
+      // 키워드 (상품명, 모델명, 브랜드, 태그)
+      if (kw) {
+        const hay = `${p.name || ''} ${p.model_code || ''} ${p.brand || ''} ${(p.tags || []).join(' ')}`.toLowerCase()
+        if (!hay.includes(kw)) return false
+      }
+      return true
+    })
+  }, [all, q, cat, brand, contract, mgmt, year, priceMin, priceMax])
+
+  const resetFilters = () => {
+    setCat('전체'); setBrand('전체'); setContract('전체')
+    setMgmt('전체'); setYear('전체'); setPriceMin(''); setPriceMax('')
+  }
+
+  const handleReceive = (product) => {
+    // 상품 정보를 sessionStorage에 저장하고 접수 페이지로 이동
+    sessionStorage.setItem('allrental_selected_product', JSON.stringify(product))
+    navigate('/admin/reception')
+  }
+
+  if (err) {
+    return (
+      <div className="splash"><div className="box">
+        <div className="logo">!</div>
+        <p>데이터 로드 실패: {err}</p>
+      </div></div>
+    )
+  }
+  if (!all) {
+    return (
+      <div className="splash"><div className="box splash-anim">
+        <div className="splash-stage">
+          <div className="splash-ring splash-ring-1" />
+          <div className="splash-ring splash-ring-2" />
+          <div className="splash-shine" />
+          <svg className="splash-logo" viewBox="0 0 100 100" width="76" height="76" aria-hidden="true">
+            <defs>
+              <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#fde68a"/><stop offset="45%" stopColor="#f59e0b"/><stop offset="100%" stopColor="#d97706"/>
+              </linearGradient>
+              <linearGradient id="sg2" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stopColor="#fbbf24"/><stop offset="100%" stopColor="#fcd34d"/>
+              </linearGradient>
+            </defs>
+            <path fill="none" stroke="url(#sg)" strokeWidth="6.5" strokeLinecap="round"
+              d="M28 36 C12 36 12 64 28 64 C44 64 44 36 28 36 C12 36 12 64 28 64 M72 36 C56 36 56 64 72 64 C88 64 88 36 72 36 C56 36 56 64 72 64"/>
+            <circle cx="50" cy="50" r="3" fill="url(#sg2)" />
+          </svg>
+        </div>
+        <div className="splash-brand">ALL렌탈</div>
+        <div className="splash-bar"><span /></div>
+        <p>상품을 검색하는 중...</p>
+      </div></div>
+    )
+  }
+
+  return (
+    <div className="cat-root">
+      <div className="cat-header">
+        <h1>상담</h1>
+        <div className="sub">PREMIUM RENTAL</div>
+        <div className="count">{list.length}개 상품</div>
+      </div>
+
+      <div className="cat-toolbar">
+        <input
+          className="cat-search"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="상품명 · 모델명 · 브랜드 · 태그 검색 (예: 아이콘3, CHP-7220N)"
+        />
+        <select className="cat-sort" value={cat} onChange={(e) => setCat(e.target.value)} aria-label="카테고리">
+          {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
-        <input placeholder="검색어" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
       </div>
-      <form onSubmit={add} style={{ display: 'grid', gap: 10, maxWidth: 720 }}>
-        <input name="name" placeholder="고객명" value={form.name} onChange={onChange} />
-        <input name="phone" placeholder="전화번호" value={form.phone} onChange={onChange} />
-        <input name="brand" placeholder="브랜드" value={form.brand} onChange={onChange} />
-        <textarea name="memo" placeholder="상담 내용" value={form.memo} onChange={onChange} />
-        <button type="submit">등록</button>
-      </form>
-      <hr style={{ margin: '24px 0' }} />
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead><tr><th>고객명</th><th>전화번호</th><th>브랜드</th><th>등록일</th><th>견적담기</th></tr></thead>
-        <tbody>
-          {filtered.map((item) => (
-            <tr key={item.id}>
-              <td>{item.name}</td>
-              <td>{item.phone}</td>
-              <td>{item.brand}</td>
-              <td>{new Date(item.createdAt).toLocaleString('ko-KR')}</td>
-              <td><button onClick={() => pushEstimate(item)}>견적담기</button></td>
-            </tr>
+
+      {/* 스마트 필터 칩 */}
+      <div className="smart-filter-box" style={{ padding: '12px 16px', background: '#fff', borderBottom: '1px solid #e5e7eb' }}>
+        <div className="smart-filter-title">🔍 검색 필터</div>
+        <div className="chip-row">
+          <span className="filter-label">브랜드</span>
+          {BRANDS.map((b) => (
+            <button key={b} className={`chip ${brand === b ? 'active' : ''}`} onClick={() => setBrand(b)}>{b}</button>
           ))}
-        </tbody>
-      </table>
+        </div>
+        <div className="chip-row">
+          <span className="filter-label">계약</span>
+          {CONTRACTS.map((c) => (
+            <button key={c} className={`chip ${contract === c ? 'active' : ''}`} onClick={() => setContract(c)}>{c}</button>
+          ))}
+        </div>
+        <div className="chip-row">
+          <span className="filter-label">관리</span>
+          {MGMT_TYPES.map((m) => (
+            <button key={m} className={`chip ${mgmt === m ? 'active' : ''}`} onClick={() => setMgmt(m)}>{m}</button>
+          ))}
+        </div>
+        <div className="chip-row">
+          <span className="filter-label">약정기간</span>
+          {YEARS.map((y) => (
+            <button key={y} className={`chip ${year === y ? 'active' : ''}`} onClick={() => setYear(y)}>{y}</button>
+          ))}
+        </div>
+        {/* 가격 범위 */}
+        <div className="chip-row">
+          <span className="filter-label">렌탈료</span>
+          <input
+            type="number" placeholder="최소" value={priceMin}
+            onChange={(e) => setPriceMin(e.target.value)}
+            style={{ width: 100, padding: '6px 8px', border: '1px solid #d1d5db', borderRadius: 8, fontSize: 13 }}
+          />
+          <span style={{ fontSize: 12, color: '#9ca3af' }}>~</span>
+          <input
+            type="number" placeholder="최대" value={priceMax}
+            onChange={(e) => setPriceMax(e.target.value)}
+            style={{ width: 100, padding: '6px 8px', border: '1px solid #d1d5db', borderRadius: 8, fontSize: 13 }}
+          />
+          <span style={{ fontSize: 12, color: '#9ca3af' }}>원</span>
+        </div>
+        <button className="btn-ghost-x" onClick={resetFilters} style={{ fontSize: 12, padding: '6px 12px' }}>필터 초기화</button>
+      </div>
+
+      {/* 상품 목록 */}
+      {list.length === 0 ? (
+        <div className="empty-state">조건에 맞는 상품이 없습니다.</div>
+      ) : (
+        <>
+          <div className="cat-grid">
+            {list.map((p) => (
+              <button
+                key={p.id}
+                className={`pcard ${sel?.id === p.id ? 'selected' : ''}`}
+                onClick={() => setSel(p)}
+              >
+                <CardSlideshow images={p.images} alt={p.name} active={sel?.id === p.id} />
+                <div className="pcard-body">
+                  <div className="pcard-brand">{p.brand}</div>
+                  <div className="pcard-name">{p.name}</div>
+                  <div className="pcard-model">{p.model_code || ' '}</div>
+                  <div className="pcard-fee is-fee">
+                    <span className="tag">월</span>
+                    <span className="val">{won(representativeFee(p.pricing_matrix))}</span>
+                    <span className="won">원~</span>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+          {/* 상세 모달 */}
+          {sel && (
+            <CounselDetailModal
+              p={sel}
+              commissionOn={commissionOn}
+              onClose={() => setSel(null)}
+              onReceive={handleReceive}
+            />
+          )}
+        </>
+      )}
     </div>
   )
 }
