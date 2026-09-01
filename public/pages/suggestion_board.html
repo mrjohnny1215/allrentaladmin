@@ -17,7 +17,7 @@
     <h5 class="card-title pc-only">공지 / 문의 / 건의</h5>
     <h5 class="card-title mobile-only">검색</h5>
     <div class="card-box">
-      <form class="board-search-form" method="get" autocomplete="off">
+      <form class="board-search-form" method="get" action="suggestion_board_list.php" autocomplete="off">
           <div class="board-search-row">
               <select name="type" class="form-select board-search-type">
                   <option value="user_id" >ID</option>
@@ -83,86 +83,19 @@
                 </tr>
             </thead>
             <tbody>
-                                                                                    <tr>
-                            <td>3</td>
-                            <td>26-07-30</td>
-                            <td class="text-start board-post-title-cell">
-                                <a href="#" class="view-link board-post-link" data-id="119">
-                                    <span class="badge bg-danger">공지</span>                                     <span class="board-new-label">NEW</span>                                     8월 프로모션 적용 현황                                                                    </a>
-                            </td>
-                            <td>eve****</td>
-                        </tr>
-                                                                    <tr>
-                            <td>2</td>
-                            <td>26-07-20</td>
-                            <td class="text-start board-post-title-cell">
-                                <a href="#" class="view-link board-post-link" data-id="118">
-                                    <span class="badge bg-danger">공지</span>                                                                         📌코웨이 7월 총주문 마감안내📌                                                                    </a>
-                            </td>
-                            <td>eve****</td>
-                        </tr>
-                                                                    <tr>
-                            <td>1</td>
-                            <td>26-06-29</td>
-                            <td class="text-start board-post-title-cell">
-                                <a href="#" class="view-link board-post-link" data-id="114">
-                                    <span class="badge bg-danger">공지</span>                                                                         📌7월 코웨이 프로모션 실시간 본사 공지사항                                                                    </a>
-                            </td>
-                            <td>eve****</td>
-                        </tr>
-                                                </tbody>
+              <tr><td colspan="4" class="text-center text-muted">로딩 중...</td></tr>
+            </tbody>
         </table>
     </div>
 
     <div class="mobile-only">
                     <div class="board-mobile-list">
-                                                  <a href="#" class="board-mobile-card view-link" data-id="119">
-                      <div class="board-mobile-card-top">
-                          <div class="board-mobile-card-title">
-                              <span class="badge bg-danger">공지</span>                               <span class="board-new-label">NEW</span>                               8월 프로모션 적용 현황                          </div>
-                          <div class="board-mobile-card-date">26-07-30</div>
-                      </div>
-
-                      <div class="board-mobile-card-meta">
-                          <div class="board-mobile-card-writer">eve****</div>
-                          <div class="board-mobile-card-count">
-                              댓글 없음                          </div>
-                      </div>
-                  </a>
-                                                  <a href="#" class="board-mobile-card view-link" data-id="118">
-                      <div class="board-mobile-card-top">
-                          <div class="board-mobile-card-title">
-                              <span class="badge bg-danger">공지</span>                                                             📌코웨이 7월 총주문 마감안내📌                          </div>
-                          <div class="board-mobile-card-date">26-07-20</div>
-                      </div>
-
-                      <div class="board-mobile-card-meta">
-                          <div class="board-mobile-card-writer">eve****</div>
-                          <div class="board-mobile-card-count">
-                              댓글 없음                          </div>
-                      </div>
-                  </a>
-                                                  <a href="#" class="board-mobile-card view-link" data-id="114">
-                      <div class="board-mobile-card-top">
-                          <div class="board-mobile-card-title">
-                              <span class="badge bg-danger">공지</span>                                                             📌7월 코웨이 프로모션 실시간 본사 공지사항                          </div>
-                          <div class="board-mobile-card-date">26-06-29</div>
-                      </div>
-
-                      <div class="board-mobile-card-meta">
-                          <div class="board-mobile-card-writer">eve****</div>
-                          <div class="board-mobile-card-count">
-                              댓글 없음                          </div>
-                      </div>
-                  </a>
+                      <div class="text-center text-muted py-3">로딩 중...</div>
                           </div>
             </div>
 
     <nav class="board-pagination-wrap">
-      <ul class="pagination justify-content-center">
-        <li class="page-item active">
-                        <a class="page-link" href="?page=1&type=&keyword=">1</a>
-                      </li>      </ul>
+      <ul class="pagination justify-content-center" id="boardPagination"></ul>
     </nav>
   </div>
 
@@ -170,7 +103,7 @@
     <!-- 글쓰기 모달 -->
     <div class="modal fade" id="writeModal" tabindex="-1">
         <div class="modal-dialog modal-lg board-modal-dialog">
-            <form method="post" class="modal-content board-modal-form">
+            <form method="post" action="suggestion_board_write.php" class="modal-content board-modal-form">
                 <div class="modal-header">
                     <h5 class="modal-title">문의/건의 작성</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>

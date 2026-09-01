@@ -4,7 +4,7 @@
   const nativeFetch = window.fetch.bind(window);
   const now = () => new Date().toISOString();
   const uid = (p='r') => p + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2,8);
-  const defaults = () => ({ submissions: [], settlements: [], estimates: [], applyLinks: [], cart: [], faq: [], comments: [], materials: {} });
+  const defaults = () => ({ submissions: [], settlements: [], estimates: [], applyLinks: [], cart: [], faq: [], comments: [], boardPosts: [], materials: {} });
   const read = () => {
     try { return Object.assign(defaults(), JSON.parse(localStorage.getItem(KEY) || '{}')); }
     catch (_) { return defaults(); }
@@ -264,7 +264,11 @@
 
     if (path === 'suggestion_board_view.php') {
       const postId=u.searchParams.get('id')||'1';
-      return html('<div class="modal-header"><h5 class="modal-title">공지·문의 상세</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div id="comment-list">'+commentsHtml(db,postId)+'</div><input type="hidden" name="parent_id" value=""><textarea name="comment" class="form-control mt-3"></textarea><button id="submit-comment" type="button" class="btn btn-primary mt-2">댓글작성</button></div>');
+      const post = db.boardPosts.find(p => String(p.id) === String(postId));
+      if (!post) return html('<div class="modal-header"><h5 class="modal-title">공지·문의 상세</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body">게시글을 찾을 수 없습니다.</div>');
+      const comments = db.comments.filter(c => String(c.post_id) === String(postId));
+      const commentCount = comments.length;
+      return html('<div class="modal-header"><h5 class="modal-title">' + esc(post.title) + '</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><small class="text-muted">' + esc(new Date(post.created_at).toLocaleString('ko-KR')) + ' | ' + esc(post.author) + ' | 댓글 ' + commentCount + '개</small><hr><div>' + esc(post.content).replace(/\n/g, '<br>') + '</div><hr><div id="comment-list">' + commentsHtml(db, postId) + '</div><input type="hidden" name="parent_id" value=""><textarea name="comment" class="form-control mt-3"></textarea><button id="submit-comment" type="button" class="btn btn-primary mt-2">댓글작성</button>' + (post.author === '관리자' ? '<button type="button" class="btn btn-danger btn-sm mt-2 ms-2" onclick="if(confirm(\'정말 삭제하시겠습니까?\')){fetch(\'suggestion_board_delete.php\',{method:\'POST\',headers:{\'Content-Type\':\'application/x-www-form-urlencoded\'},body:new URLSearchParams({id:\'' + esc(post.id) + '\'})}).then(()=>location.reload());}">삭제</button>' : '') + '</div>');
     }
     if (path === 'suggestion_comment_ajax.php') {
       const postId=data.post_id||'1';
@@ -273,6 +277,41 @@
     }
     if (path === 'suggestion_comment_delete.php') {
       db.comments=db.comments.filter(x=>String(x.id)!==String(data.id));write(db);return html('ok');
+    }
+    if (path === 'suggestion_board_write.php') {
+      const post = {
+        id: uid('board'),
+        created_at: now(),
+        title: String(data.title || '').trim(),
+        contact: String(data.contact || '').trim(),
+        email: String(data.email || '').trim(),
+        content: String(data.content || '').trim(),
+        author: String(data.author || '익명'),
+        type: String(data.type || '문의')
+      };
+      if (!post.title || !post.content) return json({ success: false, message: '제목과 내용을 입력해주세요.' });
+      db.boardPosts.unshift(post);
+      write(db);
+      return json({ success: true, id: post.id, message: '등록되었습니다.' });
+    }
+    if (path === 'suggestion_board_list.php') {
+      const q = String(data.keyword || u.searchParams.get('keyword') || '').toLowerCase();
+      let rows = db.boardPosts.slice();
+      if (q) rows = rows.filter(p => (p.title + ' ' + p.content + ' ' + p.author).toLowerCase().includes(q));
+      const limit = Number(data.limit || 20);
+      const page = Number(data.page || 1);
+      const start = (page - 1) * limit;
+      const paged = rows.slice(start, start + limit);
+      const commentCounts = {};
+      db.comments.forEach(c => { commentCounts[c.post_id] = (commentCounts[c.post_id] || 0) + 1; });
+      return json({ success: true, rows: paged, total: rows.length, page, pages: Math.max(1, Math.ceil(rows.length / limit)), commentCounts });
+    }
+    if (path === 'suggestion_board_delete.php') {
+      const id = String(data.id || '');
+      db.boardPosts = db.boardPosts.filter(p => String(p.id) !== id);
+      db.comments = db.comments.filter(c => String(c.post_id) !== id);
+      write(db);
+      return json({ success: true });
     }
 
     return nativeFetch(input, options);
