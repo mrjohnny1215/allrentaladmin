@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import AllRentalLogo from './AllRentalLogo'
 
 const MENUS = [
   { key: 'counsel', label: '상담', icon: 'counsel', type: 'react' },
@@ -77,7 +78,7 @@ export default function Layout() {
 
       {/* 메인 영역 */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, marginLeft: 0 }}>
-        <header style={{ height: 56, background: 'var(--navy)', color: '#fff', display: 'flex', alignItems: 'center', padding: '0 1.25rem', gap: 12 }}>
+        <header style={{ height: 64, background: 'var(--navy)', color: '#fff', display: 'flex', alignItems: 'center', padding: '0 1.25rem', gap: 12 }}>
           {/* 햄버거 버튼 (모바일에서만 보임) */}
           <button
             onClick={() => setSidebarOpen(v => !v)}
@@ -85,7 +86,7 @@ export default function Layout() {
             style={{ display: 'none', background: 'transparent', border: 'none', color: '#fff', fontSize: '1.4rem', cursor: 'pointer', padding: 0, marginRight: 4 }}
             className="hamburger-btn"
           >☰</button>
-          <span style={{ fontWeight: 700 }}>WEB&amp;ON + 상담</span>
+          <AllRentalLogo />
           <span style={{ marginLeft: 'auto', fontSize: '0.85rem', opacity: 0.8 }}>{active.label}</span>
         </header>
         <main style={{ flex: 1, minHeight: 0, background: 'var(--bg)' }}>

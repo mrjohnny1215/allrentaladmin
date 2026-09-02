@@ -7,6 +7,7 @@ import { img } from './lib/imageUrl'
 import './catalog.css'
 import { KAKAO_CHANNEL_URL, COMPANY } from './config'
 import { useAuth, applyFeeRate } from './auth.jsx'
+import AllRentalLogo from './components/AllRentalLogo'
 
 const CATEGORIES = ['정수기', '공기청정기', '비데', '매트리스', '안마의자']
 const BRANDS = ['전체', '코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', 'LG', '웰스', '세스코']
@@ -701,28 +702,7 @@ export default function Catalog() {
     return (
       <div className="splash">
         <div className="box splash-anim">
-          <div className="splash-stage">
-            <div className="splash-ring splash-ring-1" />
-            <div className="splash-ring splash-ring-2" />
-            <div className="splash-shine" />
-            <svg className="splash-logo" viewBox="0 0 100 100" width="76" height="76" aria-hidden="true">
-              <defs>
-                <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#fde68a"/>
-                  <stop offset="45%" stopColor="#f59e0b"/>
-                  <stop offset="100%" stopColor="#d97706"/>
-                </linearGradient>
-                <linearGradient id="sg2" x1="0" y1="1" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#fbbf24"/>
-                  <stop offset="100%" stopColor="#fcd34d"/>
-                </linearGradient>
-              </defs>
-              <path fill="none" stroke="url(#sg)" strokeWidth="6.5" strokeLinecap="round"
-                d="M28 36 C12 36 12 64 28 64 C44 64 44 36 28 36 C12 36 12 64 28 64 M72 36 C56 36 56 64 72 64 C88 64 88 36 72 36 C56 36 56 64 72 64"/>
-              <circle cx="50" cy="50" r="3" fill="url(#sg2)" />
-            </svg>
-          </div>
-          <div className="splash-brand">ALLRENTAL</div>
+          <AllRentalLogo />
           <div className="splash-bar"><span /></div>
           <p>렌탈 상담 포털을 준비하는 중...</p>
         </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from './auth.jsx'
 import { getUsers, useUsers } from './lib/users.js'
+import AllRentalLogo from './components/AllRentalLogo'
 
 export function LoginGate({ children }) {
   const { user, login, logout } = useAuth()
@@ -45,7 +46,7 @@ export function LoginGate({ children }) {
       <>
         <div className="auth-header">
           <div className="auth-left">
-            <span className="brand-mark">ALL렌탈</span>
+            <AllRentalLogo animated={false} />
           </div>
           <div className="auth-right">
             <div className="profile" ref={profileRef}>
