@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { img } from './lib/imageUrl'
 import './receipt.css'
 
 const STORE_KEY = 'allrental_estimates'

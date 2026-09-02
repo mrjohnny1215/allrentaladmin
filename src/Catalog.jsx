@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useMemo, useRef, useState,
 
 
 
+import { img } from './lib/imageUrl'
 import './catalog.css'
 import { KAKAO_CHANNEL_URL, COMPANY } from './config'
 import { useAuth, applyFeeRate } from './auth.jsx'
@@ -608,7 +609,13 @@ export default function Catalog() {
     fetch('/data/products.json', { cache: 'no-store' })
       .then((r) => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json() })
       .then((data) => {
-        setAll(data)
+        const norm = (data || []).map((p) => ({
+          ...p,
+          thumbnail: p.thumbnail ? img(p.thumbnail) : '',
+          images: (p.images || []).map((x) => img(x)),
+          detail_description_images: (p.detail_description_images || []).map((x) => img(x)),
+        }))
+        setAll(norm)
         setTimeout(() => setReady(true), 5000)
       })
       .catch((e) => setErr(String(e)))

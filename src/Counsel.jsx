@@ -7,6 +7,7 @@
    ============================================================ */
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { img } from './lib/imageUrl'
 import './catalog.css'
 
 const CATEGORIES = ['전체', '정수기', '공기청정기', '비데', '매트리스', '안마의자']
@@ -106,14 +107,14 @@ function CounselDetailModal({ p, onClose, onReceive, commissionOn }) {
             {/* 좌: 이미지 + 기본 정보 */}
             <div>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                {p.images && p.images.length > 0 ? p.images.map((img, i) => (
+                {p.images && p.images.length > 0 ? p.images.map((im, i) => (
                   <img
                     key={i}
-                    src={img}
+                    src={img(im)}
                     alt={`${p.name} ${i + 1}`}
                     style={{ width: 80, height: 80, objectFit: 'contain', borderRadius: 8, border: '1px solid #e5e7eb' }}
                   />
-                )) : <img src={NO_IMG} alt={p.name} style={{ width: 80, height: 80, objectFit: 'contain', borderRadius: 8 }} />}
+                )) : <img src={img('/assets/goods_detail/no_image.jpg')} alt={p.name} style={{ width: 80, height: 80, objectFit: 'contain', borderRadius: 8 }} />}
               </div>
             </div>
 

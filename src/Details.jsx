@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import { img } from './lib/imageUrl'
 import './receipt.css'
 
 const BRANDS = ['전체', '코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', 'LG', '웰스', '세스코']
@@ -30,7 +31,14 @@ export default function Details() {
   useEffect(() => {
     fetch('/data/products.json', { cache: 'no-store' })
       .then(r => r.ok ? r.json() : [])
-      .then(setAll)
+      .then((data) => {
+        const norm = (data || []).map((p) => ({
+          ...p,
+          thumbnail: p.thumbnail ? img(p.thumbnail) : '',
+          images: (p.images || []).map((x) => img(x)),
+        }))
+        setAll(norm)
+      })
       .catch(() => setAll([]))
   }, [])
 
