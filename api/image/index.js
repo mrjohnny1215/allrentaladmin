@@ -1,6 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 
+const CANDIDATES = [
+  process.cwd(),
+  path.join(process.cwd(), 'public'),
+  '/vercel/output',
+  '/vercel/output/public',
+]
+
 export default function handler(req) {
   try {
     const { file } = req.query
@@ -10,7 +17,30 @@ export default function handler(req) {
 
     const decoded = decodeURIComponent(file)
     const rel = decoded.startsWith('/') ? decoded.slice(1) : decoded
-    const fullPath = path.join(process.cwd(), rel)
+
+    let fullPath = null
+    for (const base of CANDIDATES) {
+      const candidate = path.join(base, rel)
+      if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) {
+        fullPath = candidate
+        break
+      }
+    }
+
+    if (!fullPath) {
+      const noImgCandidates = CANDIDATES.flatMap((base) => [
+        path.join(base, 'assets', 'no_image.jpg'),
+        path.join(base, 'public', 'assets', 'no_image.jpg'),
+        path.join(base, 'assets', 'goods_image', 'no_image.jpg'),
+      ])
+      for (const candidate of noImgCandidates) {
+        if (fs.existsSync(candidate)) {
+          const data = fs.readFileSync(candidate)
+          return new Response(data, { headers: { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=31536000, immutable' } })
+        }
+      }
+      return new Response('not found', { status: 404 })
+    }
 
     const data = fs.readFileSync(fullPath)
     const ext = path.extname(fullPath).toLowerCase()
@@ -23,13 +53,7 @@ export default function handler(req) {
       },
     })
   } catch (e) {
-    const noImg = path.join(process.cwd(), 'public', 'assets', 'no_image.jpg')
-    try {
-      const data = fs.readFileSync(noImg)
-      return new Response(data, { headers: { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=31536000, immutable' } })
-    } catch {
-      return new Response('not found', { status: 404 })
-    }
+    return new Response('not found', { status: 404 })
   }
 }
 
