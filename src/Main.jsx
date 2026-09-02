@@ -205,7 +205,8 @@ export default function Main() {
     const raw = sessionStorage.getItem('allrental_selected_product')
     if (raw) {
       try {
-        const product = JSON.parse(raw)
+        const payload = JSON.parse(raw)
+        const product = payload.product || payload
         setProductsData(product)
         const matrix = product.pricing_matrix || []
         const defaultOpt = matrix.find(r => r.contract === '신규' && r.years === '5년') || matrix[0]
@@ -223,7 +224,7 @@ export default function Main() {
             rentalFee: won(defaultOpt.monthly_fee) + '원',
             rentalOptionId: defaultOpt._idx || 0,
             selectedOption: defaultOpt,
-            fullProduct: product, // 전체 상품 데이터 보관 (렌탈 옵션 변경용)
+            fullProduct: product,
           }])
         } else {
           setProductItems([{
@@ -236,7 +237,7 @@ export default function Main() {
             fullProduct: product,
           }])
         }
-        setForm(f => ({ ...f, brand: product.brand || '' }))
+        setForm(f => ({ ...f, brand: product.brand || '', customerName: payload.customerName || '', contact: payload.customerContact || '' }))
       } catch {}
     }
 

@@ -77,7 +77,7 @@ function CardSlideshow({ images, alt, active }) {
 }
 
 /* ======================== 상담 상세 모달 ======================== */
-function CounselDetailModal({ p, onClose, onReceive, commissionOn }) {
+function CounselDetailModal({ p, onClose, onReceive, commissionOn, customerName, customerContact, onCustomerChange }) {
   if (!p) return null
   const matrix = p.pricing_matrix || []
   const rep = matrix[0] || {}
@@ -148,6 +148,21 @@ function CounselDetailModal({ p, onClose, onReceive, commissionOn }) {
               </div>
             </div>
 
+            {/* 접수용 고객정보 입력 */}
+            <div style={{ display: 'grid', gap: 10 }}>
+              <div style={{ fontWeight: 800, fontSize: 14 }}>접수 고객 정보</div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                <div>
+                  <label style={{ fontSize: 12, color: '#6b7280', fontWeight: 700 }}>고객명 *</label>
+                  <input className="input-x" value={customerName || ''} onChange={onCustomerChange} name="customerName" placeholder="고객명" />
+                </div>
+                <div>
+                  <label style={{ fontSize: 12, color: '#6b7280', fontWeight: 700 }}>연락처 *</label>
+                  <input className="input-x" value={customerContact || ''} onChange={onCustomerChange} name="customerContact" placeholder="010-0000-0000" />
+                </div>
+              </div>
+            </div>
+
             {/* 렌탈 옵션 테이블 */}
             {matrix.length > 0 && (
               <div style={{ marginTop: 8 }}>
@@ -209,6 +224,24 @@ export default function Counsel() {
   const [priceMax, setPriceMax] = useState('')
   const [sel, setSel] = useState(null)
   const [commissionOn, setCommissionOn] = useState(false)
+  const [customerName, setCustomerName] = useState('')
+  const [customerContact, setCustomerContact] = useState('')
+
+  const onCustomerChange = (e) => {
+    const { name, value } = e.target
+    if (name === 'customerName') setCustomerName(value)
+    if (name === 'customerContact') setCustomerContact(value)
+  }
+
+  const handleReceive = (product) => {
+    const payload = {
+      product,
+      customerName: customerName || '',
+      customerContact: customerContact || '',
+    }
+    sessionStorage.setItem('allrental_selected_product', JSON.stringify(payload))
+    navigate('/admin/reception')
+  }
 
   useEffect(() => {
     fetch('/data/products.json', { cache: 'no-store' })
@@ -248,12 +281,6 @@ export default function Counsel() {
   const resetFilters = () => {
     setCat('전체'); setBrand('전체'); setContract('전체')
     setMgmt('전체'); setYear('전체'); setPriceMin(''); setPriceMax('')
-  }
-
-  const handleReceive = (product) => {
-    // 상품 정보를 sessionStorage에 저장하고 접수 페이지로 이동
-    sessionStorage.setItem('allrental_selected_product', JSON.stringify(product))
-    navigate('/admin/reception')
   }
 
   if (err) {
@@ -391,6 +418,9 @@ export default function Counsel() {
               commissionOn={commissionOn}
               onClose={() => setSel(null)}
               onReceive={handleReceive}
+              customerName={customerName}
+              customerContact={customerContact}
+              onCustomerChange={onCustomerChange}
             />
           )}
         </>

@@ -89,11 +89,7 @@ export default function Layout() {
           <span style={{ marginLeft: 'auto', fontSize: '0.85rem', opacity: 0.8 }}>{active.label}</span>
         </header>
         <main style={{ flex: 1, minHeight: 0, background: 'var(--bg)' }}>
-          {active.key === 'counsel' ? (
-            <iframe src="/pages/counsel.html" title="counsel" style={{ width: '100%', height: '100%', border: 'none' }} />
-          ) : (
-            <iframe src={`/pages/${active.file}.html`} title={active.label} style={{ width: '100%', height: '100%', border: 'none' }} />
-          )}
+          {children}
         </main>
       </div>
     </div>
