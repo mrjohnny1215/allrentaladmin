@@ -19,6 +19,8 @@
   ],
   "rewrites": [
     { "source": "/pages/(.*)", "destination": "/pages/$1" },
-    { "source": "/apply/:token*", "destination": "/pages/apply.html" }
+    { "source": "/apply/:token*", "destination": "/pages/apply.html" },
+    { "source": "/admin/:path*", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
