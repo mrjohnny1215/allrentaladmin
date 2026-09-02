@@ -102,7 +102,7 @@ button { font-family: inherit; cursor: pointer; }
   object-fit: contain;
 }
 @media (max-width: 768px) {
-  .allRentalMark { width: min(80vw, 220px); }
+  .allRentalMark { width: min(55vw, 130px); }
 }
 
 /* ===== 모바일: 사이드바 오버레이 + 햄버거 토글 ===== */
