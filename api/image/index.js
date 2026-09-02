@@ -12,18 +12,6 @@ export default function handler(req) {
     const rel = decoded.startsWith('/') ? decoded.slice(1) : decoded
     const fullPath = path.join(process.cwd(), rel)
 
-    if (!fs.existsSync(fullPath)) {
-      const noImg = path.join(process.cwd(), 'public', 'assets', 'no_image.jpg')
-      if (fs.existsSync(noImg)) {
-        const data = fs.readFileSync(noImg)
-        return new Response(data, { headers: { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=31536000, immutable' } })
-      }
-      return new Response('not found', { status: 404 })
-    }
-
-    const stat = fs.statSync(fullPath)
-    if (!stat.isFile()) return new Response('not found', { status: 404 })
-
     const data = fs.readFileSync(fullPath)
     const ext = path.extname(fullPath).toLowerCase()
     const type = ext === '.png' ? 'image/png' : ext === '.webp' ? 'image/webp' : ext === '.gif' ? 'image/gif' : 'image/jpeg'
@@ -35,7 +23,13 @@ export default function handler(req) {
       },
     })
   } catch (e) {
-    return new Response('not found', { status: 404 })
+    const noImg = path.join(process.cwd(), 'public', 'assets', 'no_image.jpg')
+    try {
+      const data = fs.readFileSync(noImg)
+      return new Response(data, { headers: { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=31536000, immutable' } })
+    } catch {
+      return new Response('not found', { status: 404 })
+    }
   }
 }
 
