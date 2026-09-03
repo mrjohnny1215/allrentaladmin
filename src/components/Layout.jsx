@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import AllRentalLogo from './AllRentalLogo'
 
 const MENUS = [
@@ -21,13 +21,14 @@ const MENUS = [
 
 export default function Layout() {
   const location = useLocation()
+  const navigate = useNavigate()
   const pathKey = location.pathname.replace(/^\/admin\/?/, '').split('/')[0] || MENUS[0].key
   const [active, setActive] = useState(MENUS.find(m => m.key === pathKey) || MENUS[0])
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const selectMenu = (m) => {
     setActive(m)
-    window.location.href = '/admin/' + m.key
+    navigate('/admin/' + m.key)
     setSidebarOpen(false)
   }
 
