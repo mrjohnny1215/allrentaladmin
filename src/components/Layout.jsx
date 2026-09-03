@@ -19,7 +19,7 @@ const MENUS = [
   { key: 'howto', label: '사용법', icon: 'howto', type: 'static', file: 'howto' },
 ]
 
-export default function Layout() {
+export default function Layout({ children }) {
   const location = useLocation()
   const navigate = useNavigate()
   const pathKey = location.pathname.replace(/^\/admin\/?/, '').split('/')[0] || MENUS[0].key

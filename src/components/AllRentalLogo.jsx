@@ -1,14 +1,9 @@
 import React from 'react'
 
-export default function AllRentalLogo() {
+export default function AllRentalLogo({ src = '/images/allrental-logo.gif', alt = 'AllRental' }) {
   return (
     <div className="allRentalBrand" aria-label="AllRental">
-      <img
-        className="allRentalMark"
-        src="/images/allrental-logo-preview.png"
-        alt="AllRental"
-        draggable={false}
-      />
+      <img className="allRentalMark" src={src} alt={alt} draggable={false} />
     </div>
   )
 }

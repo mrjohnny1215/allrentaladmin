@@ -141,7 +141,7 @@ export function LoginGate({ children }) {
   return (
     <div className="splash">
       <div className="box login-card">
-        <AllRentalLogo src="/images/allrental-logo-preview.png" animated={false} />
+        <AllRentalLogo />
         <p className="login-sub">렌탈 상담 포털</p>
         <form onSubmit={submit}>
           <input className="login-input" type="text" placeholder="아이디" value={id} onChange={(e) => setId(e.target.value)} autoFocus />
