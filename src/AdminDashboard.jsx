@@ -106,7 +106,7 @@ export default function AdminDashboard() {
       </div>
 
       <footer className="site-footer">
-        <div className="foot-row copy">관리자 기능 | ALL렌탈</div>
+        <div className="foot-row copy">AllRental Admin</div>
       </footer>
     </div>
   )

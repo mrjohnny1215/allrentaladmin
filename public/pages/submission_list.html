@@ -96,43 +96,10 @@
 
     <!-- 모바일: 카드 리스트 -->
     <div class="mobile-only">
-      <div class="mobile-cards">
-                              
-
-                                      <div class="mobile-mgr" title="김성훈">
-                      김성훈                    </div>
-                  
-                  <button
-                    type="button"
-                    class="btn submission-btn-detail btn-detail-mobile btn-animate"
-                    onclick="window.openSubmissionDetailFromCard(this); event.stopPropagation();"
-                  >
-                    <span class="btn-inline-icon-wrap">
-                      <img src="./assets/webimage/button/detail.png" alt="" class="btn-inline-icon">
-                      <span>자세히</span>
-                    </span>
-                  </button>
-                </div>
-              </div>
-
-              <div class="mobile-name" title="차영옥">
-                차영옥              </div>
-
-                            <div class="mobile-subline">
-                <div class="mobile-line3" title="010-4273-8111 · 코웨이 · 모디 매트리스(Q)">
-                  010-4273-8111 · 코웨이 · 모디 매트리스(Q)                </div>
-              </div>
-
-              <div class="mobile-extra">
-                <div class="kv"><div class="k">규정</div><div class="v">신규</div></div>
-                <div class="kv"><div class="k">약정</div><div class="v">7년신규</div></div>
-                <div class="kv"><div class="k">관리</div><div class="v">베이직케어</div></div>
-                <div class="kv"><div class="k">렌탈</div><div class="v">26,900</div></div>
-                <div class="kv"><div class="k">건수</div><div class="v">1</div></div>
-                <div class="kv"><div class="k">특이</div><div class="v long"></div></div>
-              </div>
-            </div>
-                        </div>
+      <div class="mobile-cards" id="mobileSubmissionList">
+        <div class="mobile-empty">로딩 중이거나 접수내역이 없습니다.</div>
+      </div>
+    </div>
     </div>
 
   </div>

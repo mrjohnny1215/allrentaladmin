@@ -5,7 +5,7 @@ export default function AllRentalLogo() {
     <div className="allRentalBrand" aria-label="AllRental">
       <img
         className="allRentalMark"
-        src="/images/allrental-logo.gif"
+        src="/images/allrental-logo-preview.png"
         alt="AllRental"
         draggable={false}
       />

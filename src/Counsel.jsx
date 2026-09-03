@@ -306,7 +306,6 @@ export default function Counsel() {
     <div className="cat-root">
       <div className="cat-header">
         <h1>상담</h1>
-        <div className="sub">PREMIUM RENTAL</div>
         <div className="count">{list.length}개 상품</div>
       </div>
 

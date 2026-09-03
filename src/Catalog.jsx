@@ -715,8 +715,7 @@ export default function Catalog() {
   return (
     <div className="cat-root">
       <header className="cat-header">
-        <h1>ALL렌탈</h1>
-        <div className="sub">PREMIUM RENTAL</div>
+        <h1>AllRental</h1>
       </header>
 
       <div className="cat-toolbar">

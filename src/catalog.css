@@ -976,7 +976,7 @@
 }
 
 /* ===================== 로그인 게이트 ===================== */
-.auth-header { position: sticky; top: 0; z-index: 900; display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,.85); backdrop-filter: saturate(140%) blur(8px); border-bottom: 1px solid #e5e7eb; }
+.auth-header { position: sticky; top: 0; z-index: 900; display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: transparent; border-bottom: none; }
 .auth-header .auth-left { display: flex; align-items: center; gap: 8px; }
 .auth-header .brand-mark { font-size: 15px; font-weight: 900; letter-spacing: 1.5px; background: linear-gradient(135deg, #1d4ed8, #3b82f6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .auth-header .auth-right { display: flex; align-items: center; gap: 10px; }
