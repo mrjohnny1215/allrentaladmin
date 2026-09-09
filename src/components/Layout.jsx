@@ -3,20 +3,20 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import AllRentalLogo from './AllRentalLogo'
 
 const MENUS = [
-  { key: 'counsel', label: '상담', icon: 'counsel', type: 'react' },
-  { key: 'main', label: '메인', icon: 'roadview', type: 'static', file: 'main' },
-  { key: 'details', label: '제품비교', icon: 'details', type: 'static', file: 'details' },
-  { key: 'estimate_form', label: '견적서', icon: 'estimate', type: 'static', file: 'estimate_form' },
-  { key: 'submission_list', label: '접수내역', icon: 'list', type: 'static', file: 'submission_list' },
-  { key: 'progress', label: '현황통계', icon: 'progress', type: 'static', file: 'progress' },
-  { key: 'settlement_manage', label: '정산서', icon: 'settlement_manage', type: 'static', file: 'settlement_manage' },
-  { key: 'customer_apply_manage', label: '접수링크', icon: 'order', type: 'static', file: 'customer_apply_manage' },
-  { key: 'promotions', label: '프로모션', icon: 'promotion', type: 'static', file: 'promotions' },
-  { key: 'creditcard', label: '제휴카드', icon: 'card', type: 'static', file: 'partner-card' },
-  { key: 'suggestion_board', label: '공지문의', icon: 'board', type: 'static', file: 'suggestion_board' },
-  { key: 'business_card', label: '명함', icon: 'business_card', type: 'static', file: 'business_card' },
-  { key: 'faq', label: 'FAQ', icon: 'faq', type: 'static', file: 'faq' },
-  { key: 'howto', label: '사용법', icon: 'howto', type: 'static', file: 'howto' },
+  { key: 'counsel', label: '상담' },
+  { key: 'main', label: '메인' },
+  { key: 'details', label: '제품비교' },
+  { key: 'estimate_form', label: '견적서' },
+  { key: 'submission_list', label: '접수내역' },
+  { key: 'progress', label: '현황통계' },
+  { key: 'settlement_manage', label: '정산서' },
+  { key: 'customer_apply_manage', label: '접수링크' },
+  { key: 'promotions', label: '프로모션' },
+  { key: 'creditcard', label: '제휴카드' },
+  { key: 'suggestion_board', label: '공지문의' },
+  { key: 'business_card', label: '명함' },
+  { key: 'faq', label: 'FAQ' },
+  { key: 'howto', label: '사용법' },
 ]
 
 export default function Layout({ children }) {
@@ -24,76 +24,65 @@ export default function Layout({ children }) {
   const navigate = useNavigate()
   const pathKey = location.pathname.replace(/^\/admin\/?/, '').split('/')[0] || MENUS[0].key
   const [active, setActive] = useState(MENUS.find(m => m.key === pathKey) || MENUS[0])
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const selectMenu = (m) => {
     setActive(m)
     navigate('/admin/' + m.key)
-    setSidebarOpen(false)
+    setMenuOpen(false)
   }
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
-      {/* 사이드바 (모바일: 오버레이 토글) */}
-      <aside
-        className="app-sidebar"
-        style={{
-          width: 210,
-          background: 'var(--navy)',
-          color: '#fff',
-          flexShrink: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          bottom: 0,
-          zIndex: 1000,
-          transform: sidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
-          transition: 'transform 0.25s ease',
-        }}
-      >
-        <div style={{ padding: '1.25rem 1rem', fontWeight: 800, fontSize: '1.1rem', letterSpacing: '-0.5px' }}>ALL &amp; UP</div>
-        <nav style={{ flex: 1, overflowY: 'auto' }}>
-          {MENUS.map(m => (
-            <div
-              key={m.key}
-              onClick={() => selectMenu(m)}
-              className={active.key === m.key ? 'side-item active' : 'side-item'}
-              style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0.75rem 1rem', color: '#cfd6e0', cursor: 'pointer' }}
-            >
-              <img src={`./assets/webimage/sidebar/${m.icon}.png`} alt="" style={{ width: 18, height: 18, filter: 'brightness(0) invert(1)' }} />
-              <span style={{ fontSize: '0.9rem' }}>{m.label}</span>
-            </div>
-          ))}
-        </nav>
-      </aside>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <header style={{ position: 'sticky', top: 0, zIndex: 900, height: 64, background: 'var(--navy)', color: '#fff', display: 'flex', alignItems: 'center', padding: '0 1.25rem', gap: 12 }}>
+        <button
+          onClick={() => setMenuOpen(v => !v)}
+          aria-label="메뉴 열기"
+          style={{ background: 'transparent', border: 'none', color: '#fff', fontSize: '1.4rem', cursor: 'pointer', padding: 0, marginRight: 4, display: 'inline-flex' }}
+          className="hamburger-btn"
+        >☰</button>
+        <AllRentalLogo />
+        <span style={{ marginLeft: 'auto', fontSize: '0.85rem', opacity: 0.8 }}>{active.label}</span>
+      </header>
 
-      {/* 사이드바 열렸을 때 배경 dim (모바일) */}
-      {sidebarOpen && (
+      {menuOpen && (
         <div
-          onClick={() => setSidebarOpen(false)}
+          onClick={() => setMenuOpen(false)}
           style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 999 }}
         />
       )}
 
-      {/* 메인 영역 */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, marginLeft: 0 }}>
-        <header style={{ height: 64, background: 'var(--navy)', color: '#fff', display: 'flex', alignItems: 'center', padding: '0 1.25rem', gap: 12 }}>
-          {/* 햄버거 버튼 (모바일에서만 보임) */}
-          <button
-            onClick={() => setSidebarOpen(v => !v)}
-            aria-label="메뉴 열기"
-            style={{ display: 'none', background: 'transparent', border: 'none', color: '#fff', fontSize: '1.4rem', cursor: 'pointer', padding: 0, marginRight: 4 }}
-            className="hamburger-btn"
-          >☰</button>
-          <AllRentalLogo />
-          <span style={{ marginLeft: 'auto', fontSize: '0.85rem', opacity: 0.8 }}>{active.label}</span>
-        </header>
-        <main style={{ flex: 1, minHeight: 0, background: 'var(--bg)' }}>
-          {children}
-        </main>
-      </div>
+      <nav
+        style={{
+          position: 'fixed',
+          top: 64,
+          left: 0,
+          bottom: 0,
+          width: 210,
+          background: 'var(--navy)',
+          color: '#fff',
+          zIndex: 1000,
+          transform: menuOpen ? 'translateX(0)' : 'translateX(-100%)',
+          transition: 'transform 0.25s ease',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        {MENUS.map(m => (
+          <div
+            key={m.key}
+            onClick={() => selectMenu(m)}
+            className={active.key === m.key ? 'side-item active' : 'side-item'}
+            style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0.75rem 1rem', color: '#cfd6e0', cursor: 'pointer' }}
+          >
+            <span style={{ fontSize: '0.9rem' }}>{m.label}</span>
+          </div>
+        ))}
+      </nav>
+
+      <main style={{ flex: 1, minHeight: 0, background: 'var(--bg)', padding: 0, margin: 0 }}>
+        {children}
+      </main>
     </div>
   )
 }
