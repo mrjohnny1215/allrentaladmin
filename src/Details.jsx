@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { img } from './lib/imageUrl'
 import './receipt.css'
+import './details.css'
 
 const BRANDS = ['전체', '코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', 'LG', '웰스', '세스코']
 const PRODUCT_GROUPS = ['전체', '정수기', '공기청정기', '비데', '매트리스', '안마의자', '제빙기', '커피', '얼음냉온', '기타']
@@ -94,12 +95,13 @@ export default function Details() {
   }
 
   return (
-    <div className="details-root" style={{ padding: 24 }}>
-      <h2 style={{ margin: '0 0 16px', fontSize: 22, fontWeight: 900 }}>제품비교</h2>
+    <div className="details-root details-page" style={{ padding: 24 }}>
+      <h2>제품비교</h2>
 
       {/* 필터 영역 */}
-      <div className="details-filter-card" style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: 16, marginBottom: 16 }}>
-        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'flex-end' }}>
+      <fieldset className="details-filter-card">
+        <legend>검색</legend>
+        <div className="details-filter-grid">
           <div className="field-group">
             <label className="field-label">제품군</label>
             <select className="input-x" value={group} onChange={e => setGroup(e.target.value)}>
@@ -136,13 +138,13 @@ export default function Details() {
               {BRANDS.map(b => <option key={b} value={b}>{b}</option>)}
             </select>
           </div>
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div className="details-filter-actions">
             <button className="btn btn-ghost-x" onClick={resetFilters} style={{ padding: '8px 14px', fontSize: 13 }}>전체 초기화</button>
             <button className="btn btn-primary-x" onClick={() => {}} style={{ padding: '8px 14px', fontSize: 13 }}>필터 적용</button>
             <button className="btn btn-ghost-x" onClick={() => setHeaderFilterReset(v => v + 1)} style={{ padding: '8px 14px', fontSize: 13 }}>헤더필터 초기화</button>
           </div>
         </div>
-      </div>
+      </fieldset>
 
       {/* 테이블 */}
       <div className="table-scroll" style={{ overflowX: 'auto', background: '#fff', border: '1px solid #e5e7eb', borderRadius: 10 }}>
@@ -187,6 +189,21 @@ export default function Details() {
             )}
           </tbody>
         </table>
+      </div>
+
+      <div className="details-mobile-list">
+        {list.length === 0 ? <div className="details-empty">비교할 제품이 없습니다.</div> : list.map((p, idx) => {
+          const matrix = p.pricing_matrix || []
+          const fiveYear = matrix.find(row => row.years === '5년') || matrix[0] || {}
+          return <article className="details-product-card" key={p.id || idx}>
+            <div className="details-product-brand">{p.brand || '기타'} <span>{p.category || '-'}</span></div>
+            <h3>{p.name || '-'}</h3>
+            <p>{p.model_code || '-'}</p>
+            <div className="details-product-meta">규정: <b>{fiveYear.rule_raw || fiveYear.contract || '-'}</b>　 5년 관리: <b>{fiveYear.mgmt || fiveYear.mgmt_cycle || '-'}</b></div>
+            <div className="details-product-price">5년 렌탈료: <b>{won(fiveYear.monthly_fee || 0)}원</b>　 지원금: <b>{won(fiveYear.commission || 0)}원</b></div>
+            <button type="button">☷ 다른 약정 보기</button>
+          </article>
+        })}
       </div>
     </div>
   )
