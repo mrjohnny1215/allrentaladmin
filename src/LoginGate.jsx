@@ -6,9 +6,9 @@ import { supabase } from './lib/supabase.js'
 import AllRentalLogo from './components/AllRentalLogo'
 
 const BANKS = [
-  ['국민은행', 'kbstar.com'], ['신한은행', 'shinhan.com'], ['우리은행', 'wooribank.com'], ['하나은행', 'kebhana.com'],
-  ['농협은행', 'nonghyup.com'], ['기업은행', 'ibk.co.kr'], ['카카오뱅크', 'kakaobank.com'], ['K뱅크', 'kbanknow.com'], ['토스뱅크', 'tossbank.com'],
-  ['SC제일은행', 'standardchartered.co.kr'], ['부산은행', 'busanbank.co.kr'], ['대구은행', 'dgb.co.kr'], ['경남은행', 'knbank.co.kr'],
+  ['국민은행', 'kbstar.com', 'KB'], ['신한은행', 'shinhan.com', '신'], ['우리은행', 'wooribank.com', 'W'], ['하나은행', 'kebhana.com', '하'],
+  ['농협은행', 'nonghyup.com', 'NH'], ['기업은행', 'ibk.co.kr', 'IB'], ['카카오뱅크', 'kakaobank.com', 'K'], ['K뱅크', 'kbanknow.com', 'K'], ['토스뱅크', 'tossbank.com', 'T'],
+  ['SC제일은행', 'standardchartered.co.kr', 'SC'], ['부산은행', 'busanbank.co.kr', 'B'], ['대구은행', 'dgb.co.kr', 'D'], ['경남은행', 'knbank.co.kr', 'KN'],
 ]
 
 export function LoginGate({ children }) {
@@ -107,8 +107,8 @@ export function LoginGate({ children }) {
               <input className="login-input" type="password" placeholder="현재 비밀번호" value={financialPw} onChange={(e) => setFinancialPw(e.target.value)} />
               <button className="btn-ghost-x" onClick={() => financialRequest('get')}>기존 계좌정보 불러오기</button>
               <div className="bank-picker" aria-label="은행 선택">
-                {BANKS.map(([name, domain]) => <button key={name} type="button" className={`bank-option ${bankName === name ? 'on' : ''}`} onClick={() => setBankName(name)}>
-                  <img className="bank-icon" src={`https://www.google.com/s2/favicons?domain=${domain}&sz=64`} alt="" /><span>{name.replace('은행', '')}</span>
+                {BANKS.map(([name, domain, mark]) => <button key={name} type="button" className={`bank-option ${bankName === name ? 'on' : ''}`} onClick={() => setBankName(name)}>
+                  <span className="bank-icon-wrap"><span className="bank-fallback">{mark}</span><img className="bank-icon" src={`https://www.google.com/s2/favicons?domain=${domain}&sz=64`} onError={(e) => { e.currentTarget.style.display = 'none' }} alt="" /></span><span>{name.replace('은행', '')}</span>
                 </button>)}
               </div>
               <input className="login-input" placeholder="계좌번호" value={accountNumber} onChange={(e) => setAccountNumber(e.target.value)} />

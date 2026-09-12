@@ -977,7 +977,9 @@
 .bank-picker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; }
 .bank-option { display: grid; justify-items: center; gap: 4px; min-height: 62px; padding: 6px 2px; border: 1px solid #dbe3ee; border-radius: 10px; background: #fff; color: #334155; font: inherit; font-size: 10px; font-weight: 800; }
 .bank-option.on { border-color: #2563eb; background: #eff6ff; color: #1d4ed8; }
-.bank-icon { width: 28px; height: 28px; border-radius: 50%; object-fit: contain; background: #fff; }
+.bank-icon-wrap { position: relative; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #e8effa; overflow: hidden; }
+.bank-fallback { color: #1d4ed8; font-size: 10px; font-weight: 900; }
+.bank-icon { position: absolute; inset: 1px; width: 28px; height: 28px; border-radius: 50%; object-fit: contain; background: #fff; }
 .bank-option.on .bank-icon { box-shadow: 0 0 0 2px #2563eb; }
 .modal-card.sm { width: min(92vw, 420px); }
 .modal-form { display: flex; flex-direction: column; gap: 10px; padding: 14px; }
