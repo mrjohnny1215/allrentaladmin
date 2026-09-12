@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from './auth.jsx'
 import { useUsers } from './lib/users.js'
+import { supabase } from './lib/supabase.js'
 
 export default function AdminDashboard() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const { users, updateUser, removeUser, refresh } = useUsers()
   const [filterStatus, setFilterStatus] = useState('ALL')
+  const [settlementAccounts, setSettlementAccounts] = useState([])
+  const [settlementMsg, setSettlementMsg] = useState('')
 
   useEffect(() => {
     if (!user || user.role !== 'ADMIN') {
@@ -51,6 +54,14 @@ export default function AdminDashboard() {
 
   const statusLabel = (s) => (s === 'APPROVED' ? '승인' : s === 'PENDING' ? '대기' : s)
 
+  const loadSettlementAccounts = async () => {
+    const password = window.prompt('정산 계좌를 조회하려면 현재 비밀번호를 입력해 주세요.')
+    if (!password) return
+    const { data, error } = await supabase.functions.invoke('member-financial-profile-v3', { body: { action: 'admin-list', id: user.id, password } })
+    if (error || data?.error) { setSettlementMsg(data?.error || '계좌 조회에 실패했습니다.'); return }
+    setSettlementAccounts(data.profiles || []); setSettlementMsg(`정산 계좌 ${data.profiles?.length || 0}건을 조회했습니다.`)
+  }
+
   return (
     <div className="admin-wrap">
       <header className="admin-header">
@@ -69,8 +80,16 @@ export default function AdminDashboard() {
               {s === 'ALL' ? '전체' : statusLabel(s)}
             </button>
           ))}
+          <button onClick={loadSettlementAccounts}>정산 계좌 조회</button>
         </div>
       </div>
+
+      {settlementMsg && <div className="admin-toolbar">{settlementMsg}</div>}
+      {settlementAccounts.length > 0 && <div className="table-scroll" style={{ margin: '12px 16px' }}>
+        <table className="admin-table"><thead><tr><th>직원</th><th>은행</th><th>계좌번호</th><th>예금주</th><th>수정일</th></tr></thead><tbody>
+          {settlementAccounts.map((account) => <tr key={account.user_id}><td>{account.name} ({account.user_id})</td><td>{account.bank_name}</td><td>{account.account_number}</td><td>{account.account_holder}</td><td>{new Date(account.updated_at).toLocaleDateString('ko-KR')}</td></tr>)}
+        </tbody></table>
+      </div>}
 
       <div className="table-scroll">
         <table className="admin-table">

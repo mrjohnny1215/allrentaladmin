@@ -53,7 +53,7 @@ export function LoginGate({ children }) {
 
   const financialRequest = async (action) => {
     setFinancialMsg('')
-    const { data, error } = await supabase.functions.invoke('member-financial-profile-v2', {
+    const { data, error } = await supabase.functions.invoke('member-financial-profile-v3', {
       body: { action, id: user.id, password: financialPw, bankName, accountNumber, accountHolder },
     })
     if (error || data?.error) { setFinancialMsg(data?.error || '처리 중 오류가 발생했습니다.'); return }
