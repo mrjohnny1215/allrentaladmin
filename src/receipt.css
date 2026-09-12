@@ -47,3 +47,48 @@
   font-size: 13.5px; background: #fff; color: var(--gray-800);
 }
 .input-x:focus { outline: 2px solid var(--blue); outline-offset: -1px; }
+
+/* 모바일 영업용 접수 화면 */
+.receipt-root { max-width: 1180px; margin: 0 auto; padding: 24px; }
+.receipt-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 20px; align-items: start; }
+.receipt-main { display: grid; gap: 16px; }
+.receipt-section { position: relative; padding: 22px 18px 18px; border: 1px solid #dce3ec; border-radius: 16px; background: #fff; box-shadow: 0 6px 18px rgba(15, 32, 61, .05); }
+.section-title { display: inline-block; margin: -34px 0 16px 10px; padding: 0 9px; color: #14213d; background: #fff; font-size: 18px; font-weight: 900; }
+.receipt-section .field-group { gap: 8px; margin-bottom: 14px; }
+.receipt-section .field-group:last-child { margin-bottom: 0; }
+.receipt-section .field-label { color: #172033; font-size: 15px; }
+.receipt-section .required { color: #dc2626; }
+.receipt-section .input-x { min-height: 48px; border-color: #d5deea; border-radius: 10px; font-size: 15px; }
+.field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.address-controls, .email-input { display: flex; gap: 8px; }
+.find-address-btn, .add-product-btn { min-height: 48px; border: 1px solid #2563eb; border-radius: 10px; padding: 0 14px; background: #fff; color: #1d4ed8; font-weight: 900; cursor: pointer; white-space: nowrap; }
+.product-info-card { margin-top: 12px; padding: 16px; border: 1px solid #dce3ec; border-radius: 12px; background: #fbfdff; }
+.product-info-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.product-info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; font-size: 14px; }
+.product-remove-btn { border: 0; background: transparent; color: #dc2626; font-weight: 900; cursor: pointer; }
+.product-search { position: relative; }
+.search-results { position: absolute; z-index: 40; right: 0; left: 0; max-height: 220px; overflow: auto; border: 1px solid #dce3ec; border-radius: 10px; background: #fff; box-shadow: 0 10px 24px rgba(15,23,42,.14); }
+.search-result-item { display: flex; width: 100%; justify-content: space-between; padding: 12px; border: 0; border-bottom: 1px solid #edf1f7; background: #fff; text-align: left; cursor: pointer; }
+.search-name { font-weight: 800; }.search-model { color: #64748b; }
+.radio-group, .checkbox-grid { display: flex; flex-wrap: wrap; gap: 10px 16px; }
+.radio-item, .checkbox-item { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; }
+.receipt-actions, .receipt-submit { display: flex; gap: 10px; justify-content: flex-end; }
+.receipt-preview { position: sticky; top: 84px; }
+.preview-container { padding: 18px; border: 1px solid #dce3ec; border-radius: 16px; background: #fff; }
+.preview-title { margin: 0 0 12px; font-size: 16px; }.preview-text { margin: 0; white-space: pre-wrap; color: #475569; font: 12px/1.65 ui-monospace, monospace; }
+
+@media (max-width: 720px) {
+  .receipt-root { padding: 18px 14px 88px; }
+  .receipt-layout { display: block; }
+  .receipt-main { gap: 18px; }
+  .receipt-section { padding: 20px 16px 16px; }
+  .section-title { font-size: 18px; margin-bottom: 18px; }
+  .field-grid, .product-info-grid { grid-template-columns: 1fr; }
+  .address-controls, .email-input { flex-wrap: wrap; }
+  .address-controls .input-x { flex: 1 1 100% !important; }
+  .find-address-btn { flex: 1; }
+  .receipt-preview { display: none; }
+  .receipt-actions { display: none; }
+  .receipt-submit { position: fixed; right: 0; bottom: 0; left: 0; z-index: 100; gap: 0; padding: 10px 14px; background: rgba(255,255,255,.97); border-top: 1px solid #dce3ec; box-shadow: 0 -8px 20px rgba(15,23,42,.1); }
+  .receipt-submit .btn { flex: 1; min-height: 50px; border-radius: 0; }
+}
