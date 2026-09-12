@@ -2,6 +2,7 @@
 .allrental-admin-content { color: #172033; }
 .allrental-admin-content .receipt-root,
 .allrental-admin-content .details-root,
+.allrental-admin-content .estimate-root,
 .allrental-admin-content .apply-root,
 .allrental-admin-content .board-root,
 .allrental-admin-content .cat-root {
@@ -49,8 +50,19 @@
 @media (max-width: 720px) {
   .allrental-admin-content .receipt-root,
   .allrental-admin-content .details-root,
+  .allrental-admin-content .estimate-root,
   .allrental-admin-content .apply-root,
   .allrental-admin-content .board-root,
   .allrental-admin-content .cat-root { padding: 20px 14px !important; }
   .admin-page-heading h2 { font-size: 24px; }
+  .estimate-page h2 { font-size: 23px !important; letter-spacing: .25em !important; }
+  .estimate-meta-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+  .estimate-meta-row { gap: 8px !important; }
+  .estimate-meta-row .field-label { width: 62px !important; flex: 0 0 62px; }
+  .estimate-actions { display: grid !important; grid-template-columns: 1fr 1fr; gap: 8px !important; }
+  .estimate-actions .btn { min-height: 48px; padding: 8px !important; }
+  .estimate-total-row { align-items: stretch !important; flex-direction: column; }
+  .estimate-total-row textarea { width: 100%; min-height: 100px !important; }
+  .estimate-total-row > div { text-align: right; }
+  .estimate-save-actions .btn { flex: 1; min-height: 48px; }
 }
