@@ -97,12 +97,16 @@ button { font-family: inherit; cursor: pointer; }
 }
 .allRentalMark {
   display: block;
-  width: min(72vw, 320px);
+  width: min(62vw, 240px);
   height: auto;
   object-fit: contain;
 }
+.auth-header .allRentalMark { width: min(42vw, 170px); }
+.admin-shell-header .allRentalMark { width: 132px; }
+.splash .allRentalMark { width: min(56vw, 220px); }
 @media (max-width: 768px) {
-  .allRentalMark { width: min(55vw, 130px); }
+  .allRentalMark { width: min(50vw, 140px); }
+  .admin-shell-header .allRentalMark { width: 118px; }
 }
 
 /* ===== 모바일: 사이드바 오버레이 + 햄버거 토글 ===== */

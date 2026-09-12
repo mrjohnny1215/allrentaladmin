@@ -36,7 +36,7 @@ export default function Layout({ children }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <header style={{ position: 'sticky', top: 0, zIndex: 900, height: 64, background: 'var(--navy)', color: '#fff', display: 'flex', alignItems: 'center', padding: '0 1.25rem', gap: 12 }}>
+      <header className="admin-shell-header" style={{ position: 'sticky', top: 0, zIndex: 900, height: 64, background: 'var(--navy)', color: '#fff', display: 'flex', alignItems: 'center', padding: '0 1.25rem', gap: 12 }}>
         <button
           onClick={() => setMenuOpen(v => !v)}
           aria-label="메뉴 열기"
