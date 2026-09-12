@@ -5,7 +5,7 @@ import '../admin-ui.css'
 
 const MENUS = [
   { key: 'counsel', label: '상담' },
-  { key: 'main', label: '메인' },
+  { key: 'main', label: '메인페이지' },
   { key: 'details', label: '제품비교' },
   { key: 'estimate_form', label: '견적서' },
   { key: 'submission_list', label: '접수내역' },
@@ -30,7 +30,7 @@ export default function Layout({ children }) {
 
   const selectMenu = (m) => {
     setActive(m)
-    navigate('/admin/' + m.key)
+    navigate(m.key === 'main' ? '/' : '/admin/' + m.key)
     setMenuOpen(false)
   }
 

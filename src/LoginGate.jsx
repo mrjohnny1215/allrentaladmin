@@ -57,6 +57,7 @@ export function LoginGate({ children }) {
               </button>
               {profileOpen && (
                 <div className="profile-menu">
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/') }}>메인페이지</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/settlement_manage') }}>정산서</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/counsel') }}>상담</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/reception') }}>접수</button>
