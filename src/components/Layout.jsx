@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import AllRentalLogo from './AllRentalLogo'
+import '../admin-ui.css'
 
 const MENUS = [
   { key: 'counsel', label: '상담' },
@@ -13,7 +14,8 @@ const MENUS = [
   { key: 'customer_apply_manage', label: '접수링크' },
   { key: 'promotions', label: '프로모션' },
   { key: 'creditcard', label: '제휴카드' },
-  { key: 'suggestion_board', label: '공지문의' },
+  { key: 'notice', label: '공지' },
+  { key: 'inquiry', label: '문의' },
   { key: 'business_card', label: '명함' },
   { key: 'faq', label: 'FAQ' },
   { key: 'howto', label: '사용법' },
@@ -80,7 +82,7 @@ export default function Layout({ children }) {
         ))}
       </nav>
 
-      <main style={{ flex: 1, minHeight: 0, background: 'var(--bg)', padding: 0, margin: 0 }}>
+      <main className="allrental-admin-content" style={{ flex: 1, minHeight: 0, background: 'var(--bg)', padding: 0, margin: 0 }}>
         {children}
       </main>
     </div>

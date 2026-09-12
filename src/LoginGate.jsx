@@ -63,7 +63,8 @@ export function LoginGate({ children }) {
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/estimate_form') }}>견적서</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/submission_list') }}>접수내역</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/customer_apply_manage') }}>접수링크</button>
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/suggestion_board') }}>공지문의</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/notice') }}>공지</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/inquiry') }}>문의</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/details') }}>제품비교</button>
                 </div>
               )}

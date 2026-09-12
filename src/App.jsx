@@ -28,6 +28,8 @@ export default function App() {
       <Route path="/admin/customer_apply_manage" element={<Layout><CustomerApplyManage /></Layout>} />
       <Route path="/admin/promotions" element={<Layout><Counsel /></Layout>} />
       <Route path="/admin/creditcard" element={<Layout><Counsel /></Layout>} />
+      <Route path="/admin/notice" element={<Layout><SuggestionBoard defaultType="공지" /></Layout>} />
+      <Route path="/admin/inquiry" element={<Layout><SuggestionBoard defaultType="문의" /></Layout>} />
       <Route path="/admin/suggestion_board" element={<Layout><SuggestionBoard /></Layout>} />
       <Route path="/admin/business_card" element={<Layout><Counsel /></Layout>} />
       <Route path="/admin/faq" element={<Layout><Counsel /></Layout>} />

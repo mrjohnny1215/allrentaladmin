@@ -3,9 +3,9 @@ import './receipt.css'
 
 const STORE_KEY = 'allrental_suggestions'
 
-export default function SuggestionBoard() {
+export default function SuggestionBoard({ defaultType = '공지' }) {
   const [list, setList] = useState([])
-  const [type, setType] = useState('공지')
+  const [type, setType] = useState(defaultType)
   const [keyword, setKeyword] = useState('')
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(false)
@@ -26,6 +26,8 @@ export default function SuggestionBoard() {
     return () => { cancelled = true }
   }, [type])
 
+  useEffect(() => { setType(defaultType) }, [defaultType])
+
   const filtered = list.filter(item => {
     if (item.type && type && item.type !== type) return false
     if (keyword && !(item.title || '').toLowerCase().includes(keyword.toLowerCase()) && !(item.content || '').toLowerCase().includes(keyword.toLowerCase())) return false
@@ -42,8 +44,12 @@ export default function SuggestionBoard() {
   const del = (id) => { if (!confirm('삭제하시겠습니까?')) return; const next = list.filter(x => x.id !== id); setList(next); localStorage.setItem(STORE_KEY, JSON.stringify(next)) }
 
   return (
-    <div style={{ padding: 24, maxWidth: 1200, margin: '0 auto' }}>
-      <h2 style={{ margin: '0 0 20px', fontSize: 22, fontWeight: 900, color: '#166534' }}>공지 / 문의 / 건의</h2>
+    <div className="board-root" style={{ padding: 24, maxWidth: 1200, margin: '0 auto' }}>
+      <div className="admin-page-heading">
+        <span>ALLRENTAL ADMIN</span>
+        <h2>{type}</h2>
+        <p>직원 공지와 업무 문의를 앱 안에서 바로 관리합니다.</p>
+      </div>
 
       {/* 검색 */}
       <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: 16, marginBottom: 16, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
