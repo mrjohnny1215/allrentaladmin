@@ -17,6 +17,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<LoginGate><Catalog /></LoginGate>} />
+      <Route path="/admin/main" element={<LoginGate><Catalog /></LoginGate>} />
       <Route path="/admin" element={<LoginGate><AdminDashboard /></LoginGate>} />
       <Route path="/admin/counsel" element={<Layout><Counsel /></Layout>} />
       <Route path="/admin/reception" element={<Layout><Main /></Layout>} />
