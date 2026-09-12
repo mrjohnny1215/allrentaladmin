@@ -544,6 +544,19 @@
   position: relative;
   overflow: hidden;
 }
+
+/* 검색 영역과 필터 영역은 항상 각각의 줄을 사용한다. */
+.cat-root > .cat-toolbar {
+  position: static !important;
+  top: auto !important;
+  transform: none !important;
+  margin: 0 10px 16px !important;
+}
+.cat-root > .smart-filter-box {
+  position: relative !important;
+  clear: both;
+  margin: 0 10px 16px !important;
+}
 .smart-filter-box::before {
   content: '';
   position: absolute;
