@@ -175,8 +175,8 @@ export function LoginGate({ children }) {
               <input className="login-input" placeholder="이메일" value={rEmail} onChange={(e) => setREmail(e.target.value)} />
               <select className="login-input" value={rParentId} onChange={(e) => setRParentId(e.target.value)} required>
                 <option value="">소속 관리자 선택</option>
-                {users.filter((u) => u.status === 'APPROVED' && ['ADMIN', 'MANAGER'].includes(u.role)).map((u) => (
-                  <option key={u.id} value={u.id}>{u.name} ({u.role === 'ADMIN' ? '관리자' : '상위 영업사원'})</option>
+                {users.filter((u) => u.status === 'APPROVED' && u.role === 'ADMIN').map((u) => (
+                  <option key={u.id} value={u.id}>{u.name} (관리자)</option>
                 ))}
               </select>
               {regMsg && <div className="login-info">{regMsg}</div>}

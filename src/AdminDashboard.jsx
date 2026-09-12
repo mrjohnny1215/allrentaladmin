@@ -93,9 +93,7 @@ export default function AdminDashboard() {
                   </select>
                 </td>
                 <td>
-                  <select value={u.role || 'SALES'} onChange={(e) => saveOrganization(u.id, { role: e.target.value })} disabled={u.id === 'admin'}>
-                    <option value="ADMIN">관리자</option><option value="MANAGER">상위 영업사원</option><option value="SALES">영업사원</option>
-                  </select>
+                  <b>{u.role === 'ADMIN' ? '관리자' : '영업사원'}</b>
                 </td>
                 <td>{u.birth || '-'}</td>
                 <td>{u.phone || '-'}</td>
