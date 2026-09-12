@@ -371,6 +371,8 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
   const [tableOpen, setTableOpen] = useState(false)
   const [cardModal, setCardModal] = useState(false)
   const [cardImg, setCardImg] = useState(null)
+  const [receiptOpen, setReceiptOpen] = useState(false)
+  const [receiptOption, setReceiptOption] = useState(0)
 
   const BRAND_CARD = {
     '코웨이': '/pages/cards/coway.png',
@@ -543,6 +545,19 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
         )}
 
 
+        <button className="receipt-cta" onClick={() => { setReceiptOption(Math.max(0, matrix.indexOf(matched))); setReceiptOpen(true) }}>
+          <span>✓</span><span>상품 선택 후 접수하기</span>
+        </button>
+        {receiptOpen && <div className="receipt-choice-veil" onClick={() => setReceiptOpen(false)}>
+          <div className="receipt-choice-card" onClick={(e) => e.stopPropagation()}>
+            <div className="receipt-choice-head"><div><b>접수 상품 선택</b><small>{p.brand} / {p.name}</small></div><button onClick={() => setReceiptOpen(false)}>×</button></div>
+            <div className="receipt-choice-list">{(matrix.length ? matrix : [matched]).map((row, index) => <label key={index} className={receiptOption === index ? 'on' : ''}>
+              <input type="radio" checked={receiptOption === index} onChange={() => setReceiptOption(index)} />
+              <span><b>{row.contract || '신규'} · {row.years || '-'}</b><small>{row.mgmt || '관리'} / 월 {won(row.monthly_fee || p.min_monthly_fee)}원</small></span>
+            </label>)}</div>
+            <div className="receipt-choice-actions"><button onClick={() => setReceiptOpen(false)}>취소</button><button className="send" onClick={() => { const row = (matrix.length ? matrix : [matched])[receiptOption] || matched; localStorage.setItem('allrental_pending_receipt_product', JSON.stringify({ productName: p.name, modelName: p.model_code || '', brand: p.brand, color: selColor, regulation: row.contract || selContract, contract: row.years || selYears, management: row.mgmt || selMgmt, rentalFee: row.monthly_fee || p.min_monthly_fee })); window.location.assign('/admin/reception') }}>접수하기</button></div>
+          </div>
+        </div>}
         <a className="kakao-cta" href={KAKAO_CHANNEL_URL} target="_blank" rel="noopener noreferrer" onClick={(e) => { e.preventDefault(); buildAndSendKakao(p, selMgmt, selContract, selYears, selColor, discount, matched, matrix); }}>
           <img className="cta-kakao-ico" src="/images/kakao-icon.png" alt="카카오톡" />
           <span className="cta-txt">카톡 상담신청</span>

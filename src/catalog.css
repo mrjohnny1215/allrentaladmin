@@ -810,6 +810,12 @@
 
 /* 카톡 CTA */
 .kakao-cta { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: #fee500; color: #3c1e1e; font-size: 16px; font-weight: 900; padding: 14px; border-radius: 12px; margin: 22px 0 8px; text-decoration: none; box-shadow: 0 4px 14px rgba(254, 229, 0, .4); }
+.receipt-cta { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 22px; padding: 14px; border: 0; border-radius: 12px; background: #2563eb; color: #fff; font: inherit; font-size: 16px; font-weight: 900; box-shadow: 0 4px 14px rgba(37,99,235,.24); }
+.receipt-choice-veil { position: fixed; inset: 0; z-index: 1200; display: grid; place-items: center; padding: 18px; background: rgba(15,23,42,.5); }
+.receipt-choice-card { width: min(100%, 540px); max-height: 82vh; overflow: auto; border-radius: 16px; background: #fff; box-shadow: 0 24px 60px rgba(0,0,0,.3); }
+.receipt-choice-head { display: flex; align-items: start; justify-content: space-between; padding: 20px; border-bottom: 1px solid #e5e7eb; font-size: 20px; }.receipt-choice-head small,.receipt-choice-list small { display: block; margin-top: 5px; color: #64748b; font-size: 13px; font-weight: 500; }.receipt-choice-head button { border: 0; background: none; color: #64748b; font-size: 30px; line-height: 1; }
+.receipt-choice-list label { display: flex; gap: 14px; align-items: center; padding: 15px 20px; border-bottom: 1px solid #e5e7eb; cursor: pointer; }.receipt-choice-list label.on { background: #eff6ff; }.receipt-choice-list input { accent-color: #2563eb; width: 18px; height: 18px; }.receipt-choice-list b { font-size: 16px; }
+.receipt-choice-actions { display: flex; justify-content: flex-end; gap: 10px; padding: 16px 20px; }.receipt-choice-actions button { padding: 10px 18px; border: 0; border-radius: 8px; background: #e2e8f0; color: #334155; font: inherit; font-weight: 800; }.receipt-choice-actions .send { background: #2563eb; color: #fff; }
 .kakao-cta:hover { filter: brightness(1.03); }
 .cta-kakao-ico { width: 28px; height: 28px; display: block; }
 .cta-txt { line-height: 1; }
