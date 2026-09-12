@@ -8,10 +8,10 @@ const FEE_GRADES = {
   '100%': { label: '수수료 100%', rate: 1.0 },
   '90%': { label: '수수료 90%', rate: 0.90 },
   '82%': { label: '수수료 82%', rate: 0.82 },
-  '24%': { label: '수수료 24%', rate: 0.76 },
+  '76%': { label: '수수료 76%', rate: 0.76 },
 }
 
-const LEGACY_MAP = { '10%': '90%', '18%': '82%' }
+const LEGACY_MAP = { '10%': '90%', '18%': '82%', '24%': '76%' }
 
 function fallbackGetUsers() {
   try {

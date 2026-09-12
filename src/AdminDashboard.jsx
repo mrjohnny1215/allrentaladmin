@@ -109,7 +109,7 @@ export default function AdminDashboard() {
                     <option value="100%">수수료 100%</option>
                     <option value="90%">수수료 90%</option>
                     <option value="82%">수수료 82%</option>
-                    <option value="24%">수수료 24%</option>
+                    <option value="76%">수수료 76%</option>
                   </select>
                 </td>
                 <td className="actions">
