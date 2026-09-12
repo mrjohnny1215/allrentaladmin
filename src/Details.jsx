@@ -115,7 +115,7 @@ export default function Details() {
             </select>
           </div>
           <div className="field-group">
-            <label className="field-label">약정</label>
+            <label className="field-label">렌탈료 검색</label>
             <select className="input-x" value={contractFilter} onChange={e => setContractFilter(e.target.value)}>
               {CONTRACT_OPTS.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
@@ -143,6 +143,28 @@ export default function Details() {
             <button className="btn btn-primary-x" onClick={() => {}} style={{ padding: '8px 14px', fontSize: 13 }}>필터 적용</button>
             <button className="btn btn-ghost-x" onClick={() => setHeaderFilterReset(v => v + 1)} style={{ padding: '8px 14px', fontSize: 13 }}>헤더필터 초기화</button>
           </div>
+        </div>
+      </fieldset>
+
+      <fieldset className="details-sort-card">
+        <legend>필터&amp;정렬</legend>
+        <div className="details-sort-row">
+          <span>정렬</span>
+          <select className="input-x" value={sort} onChange={e => setSort(e.target.value)}>
+            {SORT_OPTS.map(item => <option key={item.value} value={item.value}>{item.label}</option>)}
+          </select>
+          <button className={sort === 'price_asc' ? 'on' : ''} onClick={() => setSort('price_asc')}>☷ 오름차순</button>
+          <button className={sort === 'price_desc' ? 'on' : ''} onClick={() => setSort('price_desc')}>☷ 내림차순</button>
+        </div>
+        <div className="details-sort-row details-contract-row">
+          <span>약정기간</span>
+          {CONTRACT_OPTS.filter(item => item !== '전체').map(item => <button className={contractFilter === item ? 'on' : ''} key={item} onClick={() => setContractFilter(item)}>{item}</button>)}
+        </div>
+        <div className="details-sort-row">
+          <span>필터설정</span>
+          <button className={brand !== '전체' ? 'on' : ''} onClick={() => setBrand(brand === '전체' ? BRANDS[1] : '전체')}>브랜드</button>
+          <button onClick={() => setContractFilter(contractFilter === '전체' ? '5년' : '전체')}>규정</button>
+          <button className={mgmt !== '전체' ? 'on' : ''} onClick={() => setMgmt(mgmt === '전체' ? MGMT_CYCLE[1] : '전체')}>관리</button>
         </div>
       </fieldset>
 
