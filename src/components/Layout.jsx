@@ -36,11 +36,11 @@ export default function Layout({ children }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <header className="admin-shell-header" style={{ position: 'sticky', top: 0, zIndex: 900, height: 64, background: 'var(--navy)', color: '#fff', display: 'flex', alignItems: 'center', padding: '0 1.25rem', gap: 12 }}>
+      <header className="admin-shell-header" style={{ position: 'sticky', top: 0, zIndex: 900, height: 64, background: '#fff', color: '#172033', display: 'flex', alignItems: 'center', padding: '0 1.25rem', gap: 12, borderBottom: '1px solid #e2e8f0' }}>
         <button
           onClick={() => setMenuOpen(v => !v)}
           aria-label="메뉴 열기"
-          style={{ background: 'transparent', border: 'none', color: '#fff', fontSize: '1.4rem', cursor: 'pointer', padding: 0, marginRight: 4, display: 'inline-flex' }}
+          style={{ background: 'transparent', border: 'none', color: '#1e3a5f', fontSize: '1.4rem', cursor: 'pointer', padding: 0, marginRight: 4, display: 'inline-flex' }}
           className="hamburger-btn"
         >☰</button>
         <AllRentalLogo />
@@ -61,8 +61,9 @@ export default function Layout({ children }) {
           left: 0,
           bottom: 0,
           width: 210,
-          background: 'var(--navy)',
-          color: '#fff',
+          background: '#fff',
+          color: '#172033',
+          borderRight: '1px solid #e2e8f0',
           zIndex: 1000,
           transform: menuOpen ? 'translateX(0)' : 'translateX(-100%)',
           transition: 'transform 0.25s ease',
@@ -75,7 +76,7 @@ export default function Layout({ children }) {
             key={m.key}
             onClick={() => selectMenu(m)}
             className={active.key === m.key ? 'side-item active' : 'side-item'}
-            style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0.75rem 1rem', color: '#cfd6e0', cursor: 'pointer' }}
+            style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0.75rem 1rem', color: '#334155', cursor: 'pointer' }}
           >
             <span style={{ fontSize: '0.9rem' }}>{m.label}</span>
           </div>

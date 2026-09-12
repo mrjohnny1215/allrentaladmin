@@ -102,11 +102,12 @@ button { font-family: inherit; cursor: pointer; }
   object-fit: contain;
 }
 .auth-header .allRentalMark { width: min(42vw, 170px); }
-.admin-shell-header .allRentalMark { width: 132px; }
+.admin-shell-header .allRentalBrand { height: 42px; overflow: hidden; }
+.admin-shell-header .allRentalMark { width: 138px !important; max-height: 42px !important; object-fit: contain; }
 .splash .allRentalMark { width: min(56vw, 220px); }
 @media (max-width: 768px) {
   .allRentalMark { width: min(50vw, 140px); }
-  .admin-shell-header .allRentalMark { width: 118px; }
+  .admin-shell-header .allRentalMark { width: 118px !important; max-height: 38px !important; }
 }
 
 /* ===== 모바일: 사이드바 오버레이 + 햄버거 토글 ===== */
