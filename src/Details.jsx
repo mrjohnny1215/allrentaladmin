@@ -19,7 +19,8 @@ const won = (n) => (n ? Number(n).toLocaleString('ko-KR') : '0')
 
 export default function Details() {
   const [all, setAll] = useState([])
-  const [group, setGroup] = useState('전체')
+  const [selectedGroups, setSelectedGroups] = useState([])
+  const [groupOpen, setGroupOpen] = useState(false)
   const [mgmt, setMgmt] = useState('전체')
   const [contractFilter, setContractFilter] = useState('전체')
   const [sort, setSort] = useState('price_asc')
@@ -45,8 +46,8 @@ export default function Details() {
 
   const list = useMemo(() => {
     let rows = all
-    if (group !== '전체') {
-      rows = rows.filter(p => (p.category || '').includes(group) || (p.name || '').includes(group))
+    if (selectedGroups.length) {
+      rows = rows.filter(p => selectedGroups.some(group => (p.category || '').includes(group) || (p.name || '').includes(group)))
     }
     if (mgmt !== '전체') {
       rows = rows.filter(p => (p.pricing_matrix || []).some(r => (r.mgmt || r.mgmt_cycle || '') === mgmt))
@@ -76,10 +77,10 @@ export default function Details() {
       return 0
     })
     return rows
-  }, [all, group, mgmt, contractFilter, sort, priceMin, priceMax, keyword, brand, headerFilterReset])
+  }, [all, selectedGroups, mgmt, contractFilter, sort, priceMin, priceMax, keyword, brand, headerFilterReset])
 
   const resetFilters = () => {
-    setGroup('전체'); setMgmt('전체'); setContractFilter('전체'); setBrand('전체')
+    setSelectedGroups([]); setMgmt('전체'); setContractFilter('전체'); setBrand('전체')
     setSort('price_asc'); setPriceMin(''); setPriceMax(''); setKeyword('')
     setHeaderFilterReset(v => v + 1)
   }
@@ -104,9 +105,14 @@ export default function Details() {
         <div className="details-filter-grid">
           <div className="field-group">
             <label className="field-label">제품군</label>
-            <select className="input-x" value={group} onChange={e => setGroup(e.target.value)}>
-              {PRODUCT_GROUPS.map(g => <option key={g} value={g}>{g}</option>)}
-            </select>
+            <div className="details-group-picker">
+              <button type="button" className="input-x details-group-trigger" onClick={() => setGroupOpen(value => !value)}>{selectedGroups.length ? `${selectedGroups.length}개 선택` : '전체'} <span>⌄</span></button>
+              {groupOpen && <div className="details-group-menu">
+                <label><input type="checkbox" checked={selectedGroups.length === 0} onChange={() => setSelectedGroups([])} /> 전체선택</label>
+                {PRODUCT_GROUPS.filter(item => item !== '전체').map(item => <label key={item}><input type="checkbox" checked={selectedGroups.includes(item)} onChange={() => setSelectedGroups(current => current.includes(item) ? current.filter(value => value !== item) : [...current, item])} /> {item}</label>)}
+                <button type="button" onClick={() => setGroupOpen(false)}>적용</button>
+              </div>}
+            </div>
           </div>
           <div className="field-group">
             <label className="field-label">관리주기</label>
