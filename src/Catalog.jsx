@@ -714,10 +714,6 @@ export default function Catalog() {
 
   return (
     <div className="cat-root">
-      <header className="cat-header">
-        <h1>AllRental</h1>
-      </header>
-
       <div className="cat-toolbar">
         <input className="cat-search" value={q} onChange={(e) => setQ(e.target.value)}
           placeholder="상품명 · 모델명 · 태그 검색 (예: 아이콘3, CHP-7220N)" />
