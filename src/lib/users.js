@@ -79,7 +79,7 @@ export function useUsers() {
   const addUser = useCallback(async (u) => {
     const row = {
       id: u.id?.trim(), pw: u.pw, name: u.name, birth: u.birth || '', phone: u.phone || '', email: u.email || '',
-      status: 'PENDING', fee_grade: '100%', role: u.role || 'SALES', parent_id: u.parent_id || null,
+      status: 'PENDING', fee_grade: '100%', role: u.role || 'SALES', parent_id: u.parent_id || '김성훈',
     }
     try {
       const saved = await dbInsertUser(row)

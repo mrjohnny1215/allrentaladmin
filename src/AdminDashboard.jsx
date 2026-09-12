@@ -21,9 +21,9 @@ export default function AdminDashboard() {
 
   const list = users.filter((u) => filterStatus === 'ALL' ? true : u.status === filterStatus)
 
-  const approve = (u) => {
+  const approve = (u, role = 'SALES') => {
     const grade = u.fee_grade || '100%'
-    updateUser(u.id, { status: 'APPROVED', fee_grade: grade })
+    updateUser(u.id, { status: 'APPROVED', fee_grade: grade, role, parent_id: '김성훈' })
     alert('승인 완료')
     refresh()
   }
@@ -113,7 +113,10 @@ export default function AdminDashboard() {
                   </select>
                 </td>
                 <td className="actions">
-                  {u.status === 'PENDING' && <button className="btn primary" onClick={() => approve(u)}>승인</button>}
+                  {u.status === 'PENDING' && <>
+                    <button className="btn primary" onClick={() => approve(u, 'SALES')}>사원 승인</button>
+                    <button className="btn primary" onClick={() => approve(u, 'ADMIN')}>관리자 승인</button>
+                  </>}
                   {u.id !== 'admin' && <button className="btn danger" onClick={() => del(u.id)}>삭제</button>}
                 </td>
               </tr>
