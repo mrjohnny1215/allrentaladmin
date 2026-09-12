@@ -1,0 +1,23 @@
+.allrental-settlement { padding: 30px; max-width: 1600px; margin: 0 auto; color: #172033; }
+.settlement-page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+.settlement-kicker { color: #2563eb; font-size: 11px; font-weight: 900; letter-spacing: .12em; }
+.settlement-page-head h2 { margin: 6px 0 5px; font-size: 28px; letter-spacing: -.04em; }
+.settlement-page-head p { margin: 0; color: #64748b; font-size: 14px; }
+.settlement-month-badge { padding: 9px 13px; border-radius: 999px; color: #1d4ed8; background: #eaf1ff; font-size: 13px; font-weight: 800; white-space: nowrap; }
+.settlement-search-card, .settlement-summary, .settlement-table-wrap { background: #fff; border: 1px solid #e7ecf5; border-radius: 18px; box-shadow: 0 10px 30px rgba(15, 35, 70, .05); }
+.settlement-search-card { padding: 22px; margin-bottom: 16px; }
+.settlement-card-title, .settlement-summary-title { margin-bottom: 16px; color: #334155; font-size: 14px; font-weight: 900; }
+.settlement-filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 13px; }
+.allrental-settlement .field-label { display: block; margin: 0 0 7px; color: #475569; font-size: 12px; font-weight: 800; }
+.allrental-settlement .input-x { min-height: 42px; border-color: #dbe4f0; background: #f9fbff; font-size: 13px; }
+.settlement-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+.settlement-actions button { border: 0; border-radius: 10px; padding: 10px 14px; font-size: 13px; font-weight: 800; cursor: pointer; }
+.settlement-reset { color: #475569; background: #eef2f7; }.settlement-search { color: #fff; background: #2563eb; }.settlement-export { color: #fff; background: #172033; }
+.settlement-summary { padding: 18px 22px; margin-bottom: 16px; background: linear-gradient(110deg, #f8fbff, #edf4ff); }
+.settlement-summary-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.settlement-stat { padding-left: 15px; border-left: 1px solid #d7e3f7; }.settlement-stat:first-child { padding-left: 0; border-left: 0; }
+.settlement-stat div { color: #64748b; font-size: 12px; }.settlement-stat strong { display: block; margin-top: 5px; color: #172033; font-size: 20px; }
+.settlement-table-wrap { overflow-x: auto; }.settlement-table { width: 100%; min-width: 1120px; border-collapse: collapse; font-size: 13px; }
+.settlement-table th { padding: 14px 12px !important; border-bottom: 1px solid #dce6f3 !important; color: #475569; background: #f8fbff !important; font-size: 12px; font-weight: 900; white-space: nowrap; }
+.settlement-table td { padding: 13px 12px !important; border-bottom: 1px solid #eef2f7 !important; }.settlement-table tbody tr:hover { background: #f7faff; }
+@media (max-width: 720px) { .allrental-settlement { padding: 18px 14px; }.settlement-page-head { align-items: flex-start; flex-direction: column; gap: 12px; }.settlement-page-head h2 { font-size: 24px; }.settlement-summary-grid { grid-template-columns: repeat(2, 1fr); }.settlement-stat:nth-child(odd) { padding-left: 0; border-left: 0; }.settlement-actions { flex-wrap: wrap; justify-content: stretch; }.settlement-actions button { flex: 1; } }

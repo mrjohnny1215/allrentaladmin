@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import './receipt.css'
+import './settlement.css'
 
 const MONTHS = Array.from({ length: 12 }, (_, i) => '' + String(i + 1).padStart(2, '0') + '월')
 
@@ -16,7 +17,7 @@ export default function SettlementManage() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    // 실제 allnup 연동: /api/settlements 프록시 우선, 실패시 localStorage fallback
+    // 정산 API 우선, 실패 시 브라우저에 저장된 정산 데이터 사용
     let cancelled = false
     setLoading(true)
     fetch('/api/settlements')
@@ -79,12 +80,20 @@ export default function SettlementManage() {
   }
 
   return (
-    <div className="settlement-root" style={{ padding: 24 }}>
-      <h2 style={{ margin: '0 0 16px', fontSize: 22, fontWeight: 900 }}>정산서</h2>
+    <div className="settlement-root allrental-settlement">
+      <section className="settlement-page-head">
+        <div>
+          <span className="settlement-kicker">ALLRENTAL ADMIN</span>
+          <h2>정산 관리</h2>
+          <p>접수 건별 수수료와 입금 현황을 한 곳에서 관리하세요.</p>
+        </div>
+        <div className="settlement-month-badge">{month || '전체'} 정산</div>
+      </section>
 
       {/* 검색 영역 */}
-      <div className="settlement-search-card" style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: 16, marginBottom: 16 }}>
-        <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
+      <div className="settlement-search-card">
+        <div className="settlement-card-title">필터 검색</div>
+        <div className="settlement-filter-grid">
           <div className="field-group">
             <label className="field-label">정산월</label>
             <select className="input-x" value={month} onChange={e => setMonth(e.target.value)}>
@@ -117,18 +126,17 @@ export default function SettlementManage() {
             <input className="input-x" type="date" value={endI} onChange={e => setEndI(e.target.value)} />
           </div>
         </div>
-        <div style={{ display: 'flex', gap: 8, marginTop: 12, justifyContent: 'flex-end' }}>
-          <button className="btn btn-ghost-x" onClick={resetSearch} style={{ padding: '8px 16px', fontSize: 13 }}>초기화</button>
-          <button className="btn btn-primary-x" onClick={() => {}} style={{ padding: '8px 16px', fontSize: 13 }}>검색</button>
-          <button className="btn btn-dark-x" onClick={csvDownload} style={{ padding: '8px 16px', fontSize: 13 }}>CSV 다운로드</button>
+        <div className="settlement-actions">
+          <button className="settlement-reset" onClick={resetSearch}>초기화</button>
+          <button className="settlement-search" onClick={() => {}}>검색</button>
+          <button className="settlement-export" onClick={csvDownload}>CSV 다운로드</button>
         </div>
       </div>
 
       {/* 합계 카드 */}
-      <div style={{ display: 'flex', gap: 12, marginBottom: 16, justifyContent: 'flex-end', flexWrap: 'wrap' }}>
-        <div style={{ background: '#f0f7ff', border: '1px solid #bfdbfe', borderRadius: 10, padding: '12px 18px', minWidth: 520, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-          <div style={{ fontSize: 13, fontWeight: 800, color: '#374151', marginBottom: 8 }}>선택/필터 기준 합계</div>
-          <div style={{ display: 'flex', gap: 24 }}>
+      <div className="settlement-summary">
+        <div className="settlement-summary-title">현재 필터 기준</div>
+        <div className="settlement-summary-grid">
             {[
               ['건수', summary.count],
               ['수수료', summary.fee.toLocaleString()],
@@ -136,12 +144,11 @@ export default function SettlementManage() {
               ['원천세', summary.tax.toLocaleString()],
               ['합계', summary.total.toLocaleString()],
             ].map(([label, value]) => (
-              <div key={label} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 11, color: '#6b7280' }}>{label}</div>
-                <div style={{ fontSize: 15, fontWeight: 900, color: '#111827' }}>{value}</div>
+              <div key={label} className="settlement-stat">
+                <div>{label}</div>
+                <strong>{value}</strong>
               </div>
             ))}
-          </div>
         </div>
       </div>
 
@@ -149,8 +156,8 @@ export default function SettlementManage() {
       {loading ? (
         <div style={{ padding: 40, textAlign: 'center', color: '#9ca3af' }}>불러오는 중...</div>
       ) : (
-        <div className="table-scroll" style={{ overflowX: 'auto', background: '#fff', border: '1px solid #e5e7eb', borderRadius: 10 }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+        <div className="settlement-table-wrap">
+          <table className="settlement-table">
             <thead>
               <tr style={{ background: '#f8fafc' }}>
                 <th style={{ padding: '10px 12px', borderBottom: '2px solid #e5e7eb', width: 40 }}><input type="checkbox" /></th>
