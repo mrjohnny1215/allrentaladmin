@@ -14,11 +14,6 @@ const MENUS = [
   { key: 'customer_apply_manage', label: '접수링크' },
   { key: 'promotions', label: '프로모션' },
   { key: 'creditcard', label: '제휴카드' },
-  { key: 'notice', label: '공지' },
-  { key: 'inquiry', label: '문의' },
-  { key: 'business_card', label: '명함' },
-  { key: 'faq', label: 'FAQ' },
-  { key: 'howto', label: '사용법' },
 ]
 
 export default function Layout({ children }) {
