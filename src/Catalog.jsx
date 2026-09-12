@@ -555,7 +555,7 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
               <input type="radio" checked={receiptOption === index} onChange={() => setReceiptOption(index)} />
               <span><b>{row.contract || '신규'} · {row.years || '-'}</b><small>{row.mgmt || '관리'} / 월 {won(row.monthly_fee || p.min_monthly_fee)}원</small></span>
             </label>)}</div>
-            <div className="receipt-choice-actions"><button onClick={() => setReceiptOpen(false)}>취소</button><button className="send" onClick={() => { const row = (matrix.length ? matrix : [matched])[receiptOption] || matched; localStorage.setItem('allrental_pending_receipt_product', JSON.stringify({ productName: p.name, modelName: p.model_code || '', brand: p.brand, color: selColor, regulation: row.contract || selContract, contract: row.years || selYears, management: row.mgmt || selMgmt, rentalFee: row.monthly_fee || p.min_monthly_fee })); window.location.assign('/admin/reception') }}>접수하기</button></div>
+            <div className="receipt-choice-actions"><button onClick={() => setReceiptOpen(false)}>취소</button><button className="send" onClick={() => { const row = (matrix.length ? matrix : [matched])[receiptOption] || matched; const selectedProduct = { ...p, colors: selColor ? [selColor] : (p.colors || []), pricing_matrix: [row] }; sessionStorage.setItem('allrental_selected_product', JSON.stringify({ product: selectedProduct })); window.location.assign('/admin/reception') }}>접수하기</button></div>
           </div>
         </div>}
         <a className="kakao-cta" href={KAKAO_CHANNEL_URL} target="_blank" rel="noopener noreferrer" onClick={(e) => { e.preventDefault(); buildAndSendKakao(p, selMgmt, selContract, selYears, selColor, discount, matched, matrix); }}>
