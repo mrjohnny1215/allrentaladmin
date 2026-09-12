@@ -23,6 +23,7 @@ export function LoginGate({ children }) {
   const [rBirth, setRBirth] = useState('')
   const [rPhone, setRPhone] = useState('')
   const [rEmail, setREmail] = useState('')
+  const [rParentId, setRParentId] = useState('김성훈')
   const [regMsg, setRegMsg] = useState('')
 
   // 비번찾기 상태
@@ -109,9 +110,9 @@ export function LoginGate({ children }) {
       setRegMsg('이미 존재하는 아이디입니다.')
       return
     }
-    await addUser({ id: _id, pw: rpw, name, birth, phone, email, parent_id: '김성훈', role: 'SALES' })
+    await addUser({ id: _id, pw: rpw, name, birth, phone, email, parent_id: rParentId, role: 'SALES' })
     setRegMsg('가입 신청이 완료되었습니다. 관리자 승인 후 이용 가능합니다.')
-    setRName(''); setRBirth(''); setRPhone(''); setREmail(''); setRPw(''); setId('')
+    setRName(''); setRBirth(''); setRPhone(''); setREmail(''); setRPw(''); setRParentId('김성훈'); setId('')
   }
 
   const submitFind = async (e) => {
@@ -172,7 +173,12 @@ export function LoginGate({ children }) {
               <input className="login-input" type="date" placeholder="생년월일" value={rBirth} onChange={(e) => setRBirth(e.target.value)} />
               <input className="login-input" placeholder="전화번호" value={rPhone} onChange={(e) => setRPhone(e.target.value)} />
               <input className="login-input" placeholder="이메일" value={rEmail} onChange={(e) => setREmail(e.target.value)} />
-              <div className="login-info">가입 후 김성훈 관리자에게 자동 배정됩니다.</div>
+              <select className="login-input" value={rParentId} onChange={(e) => setRParentId(e.target.value)} required>
+                <option value="">소속 관리자 선택</option>
+                {users.filter((u) => u.status === 'APPROVED' && ['ADMIN', 'MANAGER'].includes(u.role)).map((u) => (
+                  <option key={u.id} value={u.id}>{u.name} ({u.role === 'ADMIN' ? '관리자' : '상위 영업사원'})</option>
+                ))}
+              </select>
               {regMsg && <div className="login-info">{regMsg}</div>}
               <button className="login-submit" type="submit">가입 신청</button>
             </form>
