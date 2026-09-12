@@ -44,6 +44,7 @@ export default function Layout({ children }) {
           className="hamburger-btn"
         >☰</button>
         <AllRentalLogo />
+        <button className="admin-home-button" onClick={() => navigate('/')}>메인페이지</button>
         <span style={{ marginLeft: 'auto', fontSize: '0.85rem', opacity: 0.8 }}>{active.label}</span>
       </header>
 

@@ -45,6 +45,7 @@
 .allrental-admin-content .btn-ghost-x { background: #f1f5f9; border: 1px solid #dbe4ef; }
 .allrental-admin-content .badge { font-weight: 900; }
 .side-item.active { color: #1d4ed8 !important; background: #eff6ff; font-weight: 900; border-right: 3px solid #2563eb; }
+.admin-home-button { border: 1px solid #d8e3f3; border-radius: 8px; padding: 7px 10px; color: #1d4ed8; background: #f8fbff; font-size: 12px; font-weight: 900; cursor: pointer; white-space: nowrap; }
 @media (max-width: 720px) {
   .allrental-admin-content .receipt-root,
   .allrental-admin-content .details-root,
