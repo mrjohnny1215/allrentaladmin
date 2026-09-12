@@ -17,6 +17,7 @@
 
 .cat-root {
   min-height: 100vh;
+  padding-top: 82px;
   background: var(--gray-50);
   font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
   color: var(--gray-800);
@@ -951,7 +952,7 @@
 }
 
 /* ===================== 로그인 게이트 ===================== */
-.auth-header { position: sticky; top: 0; z-index: 900; display: flex; align-items: center; justify-content: space-between; min-height: 82px; padding: 10px 14px; background: #fff; border-bottom: 1px solid #e2e8f0; box-shadow: 0 4px 14px rgba(15, 23, 42, .08); }
+.auth-header { position: fixed; top: 0; right: 0; left: 0; z-index: 900; display: flex; align-items: center; justify-content: space-between; min-height: 82px; padding: 10px 14px; background: #fff; border-bottom: 1px solid #e2e8f0; box-shadow: 0 4px 14px rgba(15, 23, 42, .08); }
 .auth-header .auth-left { display: flex; align-items: center; gap: 8px; }
 .auth-header .brand-mark { font-size: 15px; font-weight: 900; letter-spacing: 1.5px; background: linear-gradient(135deg, #1d4ed8, #3b82f6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .auth-header .auth-right { display: flex; align-items: center; gap: 10px; }
