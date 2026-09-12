@@ -89,43 +89,29 @@ export default function EstimateForm() {
     <div className="estimate-root estimate-page" style={{ padding: 24, maxWidth: 1200, margin: '0 auto' }}>
       <h2 style={{ margin: '0 0 20px', fontSize: 26, fontWeight: 900, letterSpacing: 6, textAlign: 'center' }}>견 적 서</h2>
 
-      <div className="estimate-meta-grid" style={{ display: 'grid', gap: 16, gridTemplateColumns: '1fr 1fr', marginBottom: 20 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div className="estimate-meta-row" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-            <label className="field-label" style={{ width: 80 }}>고객명</label>
-            <input className="input-x" value={meta.customerName} onChange={e => setMeta({ ...meta, customerName: e.target.value })} placeholder="고객명" />
-            <span style={{ fontWeight: 900 }}>귀하</span>
-          </div>
-          <div className="estimate-meta-row" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-            <label className="field-label" style={{ width: 80 }}>견적일</label>
-            <input className="input-x" type="date" value={meta.estimateDate} onChange={e => setMeta({ ...meta, estimateDate: e.target.value })} />
-          </div>
-          <div className="estimate-meta-row" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-            <label className="field-label" style={{ width: 80 }}>유효기간</label>
-            <input className="input-x" value={meta.validity} onChange={e => setMeta({ ...meta, validity: e.target.value })} />
-          </div>
+      <fieldset className="estimate-info-card">
+        <legend>견적정보</legend>
+        <div className="estimate-meta-grid">
+          {[
+            ['고객명', 'customerName', '고객명'], ['공급자', 'supplier', '공급자'],
+            ['견적일', 'estimateDate', ''], ['담당자', 'manager', '담당자'],
+            ['유효기간', 'validity', '견적 해당월 계약시'], ['연락처', 'contact', '연락처'],
+          ].map(([label, key, placeholder]) => (
+            <div className="estimate-meta-row" key={key}>
+              <label className="field-label">{label}</label>
+              <input className="input-x" type={key === 'estimateDate' ? 'date' : 'text'} value={meta[key]} onChange={e => setMeta({ ...meta, [key]: e.target.value })} placeholder={placeholder} />
+            </div>
+          ))}
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div className="estimate-meta-row" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-            <label className="field-label" style={{ width: 80 }}>공급자</label>
-            <input className="input-x" value={meta.supplier} onChange={e => setMeta({ ...meta, supplier: e.target.value })} placeholder="공급자" />
-          </div>
-          <div className="estimate-meta-row" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-            <label className="field-label" style={{ width: 80 }}>담당자</label>
-            <input className="input-x" value={meta.manager} onChange={e => setMeta({ ...meta, manager: e.target.value })} placeholder="담당자" />
-          </div>
-          <div className="estimate-meta-row" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-            <label className="field-label" style={{ width: 80 }}>연락처</label>
-            <input className="input-x" value={meta.contact} onChange={e => setMeta({ ...meta, contact: e.target.value })} placeholder="연락처" />
-          </div>
+        <div className="estimate-info-links">
+          <button type="button" onClick={() => setMeta({ customerName: '', supplier: '', estimateDate: new Date().toISOString().slice(0,10), manager: '', contact: '', validity: '견적 해당월 계약시' })}>초기화</button>
+          <button type="button" onClick={() => navigate('/admin/reception')}>리스트</button>
         </div>
-      </div>
+      </fieldset>
 
-      <div className="estimate-actions" style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
-        <button type="button" className="btn btn-ghost-x" onClick={() => navigate('/admin/reception')}>리스트</button>
-        <button type="button" className="btn btn-primary-x" onClick={print}>인쇄/저장</button>
-        <button type="button" className="btn btn-primary-x" onClick={addItem}>+ 제품 추가</button>
-        <button type="button" className="btn btn-ghost-x" onClick={() => { setItems([]); setNote('') }}>초기화</button>
+      <div className="estimate-actions">
+        <button type="button" className="btn btn-primary-x" onClick={print}>공유/저장</button>
+        <button type="button" className="btn btn-primary-x" onClick={addItem}>+ 제품추가</button>
       </div>
 
       <div className="table-scroll" style={{ overflowX: 'auto', background: '#fff', border: '1px solid #e5e7eb', borderRadius: 10, marginBottom: 20 }}>
