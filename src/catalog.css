@@ -974,6 +974,11 @@
 .link-btn { background: transparent; border: none; color: #2563eb; font-size: 13px; font-weight: 800; cursor: pointer; padding: 4px; }
 .link-btn:hover { text-decoration: underline; }
 .login-info { font-size: 12px; color: #374151; width: 100%; }
+.bank-picker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; }
+.bank-option { display: grid; justify-items: center; gap: 4px; min-height: 62px; padding: 6px 2px; border: 1px solid #dbe3ee; border-radius: 10px; background: #fff; color: #334155; font: inherit; font-size: 10px; font-weight: 800; }
+.bank-option.on { border-color: #2563eb; background: #eff6ff; color: #1d4ed8; }
+.bank-icon { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #edf2f7; color: #1e40af; font-size: 10px; font-weight: 900; }
+.bank-option.on .bank-icon { background: #2563eb; color: #fff; }
 .modal-card.sm { width: min(92vw, 420px); }
 .modal-form { display: flex; flex-direction: column; gap: 10px; padding: 14px; }
 .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; }

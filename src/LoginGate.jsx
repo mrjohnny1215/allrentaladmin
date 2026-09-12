@@ -5,6 +5,12 @@ import { getUsers, useUsers } from './lib/users.js'
 import { supabase } from './lib/supabase.js'
 import AllRentalLogo from './components/AllRentalLogo'
 
+const BANKS = [
+  ['KB', '국민은행'], ['SH', '신한은행'], ['WR', '우리은행'], ['HN', '하나은행'],
+  ['NH', '농협은행'], ['IB', '기업은행'], ['KT', '카카오뱅크'], ['TS', '토스뱅크'],
+  ['SC', 'SC제일은행'], ['BN', '부산은행'], ['DG', '대구은행'], ['KN', '경남은행'],
+]
+
 export function LoginGate({ children }) {
   const navigate = useNavigate()
   const { user, login, logout } = useAuth()
@@ -100,7 +106,11 @@ export function LoginGate({ children }) {
               <input className="login-input" value={user.id} disabled />
               <input className="login-input" type="password" placeholder="현재 비밀번호" value={financialPw} onChange={(e) => setFinancialPw(e.target.value)} />
               <button className="btn-ghost-x" onClick={() => financialRequest('get')}>기존 계좌정보 불러오기</button>
-              <input className="login-input" placeholder="은행명" value={bankName} onChange={(e) => setBankName(e.target.value)} />
+              <div className="bank-picker" aria-label="은행 선택">
+                {BANKS.map(([icon, name]) => <button key={name} type="button" className={`bank-option ${bankName === name ? 'on' : ''}`} onClick={() => setBankName(name)}>
+                  <span className="bank-icon">{icon}</span><span>{name.replace('은행', '')}</span>
+                </button>)}
+              </div>
               <input className="login-input" placeholder="계좌번호" value={accountNumber} onChange={(e) => setAccountNumber(e.target.value)} />
               <input className="login-input" placeholder="예금주" value={accountHolder} onChange={(e) => setAccountHolder(e.target.value)} />
               {financialMsg && <div className="login-info">{financialMsg}</div>}
