@@ -77,7 +77,10 @@ export function useUsers() {
   useEffect(() => { refresh() }, [refresh])
 
   const addUser = useCallback(async (u) => {
-    const row = { id: u.id?.trim(), pw: u.pw, name: u.name, birth: u.birth || '', phone: u.phone || '', email: u.email || '', status: 'PENDING', fee_grade: '100%' }
+    const row = {
+      id: u.id?.trim(), pw: u.pw, name: u.name, birth: u.birth || '', phone: u.phone || '', email: u.email || '',
+      status: 'PENDING', fee_grade: '100%', role: u.role || 'SALES', parent_id: u.parent_id || null,
+    }
     try {
       const saved = await dbInsertUser(row)
       setUsers((prev) => {

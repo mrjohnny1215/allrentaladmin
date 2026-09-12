@@ -10,7 +10,7 @@ export default function AdminDashboard() {
   const [filterStatus, setFilterStatus] = useState('ALL')
 
   useEffect(() => {
-    if (!user || user.id !== 'admin') {
+    if (!user || user.role !== 'ADMIN') {
       navigate('/')
     }
   }, [user, navigate])
@@ -30,6 +30,11 @@ export default function AdminDashboard() {
 
   const saveGrade = (id, grade) => {
     updateUser(id, { fee_grade: grade })
+    refresh()
+  }
+
+  const saveOrganization = (id, patch) => {
+    updateUser(id, patch)
     refresh()
   }
 
@@ -71,7 +76,7 @@ export default function AdminDashboard() {
         <table className="admin-table">
           <thead>
             <tr>
-              <th>아이디</th><th>이름</th><th>생년월일</th><th>전화번호</th><th>이메일</th><th>가입일시</th><th>승인상태</th><th>수수료 등급</th><th>관리</th>
+              <th>아이디</th><th>이름</th><th>소속 관리자</th><th>역할</th><th>생년월일</th><th>전화번호</th><th>이메일</th><th>가입일시</th><th>승인상태</th><th>수수료 등급</th><th>관리</th>
             </tr>
           </thead>
           <tbody>
@@ -79,6 +84,19 @@ export default function AdminDashboard() {
               <tr key={u.id}>
                 <td>{u.id}</td>
                 <td>{u.name}</td>
+                <td>
+                  <select value={u.parent_id || ''} onChange={(e) => saveOrganization(u.id, { parent_id: e.target.value || null })} disabled={u.id === 'admin'}>
+                    <option value="">최상위</option>
+                    {users.filter((manager) => manager.id !== u.id && manager.status === 'APPROVED' && ['ADMIN', 'MANAGER'].includes(manager.role)).map((manager) => (
+                      <option key={manager.id} value={manager.id}>{manager.name} ({manager.id})</option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  <select value={u.role || 'SALES'} onChange={(e) => saveOrganization(u.id, { role: e.target.value })} disabled={u.id === 'admin'}>
+                    <option value="ADMIN">관리자</option><option value="MANAGER">상위 영업사원</option><option value="SALES">영업사원</option>
+                  </select>
+                </td>
                 <td>{u.birth || '-'}</td>
                 <td>{u.phone || '-'}</td>
                 <td>{u.email || '-'}</td>
@@ -100,7 +118,7 @@ export default function AdminDashboard() {
                 </td>
               </tr>
             ))}
-            {list.length === 0 && <tr><td colSpan="9" className="empty">표시할 회원이 없습니다.</td></tr>}
+            {list.length === 0 && <tr><td colSpan="11" className="empty">표시할 회원이 없습니다.</td></tr>}
           </tbody>
         </table>
       </div>

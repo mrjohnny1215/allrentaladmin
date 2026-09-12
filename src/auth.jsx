@@ -21,10 +21,13 @@ export function AuthProvider({ children }) {
       return false
     }
     const fee = getFeeGrade(acc.fee_grade || '100%')
-    const session = { id: acc.id, name: acc.name, rate: fee.rate, feeGrade: acc.fee_grade, status: acc.status }
+    const session = {
+      id: acc.id, name: acc.name, rate: fee.rate, feeGrade: acc.fee_grade, status: acc.status,
+      role: acc.role || (acc.id === 'admin' ? 'ADMIN' : 'SALES'), parentId: acc.parent_id || null,
+    }
     localStorage.setItem('allrental_auth', JSON.stringify(session))
     setUser(session)
-    return true
+    return session
   }
 
   const logout = () => {
