@@ -89,6 +89,7 @@ export function LoginGate({ children }) {
                 </div>
               )}
             </div>
+            <button className="logout-btn" onClick={() => { setFinancialOpen(true); setFinancialMsg('') }}>회원정보 변경</button>
             <button className="logout-btn" onClick={logout}>로그아웃</button>
           </div>
         </div>
