@@ -9,11 +9,8 @@ const MENUS = [
   { key: 'details', label: '제품비교' },
   { key: 'estimate_form', label: '견적서' },
   { key: 'submission_list', label: '접수내역' },
-  { key: 'progress', label: '현황통계' },
   { key: 'settlement_manage', label: '정산서' },
   { key: 'customer_apply_manage', label: '접수링크' },
-  { key: 'promotions', label: '프로모션' },
-  { key: 'creditcard', label: '제휴카드' },
 ]
 
 export default function Layout({ children }) {
