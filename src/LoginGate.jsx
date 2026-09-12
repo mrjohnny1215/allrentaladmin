@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from './auth.jsx'
 import { getUsers, useUsers } from './lib/users.js'
+import { supabase } from './lib/supabase.js'
 import AllRentalLogo from './components/AllRentalLogo'
 
 export function LoginGate({ children }) {
@@ -15,6 +16,12 @@ export function LoginGate({ children }) {
   const [regOpen, setRegOpen] = useState(false)
   const [findOpen, setFindOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
+  const [financialOpen, setFinancialOpen] = useState(false)
+  const [financialPw, setFinancialPw] = useState('')
+  const [bankName, setBankName] = useState('')
+  const [accountNumber, setAccountNumber] = useState('')
+  const [accountHolder, setAccountHolder] = useState('')
+  const [financialMsg, setFinancialMsg] = useState('')
   const profileRef = useRef(null)
 
   // 회원가입 상태
@@ -44,6 +51,18 @@ export function LoginGate({ children }) {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
+  const financialRequest = async (action) => {
+    setFinancialMsg('')
+    const { data, error } = await supabase.functions.invoke('member-financial-profile-v2', {
+      body: { action, id: user.id, password: financialPw, bankName, accountNumber, accountHolder },
+    })
+    if (error || data?.error) { setFinancialMsg(data?.error || '처리 중 오류가 발생했습니다.'); return }
+    if (action === 'get') {
+      setBankName(data.profile.bank_name || ''); setAccountNumber(data.profile.account_number || ''); setAccountHolder(data.profile.account_holder || '')
+      setFinancialMsg('계좌정보를 불러왔습니다.')
+    } else setFinancialMsg('계좌정보를 저장했습니다.')
+  }
+
   if (user) {
     return (
       <>
@@ -66,12 +85,28 @@ export function LoginGate({ children }) {
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/submission_list') }}>접수내역</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/customer_apply_manage') }}>접수링크</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/details') }}>제품비교</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); setFinancialOpen(true); setFinancialMsg('') }}>회원정보 변경</button>
                 </div>
               )}
             </div>
             <button className="logout-btn" onClick={logout}>로그아웃</button>
           </div>
         </div>
+        {financialOpen && <div className="modal-veil" onClick={(e) => e.target === e.currentTarget && setFinancialOpen(false)}>
+          <div className="modal-card sm">
+            <div className="modal-topbar"><span>회원정보 변경</span><button className="modal-close" onClick={() => setFinancialOpen(false)}>×</button></div>
+            <div className="modal-form">
+              <input className="login-input" value={user.id} disabled />
+              <input className="login-input" type="password" placeholder="현재 비밀번호" value={financialPw} onChange={(e) => setFinancialPw(e.target.value)} />
+              <button className="btn-ghost-x" onClick={() => financialRequest('get')}>기존 계좌정보 불러오기</button>
+              <input className="login-input" placeholder="은행명" value={bankName} onChange={(e) => setBankName(e.target.value)} />
+              <input className="login-input" placeholder="계좌번호" value={accountNumber} onChange={(e) => setAccountNumber(e.target.value)} />
+              <input className="login-input" placeholder="예금주" value={accountHolder} onChange={(e) => setAccountHolder(e.target.value)} />
+              {financialMsg && <div className="login-info">{financialMsg}</div>}
+              <button className="login-submit" onClick={() => financialRequest('save')}>계좌정보 저장</button>
+            </div>
+          </div>
+        </div>}
         {children}
       </>
     )
