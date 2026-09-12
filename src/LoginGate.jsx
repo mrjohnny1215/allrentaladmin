@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from './auth.jsx'
 import { getUsers, useUsers } from './lib/users.js'
 import AllRentalLogo from './components/AllRentalLogo'
 
 export function LoginGate({ children }) {
+  const navigate = useNavigate()
   const { user, login, logout } = useAuth()
   const { addUser, updateUser } = useUsers()
   const [id, setId] = useState('')
@@ -55,14 +57,14 @@ export function LoginGate({ children }) {
               </button>
               {profileOpen && (
                 <div className="profile-menu">
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/settlement_manage' }}>정산서</button>
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/counsel' }}>상담</button>
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/reception' }}>접수</button>
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/estimate_form' }}>견적서</button>
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/submission_list' }}>접수내역</button>
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/customer_apply_manage' }}>접수링크</button>
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/suggestion_board' }}>공지문의</button>
-                  <button className="profile-item" onClick={() => { setProfileOpen(false); window.location.href = '/admin/details' }}>제품비교</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/settlement_manage') }}>정산서</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/counsel') }}>상담</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/reception') }}>접수</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/estimate_form') }}>견적서</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/submission_list') }}>접수내역</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/customer_apply_manage') }}>접수링크</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/suggestion_board') }}>공지문의</button>
+                  <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/details') }}>제품비교</button>
                 </div>
               )}
             </div>
@@ -85,7 +87,7 @@ export function LoginGate({ children }) {
       return
     }
     if (id.trim() === 'admin') {
-      window.location.href = '/admin'
+      navigate('/admin')
     }
   }
 
