@@ -57,7 +57,7 @@ export default function AdminDashboard() {
   const loadSettlementAccounts = async () => {
     const password = window.prompt('정산 계좌를 조회하려면 현재 비밀번호를 입력해 주세요.')
     if (!password) return
-    const { data, error } = await supabase.functions.invoke('member-financial-profile-v3', { body: { action: 'admin-list', id: user.id, password } })
+    const { data, error } = await supabase.functions.invoke('member-financial-profile-v4', { body: { action: 'manager-list', id: user.id, password } })
     if (error || data?.error) { setSettlementMsg(data?.error || '계좌 조회에 실패했습니다.'); return }
     setSettlementAccounts(data.profiles || []); setSettlementMsg(`정산 계좌 ${data.profiles?.length || 0}건을 조회했습니다.`)
   }
@@ -80,7 +80,7 @@ export default function AdminDashboard() {
               {s === 'ALL' ? '전체' : statusLabel(s)}
             </button>
           ))}
-          <button onClick={loadSettlementAccounts}>정산 계좌 조회</button>
+          <button onClick={loadSettlementAccounts}>소속 직원 정산 계좌</button>
         </div>
       </div>
 
