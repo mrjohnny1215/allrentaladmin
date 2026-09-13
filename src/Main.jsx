@@ -5,7 +5,7 @@
    - 고객정보, 설치주소, 제품정보, 확인요청, 특이사항 영역
    - 미리보기 + 내용 복사 + 최종 접수
    ============================================================ */
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from './lib/supabase.js'
 import './receipt.css'
@@ -160,6 +160,42 @@ function RentalOptionModal({ open, onClose, product, onConfirm }) {
 }
 
 /* ==================== 미리보기 텍스트 ==================== */
+function BirthDateField({ value, onChange }) {
+  const yearRef = useRef(null)
+  const monthRef = useRef(null)
+  const dayRef = useRef(null)
+  const [parts, setParts] = useState(() => {
+    const [year = '', month = '', day = ''] = (value || '').split('-')
+    return { year, month, day }
+  })
+
+  useEffect(() => {
+    const [year = '', month = '', day = ''] = (value || '').split('-')
+    setParts({ year, month, day })
+  }, [value])
+
+  const update = (key, raw) => {
+    const limit = key === 'year' ? 4 : 2
+    const next = { ...parts, [key]: raw.replace(/\D/g, '').slice(0, limit) }
+    setParts(next)
+    onChange([next.year, next.month, next.day].every(Boolean) ? `${next.year}-${next.month.padStart(2, '0')}-${next.day.padStart(2, '0')}` : '')
+    if (key === 'year' && next.year.length === 4) monthRef.current?.focus()
+    if (key === 'month' && next.month.length === 2) dayRef.current?.focus()
+  }
+
+  const back = (event, key, previousRef) => {
+    if (event.key === 'Backspace' && !parts[key]) previousRef.current?.focus()
+  }
+
+  return <div className="birth-date-fields" aria-label="생년월일">
+    <input ref={yearRef} inputMode="numeric" maxLength={4} value={parts.year} onChange={e => update('year', e.target.value)} placeholder="YYYY" aria-label="생년" />
+    <span>-</span>
+    <input ref={monthRef} inputMode="numeric" maxLength={2} value={parts.month} onChange={e => update('month', e.target.value)} onKeyDown={e => back(e, 'month', yearRef)} placeholder="MM" aria-label="생월" />
+    <span>-</span>
+    <input ref={dayRef} inputMode="numeric" maxLength={2} value={parts.day} onChange={e => update('day', e.target.value)} onKeyDown={e => back(e, 'day', monthRef)} placeholder="DD" aria-label="생일" />
+  </div>
+}
+
 function buildPreviewText(form, productItems) {
   const lines = []
   lines.push('접수 식별정보')
@@ -437,7 +473,7 @@ export default function Main() {
               </div>
               <div className="field-grid">
                 <div className="field-group"><label className="field-label required">* 생년월일</label>
-                  <input type="date" name="birthDate" value={form.birthDate} onChange={onChange} className="input-x" />
+                  <BirthDateField value={form.birthDate} onChange={(birthDate) => setForm(f => ({ ...f, birthDate }))} />
                 </div>
                 <div className="field-group"><label className="field-label required">* 연락처</label>
                   <input type="tel" name="contact" value={form.contact} onChange={onChange} placeholder="010-0000-0000" className="input-x" />
