@@ -66,6 +66,11 @@
 .product-info-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .product-info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; font-size: 14px; }
 .product-remove-btn { border: 0; background: transparent; color: #dc2626; font-weight: 900; cursor: pointer; }
+.product-info-card + div { flex-wrap: wrap; margin-top: 10px !important; }
+.color-selector { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.color-selector button { min-height: 34px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 9px; background: #fff; color: #334155; font-weight: 700; cursor: pointer; }
+.color-selector button.on { border-color: #2563eb; background: #eff6ff; color: #1d4ed8; }
+.add-product-btn { margin-top: 12px; }
 .product-search { position: relative; }
 .search-results { position: absolute; z-index: 40; right: 0; left: 0; max-height: 220px; overflow: auto; border: 1px solid #dce3ec; border-radius: 10px; background: #fff; box-shadow: 0 10px 24px rgba(15,23,42,.14); }
 .search-result-item { display: flex; width: 100%; justify-content: space-between; padding: 12px; border: 0; border-bottom: 1px solid #edf1f7; background: #fff; text-align: left; cursor: pointer; }
@@ -83,7 +88,9 @@
   .receipt-main { gap: 18px; }
   .receipt-section { padding: 20px 16px 16px; }
   .section-title { font-size: 18px; margin-bottom: 18px; }
-  .field-grid, .product-info-grid { grid-template-columns: 1fr; }
+  .field-grid { grid-template-columns: 1fr; }
+  .product-info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 12px; }
+  .product-info-grid > :first-child { grid-column: 1 / -1; }
   .address-controls, .email-input { flex-wrap: wrap; }
   .address-controls .input-x { flex: 1 1 100% !important; }
   .find-address-btn { flex: 1; }
