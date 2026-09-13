@@ -23,12 +23,20 @@ const CHECK_REQUESTS = [
 const won = (n) => (n ? Number(n).toLocaleString('ko-KR') : '0')
 const STORE_KEY = 'allrental_submissions'
 
-const COMMON_ADDRESSES = [
-  { zip: '06001', addr: '서울특별시 강남구 테헤란로 123' },
-  { zip: '06002', addr: '서울특별시 서초구 강남대로 45' },
-  { zip: '06003', addr: '경기도 수원시 민속초가로 50' },
-  { zip: '06004', addr: '서울특별시 중구 세종대로 11' },
-]
+const openAddressSearch = (onSelect) => {
+  const launch = () => {
+    if (!window.daum?.Postcode) { alert('주소 검색을 불러오지 못했습니다. 다시 시도해 주세요.'); return }
+    new window.daum.Postcode({
+      oncomplete: (data) => onSelect({ zip: data.zonecode, address: data.roadAddress || data.jibunAddress }),
+    }).open()
+  }
+  if (window.daum?.Postcode) { launch(); return }
+  const script = document.createElement('script')
+  script.src = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'
+  script.onload = launch
+  script.onerror = () => alert('주소 검색을 불러오지 못했습니다. 다시 시도해 주세요.')
+  document.head.appendChild(script)
+}
 
 /* ==================== 색상 선택 ==================== */
 function ColorSelector({ colors, value, onChange }) {
@@ -442,10 +450,7 @@ export default function Main() {
                   <input type="text" name="zipCode" value={form.zipCode} onChange={onChange}
                     placeholder="설치 우편번호" className="input-x" style={{ flex: 2 }} readOnly />
                   <button type="button" className="find-address-btn"
-                    onClick={() => {
-                      const addr = COMMON_ADDRESSES[Math.floor(Math.random() * COMMON_ADDRESSES.length)]
-                      setForm(f => ({ ...f, zipCode: addr.zip, address: addr.addr }))
-                    }}
+                    onClick={() => openAddressSearch((addr) => setForm(f => ({ ...f, zipCode: addr.zip, address: addr.address })))}
                   >주소검색</button>
                 </div>
               </div>
