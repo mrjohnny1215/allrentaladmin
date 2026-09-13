@@ -390,7 +390,7 @@ export default function Main() {
                   <input type="text" name="brandInput" value={form.brandInput} onChange={onChange}
                     placeholder="브랜드를 직접 입력하세요" className="input-x" />
                 ) : (
-                  <select name="brand" value={form.brand} onChange={onChange} className="input-x">
+                  <select name="brand" value={form.brand} onChange={onChange} className="input-x" disabled={productItems.length > 0}>
                     <option value="">선택하세요</option>
                     {BRANDS.map((b) => <option key={b} value={b}>{b}</option>)}
                   </select>
