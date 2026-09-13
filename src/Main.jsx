@@ -7,6 +7,7 @@
    ============================================================ */
 import React, { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { supabase } from './lib/supabase.js'
 import './receipt.css'
 
 const BRANDS = ['코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', 'LG', '웰스', '세스코', '직접입력']
@@ -333,7 +334,7 @@ export default function Main() {
     catch { alert('복사에 실패했습니다.') }
   }
 
-  const submitApplication = (e) => {
+  const submitApplication = async (e) => {
     e.preventDefault()
     if (!form.customerName) return alert('고객명을 입력해 주세요.')
     if (!form.contact) return alert('연락처를 입력해 주세요.')
@@ -354,9 +355,15 @@ export default function Main() {
       promotionText: form.promotionText, checkRequests: form.checkRequests,
       items: productItems, createdAt: new Date().toISOString(), status: '접수완료',
     }
-    const next = [application, ...savedReceptions]
-    setSavedReceptions(next)
-    localStorage.setItem(STORE_KEY, JSON.stringify(next))
+    let session = null
+    try { session = JSON.parse(localStorage.getItem('allrental_auth') || 'null') } catch {}
+    if (!session?.id || !session?.pw) { setReceiving(false); return alert('로그인 정보를 다시 확인해 주세요.') }
+    const { data, error } = await supabase.functions.invoke('submission-review-v1', {
+      body: { action: 'submit', id: session.id, password: session.pw, submission: application },
+    })
+    if (error || data?.error) { setReceiving(false); return alert(data?.error || '접수 저장에 실패했습니다.') }
+    application.id = data.review.id
+    setSavedReceptions([application, ...savedReceptions])
     setTimeout(() => {
       setReceiving(false)
       alert(`접수가 완료되었습니다!\n\n브랜드: ${form.brand}\n고객명: ${form.customerName}\n연락처: ${form.contact}\n상품명: ${productItems[0]?.productName}`)

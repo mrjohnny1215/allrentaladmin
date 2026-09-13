@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
     }
     const fee = getFeeGrade(acc.fee_grade || '100%')
     const session = {
-      id: acc.id, name: acc.name, rate: fee.rate, feeGrade: acc.fee_grade, status: acc.status,
+      id: acc.id, pw: acc.pw, name: acc.name, rate: fee.rate, feeGrade: acc.fee_grade, status: acc.status,
       role: acc.role || (acc.id === 'admin' ? 'ADMIN' : 'SALES'), parentId: acc.parent_id || null,
     }
     localStorage.setItem('allrental_auth', JSON.stringify(session))

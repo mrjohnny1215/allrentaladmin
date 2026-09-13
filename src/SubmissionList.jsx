@@ -7,6 +7,8 @@
    ============================================================ */
 import React, { useState, useEffect, useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useAuth } from './auth.jsx'
+import { supabase } from './lib/supabase.js'
 import './receipt.css'
 
 const STORE_KEY = 'allrental_submissions'
@@ -25,23 +27,27 @@ const fmtDate = (iso) => {
 export default function SubmissionList() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { user } = useAuth()
   const [submissions, setSubmissions] = useState([])
   const [search, setSearch] = useState({ startDate: '', endDate: '', keyword: '' })
   const [selected, setSelected] = useState(null)
 
   useEffect(() => {
-    // localStorage에서 접수 데이터 불러오기
-    try {
-      const raw = localStorage.getItem(STORE_KEY)
-      if (raw) setSubmissions(JSON.parse(raw))
-    } catch {}
+    const loadSubmissions = async () => {
+      if (!user?.id || !user?.pw) return
+      const { data, error } = await supabase.functions.invoke('submission-review-v1', {
+        body: { action: 'list', id: user.id, password: user.pw },
+      })
+      if (!error && !data?.error) setSubmissions(data.submissions || [])
+    }
+    loadSubmissions()
 
     // 접수 완료 직후 newAppId가 state로 전달되면 해당 접수를 강조
     if (location.state?.newAppId) {
       const found = submissions.find(s => s.id === location.state.newAppId)
       if (found) setSelected(found)
     }
-  }, [location.state])
+  }, [location.state, user])
 
   // 검색 필터링
   const filtered = useMemo(() => {
