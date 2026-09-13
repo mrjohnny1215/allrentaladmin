@@ -38,7 +38,23 @@ export default function SubmissionList() {
       const { data, error } = await supabase.functions.invoke('submission-review-v1', {
         body: { action: 'list', id: user.id, password: user.pw },
       })
-      if (!error && !data?.error) setSubmissions(data.submissions || [])
+      if (error || data?.error) return
+
+      // 예전 브라우저 전용 접수는 최초 1회 공용 접수함으로 이전한다.
+      let localRecords = []
+      try { localRecords = JSON.parse(localStorage.getItem(STORE_KEY) || '[]') } catch {}
+      if (localRecords.length && !localStorage.getItem('allrental_submissions_migrated_v1')) {
+        await Promise.all(localRecords.map((submission) => supabase.functions.invoke('submission-review-v1', {
+          body: { action: 'submit', id: user.id, password: user.pw, submission },
+        })))
+        localStorage.setItem('allrental_submissions_migrated_v1', 'true')
+        const refreshed = await supabase.functions.invoke('submission-review-v1', {
+          body: { action: 'list', id: user.id, password: user.pw },
+        })
+        if (!refreshed.error && !refreshed.data?.error) setSubmissions(refreshed.data.submissions || [])
+        return
+      }
+      setSubmissions(data.submissions || [])
     }
     loadSubmissions()
 
