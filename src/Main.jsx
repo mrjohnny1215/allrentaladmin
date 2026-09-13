@@ -357,14 +357,9 @@ export default function Main() {
     }
     let session = null
     try { session = JSON.parse(localStorage.getItem('allrental_auth') || 'null') } catch {}
-    if (!session?.id) { setReceiving(false); return alert('로그인 정보를 다시 확인해 주세요.') }
-    if (!session.pw) {
-      const { data: account } = await supabase.from('users').select('pw').eq('id', session.id).maybeSingle()
-      if (account?.pw) { session = { ...session, pw: account.pw }; localStorage.setItem('allrental_auth', JSON.stringify(session)) }
-    }
-    if (!session.pw) { setReceiving(false); return alert('로그인 정보를 다시 확인해 주세요.') }
+    if (!session?.id) { setReceiving(false); return alert('로그인을 다시 진행해 주세요.') }
     const { data, error } = await supabase.functions.invoke('submission-review-v1', {
-      body: { action: 'submit', id: session.id, password: session.pw, submission: application },
+      body: { action: 'submit', id: session.id, submission: application },
     })
     if (error || data?.error) { setReceiving(false); return alert(data?.error || '접수 저장에 실패했습니다.') }
     application.id = data.review.id
