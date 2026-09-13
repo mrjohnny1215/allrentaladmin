@@ -544,6 +544,18 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
           </div>
         )}
 
+        {p.detail_url && (
+          <a
+            className="official-detail-cta"
+            href={p.detail_url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="official-detail-cta__icon">⌕</span>
+            <span><b>상품 상세 페이지 보기</b><small>{p.brand} 제품 정보 · 새 창에서 열기</small></span>
+            <span className="official-detail-cta__arrow">›</span>
+          </a>
+        )}
 
         <button className="receipt-cta" onClick={() => { setReceiptOption(Math.max(0, matrix.indexOf(matched))); setReceiptOpen(true) }}>
           <span>✓</span><span>상품 선택 후 접수하기</span>
