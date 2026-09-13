@@ -357,7 +357,12 @@ export default function Main() {
     }
     let session = null
     try { session = JSON.parse(localStorage.getItem('allrental_auth') || 'null') } catch {}
-    if (!session?.id || !session?.pw) { setReceiving(false); return alert('로그인 정보를 다시 확인해 주세요.') }
+    if (!session?.id) { setReceiving(false); return alert('로그인 정보를 다시 확인해 주세요.') }
+    if (!session.pw) {
+      const { data: account } = await supabase.from('users').select('pw').eq('id', session.id).maybeSingle()
+      if (account?.pw) { session = { ...session, pw: account.pw }; localStorage.setItem('allrental_auth', JSON.stringify(session)) }
+    }
+    if (!session.pw) { setReceiving(false); return alert('로그인 정보를 다시 확인해 주세요.') }
     const { data, error } = await supabase.functions.invoke('submission-review-v1', {
       body: { action: 'submit', id: session.id, password: session.pw, submission: application },
     })
