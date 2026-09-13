@@ -11,6 +11,8 @@ export default function AdminDashboard() {
   const [filterStatus, setFilterStatus] = useState('ALL')
   const [settlementAccounts, setSettlementAccounts] = useState([])
   const [settlementMsg, setSettlementMsg] = useState('')
+  const [employeeDetail, setEmployeeDetail] = useState(null)
+  const [employeeDetailMsg, setEmployeeDetailMsg] = useState('')
 
   useEffect(() => {
     if (!user || user.role !== 'ADMIN') {
@@ -62,6 +64,17 @@ export default function AdminDashboard() {
     setSettlementAccounts(data.profiles || []); setSettlementMsg(`정산 계좌 ${data.profiles?.length || 0}건을 조회했습니다.`)
   }
 
+  const openEmployeeDetail = async (employee) => {
+    if (employee.id === user.id) return
+    if (!user?.pw) { setEmployeeDetailMsg('로그아웃 후 다시 로그인해 주세요.'); return }
+    setEmployeeDetailMsg('직원 접수·정산 정보를 불러오는 중입니다.')
+    const { data, error } = await supabase.functions.invoke('submission-review-v1', {
+      body: { action: 'employee-summary', id: user.id, password: user.pw, employeeId: employee.id },
+    })
+    if (error || data?.error) { setEmployeeDetailMsg(data?.error || '직원 정보를 불러오지 못했습니다.'); return }
+    setEmployeeDetail(data); setEmployeeDetailMsg('')
+  }
+
   return (
     <div className="admin-wrap">
       <header className="admin-header">
@@ -102,7 +115,7 @@ export default function AdminDashboard() {
             {list.map((u) => (
               <tr key={u.id}>
                 <td>{u.id}</td>
-                <td>{u.name}</td>
+                <td><button className="btn btn-outline-x" onClick={() => openEmployeeDetail(u)}>{u.name}</button></td>
                 <td>
                   <select value={u.parent_id || ''} onChange={(e) => saveOrganization(u.id, { parent_id: e.target.value || null })} disabled={u.id === 'admin'}>
                     <option value="">최상위</option>
@@ -142,6 +155,24 @@ export default function AdminDashboard() {
           </tbody>
         </table>
       </div>
+
+      {employeeDetailMsg && <div className="admin-toolbar">{employeeDetailMsg}</div>}
+      {employeeDetail && <div className="modal-veil" onClick={() => setEmployeeDetail(null)}>
+        <div className="modal-card" style={{ maxWidth: 920, maxHeight: '85vh' }} onClick={(e) => e.stopPropagation()}>
+          <div className="modal-topbar"><div className="modal-topbar-title">{employeeDetail.employee.name} ({employeeDetail.employee.id}) 직원 상세</div><button className="modal-close" onClick={() => setEmployeeDetail(null)}>×</button></div>
+          <div className="modal-body" style={{ padding: 18, overflowY: 'auto' }}>
+            <div className="field-grid" style={{ marginBottom: 18 }}>
+              <div className="preview-container"><b>접수 건수</b><div style={{ fontSize: 24, fontWeight: 900, marginTop: 8 }}>{employeeDetail.settlement.count}건</div></div>
+              <div className="preview-container"><b>예상 정산액</b><div style={{ fontSize: 24, fontWeight: 900, marginTop: 8, color: '#1d4ed8' }}>{employeeDetail.settlement.expectedPayout.toLocaleString()}원</div><small>수수료 {Math.round(employeeDetail.settlement.rate * 100)}% 적용</small></div>
+            </div>
+            <div className="preview-container" style={{ marginBottom: 18 }}><b>정산 계좌</b><div style={{ marginTop: 8 }}>{employeeDetail.account ? `${employeeDetail.account.bank_name} · ${employeeDetail.account.account_number} · ${employeeDetail.account.account_holder}` : '등록된 계좌가 없습니다.'}</div></div>
+            <div className="table-scroll"><table className="admin-table"><thead><tr><th>접수일</th><th>고객명</th><th>상품</th><th>렌탈료</th><th>검수상태</th></tr></thead><tbody>
+              {employeeDetail.submissions.map((submission) => <tr key={submission.id}><td>{new Date(submission.createdAt).toLocaleDateString('ko-KR')}</td><td>{submission.customerName}</td><td>{submission.items?.[0]?.productName || '-'}</td><td>{submission.items?.[0]?.rentalFee || '-'}</td><td>{submission.reviewStatus}</td></tr>)}
+              {!employeeDetail.submissions.length && <tr><td colSpan="5" className="empty">접수 내역이 없습니다.</td></tr>}
+            </tbody></table></div>
+          </div>
+        </div>
+      </div>}
 
       <footer className="site-footer">
         <div className="foot-row copy">AllRental Admin</div>
