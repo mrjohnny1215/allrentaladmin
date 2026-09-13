@@ -529,7 +529,7 @@ export default function Main() {
                     <label key={req.value} className="checkbox-item">
                       <input type="checkbox" name="checkRequests" value={req.value}
                         checked={form.checkRequests.includes(req.value)} onChange={onCheckChange} />
-                      <span>{req.label} ?</span>
+                      <span>{req.label}</span>
                     </label>
                   ))}
                 </div>
