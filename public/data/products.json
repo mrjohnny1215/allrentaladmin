@@ -134093,11 +134093,7 @@
     "max_commission": 516923,
     "id": "cuckoo-cp-aqs100ewh",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AQS100EWH/01.jpg",
-      "/images/details/cuckoo/CP-AQS100EWH/02.jpg",
-      "/images/details/cuckoo/CP-AQS100EWH/03.jpg",
-      "/images/details/cuckoo/CP-AQS100EWH/04.jpg",
-      "/images/details/cuckoo/CP-AQS100EWH/05.jpg"
+      "/assets/goods_image/img_03247.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=48050&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -134501,9 +134497,7 @@
     "max_commission": 536705,
     "id": "cuckoo-cp-ahs101he",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AHS101HE/01.jpg",
-      "/images/details/cuckoo/CP-AHS101HE/02.jpg",
-      "/images/details/cuckoo/CP-AHS101HE/03.jpg"
+      "/assets/goods_image/img_03227.jpg"
     ]
   },
   {
@@ -134736,9 +134730,7 @@
     "max_commission": 570542,
     "id": "cuckoo-cp-ahs101he-2",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AHS101HE/01.jpg",
-      "/images/details/cuckoo/CP-AHS101HE/02.jpg",
-      "/images/details/cuckoo/CP-AHS101HE/03.jpg"
+      "/assets/goods_image/img_03222.jpg"
     ]
   },
   {
@@ -135136,18 +135128,7 @@
     "max_commission": 512159,
     "id": "cuckoo-cp-ahs100he",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AHS100HE/01.jpg",
-      "/images/details/cuckoo/CP-AHS100HE/02.jpg",
-      "/images/details/cuckoo/CP-AHS100HE/03.jpg",
-      "/images/details/cuckoo/CP-AHS100HE/04.jpg",
-      "/images/details/cuckoo/CP-AHS100HE/05.jpg",
-      "/images/details/cuckoo/CP-AHS100HE/06.jpg",
-      "/images/details/cuckoo/CP-AHS100HE/07.jpg",
-      "/images/details/cuckoo/CP-AHS100HE/08.jpg",
-      "/images/details/cuckoo/CP-AHS100HE/09.jpg",
-      "/images/details/cuckoo/CP-AHS100HE/10.jpg",
-      "/images/details/cuckoo/CP-AHS100HE/11.jpg",
-      "/images/details/cuckoo/CP-AHS100HE/12.jpg"
+      "/assets/goods_image/img_03217.jpg"
     ]
   },
   {
@@ -135385,8 +135366,7 @@
     "max_commission": 545996,
     "id": "cuckoo-cp-ahs100he-2",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AHS100HE/04.jpg",
-      "/images/details/cuckoo/CP-AHS100HE/05.jpg"
+      "/assets/goods_image/img_03211.jpg"
     ]
   },
   {
@@ -135782,14 +135762,7 @@
     "max_commission": 522050,
     "id": "cuckoo-cp-ahsc100he",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AHSC100HE/01.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/02.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/03.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/04.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/05.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/06.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/07.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/08.jpg"
+      "/assets/goods_image/img_03205.jpg"
     ]
   },
   {
@@ -136025,14 +135998,7 @@
     "max_commission": 557757,
     "id": "cuckoo-cp-ahsc100he-2",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AHSC100HE/01.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/02.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/03.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/04.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/05.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/06.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/07.jpg",
-      "/images/details/cuckoo/CP-AHSC100HE/08.jpg"
+      "/assets/goods_image/img_03200.jpg"
     ]
   },
   {
@@ -136219,7 +136185,9 @@
     "min_monthly_fee": 35900,
     "max_commission": 408861,
     "id": "cuckoo-cp-ss101hw",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03152.jpg"
+    ],
     "rentre_catalog": {
       "productName": "인앤아웃 아이스 10'S 정수기",
       "modelCode": "CP-SS101HW",
@@ -136423,7 +136391,9 @@
     "min_monthly_fee": 37900,
     "max_commission": 429806,
     "id": "cuckoo-cp-ss100h",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_00276.jpg"
+    ]
   },
   {
     "brand": "쿠쿠",
@@ -136619,7 +136589,9 @@
     "min_monthly_fee": 37900,
     "max_commission": 465802,
     "id": "cuckoo-cp-ss100h-2",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_00272.jpg"
+    ]
   },
   {
     "brand": "쿠쿠",
@@ -136734,9 +136706,7 @@
     "max_commission": 597370,
     "id": "cuckoo-cp-acs1610snw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-ACS1610SNW/01.jpg",
-      "/images/details/cuckoo/CP-ACS1610SNW/02.jpg",
-      "/images/details/cuckoo/CP-ACS1610SNW/03.jpg"
+      "/assets/goods_image/img_00937.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=32596&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -136860,9 +136830,7 @@
     "max_commission": 607842,
     "id": "cuckoo-cp-acsr1620sw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-ACSR1620SW/01.jpg",
-      "/images/details/cuckoo/CP-ACSR1620SW/02.jpg",
-      "/images/details/cuckoo/CP-ACSR1620SW/03.jpg"
+      "/assets/goods_image/img_00932.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=38278&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -137183,7 +137151,9 @@
     "min_monthly_fee": 38160,
     "max_commission": 505088,
     "id": "cuckoo-cp-ajs801sw",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_00927.jpg"
+    ]
   },
   {
     "brand": "쿠쿠",
@@ -137493,9 +137463,7 @@
     "max_commission": 505088,
     "id": "cuckoo-cp-ajs821sw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AJS821SW/01.jpg",
-      "/images/details/cuckoo/CP-AJS821SW/02.jpg",
-      "/images/details/cuckoo/CP-AJS821SW/03.jpg"
+      "/assets/goods_image/img_00922.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47914&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -137907,17 +137875,7 @@
     "max_commission": 501943,
     "id": "cuckoo-cp-ams100",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AMS100/01.jpg",
-      "/images/details/cuckoo/CP-AMS100/02.jpg",
-      "/images/details/cuckoo/CP-AMS100/03.jpg",
-      "/images/details/cuckoo/CP-AMS100/04.jpg",
-      "/images/details/cuckoo/CP-AMS100/05.jpg",
-      "/images/details/cuckoo/CP-AMS100/06.jpg",
-      "/images/details/cuckoo/CP-AMS100/07.jpg",
-      "/images/details/cuckoo/CP-AMS100/08.jpg",
-      "/images/details/cuckoo/CP-AMS100/09.jpg",
-      "/images/details/cuckoo/CP-AMS100/10.jpg",
-      "/images/details/cuckoo/CP-AMS100/11.jpg"
+      "/assets/goods_image/img_01613.jpg"
     ]
   },
   {
@@ -138158,17 +138116,7 @@
     "max_commission": 535052,
     "id": "cuckoo-cp-ams100-2",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AMS100/01.jpg",
-      "/images/details/cuckoo/CP-AMS100/02.jpg",
-      "/images/details/cuckoo/CP-AMS100/03.jpg",
-      "/images/details/cuckoo/CP-AMS100/04.jpg",
-      "/images/details/cuckoo/CP-AMS100/05.jpg",
-      "/images/details/cuckoo/CP-AMS100/06.jpg",
-      "/images/details/cuckoo/CP-AMS100/07.jpg",
-      "/images/details/cuckoo/CP-AMS100/08.jpg",
-      "/images/details/cuckoo/CP-AMS100/09.jpg",
-      "/images/details/cuckoo/CP-AMS100/10.jpg",
-      "/images/details/cuckoo/CP-AMS100/11.jpg"
+      "/assets/goods_image/img_01604.jpg"
     ]
   },
   {
@@ -138561,21 +138509,7 @@
     "max_commission": 434544,
     "id": "cuckoo-cp-abs100gwh-gp",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-ABS100GWH_GP/01.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/02.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/03.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/04.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/05.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/06.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/07.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/08.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/09.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/10.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/11.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/12.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/13.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/14.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/15.jpg"
+      "/assets/goods_image/img_02041.jpg"
     ]
   },
   {
@@ -138808,21 +138742,7 @@
     "max_commission": 463628,
     "id": "cuckoo-cp-abs100gwh-gp-2",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-ABS100GWH_GP/01.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/02.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/03.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/04.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/05.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/06.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/07.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/08.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/09.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/10.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/11.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/12.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/13.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/14.jpg",
-      "/images/details/cuckoo/CP-ABS100GWH_GP/15.jpg"
+      "/assets/goods_image/img_02035.jpg"
     ]
   },
   {
@@ -139220,14 +139140,7 @@
     "max_commission": 447627,
     "id": "cuckoo-cp-absc100gwh-gp",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/01.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/02.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/03.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/04.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/05.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/06.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/07.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/08.jpg"
+      "/assets/goods_image/img_02022.jpg"
     ]
   },
   {
@@ -139465,14 +139378,7 @@
     "max_commission": 477717,
     "id": "cuckoo-cp-absc100gwh-gp-2",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/01.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/02.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/03.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/04.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/05.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/06.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/07.jpg",
-      "/images/details/cuckoo/CP-ABSC100GWH_GP/08.jpg"
+      "/assets/goods_image/img_02013.jpg"
     ]
   },
   {
@@ -139668,12 +139574,7 @@
     "max_commission": 293530,
     "id": "cuckoo-cp-ts100ws-dsl-gwh-gpk",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-TS100WS_DSL_GWH_GPK/01.jpg",
-      "/images/details/cuckoo/CP-TS100WS_DSL_GWH_GPK/02.jpg",
-      "/images/details/cuckoo/CP-TS100WS_DSL_GWH_GPK/03.jpg",
-      "/images/details/cuckoo/CP-TS100WS_DSL_GWH_GPK/04.jpg",
-      "/images/details/cuckoo/CP-TS100WS_DSL_GWH_GPK/05.jpg",
-      "/images/details/cuckoo/CP-TS100WS_DSL_GWH_GPK/06.jpg"
+      "/assets/goods_image/img_00004.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11284&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -139827,7 +139728,9 @@
     "min_monthly_fee": 38900,
     "max_commission": 433259,
     "id": "cuckoo-cp-aas100ulw-ulds",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02029.jpg"
+    ]
   },
   {
     "brand": "쿠쿠",
@@ -139948,20 +139851,7 @@
     "max_commission": 180471,
     "id": "cuckoo-cp-f603hw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-F603HW/01.jpg",
-      "/images/details/cuckoo/CP-F603HW/02.jpg",
-      "/images/details/cuckoo/CP-F603HW/03.jpg",
-      "/images/details/cuckoo/CP-F603HW/05.jpg",
-      "/images/details/cuckoo/CP-F603HW/06.jpg",
-      "/images/details/cuckoo/CP-F603HW/07.jpg",
-      "/images/details/cuckoo/CP-F603HW/08.jpg",
-      "/images/details/cuckoo/CP-F603HW/09.jpg",
-      "/images/details/cuckoo/CP-F603HW/10.jpg",
-      "/images/details/cuckoo/CP-F603HW/11.jpg",
-      "/images/details/cuckoo/CP-F603HW/12.jpg",
-      "/images/details/cuckoo/CP-F603HW/13.jpg",
-      "/images/details/cuckoo/CP-F603HW/14.jpg",
-      "/images/details/cuckoo/CP-F603HW/15.jpg"
+      "/assets/goods_image/img_00377.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=36097&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -140097,7 +139987,9 @@
     "min_monthly_fee": 12900,
     "max_commission": 122013,
     "id": "cuckoo-cp-ae502hw",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03095.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=32842&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z"
@@ -140196,7 +140088,9 @@
     "min_monthly_fee": 16900,
     "max_commission": 173779,
     "id": "cuckoo-cp-x501hw",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03149.jpg"
+    ]
   },
   {
     "brand": "쿠쿠",
@@ -140339,21 +140233,7 @@
     "max_commission": 198729,
     "id": "cuckoo-cp-w602hw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-W602HW/01.jpg",
-      "/images/details/cuckoo/CP-W602HW/02.jpg",
-      "/images/details/cuckoo/CP-W602HW/03.png",
-      "/images/details/cuckoo/CP-W602HW/04.jpg",
-      "/images/details/cuckoo/CP-W602HW/05.jpg",
-      "/images/details/cuckoo/CP-W602HW/06.jpg",
-      "/images/details/cuckoo/CP-W602HW/07.jpg",
-      "/images/details/cuckoo/CP-W602HW/08.jpg",
-      "/images/details/cuckoo/CP-W602HW/09.jpg",
-      "/images/details/cuckoo/CP-W602HW/10.jpg",
-      "/images/details/cuckoo/CP-W602HW/11.jpg",
-      "/images/details/cuckoo/CP-W602HW/12.jpg",
-      "/images/details/cuckoo/CP-W602HW/13.jpg",
-      "/images/details/cuckoo/CP-W602HW/14.jpg",
-      "/images/details/cuckoo/CP-W602HW/15.jpg"
+      "/assets/goods_image/img_03103.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=26995&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -140483,7 +140363,9 @@
     "min_monthly_fee": 17900,
     "max_commission": 199813,
     "id": "cuckoo-cp-w601hw",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03099.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=27967&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -140617,13 +140499,7 @@
     "max_commission": 209484,
     "id": "cuckoo-cp-ws601hw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-WS601HW/01.jpg",
-      "/images/details/cuckoo/CP-WS601HW/02.jpg",
-      "/images/details/cuckoo/CP-WS601HW/03.jpg",
-      "/images/details/cuckoo/CP-WS601HW/04.jpg",
-      "/images/details/cuckoo/CP-WS601HW/05.jpg",
-      "/images/details/cuckoo/CP-WS601HW/06.jpg",
-      "/images/details/cuckoo/CP-WS601HW/07.jpg"
+      "/assets/goods_image/img_03115.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=21740&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -140734,12 +140610,7 @@
     "max_commission": 222381,
     "id": "cuckoo-cp-wr602hw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-WR602HW/01.jpg",
-      "/images/details/cuckoo/CP-WR602HW/02.jpg",
-      "/images/details/cuckoo/CP-WR602HW/03.jpg",
-      "/images/details/cuckoo/CP-WR602HW/04.jpg",
-      "/images/details/cuckoo/CP-WR602HW/05.jpg",
-      "/images/details/cuckoo/CP-WR602HW/06.jpg"
+      "/assets/goods_image/img_03107.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=32597&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -140872,15 +140743,7 @@
     "max_commission": 180471,
     "id": "cuckoo-cp-f603sw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-F603SW/01.jpg",
-      "/images/details/cuckoo/CP-F603SW/02.jpg",
-      "/images/details/cuckoo/CP-F603SW/03.jpg",
-      "/images/details/cuckoo/CP-F603SW/04.jpg",
-      "/images/details/cuckoo/CP-F603SW/05.jpg",
-      "/images/details/cuckoo/CP-F603SW/06.jpg",
-      "/images/details/cuckoo/CP-F603SW/07.jpg",
-      "/images/details/cuckoo/CP-F603SW/08.jpg",
-      "/images/details/cuckoo/CP-F603SW/09.jpg"
+      "/assets/goods_image/img_00375.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=45160&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -140989,7 +140852,9 @@
     "min_monthly_fee": 17900,
     "max_commission": 183450,
     "id": "cuckoo-cp-x501sw",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03146.jpg"
+    ],
     "rentre_catalog": {
       "productName": "인스퓨어 슬림 스탠드 냉온정 정수기",
       "modelCode": "CP-X501SW",
@@ -141139,9 +141004,7 @@
     "max_commission": 210335,
     "id": "cuckoo-cp-w602sw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-W602SW/01.jpg",
-      "/images/details/cuckoo/CP-W602SW/02.jpg",
-      "/images/details/cuckoo/CP-W602SW/03.jpg"
+      "/assets/goods_image/img_03063.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=28121&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -141271,7 +141134,9 @@
     "min_monthly_fee": 18900,
     "max_commission": 209484,
     "id": "cuckoo-cp-w601sw",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03059.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=28120&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -141405,9 +141270,7 @@
     "max_commission": 222381,
     "id": "cuckoo-cp-ws601sw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-WS601SW/01.jpg",
-      "/images/details/cuckoo/CP-WS601SW/02.jpg",
-      "/images/details/cuckoo/CP-WS601SW/03.jpg"
+      "/assets/goods_image/img_03111.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=21741&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -141518,9 +141381,7 @@
     "max_commission": 242017,
     "id": "cuckoo-cp-wrp602sw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-WRP602SW/01.jpg",
-      "/images/details/cuckoo/CP-WRP602SW/02.jpg",
-      "/images/details/cuckoo/CP-WRP602SW/03.jpg"
+      "/assets/goods_image/img_03067.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=30248&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -141668,9 +141529,7 @@
     "max_commission": 306383,
     "id": "cuckoo-cp-dn1201s",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-DN1201S/01.jpg",
-      "/images/details/cuckoo/CP-DN1201S/02.jpg",
-      "/images/details/cuckoo/CP-DN1201S/03.jpg"
+      "/assets/goods_image/img_00373.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47173&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -141817,10 +141676,7 @@
     "max_commission": 282294,
     "id": "cuckoo-cp-dn2001",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-DN2001/01.jpg",
-      "/images/details/cuckoo/CP-DN2001/02.jpg",
-      "/images/details/cuckoo/CP-DN2001/03.jpg",
-      "/images/details/cuckoo/CP-DN2001/04.jpg"
+      "/assets/goods_image/img_03055.jpg"
     ]
   },
   {
@@ -141942,9 +141798,7 @@
     "max_commission": 292211,
     "id": "cuckoo-cp-qn3002s",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-QN3002S/01.jpg",
-      "/images/details/cuckoo/CP-QN3002S/02.jpg",
-      "/images/details/cuckoo/CP-QN3002S/03.jpg"
+      "/assets/goods_image/img_03038.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11311&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -142057,9 +141911,7 @@
     "max_commission": 316447,
     "id": "cuckoo-cp-qrp3002s",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-QRP3002S/01.jpg",
-      "/images/details/cuckoo/CP-QRP3002S/02.jpg",
-      "/images/details/cuckoo/CP-QRP3002S/03.jpg"
+      "/assets/goods_image/img_03042.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=30061&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -142255,9 +142107,7 @@
     "max_commission": 347544,
     "id": "cuckoo-cp-af1601sw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AF1601SW/01.jpg",
-      "/images/details/cuckoo/CP-AF1601SW/02.jpg",
-      "/images/details/cuckoo/CP-AF1601SW/03.jpg"
+      "/assets/goods_image/img_03028.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=41402&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -142446,9 +142296,7 @@
     "max_commission": 441121,
     "id": "cuckoo-cp-afrp1601sw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AFRP1601SW/01.jpg",
-      "/images/details/cuckoo/CP-AFRP1601SW/02.jpg",
-      "/images/details/cuckoo/CP-AFRP1601SW/03.jpg"
+      "/assets/goods_image/img_03034.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47174&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -142553,9 +142401,7 @@
     "max_commission": 124060,
     "id": "cuckoo-cp-ad011ugw",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AD011UGW/03.jpg",
-      "/images/details/cuckoo/CP-AD011UGW/04.png",
-      "/images/details/cuckoo/CP-AD011UGW/05.jpg"
+      "/assets/goods_image/img_03079.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=33327&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -142627,13 +142473,7 @@
     "max_commission": 86956,
     "id": "cuckoo-cppu-c1710c",
     "detail_description_images": [
-      "/images/details/cuckoo/CPPU-C1710C/01.png",
-      "/images/details/cuckoo/CPPU-C1710C/02.png",
-      "/images/details/cuckoo/CPPU-C1710C/03.png",
-      "/images/details/cuckoo/CPPU-C1710C/04.png",
-      "/images/details/cuckoo/CPPU-C1710C/05.png",
-      "/images/details/cuckoo/CPPU-C1710C/06.png",
-      "/images/details/cuckoo/CPPU-C1710C/07.png"
+      "/assets/goods_image/img_00144.jpg"
     ]
   },
   {
@@ -142693,13 +142533,7 @@
     "max_commission": 92316,
     "id": "cuckoo-cppu-c1710cp",
     "detail_description_images": [
-      "/images/details/cuckoo/CPPU-C1710CP/01.png",
-      "/images/details/cuckoo/CPPU-C1710CP/02.png",
-      "/images/details/cuckoo/CPPU-C1710CP/03.png",
-      "/images/details/cuckoo/CPPU-C1710CP/04.png",
-      "/images/details/cuckoo/CPPU-C1710CP/05.png",
-      "/images/details/cuckoo/CPPU-C1710CP/06.png",
-      "/images/details/cuckoo/CPPU-C1710CP/07.png"
+      "/assets/goods_image/CPPU-C1710CP.jpg"
     ]
   },
   {
@@ -142886,9 +142720,7 @@
     "max_commission": 133632,
     "id": "cuckoo-cp-u011w-b",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-U011W_B/03.jpg",
-      "/images/details/cuckoo/CP-U011W_B/04.png",
-      "/images/details/cuckoo/CP-U011W_B/05.jpg"
+      "/assets/goods_image/img_03270.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=19824&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -143079,10 +142911,7 @@
     "max_commission": 187125,
     "id": "cuckoo-cp-aks011eg-ep-gb",
     "detail_description_images": [
-      "/images/details/cuckoo/CP-AKS011EG_EP_GB/01.jpg",
-      "/images/details/cuckoo/CP-AKS011EG_EP_GB/02.jpg",
-      "/images/details/cuckoo/CP-AKS011EG_EP_GB/03.jpg",
-      "/images/details/cuckoo/CP-AKS011EG_EP_GB/04.jpg"
+      "/assets/goods_image/img_03262.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=41404&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
@@ -143270,7 +143099,9 @@
     "min_monthly_fee": 10900,
     "max_commission": 162159,
     "id": "cuckoo-cp-ak011eg-ep-gb",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03257.jpg"
+    ]
   },
   {
     "brand": "쿠쿠",
@@ -143405,7 +143236,9 @@
     "min_monthly_fee": 8900,
     "max_commission": 114487,
     "id": "cuckoo-cbt-g1031w",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03084.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11344&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.954Z",
@@ -143552,15 +143385,7 @@
     "max_commission": 107768,
     "id": "cuckoo-cbt-g3031w",
     "detail_description_images": [
-      "/images/details/cuckoo/CBT-G3031W/01.jpg",
-      "/images/details/cuckoo/CBT-G3031W/02.jpg",
-      "/images/details/cuckoo/CBT-G3031W/03.jpg",
-      "/images/details/cuckoo/CBT-G3031W/04.jpg",
-      "/images/details/cuckoo/CBT-G3031W/05.jpg",
-      "/images/details/cuckoo/CBT-G3031W/06.jpg",
-      "/images/details/cuckoo/CBT-G3031W/07.jpg",
-      "/images/details/cuckoo/CBT-G3031W/08.jpg",
-      "/images/details/cuckoo/CBT-G3031W/09.jpg"
+      "/assets/goods_image/img_02968.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11343&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
@@ -143868,14 +143693,7 @@
     "max_commission": 149996,
     "id": "cuckoo-cbt-l1031w",
     "detail_description_images": [
-      "/images/details/cuckoo/CBT-L1031W/01.jpg",
-      "/images/details/cuckoo/CBT-L1031W/02.jpg",
-      "/images/details/cuckoo/CBT-L1031W/03.jpg",
-      "/images/details/cuckoo/CBT-L1031W/04.jpg",
-      "/images/details/cuckoo/CBT-L1031W/05.jpg",
-      "/images/details/cuckoo/CBT-L1031W/06.jpg",
-      "/images/details/cuckoo/CBT-L1031W/07.jpg",
-      "/images/details/cuckoo/CBT-L1031W/08.jpg"
+      "/assets/goods_image/img_00096.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=27376&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
@@ -144180,9 +143998,7 @@
     "max_commission": 149996,
     "id": "cuckoo-cbt-l1032w",
     "detail_description_images": [
-      "/images/details/cuckoo/CBT-L1032W/01.jpg",
-      "/images/details/cuckoo/CBT-L1032W/02.jpg",
-      "/images/details/cuckoo/CBT-L1032W/03.jpg"
+      "/assets/goods_image/img_00099.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47175&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
@@ -144306,7 +144122,9 @@
     "min_monthly_fee": 11900,
     "max_commission": 141119,
     "id": "cuckoo-cbt-e1021w",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03408.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11345&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.954Z"
@@ -144490,18 +144308,7 @@
     "max_commission": 191541,
     "id": "cuckoo-cbt-is1031w",
     "detail_description_images": [
-      "/images/details/cuckoo/CBT-IS1031W/01.jpg",
-      "/images/details/cuckoo/CBT-IS1031W/02.jpg",
-      "/images/details/cuckoo/CBT-IS1031W/03.jpg",
-      "/images/details/cuckoo/CBT-IS1031W/04.jpg",
-      "/images/details/cuckoo/CBT-IS1031W/05.jpg",
-      "/images/details/cuckoo/CBT-IS1031W/06.jpg",
-      "/images/details/cuckoo/CBT-IS1031W/07.jpg",
-      "/images/details/cuckoo/CBT-IS1031W/08.jpg",
-      "/images/details/cuckoo/CBT-IS1031W/09.jpg",
-      "/images/details/cuckoo/CBT-IS1031W/10.jpg",
-      "/images/details/cuckoo/CBT-IS1031W/11.jpg",
-      "/images/details/cuckoo/CBT-IS1031W/12.jpg"
+      "/assets/goods_image/img_03183.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11341&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
@@ -144695,15 +144502,7 @@
     "max_commission": 202440,
     "id": "cuckoo-cbt-is1031rw",
     "detail_description_images": [
-      "/images/details/cuckoo/CBT-IS1031RW/01.jpg",
-      "/images/details/cuckoo/CBT-IS1031RW/02.jpg",
-      "/images/details/cuckoo/CBT-IS1031RW/03.jpg",
-      "/images/details/cuckoo/CBT-IS1031RW/04.jpg",
-      "/images/details/cuckoo/CBT-IS1031RW/05.jpg",
-      "/images/details/cuckoo/CBT-IS1031RW/06.jpg",
-      "/images/details/cuckoo/CBT-IS1031RW/07.jpg",
-      "/images/details/cuckoo/CBT-IS1031RW/08.jpg",
-      "/images/details/cuckoo/CBT-IS1031RW/09.jpg"
+      "/assets/goods_image/img_03175.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11342&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
@@ -145020,10 +144819,7 @@
     "max_commission": 202440,
     "id": "cuckoo-cbt-kffs31rw",
     "detail_description_images": [
-      "/images/details/cuckoo/CBT-KFFS31RW/01.jpg",
-      "/images/details/cuckoo/CBT-KFFS31RW/02.jpg",
-      "/images/details/cuckoo/CBT-KFFS31RW/03.jpg",
-      "/images/details/cuckoo/CBT-KFFS31RW/04.jpg"
+      "/assets/goods_image/img_01235.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=37091&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
@@ -145335,18 +145131,7 @@
     "max_commission": 233131,
     "id": "cuckoo-cbt-qsb1041w",
     "detail_description_images": [
-      "/images/details/cuckoo/CBT-QSB1041W/01.jpg",
-      "/images/details/cuckoo/CBT-QSB1041W/02.jpg",
-      "/images/details/cuckoo/CBT-QSB1041W/03.jpg",
-      "/images/details/cuckoo/CBT-QSB1041W/04.jpg",
-      "/images/details/cuckoo/CBT-QSB1041W/05.jpg",
-      "/images/details/cuckoo/CBT-QSB1041W/06.jpg",
-      "/images/details/cuckoo/CBT-QSB1041W/07.jpg",
-      "/images/details/cuckoo/CBT-QSB1041W/08.jpg",
-      "/images/details/cuckoo/CBT-QSB1041W/09.jpg",
-      "/images/details/cuckoo/CBT-QSB1041W/10.jpg",
-      "/images/details/cuckoo/CBT-QSB1041W/11.jpg",
-      "/images/details/cuckoo/CBT-QSB1041W/12.jpg"
+      "/assets/goods_image/img_03126.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=37092&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
@@ -145537,10 +145322,7 @@
     "max_commission": 219975,
     "id": "cuckoo-cbt-qs1041rw",
     "detail_description_images": [
-      "/images/details/cuckoo/CBT-QS1041RW/01.jpg",
-      "/images/details/cuckoo/CBT-QS1041RW/02.jpg",
-      "/images/details/cuckoo/CBT-QS1041RW/03.jpg",
-      "/images/details/cuckoo/CBT-QS1041RW/04.jpg"
+      "/assets/goods_image/img_03120.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=45444&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
@@ -145844,9 +145626,7 @@
     "max_commission": 202440,
     "id": "cuckoo-cbt-pff31rw",
     "detail_description_images": [
-      "/images/details/cuckoo/CBT-PFF31RW/01.jpg",
-      "/images/details/cuckoo/CBT-PFF31RW/02.jpg",
-      "/images/details/cuckoo/CBT-PFF31RW/03.jpg"
+      "/assets/goods_image/img_01802.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=38835&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
@@ -146158,9 +145938,7 @@
     "max_commission": 219975,
     "id": "cuckoo-cbt-qsf1041w",
     "detail_description_images": [
-      "/images/details/cuckoo/CBT-QSF1041W/01.jpg",
-      "/images/details/cuckoo/CBT-QSF1041W/02.jpg",
-      "/images/details/cuckoo/CBT-QSF1041W/03.jpg"
+      "/assets/goods_image/img_03491.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47176&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
@@ -146347,9 +146125,7 @@
     "max_commission": 213338,
     "id": "cuckoo-cbt-qf1041w",
     "detail_description_images": [
-      "/images/details/cuckoo/CBT-QF1041W/01.jpg",
-      "/images/details/cuckoo/CBT-QF1041W/02.jpg",
-      "/images/details/cuckoo/CBT-QF1041W/03.jpg"
+      "/assets/goods_image/img_03160.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47177&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
@@ -146458,9 +146234,7 @@
     "max_commission": 199731,
     "id": "cuckoo-ac-09aa10fwh",
     "detail_description_images": [
-      "/images/details/cuckoo/AC-09AA10FWH/01.jpg",
-      "/images/details/cuckoo/AC-09AA10FWH/02.jpg",
-      "/images/details/cuckoo/AC-09AA10FWH/03.jpg"
+      "/assets/goods_image/img_03286.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=45445&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
@@ -146610,7 +146384,7 @@
     "max_commission": 168264,
     "id": "cuckoo-ac-12r10fnw",
     "detail_description_images": [
-      "/images/details/cuckoo/AC-12R10FNW/03.png"
+      "/assets/goods_image/img_03048.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=28171&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
@@ -146760,9 +146534,7 @@
     "max_commission": 178753,
     "id": "cuckoo-ac-14r10fnw",
     "detail_description_images": [
-      "/images/details/cuckoo/AC-14R10FNW/01.jpg",
-      "/images/details/cuckoo/AC-14R10FNW/02.jpg",
-      "/images/details/cuckoo/AC-14R10FNW/03.jpg"
+      "/assets/goods_image/img_03054.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=27519&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
@@ -146909,9 +146681,7 @@
     "max_commission": 189243,
     "id": "cuckoo-ac-14l10few",
     "detail_description_images": [
-      "/images/details/cuckoo/AC-14L10FEW/01.jpg",
-      "/images/details/cuckoo/AC-14L10FEW/02.jpg",
-      "/images/details/cuckoo/AC-14L10FEW/03.jpg"
+      "/assets/goods_image/img_03021.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47178&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
@@ -147104,9 +146874,7 @@
     "max_commission": 199731,
     "id": "cuckoo-ac-17t10fwh",
     "detail_description_images": [
-      "/images/details/cuckoo/AC-17T10FWH/01.jpg",
-      "/images/details/cuckoo/AC-17T10FWH/02.jpg",
-      "/images/details/cuckoo/AC-17T10FWH/03.jpg"
+      "/assets/goods_image/img_03001.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=16950&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
@@ -147299,9 +147067,7 @@
     "max_commission": 210221,
     "id": "cuckoo-ac-20t10fwh",
     "detail_description_images": [
-      "/images/details/cuckoo/AC-20T10FWH/01.jpg",
-      "/images/details/cuckoo/AC-20T10FWH/02.jpg",
-      "/images/details/cuckoo/AC-20T10FWH/03.jpg"
+      "/assets/goods_image/img_03010.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=16953&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
@@ -147483,9 +147249,7 @@
     "max_commission": 311099,
     "id": "cuckoo-ac-23ah10fnw",
     "detail_description_images": [
-      "/images/details/cuckoo/AC-23AH10FNW/01.jpg",
-      "/images/details/cuckoo/AC-23AH10FNW/02.jpg",
-      "/images/details/cuckoo/AC-23AH10FNW/03.jpg"
+      "/assets/goods_image/img_03139.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47179&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
@@ -147678,10 +147442,7 @@
     "max_commission": 234571,
     "id": "cuckoo-ac-25w10fws",
     "detail_description_images": [
-      "/images/details/cuckoo/AC-25W10FWS/01.jpg",
-      "/images/details/cuckoo/AC-25W10FWS/02.jpg",
-      "/images/details/cuckoo/AC-25W10FWS/03.jpg",
-      "/images/details/cuckoo/AC-25W10FWS/04.jpg"
+      "/assets/goods_image/img_00242.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11328&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
@@ -147873,7 +147634,7 @@
     "max_commission": 270204,
     "id": "cuckoo-ac-28w10fws",
     "detail_description_images": [
-      "/images/details/cuckoo/AC-28W10FWS/05.jpg"
+      "/assets/goods_image/img_03421.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11327&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
@@ -148066,7 +147827,9 @@
     "min_monthly_fee": 20970,
     "max_commission": 289799,
     "id": "cuckoo-ac-28ah10fnw",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03018.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=45453&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z"
@@ -148251,8 +148014,7 @@
     "max_commission": 289799,
     "id": "cuckoo-ac-28ah10gnw",
     "detail_description_images": [
-      "/images/details/cuckoo/AC-28AH10GNW/03.png",
-      "/images/details/cuckoo/AC-28AH10GNW/04.jpg"
+      "/assets/goods_image/img_03134.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=50268&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
@@ -148445,9 +148207,7 @@
     "max_commission": 287299,
     "id": "cuckoo-ac-30ah30fe",
     "detail_description_images": [
-      "/images/details/cuckoo/AC-30AH30FE/01.jpg",
-      "/images/details/cuckoo/AC-30AH30FE/02.jpg",
-      "/images/details/cuckoo/AC-30AH30FE/03.jpg"
+      "/assets/goods_image/img_03143.jpg"
     ]
   },
   {
@@ -148586,7 +148346,9 @@
     "min_monthly_fee": 27810,
     "max_commission": 313209,
     "id": "cuckoo-ac-35u10fws",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03426.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=28655&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z",
@@ -148736,9 +148498,7 @@
     "max_commission": 349011,
     "id": "cuckoo-ac-35u20fwge",
     "detail_description_images": [
-      "/images/details/cuckoo/AC-35U20FWGE/01.jpg",
-      "/images/details/cuckoo/AC-35U20FWGE/02.jpg",
-      "/images/details/cuckoo/AC-35U20FWGE/03.jpg"
+      "/assets/goods_image/img_00223.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47182&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
@@ -148926,7 +148686,7 @@
     "max_commission": 412641,
     "id": "cuckoo-ac-40ab10fnw",
     "detail_description_images": [
-      "/images/details/cuckoo/AC-40AB10FNW/03.jpg"
+      "/assets/goods_image/img_00917.jpg"
     ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=45455&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
@@ -149053,11 +148813,7 @@
     "max_commission": 110413,
     "id": "cuckoo-dh-y1652fnw",
     "detail_description_images": [
-      "/images/details/cuckoo/DH-Y1652FNW/03.png",
-      "/images/details/cuckoo/DH-Y1652FNW/04.png",
-      "/images/details/cuckoo/DH-Y1652FNW/05.png",
-      "/images/details/cuckoo/DH-Y1652FNW/06.png",
-      "/images/details/cuckoo/DH-Y1652FNW/07.jpg"
+      "/assets/goods_image/img_00010.jpg"
     ]
   },
   {
@@ -149181,7 +148937,9 @@
     "min_monthly_fee": 13900,
     "max_commission": 137845,
     "id": "cuckoo-dh-x22721eb",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03074.jpg"
+    ]
   },
   {
     "brand": "쿠쿠",
@@ -149343,9 +149101,7 @@
     "max_commission": 174840,
     "id": "cuckoo-dh-wf21561eb",
     "detail_description_images": [
-      "/images/details/cuckoo/DH-WF21561EB/01.jpg",
-      "/images/details/cuckoo/DH-WF21561EB/02.jpg",
-      "/images/details/cuckoo/DH-WF21561EB/03.jpg"
+      "/assets/goods_image/img_03089.jpg"
     ]
   },
   {
@@ -149404,7 +149160,9 @@
     "min_monthly_fee": 15900,
     "max_commission": 76412,
     "id": "cuckoo-cws-ao201w",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_01471.jpg"
+    ]
   },
   {
     "brand": "쿠쿠",
@@ -149478,13 +149236,7 @@
     "max_commission": 125901,
     "id": "cuckoo-bps-w1",
     "detail_description_images": [
-      "/images/details/cuckoo/BPS-W1/01.jpg",
-      "/images/details/cuckoo/BPS-W1/02.png",
-      "/images/details/cuckoo/BPS-W1/03.png",
-      "/images/details/cuckoo/BPS-W1/04.jpg",
-      "/images/details/cuckoo/BPS-W1/05.jpg",
-      "/images/details/cuckoo/BPS-W1/06.jpg",
-      "/images/details/cuckoo/BPS-W1/07.jpg"
+      "/assets/goods_image/img_01696.jpg"
     ]
   },
   {
@@ -149539,13 +149291,7 @@
     "max_commission": 173618,
     "id": "cuckoo-bfcs-led",
     "detail_description_images": [
-      "/images/details/cuckoo/BFCS-LED/01.jpg",
-      "/images/details/cuckoo/BFCS-LED/02.png",
-      "/images/details/cuckoo/BFCS-LED/03.png",
-      "/images/details/cuckoo/BFCS-LED/04.jpg",
-      "/images/details/cuckoo/BFCS-LED/05.jpg",
-      "/images/details/cuckoo/BFCS-LED/06.jpg",
-      "/images/details/cuckoo/BFCS-LED/07.jpg"
+      "/assets/goods_image/img_01699.jpg"
     ]
   },
   {
@@ -149600,13 +149346,7 @@
     "max_commission": 138272,
     "id": "cuckoo-bfcs-uv",
     "detail_description_images": [
-      "/images/details/cuckoo/BFCS-UV/01.jpg",
-      "/images/details/cuckoo/BFCS-UV/02.png",
-      "/images/details/cuckoo/BFCS-UV/03.png",
-      "/images/details/cuckoo/BFCS-UV/04.jpg",
-      "/images/details/cuckoo/BFCS-UV/05.jpg",
-      "/images/details/cuckoo/BFCS-UV/06.jpg",
-      "/images/details/cuckoo/BFCS-UV/07.jpg"
+      "/assets/goods_image/img_01702.jpg"
     ]
   },
   {
@@ -149660,11 +149400,7 @@
     "max_commission": 49909,
     "id": "cuckoo-bipm-h10",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-H10/01.jpg",
-      "/images/details/cuckoo/BIPM-H10/02.png",
-      "/images/details/cuckoo/BIPM-H10/03.png",
-      "/images/details/cuckoo/BIPM-H10/04.jpg",
-      "/images/details/cuckoo/BIPM-H10/05.jpg"
+      "/assets/goods_image/img_03987.jpg"
     ]
   },
   {
@@ -149718,11 +149454,7 @@
     "max_commission": 59727,
     "id": "cuckoo-bipm-h30",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-H30/01.jpg",
-      "/images/details/cuckoo/BIPM-H30/02.png",
-      "/images/details/cuckoo/BIPM-H30/03.png",
-      "/images/details/cuckoo/BIPM-H30/04.jpg",
-      "/images/details/cuckoo/BIPM-H30/05.jpg"
+      "/assets/goods_image/img_03988.jpg"
     ]
   },
   {
@@ -149776,11 +149508,7 @@
     "max_commission": 69545,
     "id": "cuckoo-bipm-h40",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-H40/01.jpg",
-      "/images/details/cuckoo/BIPM-H40/02.png",
-      "/images/details/cuckoo/BIPM-H40/03.png",
-      "/images/details/cuckoo/BIPM-H40/04.jpg",
-      "/images/details/cuckoo/BIPM-H40/05.jpg"
+      "/assets/goods_image/img_03989.jpg"
     ]
   },
   {
@@ -149834,11 +149562,7 @@
     "max_commission": 79363,
     "id": "cuckoo-bipm-h50",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-H50/01.jpg",
-      "/images/details/cuckoo/BIPM-H50/02.png",
-      "/images/details/cuckoo/BIPM-H50/03.png",
-      "/images/details/cuckoo/BIPM-H50/04.jpg",
-      "/images/details/cuckoo/BIPM-H50/05.jpg"
+      "/assets/goods_image/img_03990.jpg"
     ]
   },
   {
@@ -149892,11 +149616,7 @@
     "max_commission": 89181,
     "id": "cuckoo-bipm-h80",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-H80/01.jpg",
-      "/images/details/cuckoo/BIPM-H80/02.png",
-      "/images/details/cuckoo/BIPM-H80/03.png",
-      "/images/details/cuckoo/BIPM-H80/04.jpg",
-      "/images/details/cuckoo/BIPM-H80/05.jpg"
+      "/assets/goods_image/img_03991.jpg"
     ]
   },
   {
@@ -149950,11 +149670,7 @@
     "max_commission": 99000,
     "id": "cuckoo-bipm-h100",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-H100/01.jpg",
-      "/images/details/cuckoo/BIPM-H100/02.png",
-      "/images/details/cuckoo/BIPM-H100/03.png",
-      "/images/details/cuckoo/BIPM-H100/04.jpg",
-      "/images/details/cuckoo/BIPM-H100/05.jpg"
+      "/assets/goods_image/img_03986.jpg"
     ]
   },
   {
@@ -150008,11 +149724,7 @@
     "max_commission": 122563,
     "id": "cuckoo-bipm-o10",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-O10/01.jpg",
-      "/images/details/cuckoo/BIPM-O10/02.png",
-      "/images/details/cuckoo/BIPM-O10/03.png",
-      "/images/details/cuckoo/BIPM-O10/04.jpg",
-      "/images/details/cuckoo/BIPM-O10/05.jpg"
+      "/assets/goods_image/img_03993.jpg"
     ]
   },
   {
@@ -150066,11 +149778,7 @@
     "max_commission": 126490,
     "id": "cuckoo-bipm-o30",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-O30/01.jpg",
-      "/images/details/cuckoo/BIPM-O30/02.png",
-      "/images/details/cuckoo/BIPM-O30/03.png",
-      "/images/details/cuckoo/BIPM-O30/04.jpg",
-      "/images/details/cuckoo/BIPM-O30/05.jpg"
+      "/assets/goods_image/img_03998.jpg"
     ]
   },
   {
@@ -150124,11 +149832,7 @@
     "max_commission": 146127,
     "id": "cuckoo-bipm-o50",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-O50/01.jpg",
-      "/images/details/cuckoo/BIPM-O50/02.png",
-      "/images/details/cuckoo/BIPM-O50/03.png",
-      "/images/details/cuckoo/BIPM-O50/04.jpg",
-      "/images/details/cuckoo/BIPM-O50/05.jpg"
+      "/assets/goods_image/img_03999.jpg"
     ]
   },
   {
@@ -150182,11 +149886,7 @@
     "max_commission": 179509,
     "id": "cuckoo-bipm-o70",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-O70/01.jpg",
-      "/images/details/cuckoo/BIPM-O70/02.png",
-      "/images/details/cuckoo/BIPM-O70/03.png",
-      "/images/details/cuckoo/BIPM-O70/04.jpg",
-      "/images/details/cuckoo/BIPM-O70/05.jpg"
+      "/assets/goods_image/img_04000.jpg"
     ]
   },
   {
@@ -150240,11 +149940,7 @@
     "max_commission": 222709,
     "id": "cuckoo-bipm-o100",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-O100/01.jpg",
-      "/images/details/cuckoo/BIPM-O100/02.png",
-      "/images/details/cuckoo/BIPM-O100/03.png",
-      "/images/details/cuckoo/BIPM-O100/04.jpg",
-      "/images/details/cuckoo/BIPM-O100/05.jpg"
+      "/assets/goods_image/img_03992.jpg"
     ]
   },
   {
@@ -150298,11 +149994,7 @@
     "max_commission": 261981,
     "id": "cuckoo-bipm-o150",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-O150/01.jpg",
-      "/images/details/cuckoo/BIPM-O150/02.png",
-      "/images/details/cuckoo/BIPM-O150/03.png",
-      "/images/details/cuckoo/BIPM-O150/04.jpg",
-      "/images/details/cuckoo/BIPM-O150/05.jpg"
+      "/assets/goods_image/img_03994.jpg"
     ]
   },
   {
@@ -150356,11 +150048,7 @@
     "max_commission": 320890,
     "id": "cuckoo-bipm-o200",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-O200/01.jpg",
-      "/images/details/cuckoo/BIPM-O200/02.png",
-      "/images/details/cuckoo/BIPM-O200/03.png",
-      "/images/details/cuckoo/BIPM-O200/04.jpg",
-      "/images/details/cuckoo/BIPM-O200/05.jpg"
+      "/assets/goods_image/img_03995.jpg"
     ]
   },
   {
@@ -150414,11 +150102,7 @@
     "max_commission": 360163,
     "id": "cuckoo-bipm-o250",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-O250/01.jpg",
-      "/images/details/cuckoo/BIPM-O250/02.png",
-      "/images/details/cuckoo/BIPM-O250/03.png",
-      "/images/details/cuckoo/BIPM-O250/04.jpg",
-      "/images/details/cuckoo/BIPM-O250/05.jpg"
+      "/assets/goods_image/img_03996.jpg"
     ]
   },
   {
@@ -150472,11 +150156,7 @@
     "max_commission": 419072,
     "id": "cuckoo-bipm-o300",
     "detail_description_images": [
-      "/images/details/cuckoo/BIPM-O300/01.jpg",
-      "/images/details/cuckoo/BIPM-O300/02.png",
-      "/images/details/cuckoo/BIPM-O300/03.png",
-      "/images/details/cuckoo/BIPM-O300/04.jpg",
-      "/images/details/cuckoo/BIPM-O300/05.jpg"
+      "/assets/goods_image/img_03997.jpg"
     ]
   },
   {
