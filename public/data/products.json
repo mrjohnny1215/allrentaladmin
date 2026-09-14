@@ -70,7 +70,9 @@
     "min_monthly_fee": 31900,
     "max_commission": 297900,
     "id": "chungho-wi-53c9600m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02588.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=19867&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -152,7 +154,9 @@
     "min_monthly_fee": 29900,
     "max_commission": 280800,
     "id": "chungho-wi-53c8600m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02641.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=19869&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -461,7 +465,9 @@
     "min_monthly_fee": 36900,
     "max_commission": 423900,
     "id": "chungho-wi-37c90720n",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02513.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47810&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -595,7 +601,9 @@
     "min_monthly_fee": 59900,
     "max_commission": 520200,
     "id": "chungho-wi-15c7500",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02413.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -722,7 +730,10 @@
       "detailUrl": "https://rentre.kr/product/1600007501/%EC%97%90%EC%8A%A4%ED%94%84%EB%A0%88%EC%B9%B4%ED%8E%98-%EB%B8%94%EB%9E%99%EC%97%90%EB%94%94%EC%85%98-%EC%BB%A4%ED%94%BC-%EC%96%BC%EC%9D%8C%EC%A0%95%EC%88%98%EA%B8%B0",
       "thumbnailUrl": "https://cdn.rentre.kr/product-thumbnail/7c654c2b82e14a39b4b83380ed82a647.png",
       "updatedAt": "2026-09-14T08:40:40.939Z"
-    }
+    },
+    "detail_description_images": [
+      "/assets/goods_image/img_02644.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -932,7 +943,9 @@
     "min_monthly_fee": 40900,
     "max_commission": 453825,
     "id": "chungho-wi-55s9p510m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02492.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=37652&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.952Z",
@@ -1152,7 +1165,9 @@
     "min_monthly_fee": 39900,
     "max_commission": 437287,
     "id": "chungho-wi-55s90510m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02488.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=37651&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.952Z",
@@ -1366,7 +1381,9 @@
     "min_monthly_fee": 43900,
     "max_commission": 559530,
     "id": "chungho-wi-70s90010m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02495.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=33634&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -1581,7 +1598,9 @@
     "min_monthly_fee": 44900,
     "max_commission": 484312,
     "id": "chungho-wi-70s9p010m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02498.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=36869&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.952Z",
@@ -1805,7 +1824,9 @@
     "min_monthly_fee": 47900,
     "max_commission": 524700,
     "id": "chungho-wi-80s9p510m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02525.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=32177&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -2028,7 +2049,9 @@
     "min_monthly_fee": 38900,
     "max_commission": 418770,
     "id": "chungho-wi-60c90511m",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02537.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -2236,7 +2259,9 @@
     "min_monthly_fee": 37900,
     "max_commission": 419760,
     "id": "chungho-wi-60c80511m",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02612.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -2527,7 +2552,9 @@
     "min_monthly_fee": 39900,
     "max_commission": 486900,
     "id": "chungho-wi-36c90620n",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02519.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=32208&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -2723,7 +2750,9 @@
     "min_monthly_fee": 39900,
     "max_commission": 406890,
     "id": "chungho-wi-36c80620n",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02600.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -2905,7 +2934,9 @@
     "min_monthly_fee": 21900,
     "max_commission": 205200,
     "id": "chungho-wp-45c90020m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00382.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11404&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -2993,7 +3024,9 @@
     "min_monthly_fee": 19900,
     "max_commission": 166050,
     "id": "chungho-wp-30s50010n",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00636.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=27607&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -3131,7 +3164,9 @@
     "min_monthly_fee": 21900,
     "max_commission": 207000,
     "id": "chungho-wp-35c90010n",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00639.jpg"
+    ],
     "rentre_catalog": {
       "productName": "애니플러스 냉온정 정수기",
       "modelCode": "WP-35C90010N",
@@ -3332,7 +3367,9 @@
     "min_monthly_fee": 25900,
     "max_commission": 348300,
     "id": "chungho-wp-60c90520m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00556.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=25986&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -3534,7 +3571,9 @@
     "min_monthly_fee": 25900,
     "max_commission": 356400,
     "id": "chungho-wp-60c90520m-2",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00557.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=25986&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -3745,7 +3784,9 @@
     "min_monthly_fee": 27900,
     "max_commission": 247500,
     "id": "chungho-wp-31s90010n",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00401.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47200&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.952Z",
@@ -4037,7 +4078,9 @@
     "min_monthly_fee": 20900,
     "max_commission": 274950,
     "id": "chungho-wp-50s90010m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00408.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=32843&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -4416,7 +4459,9 @@
     "min_monthly_fee": 26900,
     "max_commission": 421200,
     "id": "chungho-wp-50c90621n",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00444.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=38532&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.952Z",
@@ -4633,7 +4678,9 @@
     "min_monthly_fee": 28900,
     "max_commission": 394200,
     "id": "chungho-wp-46s90510m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00486.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=26424&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -4847,7 +4894,9 @@
     "min_monthly_fee": 30900,
     "max_commission": 402300,
     "id": "chungho-wp-46s90510n",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_00491.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -5053,7 +5102,9 @@
     "min_monthly_fee": 30900,
     "max_commission": 415800,
     "id": "chungho-wp-46s9p510m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00496.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=26423&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -5275,7 +5326,9 @@
     "min_monthly_fee": 39900,
     "max_commission": 496800,
     "id": "chungho-wp-80s9p510m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00573.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=34599&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -5495,7 +5548,9 @@
     "min_monthly_fee": 27900,
     "max_commission": 368550,
     "id": "chungho-wp-60c90511m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00582.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=38260&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.952Z",
@@ -5756,7 +5811,9 @@
     "min_monthly_fee": 33900,
     "max_commission": 324000,
     "id": "chungho-wp-30b90620n",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00536.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=42283&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.952Z",
@@ -5895,7 +5952,9 @@
     "min_monthly_fee": 32900,
     "max_commission": 356400,
     "id": "chungho-wp-45s9p010m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00386.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11392&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -6012,7 +6071,9 @@
     "min_monthly_fee": 24900,
     "max_commission": 288000,
     "id": "chungho-wp-30c9560bn",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00562.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=14943&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -6108,7 +6169,9 @@
     "min_monthly_fee": 19900,
     "max_commission": 99000,
     "id": "chungho-wp-30c9460bn",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00566.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=39229&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.952Z",
@@ -6356,7 +6419,9 @@
     "min_monthly_fee": 26900,
     "max_commission": 288000,
     "id": "chungho-wp-50c80621n",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00722.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=42309&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.952Z",
@@ -6552,7 +6617,9 @@
     "min_monthly_fee": 25900,
     "max_commission": 348975,
     "id": "chungho-wp-60c80511m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00750.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=38263&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.952Z",
@@ -6645,7 +6712,9 @@
     "min_monthly_fee": 17900,
     "max_commission": 90000,
     "id": "chungho-wp-30c8460n",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00745.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=39299&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.952Z",
@@ -6779,7 +6848,9 @@
     "min_monthly_fee": 13900,
     "max_commission": 175500,
     "id": "chungho-wp-40c60000m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03155.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=19880&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -6916,7 +6987,9 @@
     "min_monthly_fee": 15900,
     "max_commission": 207900,
     "id": "chungho-wp-43c60000m",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03186.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11396&cid=1377&gid=1424",
     "rentalsegye_category": "정수기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.951Z",
@@ -7300,7 +7373,9 @@
     "min_monthly_fee": 9900,
     "max_commission": 150300,
     "id": "chungho-bd-36d50",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03390.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=48636&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.954Z",
@@ -7690,7 +7765,9 @@
     "min_monthly_fee": 17900,
     "max_commission": 237600,
     "id": "chungho-bs-65d70",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_01719.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47915&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.954Z",
@@ -7916,7 +7993,9 @@
     "min_monthly_fee": 16900,
     "max_commission": 151200,
     "id": "chungho-bs-35d50",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_01723.jpg"
+    ],
     "rentre_catalog": {
       "productName": "B600 PLUS 살균 비데",
       "modelCode": "BS-35D50",
@@ -8018,7 +8097,9 @@
     "min_monthly_fee": 12900,
     "max_commission": 106200,
     "id": "chungho-bd-35d51",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02689.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11426&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.954Z",
@@ -8405,7 +8486,9 @@
     "min_monthly_fee": 11900,
     "max_commission": 155700,
     "id": "chungho-bd-36d60",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03395.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=50848&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.954Z",
@@ -8631,7 +8714,9 @@
     "min_monthly_fee": 12900,
     "max_commission": 185400,
     "id": "chungho-bd-35d72",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03403.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=22092&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.954Z",
@@ -8776,7 +8861,9 @@
     "min_monthly_fee": 15900,
     "max_commission": 185400,
     "id": "chungho-bd-35d50r",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03399.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=22093&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.954Z",
@@ -9082,7 +9169,9 @@
     "min_monthly_fee": 10900,
     "max_commission": 132300,
     "id": "chungho-bd-40d60",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03511.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=45100&cid=1379&gid=1408",
     "rentalsegye_category": "비데",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.954Z",
@@ -9209,7 +9298,9 @@
     "min_monthly_fee": 25900,
     "max_commission": 244800,
     "id": "chungho-ah-12h6050",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00288.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=11438&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z"
@@ -9402,7 +9493,9 @@
     "min_monthly_fee": 24900,
     "max_commission": 302400,
     "id": "chungho-ap-20h7560",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00293.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=36481&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z",
@@ -9581,7 +9674,9 @@
     "min_monthly_fee": 25900,
     "max_commission": 252000,
     "id": "chungho-ap-15h5170",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00298.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=36482&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z",
@@ -9777,7 +9872,9 @@
     "min_monthly_fee": 39900,
     "max_commission": 446400,
     "id": "chungho-ap-30h8220",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00327.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=42314&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z",
@@ -9973,7 +10070,9 @@
     "min_monthly_fee": 41900,
     "max_commission": 459000,
     "id": "chungho-ap-40h8220",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00332.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=42313&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z",
@@ -10267,7 +10366,9 @@
     "min_monthly_fee": 28900,
     "max_commission": 382500,
     "id": "chungho-ap-25h8150",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00315.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47199&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.954Z",
@@ -10455,7 +10556,9 @@
     "min_monthly_fee": 23900,
     "max_commission": 239850,
     "id": "chungho-ap-10h4052",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00322.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=22078&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z",
@@ -10588,7 +10691,9 @@
     "min_monthly_fee": 22900,
     "max_commission": 293400,
     "id": "chungho-ad-10h7050",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03249.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=32824&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z"
@@ -10928,7 +11033,9 @@
     "min_monthly_fee": 28900,
     "max_commission": 282150,
     "id": "chungho-ap-30h8350",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03414.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=47916&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.954Z",
@@ -11124,7 +11231,9 @@
     "min_monthly_fee": 16900,
     "max_commission": 239400,
     "id": "chungho-ap-10h4553",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03981.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=28199&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z",
@@ -11453,7 +11562,9 @@
     "min_monthly_fee": 18900,
     "max_commission": 264600,
     "id": "chungho-ap-15h5174",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00305.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=42321&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z",
@@ -11576,7 +11687,9 @@
     "min_monthly_fee": 29900,
     "max_commission": 189540,
     "id": "chungho-av-06h3050",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_04008.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=22075&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z",
@@ -11661,7 +11774,9 @@
     "min_monthly_fee": 20900,
     "max_commission": 183600,
     "id": "chungho-chdh-120ja",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03252.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=19673&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z",
@@ -11773,7 +11888,9 @@
     "min_monthly_fee": 24900,
     "max_commission": 267300,
     "id": "chungho-sf-75a60",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02746.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -11834,7 +11951,10 @@
     "thumbnail": "/assets/goods_image/img_00277.jpg",
     "min_monthly_fee": 35900,
     "max_commission": 275625,
-    "id": "chungho-가정용-청호-미니-안마의자-드리미-dreamy"
+    "id": "chungho-가정용-청호-미니-안마의자-드리미-dreamy",
+    "detail_description_images": [
+      "/assets/goods_image/img_00277.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -11901,7 +12021,9 @@
     "min_monthly_fee": 36900,
     "max_commission": 275625,
     "id": "chungho-가정용-청호-소형-안마의자-로망-roman",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_00283.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -11965,7 +12087,9 @@
     "min_monthly_fee": 45900,
     "max_commission": 316800,
     "id": "chungho-안마의자-mc-700w",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/MC-700W.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=43679&cid=1378&gid=1404",
     "rentalsegye_category": "안마의자",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.952Z",
@@ -12163,7 +12287,9 @@
     "min_monthly_fee": 30900,
     "max_commission": 264600,
     "id": "chungho-william-j-매트리스-k",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00250.jpg"
+    ],
     "rentre_catalog": {
       "productName": "William J 매트리스 킹(K)",
       "modelCode": "William J 매트리스 킹(K)",
@@ -12358,7 +12484,9 @@
     "min_monthly_fee": 32900,
     "max_commission": 277200,
     "id": "chungho-william-j-매트리스-lk",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00256.jpg"
+    ],
     "rentre_catalog": {
       "productName": "William J 매트리스 라지킹(LK)",
       "modelCode": "William J 매트리스 라지킹(LK)",
@@ -12553,7 +12681,9 @@
     "min_monthly_fee": 26900,
     "max_commission": 239400,
     "id": "chungho-william-j-매트리스-q",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00262.jpg"
+    ],
     "rentre_catalog": {
       "productName": "William J 매트리스 퀸(Q)",
       "modelCode": "William J 매트리스 퀸(Q)",
@@ -12748,7 +12878,9 @@
     "min_monthly_fee": 25900,
     "max_commission": 233100,
     "id": "chungho-william-j-매트리스-ss",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00268.jpg"
+    ],
     "rentre_catalog": {
       "productName": "William J 매트리스 슈퍼싱글(SS)",
       "modelCode": "William J 매트리스 슈퍼싱글(SS)",
@@ -13363,7 +13495,9 @@
     "min_monthly_fee": 21900,
     "max_commission": 241200,
     "id": "chungho-듀얼-드림-매트리스-k",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_01241.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 킹(K)",
       "modelCode": "듀얼 드림 온열 매트리스 킹(K)",
@@ -13558,7 +13692,9 @@
     "min_monthly_fee": 23900,
     "max_commission": 260100,
     "id": "chungho-듀얼-드림-매트리스-lk",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_01247.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 라지킹(LK)",
       "modelCode": "듀얼 드림 온열 매트리스 라지킹(LK)",
@@ -13753,7 +13889,9 @@
     "min_monthly_fee": 18900,
     "max_commission": 222300,
     "id": "chungho-듀얼-드림-매트리스-q",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_01253.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 퀸(Q)",
       "modelCode": "듀얼 드림 온열 매트리스 퀸(Q)",
@@ -13948,7 +14086,9 @@
     "min_monthly_fee": 15900,
     "max_commission": 203400,
     "id": "chungho-듀얼-드림-매트리스-ss",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_01259.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 슈퍼싱글(SS)",
       "modelCode": "듀얼 드림 온열 매트리스 슈퍼싱글(SS)",
@@ -14563,7 +14703,9 @@
     "min_monthly_fee": 21900,
     "max_commission": 241200,
     "id": "chungho-듀얼-코지-매트리스-k",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_01265.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 킹(K)",
       "modelCode": "듀얼 드림 온열 매트리스 킹(K)",
@@ -14758,7 +14900,9 @@
     "min_monthly_fee": 23900,
     "max_commission": 260100,
     "id": "chungho-듀얼-코지-매트리스-lk",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_01271.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 라지킹(LK)",
       "modelCode": "듀얼 드림 온열 매트리스 라지킹(LK)",
@@ -14953,7 +15097,9 @@
     "min_monthly_fee": 18900,
     "max_commission": 217800,
     "id": "chungho-듀얼-코지-매트리스-q",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_01277.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 퀸(Q)",
       "modelCode": "듀얼 드림 온열 매트리스 퀸(Q)",
@@ -15148,7 +15294,9 @@
     "min_monthly_fee": 15900,
     "max_commission": 198900,
     "id": "chungho-듀얼-코지-매트리스-ss",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_01283.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 슈퍼싱글(SS)",
       "modelCode": "듀얼 드림 온열 매트리스 슈퍼싱글(SS)",
@@ -16511,7 +16659,9 @@
     "min_monthly_fee": 9900,
     "max_commission": 126900,
     "id": "chungho-스프링에어-파운데이션-g-k",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02056.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -16606,7 +16756,9 @@
     "min_monthly_fee": 8900,
     "max_commission": 121500,
     "id": "chungho-스프링에어-파운데이션-g-q",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02060.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -16701,7 +16853,9 @@
     "min_monthly_fee": 7900,
     "max_commission": 104850,
     "id": "chungho-스프링에어-파운데이션-g-ss",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02064.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -16796,7 +16950,9 @@
     "min_monthly_fee": 9900,
     "max_commission": 126900,
     "id": "chungho-스프링에어-파운데이션-k",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02068.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 킹(K)",
       "modelCode": "듀얼 드림 온열 매트리스 킹(K)",
@@ -16899,7 +17055,9 @@
     "min_monthly_fee": 8900,
     "max_commission": 121500,
     "id": "chungho-스프링에어-파운데이션-q",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02072.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 퀸(Q)",
       "modelCode": "듀얼 드림 온열 매트리스 퀸(Q)",
@@ -17002,7 +17160,9 @@
     "min_monthly_fee": 7900,
     "max_commission": 104850,
     "id": "chungho-스프링에어-파운데이션-ss",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02076.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 슈퍼싱글(SS)",
       "modelCode": "듀얼 드림 온열 매트리스 슈퍼싱글(SS)",
@@ -17105,7 +17265,9 @@
     "min_monthly_fee": 25900,
     "max_commission": 201600,
     "id": "chungho-스프링에어-프레임-fb-패브릭-볼륨헤드-k",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02080.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -17200,7 +17362,9 @@
     "min_monthly_fee": 23900,
     "max_commission": 190800,
     "id": "chungho-스프링에어-프레임-fb-패브릭-볼륨헤드-q",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02084.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -17295,7 +17459,9 @@
     "min_monthly_fee": 21900,
     "max_commission": 184500,
     "id": "chungho-스프링에어-프레임-fb-패브릭-볼륨헤드-ss",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02088.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -17390,7 +17556,9 @@
     "min_monthly_fee": 27900,
     "max_commission": 207900,
     "id": "chungho-스프링에어-프레임-fg-쿠션-날개형-k",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02092.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -17485,7 +17653,9 @@
     "min_monthly_fee": 25900,
     "max_commission": 201600,
     "id": "chungho-스프링에어-프레임-fg-쿠션-날개형-q",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02096.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -17580,7 +17750,9 @@
     "min_monthly_fee": 23900,
     "max_commission": 190800,
     "id": "chungho-스프링에어-프레임-fg-쿠션-날개형-ss",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02100.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -17675,7 +17847,9 @@
     "min_monthly_fee": 18900,
     "max_commission": 172800,
     "id": "chungho-스프링에어-프레임-ft-미니멀-템바보드-k",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02104.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -17770,7 +17944,9 @@
     "min_monthly_fee": 16900,
     "max_commission": 162000,
     "id": "chungho-스프링에어-프레임-ft-미니멀-템바보드-q",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02108.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -17865,7 +18041,9 @@
     "min_monthly_fee": 14900,
     "max_commission": 155700,
     "id": "chungho-스프링에어-프레임-ft-미니멀-템바보드-ss",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02112.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -17960,7 +18138,9 @@
     "min_monthly_fee": 20900,
     "max_commission": 179100,
     "id": "chungho-스프링에어-프레임-fu-수납-쿠션-k",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02116.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -18055,7 +18235,9 @@
     "min_monthly_fee": 18900,
     "max_commission": 172800,
     "id": "chungho-스프링에어-프레임-fu-수납-쿠션-q",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02120.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -18150,7 +18332,9 @@
     "min_monthly_fee": 16900,
     "max_commission": 162000,
     "id": "chungho-스프링에어-프레임-fu-수납-쿠션-ss",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02124.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -18337,7 +18521,9 @@
     "min_monthly_fee": 18900,
     "max_commission": 187200,
     "id": "chungho-온리-드림-매트리스-q",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02788.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 퀸(Q)",
       "modelCode": "듀얼 드림 온열 매트리스 퀸(Q)",
@@ -18532,7 +18718,9 @@
     "min_monthly_fee": 13900,
     "max_commission": 161550,
     "id": "chungho-온리-드림-매트리스-s",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02794.jpg"
+    ],
     "rentre_catalog": {
       "productName": "온리 드림 매트리스 싱글(S)",
       "modelCode": "온리 드림 매트리스 싱글(S)",
@@ -18727,7 +18915,9 @@
     "min_monthly_fee": 15900,
     "max_commission": 171000,
     "id": "chungho-온리-드림-매트리스-ss",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_02800.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 슈퍼싱글(SS)",
       "modelCode": "듀얼 드림 온열 매트리스 슈퍼싱글(SS)",
@@ -19241,7 +19431,9 @@
     "min_monthly_fee": 11900,
     "max_commission": 114750,
     "id": "chungho-파운데이션-그레이-웜베이지-샌드베이지-k",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03518.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 킹(K)",
       "modelCode": "듀얼 드림 온열 매트리스 킹(K)",
@@ -19347,7 +19539,9 @@
     "min_monthly_fee": 17900,
     "max_commission": 160650,
     "id": "chungho-파운데이션-그레이-웜베이지-샌드베이지-lk",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03525.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 라지킹(LK)",
       "modelCode": "듀얼 드림 온열 매트리스 라지킹(LK)",
@@ -19453,7 +19647,9 @@
     "min_monthly_fee": 10900,
     "max_commission": 107100,
     "id": "chungho-파운데이션-그레이-웜베이지-샌드베이지-q",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03532.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 퀸(Q)",
       "modelCode": "듀얼 드림 온열 매트리스 퀸(Q)",
@@ -19559,7 +19755,9 @@
     "min_monthly_fee": 8900,
     "max_commission": 84150,
     "id": "chungho-파운데이션-그레이-웜베이지-샌드베이지-s",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03539.jpg"
+    ],
     "rentre_catalog": {
       "productName": "온리 드림 매트리스 싱글(S)",
       "modelCode": "온리 드림 매트리스 싱글(S)",
@@ -19665,7 +19863,9 @@
     "min_monthly_fee": 9900,
     "max_commission": 91800,
     "id": "chungho-파운데이션-그레이-웜베이지-샌드베이지-ss",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_03546.jpg"
+    ],
     "rentre_catalog": {
       "productName": "듀얼 드림 온열 매트리스 슈퍼싱글(SS)",
       "modelCode": "듀얼 드림 온열 매트리스 슈퍼싱글(SS)",
@@ -19768,7 +19968,9 @@
     "min_monthly_fee": 17900,
     "max_commission": 144900,
     "id": "chungho-프레임-fbt-패브릭-템바보드-프레임-k",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03666.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -19863,7 +20065,9 @@
     "min_monthly_fee": 20900,
     "max_commission": 163800,
     "id": "chungho-프레임-fbt-패브릭-템바보드-프레임-lk",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03670.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -19958,7 +20162,9 @@
     "min_monthly_fee": 15900,
     "max_commission": 132300,
     "id": "chungho-프레임-fbt-패브릭-템바보드-프레임-q",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03674.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -20053,7 +20259,9 @@
     "min_monthly_fee": 11900,
     "max_commission": 107100,
     "id": "chungho-프레임-fbt-패브릭-템바보드-프레임-s",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03678.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -20148,7 +20356,9 @@
     "min_monthly_fee": 13900,
     "max_commission": 119700,
     "id": "chungho-프레임-fbt-패브릭-템바보드-프레임-ss",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03682.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -20243,7 +20453,9 @@
     "min_monthly_fee": 17900,
     "max_commission": 144900,
     "id": "chungho-프레임-fc-쿠션형-헤드보드-k",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03686.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -20338,7 +20550,9 @@
     "min_monthly_fee": 20900,
     "max_commission": 163800,
     "id": "chungho-프레임-fc-쿠션형-헤드보드-lk",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03690.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -20433,7 +20647,9 @@
     "min_monthly_fee": 15900,
     "max_commission": 132300,
     "id": "chungho-프레임-fc-쿠션형-헤드보드-q",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03694.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -20528,7 +20744,9 @@
     "min_monthly_fee": 11900,
     "max_commission": 107100,
     "id": "chungho-프레임-fc-쿠션형-헤드보드-s",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03698.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -20623,7 +20841,9 @@
     "min_monthly_fee": 13900,
     "max_commission": 119700,
     "id": "chungho-프레임-fc-쿠션형-헤드보드-ss",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03702.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -20720,7 +20940,9 @@
     "min_monthly_fee": 19900,
     "max_commission": 157500,
     "id": "chungho-프레임-fh-호텔식-패브릭-k",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03720.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -20817,7 +21039,9 @@
     "min_monthly_fee": 33900,
     "max_commission": 191250,
     "id": "chungho-프레임-fh-호텔식-패브릭-k-더블-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03708.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -20914,7 +21138,9 @@
     "min_monthly_fee": 26900,
     "max_commission": 180000,
     "id": "chungho-프레임-fh-호텔식-패브릭-k-싱글-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03714.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -21011,7 +21237,9 @@
     "min_monthly_fee": 22900,
     "max_commission": 176400,
     "id": "chungho-프레임-fh-호텔식-패브릭-lk",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03738.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -21108,7 +21336,9 @@
     "min_monthly_fee": 36900,
     "max_commission": 214200,
     "id": "chungho-프레임-fh-호텔식-패브릭-lk-더블-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03726.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -21205,7 +21435,9 @@
     "min_monthly_fee": 29900,
     "max_commission": 201600,
     "id": "chungho-프레임-fh-호텔식-패브릭-lk-싱글-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03732.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -21302,7 +21534,9 @@
     "min_monthly_fee": 17900,
     "max_commission": 144900,
     "id": "chungho-프레임-fh-호텔식-패브릭-q",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03756.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -21399,7 +21633,9 @@
     "min_monthly_fee": 31900,
     "max_commission": 175950,
     "id": "chungho-프레임-fh-호텔식-패브릭-q-더블-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03744.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -21496,7 +21732,9 @@
     "min_monthly_fee": 24900,
     "max_commission": 165600,
     "id": "chungho-프레임-fh-호텔식-패브릭-q-싱글-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03750.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -21593,7 +21831,9 @@
     "min_monthly_fee": 13900,
     "max_commission": 119700,
     "id": "chungho-프레임-fh-호텔식-패브릭-s",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03774.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -21690,7 +21930,9 @@
     "min_monthly_fee": 29900,
     "max_commission": 145350,
     "id": "chungho-프레임-fh-호텔식-패브릭-s-더블-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03762.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -21787,7 +22029,9 @@
     "min_monthly_fee": 20900,
     "max_commission": 136800,
     "id": "chungho-프레임-fh-호텔식-패브릭-s-싱글-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03768.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -21884,7 +22128,9 @@
     "min_monthly_fee": 15900,
     "max_commission": 132300,
     "id": "chungho-프레임-fh-호텔식-패브릭-ss",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03792.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -21981,7 +22227,9 @@
     "min_monthly_fee": 29900,
     "max_commission": 160650,
     "id": "chungho-프레임-fh-호텔식-패브릭-ss-더블-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03780.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -22078,7 +22326,9 @@
     "min_monthly_fee": 22900,
     "max_commission": 151200,
     "id": "chungho-프레임-fh-호텔식-패브릭-ss-싱글-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03786.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -22175,7 +22425,9 @@
     "min_monthly_fee": 13900,
     "max_commission": 119700,
     "id": "chungho-프레임-fs-미니멀-프레임-k",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03810.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -22272,7 +22524,9 @@
     "min_monthly_fee": 22900,
     "max_commission": 145350,
     "id": "chungho-프레임-fs-미니멀-프레임-k-더블-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03798.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -22369,7 +22623,9 @@
     "min_monthly_fee": 18900,
     "max_commission": 136800,
     "id": "chungho-프레임-fs-미니멀-프레임-k-싱글-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03804.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -22466,7 +22722,9 @@
     "min_monthly_fee": 16900,
     "max_commission": 138600,
     "id": "chungho-프레임-fs-미니멀-프레임-lk",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03828.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -22563,7 +22821,9 @@
     "min_monthly_fee": 25900,
     "max_commission": 168300,
     "id": "chungho-프레임-fs-미니멀-프레임-lk-더블-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03816.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -22660,7 +22920,9 @@
     "min_monthly_fee": 21900,
     "max_commission": 158400,
     "id": "chungho-프레임-fs-미니멀-프레임-lk-싱글-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03822.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -22757,7 +23019,9 @@
     "min_monthly_fee": 12900,
     "max_commission": 107100,
     "id": "chungho-프레임-fs-미니멀-프레임-q",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03846.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -22854,7 +23118,9 @@
     "min_monthly_fee": 21900,
     "max_commission": 130050,
     "id": "chungho-프레임-fs-미니멀-프레임-q-더블-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03834.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -22951,7 +23217,9 @@
     "min_monthly_fee": 17900,
     "max_commission": 122400,
     "id": "chungho-프레임-fs-미니멀-프레임-q-싱글-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03840.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -23048,7 +23316,9 @@
     "min_monthly_fee": 9900,
     "max_commission": 75600,
     "id": "chungho-프레임-fs-미니멀-프레임-s",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03864.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -23145,7 +23415,9 @@
     "min_monthly_fee": 18900,
     "max_commission": 91800,
     "id": "chungho-프레임-fs-미니멀-프레임-s-더블-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03852.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -23242,7 +23514,9 @@
     "min_monthly_fee": 14900,
     "max_commission": 86400,
     "id": "chungho-프레임-fs-미니멀-프레임-s-싱글-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03858.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -23339,7 +23613,9 @@
     "min_monthly_fee": 11900,
     "max_commission": 94500,
     "id": "chungho-프레임-fs-미니멀-프레임-ss",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03882.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -23436,7 +23712,9 @@
     "min_monthly_fee": 20900,
     "max_commission": 114750,
     "id": "chungho-프레임-fs-미니멀-프레임-ss-더블-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03870.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -23533,7 +23811,9 @@
     "min_monthly_fee": 16900,
     "max_commission": 108000,
     "id": "chungho-프레임-fs-미니멀-프레임-ss-싱글-판넬",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03876.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -23628,7 +23908,9 @@
     "min_monthly_fee": 18900,
     "max_commission": 151200,
     "id": "chungho-프레임-wb-패브릭-원목-k",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03886.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -23723,7 +24005,9 @@
     "min_monthly_fee": 21900,
     "max_commission": 170100,
     "id": "chungho-프레임-wb-패브릭-원목-lk",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03890.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -23818,7 +24102,9 @@
     "min_monthly_fee": 16900,
     "max_commission": 138600,
     "id": "chungho-프레임-wb-패브릭-원목-q",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03894.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -23913,7 +24199,9 @@
     "min_monthly_fee": 12900,
     "max_commission": 113400,
     "id": "chungho-프레임-wb-패브릭-원목-s",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03898.jpg"
+    ]
   },
   {
     "brand": "청호나이스",
@@ -24008,7 +24296,9 @@
     "min_monthly_fee": 14900,
     "max_commission": 126000,
     "id": "chungho-프레임-wb-패브릭-원목-ss",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_03902.jpg"
+    ]
   },
   {
     "brand": "SK매직",
