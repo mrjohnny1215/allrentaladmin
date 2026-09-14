@@ -41,7 +41,7 @@ async function fetchText(url) {
   return { html: await response.text(), finalUrl: response.url }
 }
 
-function imageUrls(html, pageUrl) {
+function imageUrls(html, pageUrl, modelCode = '') {
   const found = []
   const tags = html.match(/<(?:img|source)\b[^>]*>/gi) || []
   for (const tag of tags) {
@@ -49,6 +49,12 @@ function imageUrls(html, pageUrl) {
     if (!attr) continue
     let src = attr[1].trim().replace(/&amp;/g, '&')
     if (!src || src.startsWith('data:') || skipWords.test(src)) continue
+    const alt = /\balt\s*=\s*["']([^"']*)["']/i.exec(tag)?.[1] || ''
+    const compactModel = String(modelCode).replace(/[^a-z0-9]/gi, '').toLowerCase()
+    const compactAlt = alt.replace(/[^a-z0-9]/gi, '').toLowerCase()
+    // 판매 페이지의 추천상품 카드에는 다른 모델 번호가 alt/id로 표시된다.
+    if (/\bid\s*=\s*["']ui_product_img_/i.test(tag)) continue
+    if (compactModel && /[a-z]{1,5}[\s_-]*\d/i.test(alt) && compactAlt && !compactAlt.includes(compactModel)) continue
     try { src = new URL(src, pageUrl).href } catch { continue }
     if (!/\.(?:avif|jpe?g|png|webp)(?:[?#].*)?$/i.test(src) || !bodyWords.test(src)) continue
     if (!found.includes(src)) found.push(src)
@@ -88,7 +94,7 @@ for (const product of products) {
   try {
     const cached = cacheHtml(product.detail_url)
     const { html, finalUrl } = cached ? { html: cached, finalUrl: product.detail_url } : await fetchText(product.detail_url)
-    const urls = imageUrls(html, finalUrl)
+    const urls = imageUrls(html, finalUrl, product.model_code)
     const local = []
     for (const [index, url] of urls.entries()) {
       const base = `${String(index + 1).padStart(2, '0')}`
