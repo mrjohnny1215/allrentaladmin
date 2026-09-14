@@ -54,6 +54,20 @@ function sourceRecords(html, pageUrl) {
 }
 
 const products = JSON.parse(fs.readFileSync(productsPath, 'utf8'))
+const cowayHashes = new Map()
+for (const product of products) {
+  if (product.brand !== '코웨이') continue
+  for (const relativePath of product.detail_description_images || []) {
+    const fullPath = path.join(root, 'public', relativePath)
+    if (!fs.existsSync(fullPath)) continue
+    const hash = fs.readFileSync(fullPath).toString('base64')
+    const models = cowayHashes.get(hash) || new Set()
+    models.add(relativePath)
+    cowayHashes.set(hash, models)
+  }
+}
+// 서로 다른 코웨이 상품 열 개 이상에 완전히 동일한 큰 사진은 공통 홍보 이미지다.
+const sharedCowayAssets = new Set([...cowayHashes].filter(([, paths]) => paths.size >= 10).map(([hash]) => hash))
 let removed = 0
 let changedProducts = 0
 
@@ -72,7 +86,8 @@ for (const product of products) {
     const compactAlt = String(source?.alt || '').replace(/[^a-z0-9]/gi, '').toLowerCase()
     const isOtherModel = Boolean(source && (source.relatedCard || (compactModel && /[a-z]{1,5}[\s_-]*\d/i.test(source.alt) && compactAlt && !compactAlt.includes(compactModel))))
     const isUiAsset = size && (size.width < 200 || size.height < 100)
-    if (isUiAsset || isOtherModel) {
+    const isSharedCowayAsset = product.brand === '코웨이' && sharedCowayAssets.has(fs.readFileSync(fullPath).toString('base64'))
+    if (isUiAsset || isOtherModel || isSharedCowayAsset) {
       fs.unlinkSync(fullPath)
       removed += 1
     } else {
