@@ -54,6 +54,7 @@ function sourceRecords(html, pageUrl) {
 }
 
 const products = JSON.parse(fs.readFileSync(productsPath, 'utf8'))
+const unverifiedBrands = new Set(['청호나이스'])
 const cowayHashes = new Map()
 for (const product of products) {
   if (product.brand !== '코웨이') continue
@@ -87,7 +88,8 @@ for (const product of products) {
     const isOtherModel = Boolean(source && (source.relatedCard || (compactModel && /[a-z]{1,5}[\s_-]*\d/i.test(source.alt) && compactAlt && !compactAlt.includes(compactModel))))
     const isUiAsset = size && (size.width < 200 || size.height < 100)
     const isSharedCowayAsset = product.brand === '코웨이' && sharedCowayAssets.has(fs.readFileSync(fullPath).toString('base64'))
-    if (isUiAsset || isOtherModel || isSharedCowayAsset) {
+    const isUnverifiedBrand = unverifiedBrands.has(product.brand)
+    if (isUiAsset || isOtherModel || isSharedCowayAsset || isUnverifiedBrand) {
       fs.unlinkSync(fullPath)
       removed += 1
     } else {
