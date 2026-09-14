@@ -156614,7 +156614,9 @@
     "min_monthly_fee": 33100,
     "max_commission": 459326,
     "id": "lg-wd524v-c-h-s",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_00686.jpg"
+    ]
   },
   {
     "brand": "LG",
@@ -156804,7 +156806,9 @@
     "min_monthly_fee": 31200,
     "max_commission": 422836,
     "id": "lg-wd523v-c-h-s-p-m",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_00469.jpg"
+    ]
   },
   {
     "brand": "LG",
@@ -157136,7 +157140,9 @@
     "min_monthly_fee": 27400,
     "max_commission": 389454,
     "id": "lg-wd520vc",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00464.jpg"
+    ],
     "rentre_catalog": {
       "productName": "퓨리케어 오브제컬렉션 냉온정 정수기(맞춤 lite, 25년 출시)",
       "modelCode": "WD520VC",
@@ -157586,7 +157592,9 @@
     "min_monthly_fee": 20800,
     "max_commission": 321218,
     "id": "lg-wd220m-c-n-b",
-    "detail_description_images": []
+    "detail_description_images": [
+      "/assets/goods_image/img_02805.jpg"
+    ]
   },
   {
     "brand": "LG",
@@ -159557,7 +159565,9 @@
     "min_monthly_fee": 24600,
     "max_commission": 292500,
     "id": "lg-as195dwwam",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00048.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=40000&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z",
@@ -159760,7 +159770,9 @@
     "min_monthly_fee": 30300,
     "max_commission": 298390,
     "id": "lg-as195dwwam-2",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00041.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=40000&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z",
@@ -162557,7 +162569,9 @@
     "min_monthly_fee": 27400,
     "max_commission": 310172,
     "id": "lg-as192dsfam",
-    "detail_description_images": [],
+    "detail_description_images": [
+      "/assets/goods_image/img_00028.jpg"
+    ],
     "rentalsegye_detail_url": "https://www.rentalsegye.com/product.php?no=26927&cid=1379&gid=1407",
     "rentalsegye_category": "공기청정기",
     "rentalsegye_matched_at": "2026-09-14T08:25:24.953Z",

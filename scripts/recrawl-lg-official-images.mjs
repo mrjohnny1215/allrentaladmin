@@ -47,6 +47,11 @@ let replaced = 0
 let failed = 0
 
 for (const product of lgProducts) {
+  const current = product.detail_description_images || []
+  if (current.length === 1 && /\/official-main\.jpg$/i.test(current[0]) && fs.existsSync(path.join(root, 'public', current[0]))) {
+    console.log(JSON.stringify({ event: 'kept', model: product.model_code }))
+    continue
+  }
   try {
     const html = await fetchText(product.detail_url)
     const source = ogImage(html)
@@ -58,10 +63,13 @@ for (const product of lgProducts) {
     replaced += 1
     console.log(JSON.stringify({ event: 'replaced', model: product.model_code, source }))
   } catch (error) {
-    // 오래된 상세 이미지는 신뢰할 수 없으므로 실패한 모델에서도 노출하지 않는다.
-    product.detail_description_images = []
+    // 공식 페이지가 폐기된 모델은 타 모델 사진 대신, 이미 이 상품 카드에 쓰이는
+    // 내부 대표 이미지만 상세 영역의 안전한 대체 이미지로 쓴다.
+    const fallback = [product.thumbnail, ...(product.images || [])]
+      .find(src => src && fs.existsSync(path.join(root, 'public', src)))
+    product.detail_description_images = fallback ? [fallback] : []
     failed += 1
-    console.warn(JSON.stringify({ event: 'failed', model: product.model_code, error: error.message }))
+    console.warn(JSON.stringify({ event: 'fallback', model: product.model_code, fallback: Boolean(fallback), error: error.message }))
   }
 }
 
