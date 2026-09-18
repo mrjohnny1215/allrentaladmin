@@ -233,12 +233,28 @@ function Calculator({ matrix, colors = [], commissionOn, onPick, discount = 0, s
     (kind === 'contract' ? r.contract === val : (!contract || r.contract === contract)) &&
     (kind === 'years' ? r.years === val : (!years || r.years === years)))
 
-  const Seg = ({ cap, opts, val, set, kind, cls = '' }) => (
+  // 계약 유형은 현재 관리 주기/약정과 맞지 않더라도 항상 선택할 수 있어야 한다.
+  // 보상·결합을 누르면 해당 유형에서 실제로 존재하는 요금 조건으로 함께 전환한다.
+  const selectContract = (nextContract) => {
+    const row =
+      matrix.find((r) => r.contract === nextContract && r.mgmt === mgmt && r.years === years) ||
+      matrix.find((r) => r.contract === nextContract && r.years === years) ||
+      matrix.find((r) => r.contract === nextContract && r.mgmt === mgmt) ||
+      matrix.find((r) => r.contract === nextContract)
+    if (!row) return
+    const next = { mgmt: row.mgmt || '', contract: row.contract || '', years: row.years || '' }
+    setMgmt(next.mgmt)
+    setContract(next.contract)
+    setYears(next.years)
+    onPick && onPick({ ...next, color })
+  }
+
+  const Seg = ({ cap, opts, val, set, kind, cls = '', alwaysAvailable = false }) => (
     <div className="calc-row">
       <span className="cap">{cap}</span>
       <div className={`seg ${cls}`}>
         {opts.filter((o) => avail[kind].has(o)).map((o) => (
-          <button key={o} className={val === o ? 'on' : ''} disabled={!canPick(kind, o)}
+          <button key={o} className={val === o ? 'on' : ''} disabled={!alwaysAvailable && !canPick(kind, o)}
             onClick={() => set(o)}>{o}</button>
         ))}
       </div>
@@ -249,7 +265,7 @@ function Calculator({ matrix, colors = [], commissionOn, onPick, discount = 0, s
     <div className="calc">
       <h3>🧮 렌탈료 / 수수료 계산기</h3>
       <Seg cap="관리 방식" opts={MGMTS} val={mgmt} set={(o) => { setMgmt(o); onPick && onPick({ mgmt: o, contract, years }) }} kind="mgmt" />
-      <Seg cap="계약 유형" opts={CONTRACTS} val={contract} set={(o) => { setContract(o); onPick && onPick({ mgmt, contract: o, years }) }} kind="contract" />
+      <Seg cap="계약 유형" opts={CONTRACTS} val={contract} set={selectContract} kind="contract" alwaysAvailable />
       <Seg cap="약정 기간" opts={YEARS} val={years} set={(o) => { setYears(o); onPick && onPick({ mgmt, contract, years: o }) }} kind="years" cls="years" />
 
       <div className="calc-row discount-row">
