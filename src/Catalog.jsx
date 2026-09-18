@@ -368,7 +368,8 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
     return true
   })
 
-  const [tableOpen, setTableOpen] = useState(false)
+  // 계약 유형별 수당을 처음부터 볼 수 있게 전체 요금표를 펼쳐 둔다.
+  const [tableOpen, setTableOpen] = useState(true)
   const [cardModal, setCardModal] = useState(false)
   const [cardImg, setCardImg] = useState(null)
   const [receiptOpen, setReceiptOpen] = useState(false)
@@ -467,7 +468,7 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
 
             {matrix.length > 0 && (
               <div className="info-block">
-                <h4>📋 {p.name} 렌탈료 및 프로모션</h4>
+                <h4>📋 {p.name} 렌탈료 및 수당</h4>
                 <div className={`table-scroll ${tableOpen ? '' : 'collapsed'}`}>
                   <table className="matrix-table">
                     <thead>
@@ -613,7 +614,8 @@ export default function Catalog() {
   const [airFuncFilter, setAirFuncFilter] = useState('all')
   const [mattressTypeFilter, setMattressTypeFilter] = useState('all')
   // 수수료 ON/OFF (플로팅 버튼)
-  const [commissionOn, setCommissionOn] = useState(false)
+  // 신규·보상·결합 수당을 기본으로 표시하고, 필요할 때만 플로팅 버튼으로 숨긴다.
+  const [commissionOn, setCommissionOn] = useState(true)
   // 정렬 (수수료 많은순 기본)
   const [sort, setSort] = useState('commission_desc')
   const detailRef = useRef(null)

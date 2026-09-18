@@ -45,6 +45,11 @@ export default function AdminDashboard() {
     refresh()
   }
 
+  const saveRole = (id, role) => {
+    updateUser(id, { role })
+    refresh()
+  }
+
   const del = (id) => {
     if (!confirm('탈퇴/삭제 하시겠습니까?')) return
     removeUser(id)
@@ -136,7 +141,14 @@ export default function AdminDashboard() {
                   </select>
                 </td>
                 <td>
-                  <b>{u.role === 'ADMIN' ? '관리자' : '영업사원'}</b>
+                  {u.id === 'admin' ? (
+                    <b>최고 관리자</b>
+                  ) : (
+                    <select value={u.role || 'SALES'} onChange={(e) => saveRole(u.id, e.target.value)} disabled={u.status !== 'APPROVED'} aria-label={`${u.name} 역할`}>
+                      <option value="SALES">영업사원</option>
+                      <option value="MANAGER">팀장(관리자)</option>
+                    </select>
+                  )}
                 </td>
                 <td>{u.birth || '-'}</td>
                 <td>{u.phone || '-'}</td>
@@ -156,7 +168,7 @@ export default function AdminDashboard() {
                 <td className="actions">
                   {u.status === 'PENDING' && <>
                     <button className="btn primary" onClick={() => approve(u, 'SALES')}>사원 승인</button>
-                    <button className="btn primary" onClick={() => approve(u, 'ADMIN')}>관리자 승인</button>
+                    <button className="btn primary" onClick={() => approve(u, 'MANAGER')}>팀장 승인</button>
                   </>}
                   {u.id !== 'admin' && <button className="btn danger" onClick={() => del(u.id)}>삭제</button>}
                 </td>
