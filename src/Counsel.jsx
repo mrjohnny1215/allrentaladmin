@@ -223,6 +223,7 @@ export default function Counsel() {
   const [year, setYear] = useState('전체')
   const [priceMin, setPriceMin] = useState('')
   const [priceMax, setPriceMax] = useState('')
+  const [sort, setSort] = useState('sales_desc')
   const [sel, setSel] = useState(null)
   const [commissionOn, setCommissionOn] = useState(false)
   const [customerName, setCustomerName] = useState('')
@@ -254,7 +255,7 @@ export default function Counsel() {
   const list = useMemo(() => {
     if (!all) return []
     const kw = q.trim().toLowerCase()
-    return all.filter((p) => {
+    const filtered = all.filter((p) => {
       // 카테고리
       if (cat !== '전체' && p.category !== cat) return false
       // 브랜드
@@ -277,7 +278,12 @@ export default function Counsel() {
       }
       return true
     })
-  }, [all, q, cat, brand, contract, mgmt, year, priceMin, priceMax])
+    return [...filtered].sort((a, b) => {
+      if (sort === 'price_asc') return representativeFee(a.pricing_matrix) - representativeFee(b.pricing_matrix)
+      if (sort === 'price_desc') return representativeFee(b.pricing_matrix) - representativeFee(a.pricing_matrix)
+      return (b.max_commission || 0) - (a.max_commission || 0)
+    })
+  }, [all, q, cat, brand, contract, mgmt, year, priceMin, priceMax, sort])
 
   const resetFilters = () => {
     setCat('전체'); setBrand('전체'); setContract('전체')
@@ -318,6 +324,11 @@ export default function Counsel() {
         />
         <select className="cat-sort" value={cat} onChange={(e) => setCat(e.target.value)} aria-label="카테고리">
           {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+        </select>
+        <select className="cat-sort" value={sort} onChange={(e) => setSort(e.target.value)} aria-label="상품 정렬">
+          <option value="sales_desc">판매량 많은 순</option>
+          <option value="price_asc">렌탈료 낮은 순</option>
+          <option value="price_desc">렌탈료 높은 순</option>
         </select>
       </div>
 
