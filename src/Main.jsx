@@ -202,13 +202,23 @@ const BANK_OPTIONS = [
   ['농협은행', '/images/banks/nh.svg'], ['기업은행', '/images/banks/ibk.png'], ['카카오뱅크', '/images/banks/kakaobank.png'], ['K뱅크', '/images/banks/kbank.svg'], ['토스뱅크', '/images/banks/toss.svg'],
   ['SC제일은행', '/images/banks/sc.png'], ['부산은행', '/images/banks/bnk.png'], ['대구은행', '/images/banks/dgb.svg'], ['경남은행', '/images/banks/knbank.png'],
 ]
-const CARD_OPTIONS = ['국민카드', '신한카드', '삼성카드', '현대카드', '롯데카드', '우리카드', '하나카드', 'NH농협카드', 'BC카드'].map((name) => [name, '💳'])
+const CARD_OPTIONS = [
+  ['국민카드', '/images/cards/kbcard.jpg'],
+  ['신한카드', '/images/cards/shinhancard.jpg'],
+  ['삼성카드', '/images/cards/samsungcard.jpg'],
+  ['현대카드', '/images/cards/hyundaicard.jpg'],
+  ['롯데카드', '/images/cards/lottecard.jpg'],
+  ['우리카드', '/images/cards/wooricard.jpg'],
+  ['하나카드', '/images/cards/hanacard.jpg'],
+  ['NH농협카드', '/images/banks/nh.svg'],
+  ['BC카드', '/images/cards/bccard.jpg'],
+]
 
 function IconPicker({ value, onChange, options, placeholder }) {
   const [open, setOpen] = useState(false)
   const selected = options.find(([name]) => name === value)
   const renderIcon = (option) => option?.[1]?.startsWith('/')
-    ? <img src={option[1]} alt="" style={{ width: 23, height: 23, objectFit: 'contain', borderRadius: 6 }} />
+    ? <img src={option[1]} alt="" style={{ width: option[1].startsWith('/images/cards/') ? 42 : 23, height: 23, objectFit: 'contain', borderRadius: 6 }} />
     : <span style={{ width: 23, height: 23, display: 'grid', placeItems: 'center', fontSize: 17 }}>{option?.[1] || '•'}</span>
   return <div style={{ position: 'relative' }}>
     <button type="button" className="input-x" onClick={() => setOpen((v) => !v)}
