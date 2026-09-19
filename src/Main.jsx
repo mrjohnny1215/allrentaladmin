@@ -236,7 +236,8 @@ export default function Main() {
     customerType: '개인', brand: '', brandInput: '',
     businessName: '', businessNumber: '', corporationNumber: '',
     emailId: '', emailDomain: '', customerName: '', birthDate: '',
-    contact: '', paymentInfo: '', zipCode: '', address: '', detailAddress: '',
+    contact: '', paymentType: 'account', bankName: '', accountNumber: '',
+    cardCompany: '', cardNumber: '', cardExpiry: '', paymentInfo: '', zipCode: '', address: '', detailAddress: '',
     notes: '가장 빠른 설치 요청', promotion: '없음', promotionText: '',
     checkRequests: [],
   })
@@ -387,7 +388,10 @@ export default function Main() {
       businessName: form.businessName, businessNumber: form.businessNumber,
       corporationNumber: form.corporationNumber, emailId: form.emailId, emailDomain: form.emailDomain,
       customerName: form.customerName, birthDate: form.birthDate, contact: form.contact,
-      paymentInfo: form.paymentInfo, zipCode: form.zipCode, address: form.address,
+      paymentInfo: form.paymentType === 'card'
+        ? [form.cardCompany, form.cardNumber, form.cardExpiry].filter(Boolean).join(' / ')
+        : [form.bankName, form.accountNumber].filter(Boolean).join(' / '),
+      zipCode: form.zipCode, address: form.address,
       detailAddress: form.detailAddress, notes: form.notes, promotion: form.promotion,
       promotionText: form.promotionText, checkRequests: form.checkRequests,
       items: productItems, createdAt: new Date().toISOString(), status: '접수완료',
@@ -481,8 +485,33 @@ export default function Main() {
                 </div>
               </div>
               <div className="field-group"><label className="field-label">결제정보</label>
-                <input type="text" name="paymentInfo" value={form.paymentInfo} onChange={onChange}
-                  placeholder="은행명+계좌 / 카드회사+카드번호+유효기간" className="input-x" />
+                <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
+                  <button type="button" className={'btn ' + (form.paymentType === 'account' ? 'btn-primary-x' : 'btn-ghost-x')}
+                    onClick={() => setForm(f => ({ ...f, paymentType: 'account' }))}>은행 + 계좌</button>
+                  <button type="button" className={'btn ' + (form.paymentType === 'card' ? 'btn-primary-x' : 'btn-ghost-x')}
+                    onClick={() => setForm(f => ({ ...f, paymentType: 'card' }))}>카드</button>
+                </div>
+                {form.paymentType === 'account' ? (
+                  <div className="field-grid">
+                    <select name="bankName" value={form.bankName} onChange={onChange} className="input-x" aria-label="은행 선택">
+                      <option value="">은행 선택</option>
+                      {['국민은행', '신한은행', '우리은행', '하나은행', '농협은행', '기업은행', '카카오뱅크', 'K뱅크', '토스뱅크', 'SC제일은행', '부산은행', '대구은행', '경남은행'].map((bank) => <option key={bank} value={bank}>{bank}</option>)}
+                    </select>
+                    <input type="text" inputMode="numeric" name="accountNumber" value={form.accountNumber} onChange={onChange}
+                      placeholder="계좌번호" className="input-x" />
+                  </div>
+                ) : (
+                  <div className="field-grid">
+                    <select name="cardCompany" value={form.cardCompany} onChange={onChange} className="input-x" aria-label="카드사 선택">
+                      <option value="">카드사 선택</option>
+                      {['국민카드', '신한카드', '삼성카드', '현대카드', '롯데카드', '우리카드', '하나카드', 'NH농협카드', 'BC카드'].map((company) => <option key={company} value={company}>{company}</option>)}
+                    </select>
+                    <input type="text" inputMode="numeric" name="cardNumber" value={form.cardNumber} onChange={onChange}
+                      placeholder="카드번호" className="input-x" />
+                    <input type="text" inputMode="numeric" name="cardExpiry" value={form.cardExpiry} onChange={onChange}
+                      placeholder="유효기간 (MM/YY)" className="input-x" />
+                  </div>
+                )}
               </div>
             </div>
 
