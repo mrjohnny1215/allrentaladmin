@@ -129,6 +129,27 @@ export default function AdminDashboard() {
         </tbody></table>
       </div>}
 
+      <section style={{ margin: '16px', padding: 20, border: '1px solid #cfe0ff', borderRadius: 16, background: 'linear-gradient(180deg, #f8fbff 0%, #fff 100%)' }}>
+        <div style={{ fontWeight: 900, fontSize: 17 }}>조직도</div>
+        <div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>관리자와 소속 영업사원 현황입니다. 팀 카드를 누르면 아래에서 상세 명단을 볼 수 있습니다.</div>
+        <div style={{ display: 'flex', justifyContent: 'center', margin: '18px 0 8px' }}>
+          <div style={{ padding: '10px 18px', borderRadius: 10, color: '#fff', background: '#172554', fontWeight: 900 }}>최고 관리자 · {users.find((member) => member.id === 'admin')?.name || '관리자'} (admin)</div>
+        </div>
+        <div style={{ width: 2, height: 20, margin: '0 auto', background: '#94a3b8' }} />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 12, marginTop: 10 }}>
+          {managers.filter((manager) => manager.id !== 'admin').map((manager) => {
+            const members = users.filter((member) => !managerIds.has(member.id) && member.parent_id === manager.id)
+            const active = expandedManagerId === manager.id
+            return <button key={manager.id} onClick={() => setExpandedManagerId(active ? null : manager.id)} style={{ padding: 14, border: `1px solid ${active ? '#2563eb' : '#cbd5e1'}`, borderRadius: 12, background: active ? '#eff6ff' : '#fff', textAlign: 'left', cursor: 'pointer' }}>
+              <div style={{ color: '#1d4ed8', fontSize: 12, fontWeight: 900 }}>관리자 / 팀장</div>
+              <div style={{ marginTop: 3, color: '#172554', fontWeight: 900 }}>{manager.name} <span style={{ color: '#64748b', fontWeight: 600 }}>({manager.id})</span></div>
+              <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #e2e8f0', color: '#475569', fontSize: 13, lineHeight: 1.7 }}>{members.length ? members.map((member) => member.name).join(' · ') : '소속 영업사원 없음'}</div>
+            </button>
+          })}
+          {managers.filter((manager) => manager.id !== 'admin').length === 0 && <div className="empty">등록된 관리자 또는 팀장이 없습니다.</div>}
+        </div>
+      </section>
+
       <section style={{ margin: '16px', padding: 18, border: '1px solid #dbe4ef', borderRadius: 14, background: '#f8fbff' }}>
         <div style={{ fontWeight: 900, marginBottom: 12 }}>관리자 선택</div>
         <div style={{ color: '#64748b', fontSize: 13, marginBottom: 14 }}>관리자를 클릭하면 해당 소속 영업사원만 표시됩니다.</div>
