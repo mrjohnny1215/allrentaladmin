@@ -15,6 +15,7 @@ export default function AdminDashboard() {
   const [settlementPassword, setSettlementPassword] = useState('')
   const [employeeDetail, setEmployeeDetail] = useState(null)
   const [employeeDetailMsg, setEmployeeDetailMsg] = useState('')
+  const [expandedManagerId, setExpandedManagerId] = useState(null)
 
   useEffect(() => {
     if (!user || user.role !== 'ADMIN') {
@@ -27,6 +28,14 @@ export default function AdminDashboard() {
   }, [refresh])
 
   const list = users.filter((u) => filterStatus === 'ALL' ? true : u.status === filterStatus)
+  // 역할이 팀장/관리자가 아니더라도 실제 소속 관리자로 지정된 회원은 관리자 묶음으로 표시한다.
+  const managerIds = new Set(users.filter((u) => u.parent_id).map((u) => u.parent_id))
+  users.filter((u) => ['ADMIN', 'MANAGER'].includes(u.role)).forEach((u) => managerIds.add(u.id))
+  const managers = list.filter((u) => managerIds.has(u.id))
+  const pendingMembers = list.filter((u) => u.status === 'PENDING' && !managerIds.has(u.id))
+  const displayedMembers = expandedManagerId
+    ? list.filter((u) => u.id === expandedManagerId || (!managerIds.has(u.id) && u.parent_id === expandedManagerId))
+    : pendingMembers
 
   const approve = (u, role = 'SALES') => {
     const grade = u.fee_grade || '100%'
@@ -120,6 +129,21 @@ export default function AdminDashboard() {
         </tbody></table>
       </div>}
 
+      <section style={{ margin: '16px', padding: 18, border: '1px solid #dbe4ef', borderRadius: 14, background: '#f8fbff' }}>
+        <div style={{ fontWeight: 900, marginBottom: 12 }}>관리자 선택</div>
+        <div style={{ color: '#64748b', fontSize: 13, marginBottom: 14 }}>관리자를 클릭하면 해당 소속 영업사원만 표시됩니다.</div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+          {managers.map((manager) => {
+            const salesCount = users.filter((member) => !managerIds.has(member.id) && member.parent_id === manager.id).length
+            const active = expandedManagerId === manager.id
+            return <button key={manager.id} className={`btn ${active ? 'primary' : 'btn-outline-x'}`} onClick={() => setExpandedManagerId(active ? null : manager.id)}>
+              {manager.name} ({manager.id}) · 영업사원 {salesCount}명
+            </button>
+          })}
+          {!managers.length && <span className="empty">표시할 관리자가 없습니다.</span>}
+        </div>
+      </section>
+
       <div className="table-scroll">
         <table className="admin-table">
           <thead>
@@ -128,7 +152,7 @@ export default function AdminDashboard() {
             </tr>
           </thead>
           <tbody>
-            {list.map((u) => (
+            {displayedMembers.map((u) => (
               <tr key={u.id}>
                 <td>{u.id}</td>
                 <td><button className="btn btn-outline-x" onClick={() => openEmployeeDetail(u)}>{u.name}</button></td>
@@ -174,7 +198,8 @@ export default function AdminDashboard() {
                 </td>
               </tr>
             ))}
-            {list.length === 0 && <tr><td colSpan="11" className="empty">표시할 회원이 없습니다.</td></tr>}
+            {!expandedManagerId && pendingMembers.length === 0 && <tr><td colSpan="11" className="empty">위에서 관리자를 선택하면 소속 영업사원이 표시됩니다.</td></tr>}
+            {expandedManagerId && displayedMembers.length === 0 && <tr><td colSpan="11" className="empty">해당 관리자에게 소속된 영업사원이 없습니다.</td></tr>}
           </tbody>
         </table>
       </div>
