@@ -214,6 +214,20 @@ const CARD_OPTIONS = [
   ['BC카드', '/images/cards/bccard.jpg'],
 ]
 
+const BANK_ACCOUNT_RULES = {
+  국민은행: [10, 14], 신한은행: [10, 14], 우리은행: [10, 16], 하나은행: [10, 14],
+  농협은행: [10, 14], 기업은행: [10, 14], 카카오뱅크: [10, 13], K뱅크: [10, 14],
+  토스뱅크: [10, 14], SC제일은행: [10, 14], 부산은행: [10, 14], 대구은행: [10, 14], 경남은행: [10, 14],
+}
+
+const getAccountWarning = (bankName, accountNumber) => {
+  if (!bankName || !accountNumber) return ''
+  const digits = accountNumber.replace(/\D/g, '')
+  const [min, max] = BANK_ACCOUNT_RULES[bankName] || [10, 16]
+  if (digits.length < min || digits.length > max) return bankName + ' 계좌번호는 숫자 ' + min + '~' + max + '자리로 입력해 주세요.'
+  return ''
+}
+
 function IconPicker({ value, onChange, options, placeholder }) {
   const [open, setOpen] = useState(false)
   const selected = options.find(([name]) => name === value)
@@ -403,6 +417,7 @@ export default function Main() {
     updateProductItem(editingItemIdx, 'selectedOption', opt)
   }
   const previewText = useMemo(() => buildPreviewText(form, productItems), [form, productItems])
+  const accountWarning = useMemo(() => getAccountWarning(form.bankName, form.accountNumber), [form.bankName, form.accountNumber])
 
   const copyPreview = async () => {
     try { await navigator.clipboard.writeText(previewText); alert('내용이 복사되었습니다!') }
@@ -417,6 +432,10 @@ export default function Main() {
     if (productItems.length === 0 || !productItems[0]?.productName) return alert('상품을 선택해 주세요.')
     if (productItems.some(item => !item.regulation || !item.contract || !item.management || !item.rentalFee))
       return alert('모든 제품 정보를 입력해 주세요.')
+    if (form.paymentType === 'account') {
+      if (!form.bankName || !form.accountNumber) return alert('은행과 계좌번호를 입력해 주세요.')
+      if (accountWarning) return alert(accountWarning)
+    }
 
     setReceiving(true)
     const application = {
@@ -531,8 +550,12 @@ export default function Main() {
                 {form.paymentType === 'account' ? (
                   <div className="field-grid">
                     <IconPicker value={form.bankName} onChange={(bankName) => setForm(f => ({ ...f, bankName }))} options={BANK_OPTIONS} placeholder="은행 선택" />
-                    <input type="text" inputMode="numeric" name="accountNumber" value={form.accountNumber} onChange={onChange}
-                      placeholder="계좌번호" className="input-x" />
+                    <div>
+                      <input type="text" inputMode="numeric" name="accountNumber" value={form.accountNumber} onChange={onChange}
+                        placeholder="계좌번호" className="input-x" aria-describedby={accountWarning ? 'account-format-warning' : undefined}
+                        style={accountWarning ? { borderColor: '#dc2626', boxShadow: '0 0 0 3px rgba(220,38,38,.12)' } : undefined} />
+                      {accountWarning && <p id="account-format-warning" role="alert" style={{ margin: '6px 2px 0', color: '#dc2626', fontSize: 12, fontWeight: 700 }}>{accountWarning}</p>}
+                    </div>
                   </div>
                 ) : (
                   <div className="field-grid">
