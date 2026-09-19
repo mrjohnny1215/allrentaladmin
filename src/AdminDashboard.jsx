@@ -189,9 +189,9 @@ export default function AdminDashboard() {
               <div className="preview-container"><b>예상 정산액</b><div style={{ fontSize: 24, fontWeight: 900, marginTop: 8, color: '#1d4ed8' }}>{employeeDetail.settlement.expectedPayout.toLocaleString()}원</div><small>수수료 {Math.round(employeeDetail.settlement.rate * 100)}% 적용</small></div>
             </div>
             <div className="preview-container" style={{ marginBottom: 18 }}><b>정산 계좌</b><div style={{ marginTop: 8 }}>{employeeDetail.account ? `${employeeDetail.account.bank_name} · ${employeeDetail.account.account_number} · ${employeeDetail.account.account_holder}` : '등록된 계좌가 없습니다.'}</div></div>
-            <div className="table-scroll"><table className="admin-table"><thead><tr><th>접수일</th><th>고객명</th><th>상품</th><th>렌탈료</th><th>검수상태</th></tr></thead><tbody>
-              {employeeDetail.submissions.map((submission) => <tr key={submission.id}><td>{new Date(submission.createdAt).toLocaleDateString('ko-KR')}</td><td>{submission.customerName}</td><td>{submission.items?.[0]?.productName || '-'}</td><td>{submission.items?.[0]?.rentalFee || '-'}</td><td>{submission.reviewStatus}</td></tr>)}
-              {!employeeDetail.submissions.length && <tr><td colSpan="5" className="empty">접수 내역이 없습니다.</td></tr>}
+            <div className="table-scroll"><table className="admin-table"><thead><tr><th>접수일</th><th>고객명</th><th>상품</th><th>렌탈료</th><th>검수상태</th><th>상세</th></tr></thead><tbody>
+              {employeeDetail.submissions.map((submission) => <tr key={submission.id}><td>{new Date(submission.createdAt).toLocaleDateString('ko-KR')}</td><td>{submission.customerName}</td><td>{submission.items?.[0]?.productName || '-'}</td><td>{submission.items?.[0]?.rentalFee || '-'}</td><td>{submission.reviewStatus}</td><td><button className="btn primary" style={{ padding: '5px 10px', fontSize: 12 }} onClick={() => { setEmployeeDetail(null); navigate('/admin/submission_list', { state: { selectedAppId: submission.id } }) }}>상세 보기</button></td></tr>)}
+              {!employeeDetail.submissions.length && <tr><td colSpan="6" className="empty">접수 내역이 없습니다.</td></tr>}
             </tbody></table></div>
           </div>
         </div>

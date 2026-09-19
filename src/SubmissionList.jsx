@@ -41,6 +41,15 @@ export default function SubmissionList() {
   const [selected, setSelected] = useState(null)
 
   useEffect(() => {
+    const requestedAppId = location.state?.selectedAppId || location.state?.newAppId
+    const applySubmissions = (records) => {
+      setSubmissions(records)
+      if (requestedAppId) {
+        const requested = records.find((submission) => String(submission.id) === String(requestedAppId))
+        if (requested) setSelected(requested)
+      }
+    }
+
     const loadSubmissions = async () => {
       if (!user?.id || !user?.pw) return
       const { data, error } = await supabase.functions.invoke('submission-review-v1', {
@@ -59,18 +68,12 @@ export default function SubmissionList() {
         const refreshed = await supabase.functions.invoke('submission-review-v1', {
           body: { action: 'list', id: user.id, password: user.pw },
         })
-        if (!refreshed.error && !refreshed.data?.error) setSubmissions(refreshed.data.submissions || [])
+        if (!refreshed.error && !refreshed.data?.error) applySubmissions(refreshed.data.submissions || [])
         return
       }
-      setSubmissions(data.submissions || [])
+      applySubmissions(data.submissions || [])
     }
     loadSubmissions()
-
-    // 접수 완료 직후 newAppId가 state로 전달되면 해당 접수를 강조
-    if (location.state?.newAppId) {
-      const found = submissions.find(s => s.id === location.state.newAppId)
-      if (found) setSelected(found)
-    }
   }, [location.state, user])
 
   // 검색 필터링
