@@ -8,7 +8,7 @@ import AllRentalLogo from './components/AllRentalLogo'
 const BANKS = [
   ['국민은행', 'KB'], ['신한은행', '신', '/images/banks/shinhan.png'], ['우리은행', 'W', '/images/banks/woori.png'], ['하나은행', '하'],
   ['농협은행', 'NH'], ['기업은행', 'IB', '/images/banks/ibk.png'], ['카카오뱅크', 'K', '/images/banks/kakaobank.png'], ['K뱅크', 'K'], ['토스뱅크', 'T'],
-  ['SC제일은행', 'SC', '/images/banks/sc.png'], ['부산은행', 'B', '/images/banks/bnk.png'], ['대구은행', 'D'], ['경남은행', 'KN'],
+  ['SC제일은행', 'SC', '/images/banks/sc.png'], ['부산은행', 'B', '/images/banks/bnk.png'], ['대구은행', 'D'], ['경남은행', 'KN', '/images/banks/knbank.png'],
 ]
 
 export function LoginGate({ children }) {
