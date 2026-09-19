@@ -303,6 +303,7 @@ export default function Main() {
   const [receiving, setReceiving] = useState(false)
   const [optionModalOpen, setOptionModalOpen] = useState(false)
   const [editingItemIdx, setEditingItemIdx] = useState(0)
+  const [addProductOpen, setAddProductOpen] = useState(false)
 
   useEffect(() => {
     // 상담에서 전달한 상품 정보 받기
@@ -375,10 +376,10 @@ export default function Main() {
     setSearchResults(results)
   }
 
-  const selectProduct = (product) => {
+  const makeProductItem = (product) => {
     const matrix = product.pricing_matrix || []
     const defaultOpt = matrix.find(r => r.contract === '신규' && r.years === '5년') || matrix[0]
-    setProductItems([{
+    return {
       productId: product.id,
       productName: product.name,
       modelName: product.model_code,
@@ -392,17 +393,21 @@ export default function Main() {
       rentalOptionId: defaultOpt ? (defaultOpt._idx || 0) : 0,
       selectedOption: defaultOpt,
       fullProduct: product,
-    }])
+    }
+  }
+
+  const selectProduct = (product) => {
+    setProductItems([makeProductItem(product)])
     setSearchTerm('')
     setSearchResults([])
   }
 
-  const addProduct = () => {
-    setProductItems([...productItems, {
-      productId: '', productName: '', modelName: '',
-      color: '', colors: [], regulation: '', contract: '',
-      management: '', rentalFee: '', selectedOption: null,
-    }])
+  const addProduct = () => setAddProductOpen((open) => !open)
+  const selectAdditionalProduct = (productId) => {
+    const product = allProducts.find((item) => String(item.id) === productId)
+    if (!product) return
+    setProductItems((items) => [...items, makeProductItem(product)])
+    setAddProductOpen(false)
   }
   const updateProductItem = (idx, field, value) => {
     const next = [...productItems]
@@ -640,7 +645,19 @@ export default function Main() {
                 </div>
               ))}
 
-              <button type="button" onClick={addProduct} className="add-product-btn">+ 제품정보 추가</button>
+              <button type="button" onClick={addProduct} className="add-product-btn" disabled={!allProducts.length}>+ 제품정보 추가</button>
+              {addProductOpen && (
+                <div style={{ marginTop: 10, padding: 12, border: '1px solid #bfdbfe', borderRadius: 10, background: '#f8fbff' }}>
+                  <label className="field-label" htmlFor="additional-product-select">추가할 상품 선택</label>
+                  <select id="additional-product-select" className="input-x" defaultValue=""
+                    onChange={(e) => selectAdditionalProduct(e.target.value)} style={{ marginTop: 6 }}>
+                    <option value="" disabled>등록된 상품을 선택하세요</option>
+                    {allProducts.map((product) => (
+                      <option key={product.id} value={product.id}>{product.brand} · {product.name} · {product.model_code}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </div>
 
             {/* [프로모션 + 확인요청] */}
