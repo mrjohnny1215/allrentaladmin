@@ -223,6 +223,12 @@ const BANK_ACCOUNT_RULES = {
 const getAccountWarning = (bankName, accountNumber) => {
   if (!bankName || !accountNumber) return ''
   const digits = accountNumber.replace(/\D/g, '')
+  if (bankName === '국민은행') {
+    const isStandard = /^\d{14}$/.test(digits)
+    const isCustom = /^0\d{9,10}$/.test(digits)
+    if (!isStandard && !isCustom) return '국민은행 계좌번호는 14자리 또는 0으로 시작하는 10~11자리로 입력해 주세요.'
+    return ''
+  }
   const [min, max] = BANK_ACCOUNT_RULES[bankName] || [10, 16]
   if (digits.length < min || digits.length > max) return bankName + ' 계좌번호는 숫자 ' + min + '~' + max + '자리로 입력해 주세요.'
   return ''
