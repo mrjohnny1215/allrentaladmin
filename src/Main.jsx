@@ -178,7 +178,8 @@ function BirthDateField({ value, onChange }) {
     const limit = key === 'year' ? 4 : 2
     const next = { ...parts, [key]: raw.replace(/\D/g, '').slice(0, limit) }
     setParts(next)
-    onChange([next.year, next.month, next.day].every(Boolean) ? `${next.year}-${next.month.padStart(2, '0')}-${next.day.padStart(2, '0')}` : '')
+    const complete = next.year.length === 4 && next.month.length === 2 && next.day.length === 2
+    onChange(complete ? `${next.year}-${next.month}-${next.day}` : '')
     if (key === 'year' && next.year.length === 4) monthRef.current?.focus()
     if (key === 'month' && next.month.length === 2) dayRef.current?.focus()
   }
