@@ -197,6 +197,33 @@ function BirthDateField({ value, onChange }) {
   </div>
 }
 
+const BANK_OPTIONS = [
+  ['국민은행', '/images/banks/kb.svg'], ['신한은행', '/images/banks/shinhan.png'], ['우리은행', '/images/banks/woori.png'], ['하나은행', '/images/banks/hana.svg'],
+  ['농협은행', '/images/banks/nh.svg'], ['기업은행', '/images/banks/ibk.png'], ['카카오뱅크', '/images/banks/kakaobank.png'], ['K뱅크', '/images/banks/kbank.svg'], ['토스뱅크', '/images/banks/toss.svg'],
+  ['SC제일은행', '/images/banks/sc.png'], ['부산은행', '/images/banks/bnk.png'], ['대구은행', '/images/banks/dgb.svg'], ['경남은행', '/images/banks/knbank.png'],
+]
+const CARD_OPTIONS = ['국민카드', '신한카드', '삼성카드', '현대카드', '롯데카드', '우리카드', '하나카드', 'NH농협카드', 'BC카드'].map((name) => [name, '💳'])
+
+function IconPicker({ value, onChange, options, placeholder }) {
+  const [open, setOpen] = useState(false)
+  const selected = options.find(([name]) => name === value)
+  const renderIcon = (option) => option?.[1]?.startsWith('/')
+    ? <img src={option[1]} alt="" style={{ width: 23, height: 23, objectFit: 'contain', borderRadius: 6 }} />
+    : <span style={{ width: 23, height: 23, display: 'grid', placeItems: 'center', fontSize: 17 }}>{option?.[1] || '•'}</span>
+  return <div style={{ position: 'relative' }}>
+    <button type="button" className="input-x" onClick={() => setOpen((v) => !v)}
+      style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', textAlign: 'left', cursor: 'pointer' }}>
+      <span style={{ display: 'flex', gap: 9, alignItems: 'center' }}>{selected && renderIcon(selected)}<span>{selected?.[0] || placeholder}</span></span><span>⌄</span>
+    </button>
+    {open && <div style={{ position: 'absolute', zIndex: 40, top: 'calc(100% + 4px)', left: 0, right: 0, maxHeight: 260, overflowY: 'auto', background: '#fff', border: '1px solid #cbd5e1', borderRadius: 10, boxShadow: '0 12px 24px rgba(15,23,42,.16)' }}>
+      {options.map((option) => <button key={option[0]} type="button" onClick={() => { onChange(option[0]); setOpen(false) }}
+        style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', border: 0, borderBottom: '1px solid #eef2f7', background: value === option[0] ? '#eff6ff' : '#fff', color: '#0f172a', font: 'inherit', textAlign: 'left', cursor: 'pointer' }}>
+        {renderIcon(option)}<span>{option[0]}</span>
+      </button>)}
+    </div>}
+  </div>
+}
+
 function buildPreviewText(form, productItems) {
   const lines = []
   lines.push('접수 식별정보')
@@ -493,19 +520,13 @@ export default function Main() {
                 </div>
                 {form.paymentType === 'account' ? (
                   <div className="field-grid">
-                    <select name="bankName" value={form.bankName} onChange={onChange} className="input-x" aria-label="은행 선택">
-                      <option value="">은행 선택</option>
-                      {['국민은행', '신한은행', '우리은행', '하나은행', '농협은행', '기업은행', '카카오뱅크', 'K뱅크', '토스뱅크', 'SC제일은행', '부산은행', '대구은행', '경남은행'].map((bank) => <option key={bank} value={bank}>{bank}</option>)}
-                    </select>
+                    <IconPicker value={form.bankName} onChange={(bankName) => setForm(f => ({ ...f, bankName }))} options={BANK_OPTIONS} placeholder="은행 선택" />
                     <input type="text" inputMode="numeric" name="accountNumber" value={form.accountNumber} onChange={onChange}
                       placeholder="계좌번호" className="input-x" />
                   </div>
                 ) : (
                   <div className="field-grid">
-                    <select name="cardCompany" value={form.cardCompany} onChange={onChange} className="input-x" aria-label="카드사 선택">
-                      <option value="">카드사 선택</option>
-                      {['국민카드', '신한카드', '삼성카드', '현대카드', '롯데카드', '우리카드', '하나카드', 'NH농협카드', 'BC카드'].map((company) => <option key={company} value={company}>{company}</option>)}
-                    </select>
+                    <IconPicker value={form.cardCompany} onChange={(cardCompany) => setForm(f => ({ ...f, cardCompany }))} options={CARD_OPTIONS} placeholder="카드사 선택" />
                     <input type="text" inputMode="numeric" name="cardNumber" value={form.cardNumber} onChange={onChange}
                       placeholder="카드번호" className="input-x" />
                     <input type="text" inputMode="numeric" name="cardExpiry" value={form.cardExpiry} onChange={onChange}
