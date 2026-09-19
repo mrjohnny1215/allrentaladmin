@@ -12,6 +12,13 @@ import { supabase } from './lib/supabase.js'
 import './receipt.css'
 
 const STORE_KEY = 'allrental_submissions'
+const CHECK_REQUEST_LABELS = {
+  pre_visit: '사전답사',
+  hard_construction: '난공사 요청',
+  other_company: '타사정보',
+  product_collect: '기존 제품 수거',
+  self_receipt: '자체접수',
+}
 
 const won = (n) => {
   const num = parseInt(String(n || '0').replace(/[^0-9]/g, ''), 10)
@@ -89,6 +96,7 @@ export default function SubmissionList() {
 
   const DetailModal = ({ app, onClose }) => {
     if (!app) return null
+    const items = Array.isArray(app.items) ? app.items : []
     return (
       <div className="modal-veil" onClick={onClose}>
         <div className="modal-card" style={{ maxWidth: 800, maxHeight: '85vh' }} onClick={(e) => e.stopPropagation()}>
@@ -142,7 +150,7 @@ export default function SubmissionList() {
               </div>
 
               {/* 제품 정보 목록 */}
-              {app.items && app.items.map((item, idx) => (
+              {items.map((item, idx) => (
                 <div key={idx} className="product-info-card">
                   <div className="product-info-header">
                     <b>제품정보{idx + 1}</b>
@@ -174,7 +182,7 @@ export default function SubmissionList() {
                   <h3 className="section-title">확인요청</h3>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 13 }}>
                     {app.checkRequests.map((r) => (
-                      <span key={r} style={{ padding: '4px 10px', background: '#f3f4f6', borderRadius: 6 }}>{r}</span>
+                      <span key={r} style={{ padding: '4px 10px', background: '#f3f4f6', borderRadius: 6 }}>{CHECK_REQUEST_LABELS[r] || r}</span>
                     ))}
                   </div>
                 </div>
@@ -243,8 +251,11 @@ export default function SubmissionList() {
             </thead>
             <tbody>
               {filtered.map((s) => {
-                const firstItem = s.items && s.items[0]
-                const itemCount = s.items ? s.items.length : 0
+                const items = Array.isArray(s.items) ? s.items : []
+                const itemCount = items.length
+                const renderItems = (field) => items.length
+                  ? items.map((item, idx) => <div key={`${item.productId || item.modelName || idx}-${field}`}>{item[field] || '-'}</div>)
+                  : '-'
                 return (
                   <tr
                     key={s.id}
@@ -257,11 +268,11 @@ export default function SubmissionList() {
                     <td style={{ padding: '10px 12px' }}>{s.brand}</td>
                     <td style={{ padding: '10px 12px', fontWeight: 700 }}>{s.customerName}</td>
                     <td style={{ padding: '10px 12px' }}>{s.contact}</td>
-                    <td style={{ padding: '10px 12px' }}>{firstItem?.productName || '-'}</td>
-                    <td style={{ padding: '10px 12px' }}>{firstItem?.regulation || '-'}</td>
-                    <td style={{ padding: '10px 12px' }}>{firstItem?.contract || '-'}</td>
-                    <td style={{ padding: '10px 12px' }}>{firstItem?.management || '-'}</td>
-                    <td style={{ padding: '10px 12px' }}>{firstItem?.rentalFee || '-'}</td>
+                    <td style={{ padding: '10px 12px' }}>{renderItems('productName')}</td>
+                    <td style={{ padding: '10px 12px' }}>{renderItems('regulation')}</td>
+                    <td style={{ padding: '10px 12px' }}>{renderItems('contract')}</td>
+                    <td style={{ padding: '10px 12px' }}>{renderItems('management')}</td>
+                    <td style={{ padding: '10px 12px' }}>{renderItems('rentalFee')}</td>
                     <td style={{ padding: '10px 12px' }}>{s.notes || '-'}</td>
                     <td style={{ padding: '10px 12px', textAlign: 'center' }}>{itemCount}</td>
                     <td style={{ padding: '10px 12px', textAlign: 'center' }}>
