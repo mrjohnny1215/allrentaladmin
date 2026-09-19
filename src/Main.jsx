@@ -320,7 +320,10 @@ export default function Main() {
         const product = payload.product || payload
         setProductsData(product)
         const matrix = product.pricing_matrix || []
-        const defaultOpt = matrix.find(r => r.contract === '신규' && r.years === '5년') || matrix[0]
+        const selectedFromCounsel = payload.selectedOption
+        const defaultOpt = selectedFromCounsel
+          ? matrix[selectedFromCounsel._idx] || selectedFromCounsel
+          : matrix.find(r => r.contract === '신규' && r.years === '5년') || matrix[0]
         if (defaultOpt) {
           setProductItems([{
             productId: product.id,
@@ -328,7 +331,7 @@ export default function Main() {
             modelName: product.model_code,
             brand: product.brand,
             colors: product.colors || [],
-            color: product.colors?.[0] || '',
+            color: payload.color || product.colors?.[0] || '',
             regulation: defaultOpt.rule_raw || defaultOpt.contract,
             contract: defaultOpt.plan_label || `${defaultOpt.years}${defaultOpt.contract}`,
             management: defaultOpt.mgmt_cycle || defaultOpt.mgmt,
@@ -344,7 +347,7 @@ export default function Main() {
             modelName: product.model_code,
             brand: product.brand,
             colors: product.colors || [],
-            color: product.colors?.[0] || '',
+            color: payload.color || product.colors?.[0] || '',
             fullProduct: product,
           }])
         }

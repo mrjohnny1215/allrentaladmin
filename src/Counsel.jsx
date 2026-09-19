@@ -81,19 +81,25 @@ function CardSlideshow({ images, alt, active }) {
 function CounselDetailModal({ p, onClose, onReceive, commissionOn, customerName, customerContact, onCustomerChange }) {
   if (!p) return null
   const matrix = p.pricing_matrix || []
-  const rep = matrix[0] || {}
+  const [rule, setRule] = useState('')
+  const [contractType, setContractType] = useState('')
+  const [management, setManagement] = useState('')
+  const [managementCycle, setManagementCycle] = useState('')
+  const [years, setYears] = useState('')
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(0)
+  const [selectedColor, setSelectedColor] = useState(p.colors?.[0] || '')
+  const options = matrix.map((option, index) => ({ ...option, _idx: index }))
+  const filteredOptions = options.filter((option) =>
+    (!rule || (option.rule_raw || option.contract || '') === rule) &&
+    (!contractType || option.contract === contractType) &&
+    (!management || (option.mgmt || '') === management) &&
+    (!managementCycle || (option.mgmt_cycle || '') === managementCycle) &&
+    (!years || option.years === years)
+  )
+  const selectedOption = filteredOptions.find((option) => option._idx === selectedOptionIndex) || filteredOptions[0] || options[0] || {}
+  const optionValues = (field, fallback = '') => [...new Set(options.map((option) => option[field] || fallback).filter(Boolean))]
+  const rep = selectedOption
   const effMonthly = rep.monthly_fee || p.min_monthly_fee || 0
-
-  // 렌탈 옵션 그룹화 (규정 · 관리 조합)
-  const optionGroups = useMemo(() => {
-    const groups = {}
-    matrix.forEach((r, i) => {
-      const key = `${r.rule_raw || r.contract || ''} · ${r.mgmt_cycle || r.mgmt || ''}`
-      if (!groups[key]) groups[key] = []
-      groups[key].push({ ...r, _idx: i })
-    })
-    return groups
-  }, [matrix])
 
   return (
     <div className="modal-veil" onClick={onClose}>
@@ -126,8 +132,8 @@ function CounselDetailModal({ p, onClose, onReceive, commissionOn, customerName,
                 <div><b style={{ color: '#6b7280' }}>상품명</b> {p.name}</div>
                 <div><b style={{ color: '#6b7280' }}>모델명</b> {p.model_code || '-'}</div>
                 <div><b style={{ color: '#6b7280' }}>제품종류</b> {p.category || '-'}</div>
-                {p.colors && p.colors.length > 1 && (
-                  <div><b style={{ color: '#6b7280' }}>색상</b> {p.colors.join(', ')}</div>
+                {selectedColor && (
+                  <div><b style={{ color: '#6b7280' }}>선택 색상</b> {selectedColor}</div>
                 )}
               </div>
 
@@ -164,26 +170,56 @@ function CounselDetailModal({ p, onClose, onReceive, commissionOn, customerName,
               </div>
             </div>
 
-            {/* 렌탈 옵션 테이블 */}
+            {/* 렌탈 조건 · 색상 선택 */}
             {matrix.length > 0 && (
               <div style={{ marginTop: 8 }}>
-                <h4 style={{ margin: '0 0 8px', fontSize: 14, fontWeight: 800 }}>렌탈료 정보</h4>
+                <h4 style={{ margin: '0 0 8px', fontSize: 14, fontWeight: 800 }}>렌탈 조건 선택</h4>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 8, marginBottom: 12 }}>
+                  <select className="input-x" value={rule} onChange={(e) => setRule(e.target.value)} aria-label="규정 선택">
+                    <option value="">규정 전체</option>
+                    {optionValues('rule_raw', '').map((value) => <option key={value} value={value}>{value}</option>)}
+                  </select>
+                  <select className="input-x" value={contractType} onChange={(e) => setContractType(e.target.value)} aria-label="계약 선택">
+                    <option value="">계약 전체</option>
+                    {optionValues('contract').map((value) => <option key={value} value={value}>{value}</option>)}
+                  </select>
+                  <select className="input-x" value={management} onChange={(e) => setManagement(e.target.value)} aria-label="관리 선택">
+                    <option value="">관리 전체</option>
+                    {optionValues('mgmt').map((value) => <option key={value} value={value}>{value}</option>)}
+                  </select>
+                  <select className="input-x" value={managementCycle} onChange={(e) => setManagementCycle(e.target.value)} aria-label="관리주기 선택">
+                    <option value="">관리주기 전체</option>
+                    {optionValues('mgmt_cycle').map((value) => <option key={value} value={value}>{value}</option>)}
+                  </select>
+                  <select className="input-x" value={years} onChange={(e) => setYears(e.target.value)} aria-label="약정기간 선택">
+                    <option value="">약정기간 전체</option>
+                    {optionValues('years').map((value) => <option key={value} value={value}>{value}</option>)}
+                  </select>
+                  {p.colors?.length > 0 && (
+                    <select className="input-x" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)} aria-label="색상 선택">
+                      {p.colors.map((color) => <option key={color} value={color}>{color}</option>)}
+                    </select>
+                  )}
+                </div>
+                <p style={{ margin: '0 0 8px', color: '#64748b', fontSize: 12 }}>원하는 조건의 행을 눌러 선택한 뒤 접수해 주세요.</p>
                 <div style={{ overflowX: 'auto' }}>
                   <table className="matrix-table" style={{ fontSize: 12.5 }}>
                     <thead>
                       <tr>
-                        <th>규정</th><th>계약</th><th>관리주기</th>
-                        <th>약정기간</th><th>월 렌탈료</th>
+                        <th>선택</th><th>규정</th><th>계약</th><th>관리</th>
+                        <th>관리주기</th><th>약정기간</th><th>월 렌탈료</th>
                         {commissionOn && <th>수수료</th>}
                       </tr>
                     </thead>
                     <tbody>
-                      {matrix.map((r, i) => (
-                        <tr key={i}>
+                      {filteredOptions.map((r) => (
+                        <tr key={r._idx} onClick={() => setSelectedOptionIndex(r._idx)} style={{ cursor: 'pointer', background: selectedOption._idx === r._idx ? '#eff6ff' : undefined }}>
+                          <td><input type="radio" checked={selectedOption._idx === r._idx} onChange={() => setSelectedOptionIndex(r._idx)} aria-label={`${r.years || ''} ${r.contract || ''} 선택`} /></td>
                           <td>{r.rule_raw || r.contract || '-'}</td>
                           <td>{r.contract || '-'}</td>
                           <td>{r.mgmt || '-'}</td>
                           <td>{r.mgmt_cycle || '-'}</td>
+                          <td>{r.years || '-'}</td>
                           <td><b>{won(r.monthly_fee)}원</b></td>
                           {commissionOn && <td>{r.commission ? won(r.commission) + '원' : '-'}</td>}
                         </tr>
@@ -200,7 +236,7 @@ function CounselDetailModal({ p, onClose, onReceive, commissionOn, customerName,
               <button
                 className="btn btn-primary-x"
                 style={{ flex: 1, maxWidth: 200 }}
-                onClick={() => onReceive(p)}
+                onClick={() => onReceive(p, { selectedOption, color: selectedColor })}
               >접수</button>
             </div>
           </div>
@@ -235,9 +271,11 @@ export default function Counsel() {
     if (name === 'customerContact') setCustomerContact(value)
   }
 
-  const handleReceive = (product) => {
+  const handleReceive = (product, selection = {}) => {
     const payload = {
       product,
+      selectedOption: selection.selectedOption || null,
+      color: selection.color || '',
       customerName: customerName || '',
       customerContact: customerContact || '',
     }
