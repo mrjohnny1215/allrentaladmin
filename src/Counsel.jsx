@@ -12,6 +12,7 @@ import './catalog.css'
 import AllRentalLogo from './components/AllRentalLogo'
 
 const CATEGORIES = ['전체', '정수기', '공기청정기', '비데', '매트리스', '안마의자']
+const CATEGORY_DISPLAY_ORDER = ['정수기', '공기청정기', '비데', '매트리스', '안마의자']
 const BRANDS = ['전체', '코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', 'LG', '웰스', '세스코']
 const CONTRACTS = ['전체', '신규', '보상', '신규/후결합', '보상/후결합', '신규/동시구매', '보상/동시구매']
 const MGMT_TYPES = ['전체', '방문관리', '셀프관리', '자가관리']
@@ -319,6 +320,12 @@ export default function Counsel() {
     return [...filtered].sort((a, b) => {
       if (sort === 'price_asc') return representativeFee(a.pricing_matrix) - representativeFee(b.pricing_matrix)
       if (sort === 'price_desc') return representativeFee(b.pricing_matrix) - representativeFee(a.pricing_matrix)
+      const categoryOrder = (category) => {
+        const index = CATEGORY_DISPLAY_ORDER.indexOf(category)
+        return index === -1 ? CATEGORY_DISPLAY_ORDER.length : index
+      }
+      const categoryDifference = categoryOrder(a.category) - categoryOrder(b.category)
+      if (categoryDifference) return categoryDifference
       return (b.max_commission || 0) - (a.max_commission || 0)
     })
   }, [all, q, cat, brand, contract, mgmt, year, priceMin, priceMax, sort])
