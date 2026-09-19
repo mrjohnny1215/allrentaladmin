@@ -644,7 +644,7 @@ export default function Main() {
                       </span>
                     )}
                   </div>
-                  {item.colors && item.colors.length > 0 && idx === 0 && (
+                  {item.colors && item.colors.length > 0 && (
                     <ColorSelector colors={item.colors} value={item.color}
                       onChange={(c) => updateProductItem(idx, 'color', c)} />
                   )}
