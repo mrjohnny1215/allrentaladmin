@@ -20,6 +20,11 @@ const CHECK_REQUEST_LABELS = {
   product_collect: '기존 제품 수거',
   self_receipt: '자체접수',
 }
+const REVIEW_STATUS_LABELS = {
+  PENDING: '검수 대기',
+  APPROVED: '검수 확정',
+  REJECTED: '반려',
+}
 
 const won = (n) => {
   const num = parseInt(String(n || '0').replace(/[^0-9]/g, ''), 10)
@@ -39,6 +44,7 @@ export default function SubmissionList() {
   const [submissions, setSubmissions] = useState([])
   const [search, setSearch] = useState({ startDate: '', endDate: '', keyword: '' })
   const [selected, setSelected] = useState(null)
+  const [reviewing, setReviewing] = useState('')
 
   useEffect(() => {
     const requestedAppId = location.state?.selectedAppId || location.state?.newAppId
@@ -98,9 +104,26 @@ export default function SubmissionList() {
 
   const resetSearch = () => setSearch({ startDate: '', endDate: '', keyword: '' })
 
+  const updateReviewStatus = async (app, reviewStatus) => {
+    const label = REVIEW_STATUS_LABELS[reviewStatus]
+    if (!window.confirm(`이 접수를 '${label}' 처리할까요?`)) return
+    setReviewing(reviewStatus)
+    const { data, error } = await supabase.functions.invoke('submission-review-v1', {
+      body: { action: 'review', id: user.id, password: user.pw, submissionId: app.id, reviewStatus },
+    })
+    setReviewing('')
+    if (error || data?.error) {
+      alert(data?.error || '검수 처리에 실패했습니다.')
+      return
+    }
+    setSubmissions((previous) => previous.map((submission) => submission.id === app.id ? { ...submission, reviewStatus } : submission))
+    setSelected((previous) => previous?.id === app.id ? { ...previous, reviewStatus } : previous)
+  }
+
   const DetailModal = ({ app, onClose }) => {
     if (!app) return null
     const items = Array.isArray(app.items) ? app.items : []
+    const canReview = ['ADMIN', 'MANAGER'].includes(user?.role)
     return (
       <div className="modal-veil" onClick={onClose}>
         <div className="modal-card" style={{ maxWidth: 800, maxHeight: '85vh' }} onClick={(e) => e.stopPropagation()}>
@@ -110,6 +133,13 @@ export default function SubmissionList() {
           </div>
           <div className="modal-body">
             <div style={{ display: 'grid', gap: 16 }}>
+              <div className="receipt-section" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+                <div><b style={{ color: '#6b7280' }}>검수상태</b> <strong style={{ color: app.reviewStatus === 'APPROVED' ? '#15803d' : app.reviewStatus === 'REJECTED' ? '#dc2626' : '#b45309' }}>{REVIEW_STATUS_LABELS[app.reviewStatus] || app.reviewStatus || '검수 대기'}</strong></div>
+                {canReview && app.reviewStatus === 'PENDING' && <div style={{ display: 'flex', gap: 8 }}>
+                  <button className="btn primary" disabled={!!reviewing} onClick={() => updateReviewStatus(app, 'APPROVED')}>{reviewing === 'APPROVED' ? '처리 중...' : '검수 확정'}</button>
+                  <button className="btn danger" disabled={!!reviewing} onClick={() => updateReviewStatus(app, 'REJECTED')}>{reviewing === 'REJECTED' ? '처리 중...' : '반려'}</button>
+                </div>}
+              </div>
               {/* 기본 정보 */}
               <div className="receipt-section">
                 <h3 className="section-title">접수 정보</h3>
