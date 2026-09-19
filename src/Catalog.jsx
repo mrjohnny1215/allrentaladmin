@@ -118,7 +118,7 @@ function FilterChips({ label, options, value, onChange }) {
 }
 
 /* ============ 카드 썸네일: 다중 이미지 자동 순환 (GIF 효과) ============ */
-function CardSlideshow({ images, alt, active }) {
+function CardSlideshow({ images, alt, active, priority = false }) {
   const list = images && images.length ? images.slice(0, 6) : [NO_IMG]
   const [idx, setIdx] = useState(0)
   const [hover, setHover] = useState(false)
@@ -142,7 +142,8 @@ function CardSlideshow({ images, alt, active }) {
           src={src}
           alt={`${alt} ${i + 1}`}
           className={i === idx ? 'on' : ''}
-          loading={i === 0 ? 'eager' : 'lazy'}
+          loading={i === 0 && priority ? 'eager' : 'lazy'}
+          fetchPriority={i === 0 && priority ? 'high' : 'low'}
           decoding="async"
           onError={(e) => { e.currentTarget.src = NO_IMG }}
         />
@@ -797,10 +798,10 @@ export default function Catalog() {
       ) : (
         <>
           <div className="cat-grid">
-            {shown.map((p) => (
+            {shown.map((p, i) => (
               <button key={p.id} className={`pcard ${sel?.id === p.id ? 'selected' : ''}`}
                 onClick={() => open(p)}>
-                <CardSlideshow images={p.images} alt={p.name} active={sel?.id === p.id} />
+                <CardSlideshow images={p.images} alt={p.name} active={sel?.id === p.id} priority={i < 4} />
                 <div className="pcard-body">
                   <div className="pcard-brand">{p.brand}</div>
                   <div className="pcard-name">{p.name}</div>

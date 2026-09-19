@@ -31,7 +31,7 @@ export default function Details() {
   const [headerFilterReset, setHeaderFilterReset] = useState(0)
 
   useEffect(() => {
-    fetch('/data/products.json', { cache: 'no-store' })
+    fetch('/data/products.json')
       .then(r => r.ok ? r.json() : [])
       .then((data) => {
         const norm = (data || []).map((p) => ({

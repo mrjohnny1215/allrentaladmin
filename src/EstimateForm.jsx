@@ -16,7 +16,7 @@ export default function EstimateForm() {
   const [saved, setSaved] = useState([])
 
   useEffect(() => {
-    fetch('/data/products.json', { cache: 'no-store' })
+    fetch('/data/products.json')
       .then(r => r.ok ? r.json() : [])
       .then(setAllProducts)
       .catch(() => setAllProducts([]))

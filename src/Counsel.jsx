@@ -245,7 +245,7 @@ export default function Counsel() {
   }
 
   useEffect(() => {
-    fetch('/data/products.json', { cache: 'no-store' })
+    fetch('/data/products.json')
       .then((r) => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json() })
       .then((data) => setAll(data))
       .catch((e) => setErr(String(e)))
