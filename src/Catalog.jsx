@@ -640,7 +640,8 @@ export default function Catalog() {
   const modalBodyRef = useRef(null)
 
   useEffect(() => {
-    fetch('/data/products.json', { cache: 'no-store' })
+    // 상품 목록은 정적 데이터이므로 브라우저 캐시를 사용해 재방문 시 즉시 표시한다.
+    fetch('/data/products.json')
       .then((r) => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json() })
       .then((data) => {
         const norm = (data || []).map((p) => ({
@@ -650,7 +651,7 @@ export default function Catalog() {
           detail_description_images: (p.detail_description_images || []).map((x) => img(x)),
         }))
         setAll(norm)
-        setTimeout(() => setReady(true), 5000)
+        setReady(true)
       })
       .catch((e) => setErr(String(e)))
   }, [])
