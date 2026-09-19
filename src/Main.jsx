@@ -8,6 +8,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from './lib/supabase.js'
+import { img } from './lib/imageUrl'
 import './receipt.css'
 
 const BRANDS = ['코웨이', '청호나이스', '쿠쿠', 'SK매직', '현대큐밍', 'LG', '웰스', '세스코', '직접입력']
@@ -57,6 +58,7 @@ function ColorSelector({ colors, value, onChange }) {
 
 /* ==================== 제품 정보 카드 ==================== */
 function ProductInfoCard({ item, onRemove, itemIndex, showRemove }) {
+  const thumbnail = img(item.fullProduct?.thumbnail || item.fullProduct?.images?.[0] || '')
   return (
     <div className="product-info-card">
       <div className="product-info-header">
@@ -65,16 +67,20 @@ function ProductInfoCard({ item, onRemove, itemIndex, showRemove }) {
           <button type="button" onClick={onRemove} className="product-remove-btn" title="삭제">✕</button>
         )}
       </div>
-      <div className="product-info-grid">
-        <div><b style={{ color: '#6b7280' }}>* 상품명</b> <span style={{ color: '#1d4ed8' }}>{item.productName || '-'}</span></div>
-        <div><b style={{ color: '#6b7280' }}>* 모델명</b> {item.modelName || '-'}</div>
-        <div><b style={{ color: '#6b7280' }}>색상</b> {item.color || '-'}</div>
-        <div><b style={{ color: '#6b7280' }}>* 규정</b> {item.regulation || '-'}</div>
-        <div><b style={{ color: '#6b7280' }}>* 약정</b> {item.contract || '-'}</div>
-        <div><b style={{ color: '#6b7280' }}>* 관리</b> {item.management || '-'}</div>
-        <div><b style={{ color: '#6b7280' }}>* 렌탈료</b> <span style={{ color: '#1d4ed8', fontWeight: 700 }}>{item.rentalFee || '-'}</span></div>
-        <div><b style={{ color: '#6b7280' }}>* 프로모션</b>
-          <span style={{ marginLeft: 8 }}>{item.promotion || '없음'}</span>
+      <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+        {thumbnail && <img src={thumbnail} alt="" onError={(e) => { e.currentTarget.style.display = 'none' }}
+          style={{ width: 82, height: 82, flex: '0 0 82px', objectFit: 'contain', border: '1px solid #e2e8f0', borderRadius: 10, background: '#fff' }} />}
+        <div className="product-info-grid" style={{ flex: 1, minWidth: 0 }}>
+          <div><b style={{ color: '#6b7280' }}>* 상품명</b> <span style={{ color: '#1d4ed8' }}>{item.productName || '-'}</span></div>
+          <div><b style={{ color: '#6b7280' }}>* 모델명</b> {item.modelName || '-'}</div>
+          <div><b style={{ color: '#6b7280' }}>색상</b> {item.color || '-'}</div>
+          <div><b style={{ color: '#6b7280' }}>* 규정</b> {item.regulation || '-'}</div>
+          <div><b style={{ color: '#6b7280' }}>* 약정</b> {item.contract || '-'}</div>
+          <div><b style={{ color: '#6b7280' }}>* 관리</b> {item.management || '-'}</div>
+          <div><b style={{ color: '#6b7280' }}>* 렌탈료</b> <span style={{ color: '#1d4ed8', fontWeight: 700 }}>{item.rentalFee || '-'}</span></div>
+          <div><b style={{ color: '#6b7280' }}>* 프로모션</b>
+            <span style={{ marginLeft: 8 }}>{item.promotion || '없음'}</span>
+          </div>
         </div>
       </div>
     </div>
