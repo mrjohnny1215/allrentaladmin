@@ -37,6 +37,22 @@ Deno.serve(async (req) => {
       return response({ submissions: (data ?? []).map((row) => ({ ...row.submission, id: row.id, createdAt: row.submitted_at, reviewStatus: row.review_status, submittedBy: row.submitted_by })) })
     }
 
+    if (action === "team-overview") {
+      if (user.role !== "HQ_DIRECTOR") return response({ error: "본부장만 소속 직원 현황을 조회할 수 있습니다." }, 403)
+      const { data: teamMembers, error: membersError } = await db.from("users")
+        .select("id,name,role,fee_grade").eq("parent_id", user.id).eq("status", "APPROVED").order("name")
+      if (membersError) throw membersError
+      const ids = (teamMembers ?? []).map((member) => member.id)
+      if (!ids.length) return response({ teamMembers: [], submissions: [] })
+      const { data, error } = await db.from("submission_reviews")
+        .select("id,submission,submitted_by,review_status,submitted_at").in("submitted_by", ids).order("submitted_at", { ascending: false })
+      if (error) throw error
+      return response({
+        teamMembers: teamMembers ?? [],
+        submissions: (data ?? []).map((row) => ({ ...row.submission, id: row.id, createdAt: row.submitted_at, reviewStatus: row.review_status, submittedBy: row.submitted_by })),
+      })
+    }
+
     if (action === "review") {
       if (!submissionId || !["APPROVED", "REJECTED"].includes(reviewStatus)) return response({ error: "검수 상태를 확인해 주세요." }, 400)
       if (!["ADMIN", "HQ_DIRECTOR", "BRANCH_MANAGER", "CENTER_MANAGER", "TEAM_LEAD", "MANAGER"].includes(user.role)) return response({ error: "관리자 직급만 검수할 수 있습니다." }, 403)
@@ -50,10 +66,10 @@ Deno.serve(async (req) => {
     }
 
     if (action === "employee-summary") {
-      if (user.role !== "ADMIN" || !employeeId) return response({ error: "관리자만 조회할 수 있습니다." }, 403)
+      if (!["ADMIN", "HQ_DIRECTOR"].includes(user.role) || !employeeId) return response({ error: "관리자 또는 본부장만 조회할 수 있습니다." }, 403)
       const { data: employee, error: employeeError } = await db.from("users").select("id,name,parent_id,fee_grade").eq("id", employeeId).maybeSingle()
       if (employeeError || !employee) return response({ error: "직원을 찾을 수 없습니다." }, 404)
-      if (user.id !== "admin" && employee.parent_id !== user.id) return response({ error: "소속 직원만 조회할 수 있습니다." }, 403)
+      if (user.role !== "ADMIN" && employee.parent_id !== user.id) return response({ error: "소속 직원만 조회할 수 있습니다." }, 403)
       const { data: rows, error } = await db.from("submission_reviews")
         .select("id,submission,review_status,submitted_at").eq("submitted_by", employee.id).order("submitted_at", { ascending: false })
       if (error) throw error

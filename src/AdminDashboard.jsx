@@ -30,12 +30,15 @@ export default function AdminDashboard() {
   const [expandedManagerId, setExpandedManagerId] = useState(null)
   const [allContracts, setAllContracts] = useState([])
   const [contractsMsg, setContractsMsg] = useState('')
+  const [teamMembers, setTeamMembers] = useState([])
+  const isSuperAdmin = user?.role === 'ADMIN'
+  const isHqDirector = user?.role === 'HQ_DIRECTOR'
 
   useEffect(() => {
-    if (!user || user.role !== 'ADMIN') {
+    if (!user || (!isSuperAdmin && !isHqDirector)) {
       navigate('/')
     }
-  }, [user, navigate])
+  }, [user, isSuperAdmin, isHqDirector, navigate])
 
   useEffect(() => {
     refresh()
@@ -44,21 +47,23 @@ export default function AdminDashboard() {
   // 최고 관리자는 어떤 조직의 하위에도 둘 수 없다. 이전 데이터에 남은 연결도
   // 관리자 화면을 열 때 한 번 정리해 최상위 조직을 항상 유지한다.
   useEffect(() => {
+    if (!isSuperAdmin) return
     const administrator = users.find((member) => member.id === 'admin' || member.role === 'ADMIN')
     if (administrator?.parent_id) updateUser(administrator.id, { parent_id: null })
-  }, [users, updateUser])
+  }, [users, isSuperAdmin, updateUser])
 
   const loadAllContracts = async () => {
-    if (!user?.id || !user?.pw || user.role !== 'ADMIN') return
+    if (!user?.id || !user?.pw || (!isSuperAdmin && !isHqDirector)) return
     setContractsMsg('전체 직원 계약 현황을 불러오는 중입니다.')
     const { data, error } = await supabase.functions.invoke('submission-review-v1', {
-      body: { action: 'list', id: user.id, password: user.pw },
+      body: { action: isSuperAdmin ? 'list' : 'team-overview', id: user.id, password: user.pw },
     })
     if (error || data?.error) {
       setContractsMsg(data?.error || '계약 현황을 불러오지 못했습니다.')
       return
     }
     setAllContracts(data?.submissions || [])
+    setTeamMembers(data?.teamMembers || [])
     setContractsMsg('')
   }
 
@@ -78,7 +83,8 @@ export default function AdminDashboard() {
   const displayedMembers = expandedManagerId
     ? list.filter((u) => u.parent_id === expandedManagerId)
     : unassignedMembers
-  const staffContractRows = users.filter((member) => member.id !== 'admin').map((member) => {
+  const contractMembers = isSuperAdmin ? users.filter((member) => member.id !== 'admin') : teamMembers
+  const staffContractRows = contractMembers.map((member) => {
     const contracts = allContracts.filter((contract) => contract.submittedBy === member.id)
     return {
       member,
@@ -152,14 +158,14 @@ export default function AdminDashboard() {
   return (
     <div className="admin-wrap">
       <header className="admin-header">
-        <h1>관리자 대시보드</h1>
+        <h1>{isSuperAdmin ? '관리자 대시보드' : '본부장 대시보드'}</h1>
         <div>
           <span className="admin-id">관리자: <b>{user.id}</b></span>
           <button className="logout-btn" onClick={logoutAndGo}>로그아웃</button>
         </div>
       </header>
 
-      <div className="admin-toolbar">
+      {isSuperAdmin && <div className="admin-toolbar">
         <span>총 회원: {users.length}명</span>
         <div className="seg">
           {['ALL', 'PENDING', 'APPROVED'].map((s) => (
@@ -169,10 +175,10 @@ export default function AdminDashboard() {
           ))}
           <button onClick={loadSettlementAccounts}>소속 직원 정산 계좌</button>
         </div>
-      </div>
+      </div>}
 
-      {settlementMsg && <div className="admin-toolbar">{settlementMsg}</div>}
-      {settlementPasswordOpen && <div className="modal-veil" onClick={() => setSettlementPasswordOpen(false)}>
+      {isSuperAdmin && settlementMsg && <div className="admin-toolbar">{settlementMsg}</div>}
+      {isSuperAdmin && settlementPasswordOpen && <div className="modal-veil" onClick={() => setSettlementPasswordOpen(false)}>
         <div className="modal-card" style={{ maxWidth: 420 }} onClick={(e) => e.stopPropagation()}>
           <div className="modal-topbar"><div className="modal-topbar-title">소속직원 정산 계좌 조회</div><button className="modal-close" onClick={() => setSettlementPasswordOpen(false)}>×</button></div>
           <div className="modal-body" style={{ padding: 18 }}>
@@ -182,13 +188,13 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>}
-      {settlementAccounts.length > 0 && <div className="table-scroll" style={{ margin: '12px 16px' }}>
+      {isSuperAdmin && settlementAccounts.length > 0 && <div className="table-scroll" style={{ margin: '12px 16px' }}>
         <table className="admin-table"><thead><tr><th>직원</th><th>은행</th><th>계좌번호</th><th>예금주</th><th>수정일</th></tr></thead><tbody>
           {settlementAccounts.map((account) => <tr key={account.user_id}><td>{account.name} ({account.user_id})</td><td>{account.bank_name}</td><td>{account.account_number}</td><td>{account.account_holder}</td><td>{new Date(account.updated_at).toLocaleDateString('ko-KR')}</td></tr>)}
         </tbody></table>
       </div>}
 
-      <section style={{ margin: '16px', padding: 20, border: '1px solid #cfe0ff', borderRadius: 16, background: 'linear-gradient(180deg, #f8fbff 0%, #fff 100%)' }}>
+      {isSuperAdmin && <section style={{ margin: '16px', padding: 20, border: '1px solid #cfe0ff', borderRadius: 16, background: 'linear-gradient(180deg, #f8fbff 0%, #fff 100%)' }}>
         <div style={{ fontWeight: 900, fontSize: 17 }}>조직도</div>
         <div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>본부장 카드를 누르면 해당 본부장의 직속 인원이 아래 표에 리스트로 표시됩니다.</div>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10, margin: '18px 0 8px' }}>
@@ -207,11 +213,11 @@ export default function AdminDashboard() {
           })}
           {!organizationChildren.length && <div className="empty">바로 아래에 등록된 조직이 없습니다.</div>}
         </div>
-      </section>
+      </section>}
 
       <section style={{ margin: '16px', padding: 20, border: '1px solid #cfe0ff', borderRadius: 16, background: '#fff' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-          <div><div style={{ fontWeight: 900, fontSize: 17 }}>전체 직원 계약 현황</div><div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>계약이 있는 직원의 접수 및 검수 상태를 한눈에 확인합니다.</div></div>
+          <div><div style={{ fontWeight: 900, fontSize: 17 }}>{isSuperAdmin ? '전체 직원 계약 현황' : '내 소속 직원 판매 현황'}</div><div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>{isSuperAdmin ? '계약이 있는 직원의 접수 및 검수 상태를 한눈에 확인합니다.' : '내 직속 직원의 접수 및 검수 상태만 표시됩니다.'}</div></div>
           <button className="btn btn-outline-x" onClick={loadAllContracts}>계약 현황 새로고침</button>
         </div>
         <div className="field-grid" style={{ margin: '16px 0 12px' }}>
@@ -223,11 +229,11 @@ export default function AdminDashboard() {
         {contractsMsg && <div style={{ color: '#64748b', fontSize: 13, marginBottom: 10 }}>{contractsMsg}</div>}
         <div className="table-scroll"><table className="admin-table"><thead><tr><th>직원</th><th>직급</th><th>전체 접수</th><th>검수 대기</th><th>검수 확정</th><th>반려</th><th>최근 접수일</th><th>보기</th></tr></thead><tbody>
           {staffContractRows.map(({ member, total, pending, approved, rejected, latest }) => <tr key={member.id}><td>{member.name} ({member.id})</td><td>{rankLabel(member.role)}</td><td>{total}건</td><td>{pending}건</td><td>{approved}건</td><td>{rejected}건</td><td>{latest ? new Date(latest).toLocaleDateString('ko-KR') : '-'}</td><td><button className="btn btn-outline-x" onClick={() => openEmployeeDetail(member)}>상세 보기</button></td></tr>)}
-          {!staffContractRows.length && <tr><td colSpan="8" className="empty">계약이 있는 직원이 없습니다.</td></tr>}
+          {!staffContractRows.length && <tr><td colSpan="8" className="empty">계약이 있는 소속 직원이 없습니다.</td></tr>}
         </tbody></table></div>
       </section>
 
-      <div className="table-scroll">
+      {isSuperAdmin && <div className="table-scroll">
         <table className="admin-table">
           <thead>
             <tr>
@@ -282,7 +288,7 @@ export default function AdminDashboard() {
             {expandedManagerId && displayedMembers.length === 0 && <tr><td colSpan="11" className="empty">해당 본부장에게 직속으로 소속된 인원이 없습니다.</td></tr>}
           </tbody>
         </table>
-      </div>
+      </div>}
 
       {employeeDetailMsg && <div className="admin-toolbar">{employeeDetailMsg}</div>}
       {employeeDetail && <div className="modal-veil" onClick={() => setEmployeeDetail(null)}>
