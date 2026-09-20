@@ -88,8 +88,10 @@ export function useUsers() {
         fallbackSetUsers(next)
         return next
       })
+      return saved
     } catch (e) {
       alert('회원가입 저장 실패: ' + (e.message || e))
+      return null
     }
   }, [])
 

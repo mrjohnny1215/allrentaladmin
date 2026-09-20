@@ -37,6 +37,9 @@ export function LoginGate({ children }) {
   const [rPhone, setRPhone] = useState('')
   const [rEmail, setREmail] = useState('')
   const [rParentId, setRParentId] = useState('')
+  const [rBankName, setRBankName] = useState('')
+  const [rAccountNumber, setRAccountNumber] = useState('')
+  const [rAccountHolder, setRAccountHolder] = useState('')
   const [regMsg, setRegMsg] = useState('')
 
   // 비번찾기 상태
@@ -147,7 +150,7 @@ export function LoginGate({ children }) {
     const birth = rBirth.trim()
     const phone = rPhone.trim()
     const email = rEmail.trim()
-    if (!_id || !rpw || !name || !birth || !phone || !email || !rParentId) {
+    if (!_id || !rpw || !name || !birth || !phone || !email || !rParentId || !rBankName || !rAccountNumber.trim() || !rAccountHolder.trim()) {
       setRegMsg('모든 항목을 입력해 주세요.')
       return
     }
@@ -156,9 +159,14 @@ export function LoginGate({ children }) {
       setRegMsg('이미 존재하는 아이디입니다.')
       return
     }
-    await addUser({ id: _id, pw: rpw, name, birth, phone, email, parent_id: rParentId, role: 'SALES' })
+    const savedUser = await addUser({ id: _id, pw: rpw, name, birth, phone, email, parent_id: rParentId, role: 'SALES' })
+    if (!savedUser) { setRegMsg('가입 신청을 저장하지 못했습니다. 다시 시도해 주세요.'); return }
+    const { data, error } = await supabase.functions.invoke('member-financial-profile-v4', {
+      body: { action: 'register-save', id: _id, password: rpw, bankName: rBankName, accountNumber: rAccountNumber, accountHolder: rAccountHolder },
+    })
+    if (error || data?.error) { setRegMsg(data?.error || '가입 신청은 완료됐지만 계좌정보 저장에 실패했습니다.'); return }
     setRegMsg('가입 신청이 완료되었습니다. 관리자 승인 후 이용 가능합니다.')
-    setRName(''); setRBirth(''); setRPhone(''); setREmail(''); setRPw(''); setRParentId(''); setId('')
+    setRName(''); setRBirth(''); setRPhone(''); setREmail(''); setRPw(''); setRParentId(''); setRBankName(''); setRAccountNumber(''); setRAccountHolder(''); setId('')
   }
 
   const submitFind = async (e) => {
@@ -225,6 +233,12 @@ export function LoginGate({ children }) {
                   <option key={u.id} value={u.id}>{u.name} ({u.role === 'ADMIN' ? '최고 관리자' : '관리자/팀장'})</option>
                 ))}
               </select>
+              <select className="login-input" value={rBankName} onChange={(e) => setRBankName(e.target.value)} required>
+                <option value="">입금 은행 선택</option>
+                {BANKS.map(([name]) => <option key={name} value={name}>{name}</option>)}
+              </select>
+              <input className="login-input" inputMode="numeric" placeholder="입금 계좌번호 (숫자만)" value={rAccountNumber} onChange={(e) => setRAccountNumber(e.target.value.replace(/[^0-9]/g, ''))} />
+              <input className="login-input" placeholder="예금주" value={rAccountHolder} onChange={(e) => setRAccountHolder(e.target.value)} />
               {regMsg && <div className="login-info">{regMsg}</div>}
               <button className="login-submit" type="submit">가입 신청</button>
             </form>
