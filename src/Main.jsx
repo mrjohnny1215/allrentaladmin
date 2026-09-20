@@ -418,7 +418,15 @@ export default function Main() {
     setProductItems((items) => [...items, makeProductItem(product)])
     setAddProductOpen(false)
   }
-  const additionalCategories = useMemo(() => [...new Set(allProducts.map((product) => product.category).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'ko')), [allProducts])
+  const additionalCategoryOrder = ['정수기', '공기청정기', '비데', '매트리스', '안마의자']
+  const additionalCategories = useMemo(() => [...new Set(allProducts.map((product) => product.category).filter(Boolean))].sort((a, b) => {
+    const aOrder = additionalCategoryOrder.indexOf(a)
+    const bOrder = additionalCategoryOrder.indexOf(b)
+    if (aOrder === -1 && bOrder === -1) return a.localeCompare(b, 'ko')
+    if (aOrder === -1) return 1
+    if (bOrder === -1) return -1
+    return aOrder - bOrder
+  }), [allProducts])
   const additionalProducts = useMemo(() => allProducts.filter((product) => product.category === additionalCategory), [allProducts, additionalCategory])
   const addProduct = () => setAddProductOpen((open) => {
     const nextOpen = !open
