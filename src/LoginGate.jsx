@@ -36,7 +36,7 @@ export function LoginGate({ children }) {
   const [rBirth, setRBirth] = useState('')
   const [rPhone, setRPhone] = useState('')
   const [rEmail, setREmail] = useState('')
-  const [rParentId, setRParentId] = useState('김성훈')
+  const [rParentId, setRParentId] = useState('')
   const [regMsg, setRegMsg] = useState('')
 
   // 비번찾기 상태
@@ -147,7 +147,7 @@ export function LoginGate({ children }) {
     const birth = rBirth.trim()
     const phone = rPhone.trim()
     const email = rEmail.trim()
-    if (!_id || !rpw || !name || !birth || !phone || !email) {
+    if (!_id || !rpw || !name || !birth || !phone || !email || !rParentId) {
       setRegMsg('모든 항목을 입력해 주세요.')
       return
     }
@@ -158,7 +158,7 @@ export function LoginGate({ children }) {
     }
     await addUser({ id: _id, pw: rpw, name, birth, phone, email, parent_id: rParentId, role: 'SALES' })
     setRegMsg('가입 신청이 완료되었습니다. 관리자 승인 후 이용 가능합니다.')
-    setRName(''); setRBirth(''); setRPhone(''); setREmail(''); setRPw(''); setRParentId('김성훈'); setId('')
+    setRName(''); setRBirth(''); setRPhone(''); setREmail(''); setRPw(''); setRParentId(''); setId('')
   }
 
   const submitFind = async (e) => {
@@ -221,8 +221,8 @@ export function LoginGate({ children }) {
               <input className="login-input" placeholder="이메일" value={rEmail} onChange={(e) => setREmail(e.target.value)} />
               <select className="login-input" value={rParentId} onChange={(e) => setRParentId(e.target.value)} required>
                 <option value="">소속 관리자 선택</option>
-                {users.filter((u) => u.status === 'APPROVED' && u.role === 'ADMIN').map((u) => (
-                  <option key={u.id} value={u.id}>{u.name} (관리자)</option>
+                {users.filter((u) => u.status === 'APPROVED' && (['ADMIN', 'MANAGER'].includes(u.role) || users.some((member) => member.parent_id === u.id))).map((u) => (
+                  <option key={u.id} value={u.id}>{u.name} ({u.role === 'ADMIN' ? '최고 관리자' : '관리자/팀장'})</option>
                 ))}
               </select>
               {regMsg && <div className="login-info">{regMsg}</div>}
