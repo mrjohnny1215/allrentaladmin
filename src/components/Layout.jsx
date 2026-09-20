@@ -22,7 +22,7 @@ export default function Layout({ children }) {
 
   const selectMenu = (m) => {
     setActive(m)
-    navigate(m.key === 'main' ? '/' : '/admin/' + m.key)
+    navigate(m.key === 'main' ? '/admin' : '/admin/' + m.key)
     setMenuOpen(false)
   }
 
@@ -36,7 +36,7 @@ export default function Layout({ children }) {
           className="hamburger-btn"
         >☰</button>
         <AllRentalLogo />
-        <button className="admin-home-button" onClick={() => navigate('/')}>메인페이지</button>
+        <button className="admin-home-button" onClick={() => navigate('/admin')}>메인페이지</button>
         <span style={{ marginLeft: 'auto', fontSize: '0.85rem', opacity: 0.8 }}>{active.label}</span>
       </header>
 
