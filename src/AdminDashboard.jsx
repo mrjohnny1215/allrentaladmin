@@ -39,6 +39,13 @@ export default function AdminDashboard() {
     refresh()
   }, [refresh])
 
+  // 최고 관리자는 어떤 조직의 하위에도 둘 수 없다. 이전 데이터에 남은 연결도
+  // 관리자 화면을 열 때 한 번 정리해 최상위 조직을 항상 유지한다.
+  useEffect(() => {
+    const administrator = users.find((member) => member.id === 'admin' || member.role === 'ADMIN')
+    if (administrator?.parent_id) updateUser(administrator.id, { parent_id: null })
+  }, [users, updateUser])
+
   const list = users.filter((u) => filterStatus === 'ALL' ? true : u.status === filterStatus)
   // 직급이 있거나 실제 소속 상위자로 지정된 회원은 조직도 관리자 묶음으로 표시한다.
   const managerIds = new Set(users.filter((u) => u.parent_id).map((u) => u.parent_id))
@@ -178,7 +185,7 @@ export default function AdminDashboard() {
                 <td>{u.id}</td>
                 <td><button className="btn btn-outline-x" onClick={() => openEmployeeDetail(u)}>{u.name}</button></td>
                 <td>
-                  <select value={u.parent_id || ''} onChange={(e) => saveOrganization(u.id, { parent_id: e.target.value || null })} disabled={u.id === 'admin'}>
+                  <select value={u.id === 'admin' ? '' : (u.parent_id || '')} onChange={(e) => saveOrganization(u.id, { parent_id: e.target.value || null })} disabled={u.id === 'admin'}>
                     <option value="">최상위</option>
                     {users.filter((manager) => manager.id !== u.id && manager.status === 'APPROVED' && (MANAGEMENT_ROLES.includes(manager.role) || managerIds.has(manager.id))).map((manager) => (
                       <option key={manager.id} value={manager.id}>{manager.name} · {rankLabel(manager.role)} ({manager.id})</option>
