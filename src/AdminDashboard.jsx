@@ -44,7 +44,6 @@ export default function AdminDashboard() {
   // 직급이 있거나 실제 소속 상위자로 지정된 회원은 조직도 관리자 묶음으로 표시한다.
   const managerIds = new Set(users.filter((u) => u.parent_id).map((u) => u.parent_id))
   users.filter((u) => MANAGEMENT_ROLES.includes(u.role)).forEach((u) => managerIds.add(u.id))
-  const managers = list.filter((u) => managerIds.has(u.id))
   const topAdministrator = users.find((member) => member.id === 'admin') || users.find((member) => member.role === 'ADMIN')
   const organizationFocus = users.find((member) => member.id === organizationFocusId) || topAdministrator
   const organizationChildren = organizationFocus
@@ -168,21 +167,6 @@ export default function AdminDashboard() {
         </div>
       </section>
 
-      <section style={{ margin: '16px', padding: 18, border: '1px solid #dbe4ef', borderRadius: 14, background: '#f8fbff' }}>
-        <div style={{ fontWeight: 900, marginBottom: 12 }}>관리자 선택</div>
-        <div style={{ color: '#64748b', fontSize: 13, marginBottom: 14 }}>관리자를 클릭하면 해당 소속 영업사원만 표시됩니다.</div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-          {managers.map((manager) => {
-            const salesCount = users.filter((member) => !managerIds.has(member.id) && member.parent_id === manager.id).length
-            const active = expandedManagerId === manager.id
-            return <button key={manager.id} className={`btn ${active ? 'primary' : 'btn-outline-x'}`} onClick={() => { setExpandedManagerId(active ? null : manager.id); if (!active) setOrganizationFocusId(manager.id) }}>
-              {manager.name} ({manager.id}) · 소속 인원 {salesCount}명
-            </button>
-          })}
-          {!managers.length && <span className="empty">표시할 관리자가 없습니다.</span>}
-        </div>
-      </section>
-
       <div className="table-scroll">
         <table className="admin-table">
           <thead>
@@ -234,7 +218,7 @@ export default function AdminDashboard() {
                 </td>
               </tr>
             ))}
-            {!expandedManagerId && unassignedMembers.length === 0 && <tr><td colSpan="11" className="empty">직급 또는 소속 지정 대기자가 없습니다. 위에서 관리자를 선택하면 소속 인원이 표시됩니다.</td></tr>}
+            {!expandedManagerId && unassignedMembers.length === 0 && <tr><td colSpan="11" className="empty">직급 또는 소속 지정 대기자가 없습니다. 위 조직도에서 직급 카드를 선택하면 소속 인원이 표시됩니다.</td></tr>}
             {expandedManagerId && displayedMembers.length === 0 && <tr><td colSpan="11" className="empty">해당 관리자에게 소속된 영업사원이 없습니다.</td></tr>}
           </tbody>
         </table>
