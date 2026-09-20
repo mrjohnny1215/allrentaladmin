@@ -49,12 +49,20 @@ export default function SubmissionList() {
 
   useEffect(() => {
     const requestedAppId = location.state?.selectedAppId || location.state?.newAppId
+    const sourceSubmission = location.state?.sourceSubmission
     const applySubmissions = (records) => {
       setSubmissions(records)
       if (requestedAppId) {
         const requested = records.find((submission) => String(submission.id) === String(requestedAppId))
         if (requested) setSelected(requested)
       }
+    }
+
+    // 관리자 대시보드의 직원 상세에서 진입한 경우, 현재 로그인 상태의 목록
+    // 필터와 관계없이 선택한 접수 상세를 즉시 표시한다.
+    if (sourceSubmission?.id) {
+      applySubmissions([sourceSubmission])
+      return
     }
 
     const loadSubmissions = async () => {
