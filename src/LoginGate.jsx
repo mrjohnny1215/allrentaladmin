@@ -238,10 +238,12 @@ export function LoginGate({ children }) {
                   <option key={u.id} value={u.id}>{u.name} ({u.role === 'ADMIN' ? '최고 관리자' : '관리자/팀장'})</option>
                 ))}
               </select>
-              <select className="login-input" value={rBankName} onChange={(e) => setRBankName(e.target.value)} required>
-                <option value="">입금 은행 선택</option>
-                {BANKS.map(([name]) => <option key={name} value={name}>{name}</option>)}
-              </select>
+              <div style={{ fontSize: 13, fontWeight: 800, color: '#334155' }}>입금 은행 선택 {rBankName && <span style={{ color: '#2563eb' }}>· {rBankName}</span>}</div>
+              <div className="bank-picker" aria-label="입금 은행 선택">
+                {BANKS.map(([name, mark, icon]) => <button key={name} type="button" className={`bank-option ${rBankName === name ? 'on' : ''}`} onClick={() => setRBankName(name)}>
+                  <span className="bank-icon-wrap">{icon ? <img className="bank-icon" src={icon} alt={`${name} 로고`} /> : <span className="bank-fallback">{mark}</span>}</span><span>{name.replace('은행', '')}</span>
+                </button>)}
+              </div>
               <input className="login-input" inputMode="numeric" placeholder="입금 계좌번호 (숫자만)" value={rAccountNumber} onChange={(e) => setRAccountNumber(e.target.value.replace(/[^0-9]/g, ''))} />
               <input className="login-input" placeholder="예금주" value={rAccountHolder} onChange={(e) => setRAccountHolder(e.target.value)} />
               {regMsg && <div className="login-info">{regMsg}</div>}
