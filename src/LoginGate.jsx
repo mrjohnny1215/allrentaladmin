@@ -37,6 +37,7 @@ export function LoginGate({ children }) {
   const [rPhone, setRPhone] = useState('')
   const [rEmail, setREmail] = useState('')
   const [rParentId, setRParentId] = useState('')
+  const [rRole, setRRole] = useState('SALES')
   const [rBankName, setRBankName] = useState('')
   const [rAccountNumber, setRAccountNumber] = useState('')
   const [rAccountHolder, setRAccountHolder] = useState('')
@@ -159,14 +160,14 @@ export function LoginGate({ children }) {
       setRegMsg('이미 존재하는 아이디입니다.')
       return
     }
-    const savedUser = await addUser({ id: _id, pw: rpw, name, birth, phone, email, parent_id: rParentId, role: 'SALES' })
+    const savedUser = await addUser({ id: _id, pw: rpw, name, birth, phone, email, parent_id: rParentId, role: rRole })
     if (!savedUser) { setRegMsg('가입 신청을 저장하지 못했습니다. 다시 시도해 주세요.'); return }
     const { data, error } = await supabase.functions.invoke('member-financial-profile-v4', {
       body: { action: 'register-save', id: _id, password: rpw, bankName: rBankName, accountNumber: rAccountNumber, accountHolder: rAccountHolder },
     })
     if (error || data?.error) { setRegMsg(data?.error || '가입 신청은 완료됐지만 계좌정보 저장에 실패했습니다.'); return }
     setRegMsg('가입 신청이 완료되었습니다. 관리자 승인 후 이용 가능합니다.')
-    setRName(''); setRBirth(''); setRPhone(''); setREmail(''); setRPw(''); setRParentId(''); setRBankName(''); setRAccountNumber(''); setRAccountHolder(''); setId('')
+    setRName(''); setRBirth(''); setRPhone(''); setREmail(''); setRPw(''); setRParentId(''); setRRole('SALES'); setRBankName(''); setRAccountNumber(''); setRAccountHolder(''); setId('')
   }
 
   const submitFind = async (e) => {
@@ -227,8 +228,12 @@ export function LoginGate({ children }) {
               <input className="login-input" type="date" placeholder="생년월일" value={rBirth} onChange={(e) => setRBirth(e.target.value)} />
               <input className="login-input" placeholder="전화번호" value={rPhone} onChange={(e) => setRPhone(e.target.value)} />
               <input className="login-input" placeholder="이메일" value={rEmail} onChange={(e) => setREmail(e.target.value)} />
+              <select className="login-input" value={rRole} onChange={(e) => setRRole(e.target.value)}>
+                <option value="SALES">영업사원으로 가입 신청</option>
+                <option value="MANAGER">팀장(관리자)으로 가입 신청</option>
+              </select>
               <select className="login-input" value={rParentId} onChange={(e) => setRParentId(e.target.value)} required>
-                <option value="">소속 관리자 선택</option>
+                <option value="">소속 상위 관리자 선택</option>
                 {users.filter((u) => u.status === 'APPROVED' && (['ADMIN', 'MANAGER'].includes(u.role) || users.some((member) => member.parent_id === u.id))).map((u) => (
                   <option key={u.id} value={u.id}>{u.name} ({u.role === 'ADMIN' ? '최고 관리자' : '관리자/팀장'})</option>
                 ))}
