@@ -28,7 +28,6 @@ export default function AdminDashboard() {
   const [employeeDetail, setEmployeeDetail] = useState(null)
   const [employeeDetailMsg, setEmployeeDetailMsg] = useState('')
   const [expandedManagerId, setExpandedManagerId] = useState(null)
-  const [organizationFocusId, setOrganizationFocusId] = useState('admin')
 
   useEffect(() => {
     if (!user || user.role !== 'ADMIN') {
@@ -45,13 +44,12 @@ export default function AdminDashboard() {
   const managerIds = new Set(users.filter((u) => u.parent_id).map((u) => u.parent_id))
   users.filter((u) => MANAGEMENT_ROLES.includes(u.role)).forEach((u) => managerIds.add(u.id))
   const topAdministrator = users.find((member) => member.id === 'admin') || users.find((member) => member.role === 'ADMIN')
-  const organizationFocus = users.find((member) => member.id === organizationFocusId) || topAdministrator
-  const organizationChildren = organizationFocus
-    ? users.filter((member) => member.status === 'APPROVED' && member.id !== organizationFocus.id && (member.parent_id === organizationFocus.id || (organizationFocus.id === topAdministrator?.id && !member.parent_id))).sort((a, b) => rankOrder(a.role) - rankOrder(b.role) || a.name.localeCompare(b.name, 'ko'))
+  const organizationChildren = topAdministrator
+    ? users.filter((member) => member.status === 'APPROVED' && member.id !== topAdministrator.id && (member.parent_id === topAdministrator.id || !member.parent_id)).sort((a, b) => rankOrder(a.role) - rankOrder(b.role) || a.name.localeCompare(b.name, 'ko'))
     : []
   const unassignedMembers = list.filter((u) => !managerIds.has(u.id) && (!u.parent_id || u.role === 'UNASSIGNED'))
   const displayedMembers = expandedManagerId
-    ? list.filter((u) => u.id === expandedManagerId || (!managerIds.has(u.id) && u.parent_id === expandedManagerId))
+    ? list.filter((u) => u.parent_id === expandedManagerId)
     : unassignedMembers
 
   const approve = (u) => {
@@ -148,19 +146,19 @@ export default function AdminDashboard() {
 
       <section style={{ margin: '16px', padding: 20, border: '1px solid #cfe0ff', borderRadius: 16, background: 'linear-gradient(180deg, #f8fbff 0%, #fff 100%)' }}>
         <div style={{ fontWeight: 900, fontSize: 17 }}>조직도</div>
-        <div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>현재 직급의 바로 아래 조직만 표시됩니다. 카드를 누르면 상위 조직은 숨기고 하위 조직으로 이동합니다.</div>
+        <div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>본부장 카드를 누르면 해당 본부장의 직속 인원이 아래 표에 리스트로 표시됩니다.</div>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10, margin: '18px 0 8px' }}>
-          <div style={{ padding: '10px 18px', borderRadius: 10, color: '#fff', background: '#172554', fontWeight: 900 }}>{organizationFocus ? `${rankLabel(organizationFocus.role)} · ${organizationFocus.name} (${organizationFocus.id})` : '최고 관리자'}</div>
-          {organizationFocus?.id !== topAdministrator?.id && <button className="btn btn-outline-x" onClick={() => { setOrganizationFocusId(topAdministrator?.id || 'admin'); setExpandedManagerId(null) }}>최고 관리자부터 보기</button>}
+          <div style={{ padding: '10px 18px', borderRadius: 10, color: '#fff', background: '#172554', fontWeight: 900 }}>{topAdministrator ? `${rankLabel(topAdministrator.role)} · ${topAdministrator.name} (${topAdministrator.id})` : '최고 관리자'}</div>
+          {expandedManagerId && <button className="btn btn-outline-x" onClick={() => setExpandedManagerId(null)}>전체 조직도 보기</button>}
         </div>
         <div style={{ width: 2, height: 20, margin: '0 auto', background: '#94a3b8' }} />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 12, marginTop: 10 }}>
           {organizationChildren.map((member) => {
             const directCount = users.filter((child) => child.parent_id === member.id).length
-            return <button key={member.id} onClick={() => { setOrganizationFocusId(member.id); setExpandedManagerId(member.id) }} style={{ padding: 14, border: '1px solid #cbd5e1', borderRadius: 12, background: '#fff', textAlign: 'left', cursor: 'pointer' }}>
+            return <button key={member.id} onClick={() => setExpandedManagerId(member.id)} style={{ padding: 14, border: `1px solid ${expandedManagerId === member.id ? '#2563eb' : '#cbd5e1'}`, borderRadius: 12, background: expandedManagerId === member.id ? '#eff6ff' : '#fff', textAlign: 'left', cursor: 'pointer' }}>
               <div style={{ color: '#1d4ed8', fontSize: 12, fontWeight: 900 }}>{rankLabel(member.role)}</div>
               <div style={{ marginTop: 3, color: '#172554', fontWeight: 900 }}>{member.name} <span style={{ color: '#64748b', fontWeight: 600 }}>({member.id})</span></div>
-              <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #e2e8f0', color: '#475569', fontSize: 13 }}>{directCount ? `하위 조직 ${directCount}명 보기` : '하위 조직 없음'}</div>
+              <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #e2e8f0', color: '#475569', fontSize: 13 }}>{directCount ? `직속 인원 ${directCount}명 리스트 보기` : '직속 인원 없음'}</div>
             </button>
           })}
           {!organizationChildren.length && <div className="empty">바로 아래에 등록된 조직이 없습니다.</div>}
@@ -219,7 +217,7 @@ export default function AdminDashboard() {
               </tr>
             ))}
             {!expandedManagerId && unassignedMembers.length === 0 && <tr><td colSpan="11" className="empty">직급 또는 소속 지정 대기자가 없습니다. 위 조직도에서 직급 카드를 선택하면 소속 인원이 표시됩니다.</td></tr>}
-            {expandedManagerId && displayedMembers.length === 0 && <tr><td colSpan="11" className="empty">해당 관리자에게 소속된 영업사원이 없습니다.</td></tr>}
+            {expandedManagerId && displayedMembers.length === 0 && <tr><td colSpan="11" className="empty">해당 본부장에게 직속으로 소속된 인원이 없습니다.</td></tr>}
           </tbody>
         </table>
       </div>
