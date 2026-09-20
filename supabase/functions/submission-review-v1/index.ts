@@ -39,7 +39,7 @@ Deno.serve(async (req) => {
 
     if (action === "review") {
       if (!submissionId || !["APPROVED", "REJECTED"].includes(reviewStatus)) return response({ error: "검수 상태를 확인해 주세요." }, 400)
-      if (!["ADMIN", "MANAGER"].includes(user.role)) return response({ error: "관리자 또는 팀장만 검수할 수 있습니다." }, 403)
+      if (!["ADMIN", "HQ_DIRECTOR", "BRANCH_MANAGER", "CENTER_MANAGER", "TEAM_LEAD", "MANAGER"].includes(user.role)) return response({ error: "관리자 직급만 검수할 수 있습니다." }, 403)
 
       let query = db.from("submission_reviews").update({ review_status: reviewStatus }).eq("id", submissionId)
       if (user.role !== "ADMIN") query = query.eq("assigned_manager_id", user.id)

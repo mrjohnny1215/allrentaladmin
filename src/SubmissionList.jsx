@@ -25,6 +25,7 @@ const REVIEW_STATUS_LABELS = {
   APPROVED: '검수 확정',
   REJECTED: '반려',
 }
+const REVIEWER_ROLES = ['ADMIN', 'HQ_DIRECTOR', 'BRANCH_MANAGER', 'CENTER_MANAGER', 'TEAM_LEAD', 'MANAGER']
 
 const won = (n) => {
   const num = parseInt(String(n || '0').replace(/[^0-9]/g, ''), 10)
@@ -123,7 +124,7 @@ export default function SubmissionList() {
   const DetailModal = ({ app, onClose }) => {
     if (!app) return null
     const items = Array.isArray(app.items) ? app.items : []
-    const canReview = ['ADMIN', 'MANAGER'].includes(user?.role)
+    const canReview = REVIEWER_ROLES.includes(user?.role)
     return (
       <div className="modal-veil" onClick={onClose}>
         <div className="modal-card" style={{ maxWidth: 800, maxHeight: '85vh' }} onClick={(e) => e.stopPropagation()}>

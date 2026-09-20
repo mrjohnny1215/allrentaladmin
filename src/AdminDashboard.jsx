@@ -4,6 +4,17 @@ import { useAuth } from './auth.jsx'
 import { useUsers } from './lib/users.js'
 import { supabase } from './lib/supabase.js'
 
+const RANK_OPTIONS = [
+  ['ADMIN', '관리자'],
+  ['HQ_DIRECTOR', '본부장'],
+  ['BRANCH_MANAGER', '지점장'],
+  ['CENTER_MANAGER', '센터장'],
+  ['TEAM_LEAD', '팀장'],
+  ['MANAGER', '매니저'],
+]
+const MANAGEMENT_ROLES = RANK_OPTIONS.map(([role]) => role)
+const rankLabel = (role) => RANK_OPTIONS.find(([value]) => value === role)?.[1] || '미지정'
+
 export default function AdminDashboard() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
@@ -28,18 +39,18 @@ export default function AdminDashboard() {
   }, [refresh])
 
   const list = users.filter((u) => filterStatus === 'ALL' ? true : u.status === filterStatus)
-  // 역할이 팀장/관리자가 아니더라도 실제 소속 관리자로 지정된 회원은 관리자 묶음으로 표시한다.
+  // 직급이 있거나 실제 소속 상위자로 지정된 회원은 조직도 관리자 묶음으로 표시한다.
   const managerIds = new Set(users.filter((u) => u.parent_id).map((u) => u.parent_id))
-  users.filter((u) => ['ADMIN', 'MANAGER'].includes(u.role)).forEach((u) => managerIds.add(u.id))
+  users.filter((u) => MANAGEMENT_ROLES.includes(u.role)).forEach((u) => managerIds.add(u.id))
   const managers = list.filter((u) => managerIds.has(u.id))
-  const pendingMembers = list.filter((u) => u.status === 'PENDING' && !managerIds.has(u.id))
+  const unassignedMembers = list.filter((u) => !managerIds.has(u.id) && (!u.parent_id || u.role === 'UNASSIGNED'))
   const displayedMembers = expandedManagerId
     ? list.filter((u) => u.id === expandedManagerId || (!managerIds.has(u.id) && u.parent_id === expandedManagerId))
-    : pendingMembers
+    : unassignedMembers
 
-  const approve = (u, role = 'SALES') => {
+  const approve = (u) => {
     const grade = u.fee_grade || '100%'
-    updateUser(u.id, { status: 'APPROVED', fee_grade: grade, role, parent_id: '김성훈' })
+    updateUser(u.id, { status: 'APPROVED', fee_grade: grade })
     alert('승인 완료')
     refresh()
   }
@@ -141,7 +152,7 @@ export default function AdminDashboard() {
             const members = users.filter((member) => !managerIds.has(member.id) && member.parent_id === manager.id)
             const active = expandedManagerId === manager.id
             return <button key={manager.id} onClick={() => setExpandedManagerId(active ? null : manager.id)} style={{ padding: 14, border: `1px solid ${active ? '#2563eb' : '#cbd5e1'}`, borderRadius: 12, background: active ? '#eff6ff' : '#fff', textAlign: 'left', cursor: 'pointer' }}>
-              <div style={{ color: '#1d4ed8', fontSize: 12, fontWeight: 900 }}>관리자 / 팀장</div>
+              <div style={{ color: '#1d4ed8', fontSize: 12, fontWeight: 900 }}>{rankLabel(manager.role)}</div>
               <div style={{ marginTop: 3, color: '#172554', fontWeight: 900 }}>{manager.name} <span style={{ color: '#64748b', fontWeight: 600 }}>({manager.id})</span></div>
               <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #e2e8f0', color: '#475569', fontSize: 13, lineHeight: 1.7 }}>{members.length ? members.map((member) => member.name).join(' · ') : '소속 영업사원 없음'}</div>
             </button>
@@ -158,7 +169,7 @@ export default function AdminDashboard() {
             const salesCount = users.filter((member) => !managerIds.has(member.id) && member.parent_id === manager.id).length
             const active = expandedManagerId === manager.id
             return <button key={manager.id} className={`btn ${active ? 'primary' : 'btn-outline-x'}`} onClick={() => setExpandedManagerId(active ? null : manager.id)}>
-              {manager.name} ({manager.id}) · 영업사원 {salesCount}명
+              {manager.name} ({manager.id}) · 소속 인원 {salesCount}명
             </button>
           })}
           {!managers.length && <span className="empty">표시할 관리자가 없습니다.</span>}
@@ -169,7 +180,7 @@ export default function AdminDashboard() {
         <table className="admin-table">
           <thead>
             <tr>
-              <th>아이디</th><th>이름</th><th>소속 관리자</th><th>역할</th><th>생년월일</th><th>전화번호</th><th>이메일</th><th>가입일시</th><th>승인상태</th><th>수수료 등급</th><th>관리</th>
+              <th>아이디</th><th>이름</th><th>소속 상위자</th><th>직급</th><th>생년월일</th><th>전화번호</th><th>이메일</th><th>가입일시</th><th>승인상태</th><th>수수료 등급</th><th>관리</th>
             </tr>
           </thead>
           <tbody>
@@ -180,18 +191,18 @@ export default function AdminDashboard() {
                 <td>
                   <select value={u.parent_id || ''} onChange={(e) => saveOrganization(u.id, { parent_id: e.target.value || null })} disabled={u.id === 'admin'}>
                     <option value="">최상위</option>
-                    {users.filter((manager) => manager.id !== u.id && manager.status === 'APPROVED' && ['ADMIN', 'MANAGER'].includes(manager.role)).map((manager) => (
-                      <option key={manager.id} value={manager.id}>{manager.name} ({manager.id})</option>
+                    {users.filter((manager) => manager.id !== u.id && manager.status === 'APPROVED' && (MANAGEMENT_ROLES.includes(manager.role) || managerIds.has(manager.id))).map((manager) => (
+                      <option key={manager.id} value={manager.id}>{manager.name} · {rankLabel(manager.role)} ({manager.id})</option>
                     ))}
                   </select>
                 </td>
                 <td>
                   {u.id === 'admin' ? (
-                    <b>최고 관리자</b>
+                    <b>관리자</b>
                   ) : (
-                    <select value={u.role || 'SALES'} onChange={(e) => saveRole(u.id, e.target.value)} disabled={u.status !== 'APPROVED'} aria-label={`${u.name} 역할`}>
-                      <option value="SALES">영업사원</option>
-                      <option value="MANAGER">팀장(관리자)</option>
+                    <select value={u.role || 'UNASSIGNED'} onChange={(e) => saveRole(u.id, e.target.value)} aria-label={`${u.name} 직급`}>
+                      <option value="UNASSIGNED">직급 미지정</option>
+                      {RANK_OPTIONS.filter(([role]) => role !== 'ADMIN').map(([role, label]) => <option key={role} value={role}>{label}</option>)}
                     </select>
                   )}
                 </td>
@@ -211,15 +222,12 @@ export default function AdminDashboard() {
                   </select>
                 </td>
                 <td className="actions">
-                  {u.status === 'PENDING' && <>
-                    <button className="btn primary" onClick={() => approve(u, 'SALES')}>사원 승인</button>
-                    <button className="btn primary" onClick={() => approve(u, 'MANAGER')}>팀장 승인</button>
-                  </>}
+                  {u.status === 'PENDING' && <button className="btn primary" onClick={() => approve(u)}>가입 승인</button>}
                   {u.id !== 'admin' && <button className="btn danger" onClick={() => del(u.id)}>삭제</button>}
                 </td>
               </tr>
             ))}
-            {!expandedManagerId && pendingMembers.length === 0 && <tr><td colSpan="11" className="empty">위에서 관리자를 선택하면 소속 영업사원이 표시됩니다.</td></tr>}
+            {!expandedManagerId && unassignedMembers.length === 0 && <tr><td colSpan="11" className="empty">직급 또는 소속 지정 대기자가 없습니다. 위에서 관리자를 선택하면 소속 인원이 표시됩니다.</td></tr>}
             {expandedManagerId && displayedMembers.length === 0 && <tr><td colSpan="11" className="empty">해당 관리자에게 소속된 영업사원이 없습니다.</td></tr>}
           </tbody>
         </table>

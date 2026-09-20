@@ -36,8 +36,6 @@ export function LoginGate({ children }) {
   const [rBirth, setRBirth] = useState('')
   const [rPhone, setRPhone] = useState('')
   const [rEmail, setREmail] = useState('')
-  const [rParentId, setRParentId] = useState('')
-  const [rRole, setRRole] = useState('SALES')
   const [rBankName, setRBankName] = useState('')
   const [rAccountNumber, setRAccountNumber] = useState('')
   const [rAccountHolder, setRAccountHolder] = useState('')
@@ -151,7 +149,7 @@ export function LoginGate({ children }) {
     const birth = rBirth.trim()
     const phone = rPhone.trim()
     const email = rEmail.trim()
-    if (!_id || !rpw || !name || !birth || !phone || !email || !rParentId || !rBankName || !rAccountNumber.trim() || !rAccountHolder.trim()) {
+    if (!_id || !rpw || !name || !birth || !phone || !email || !rBankName || !rAccountNumber.trim() || !rAccountHolder.trim()) {
       setRegMsg('모든 항목을 입력해 주세요.')
       return
     }
@@ -160,14 +158,14 @@ export function LoginGate({ children }) {
       setRegMsg('이미 존재하는 아이디입니다.')
       return
     }
-    const savedUser = await addUser({ id: _id, pw: rpw, name, birth, phone, email, parent_id: rParentId, role: rRole })
+    const savedUser = await addUser({ id: _id, pw: rpw, name, birth, phone, email, parent_id: null, role: 'UNASSIGNED' })
     if (!savedUser) { setRegMsg('가입 신청을 저장하지 못했습니다. 다시 시도해 주세요.'); return }
     const { data, error } = await supabase.functions.invoke('member-financial-profile-v4', {
       body: { action: 'register-save', id: _id, password: rpw, bankName: rBankName, accountNumber: rAccountNumber, accountHolder: rAccountHolder },
     })
     if (error || data?.error) { setRegMsg(data?.error || '가입 신청은 완료됐지만 계좌정보 저장에 실패했습니다.'); return }
     setRegMsg('가입 신청이 완료되었습니다. 관리자 승인 후 이용 가능합니다.')
-    setRName(''); setRBirth(''); setRPhone(''); setREmail(''); setRPw(''); setRParentId(''); setRRole('SALES'); setRBankName(''); setRAccountNumber(''); setRAccountHolder(''); setId('')
+    setRName(''); setRBirth(''); setRPhone(''); setREmail(''); setRPw(''); setRBankName(''); setRAccountNumber(''); setRAccountHolder(''); setId('')
   }
 
   const submitFind = async (e) => {
@@ -225,19 +223,10 @@ export function LoginGate({ children }) {
               <input className="login-input" placeholder="아이디" value={id} onChange={(e) => setId(e.target.value)} />
               <input className="login-input" type="password" placeholder="비밀번호" value={rPw} onChange={(e) => setRPw(e.target.value)} />
               <input className="login-input" placeholder="이름" value={rName} onChange={(e) => setRName(e.target.value)} />
-              <input className="login-input" type="date" placeholder="생년월일" value={rBirth} onChange={(e) => setRBirth(e.target.value)} />
+              <label style={{ fontSize: 13, fontWeight: 800, color: '#334155', marginBottom: -4 }}>생년월일</label>
+              <input className="login-input" type="date" aria-label="생년월일" value={rBirth} onChange={(e) => setRBirth(e.target.value)} />
               <input className="login-input" placeholder="전화번호" value={rPhone} onChange={(e) => setRPhone(e.target.value)} />
               <input className="login-input" placeholder="이메일" value={rEmail} onChange={(e) => setREmail(e.target.value)} />
-              <select className="login-input" value={rRole} onChange={(e) => setRRole(e.target.value)}>
-                <option value="SALES">영업사원으로 가입 신청</option>
-                <option value="MANAGER">팀장(관리자)으로 가입 신청</option>
-              </select>
-              <select className="login-input" value={rParentId} onChange={(e) => setRParentId(e.target.value)} required>
-                <option value="">소속 상위 관리자 선택</option>
-                {users.filter((u) => u.status === 'APPROVED' && (['ADMIN', 'MANAGER'].includes(u.role) || users.some((member) => member.parent_id === u.id))).map((u) => (
-                  <option key={u.id} value={u.id}>{u.name} ({u.role === 'ADMIN' ? '최고 관리자' : '관리자/팀장'})</option>
-                ))}
-              </select>
               <div style={{ fontSize: 13, fontWeight: 800, color: '#334155' }}>입금 은행 선택 {rBankName && <span style={{ color: '#2563eb' }}>· {rBankName}</span>}</div>
               <div className="bank-picker" aria-label="입금 은행 선택">
                 {BANKS.map(([name, mark, icon]) => <button key={name} type="button" className={`bank-option ${rBankName === name ? 'on' : ''}`} onClick={() => setRBankName(name)}>
