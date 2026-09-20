@@ -86,6 +86,7 @@ export function LoginGate({ children }) {
               {profileOpen && (
                 <div className="profile-menu">
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/') }}>메인페이지</button>
+                  {['ADMIN', 'HQ_DIRECTOR'].includes(user.role) && <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin') }}>대시보드</button>}
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/settlement_manage') }}>정산서</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/counsel') }}>상담</button>
                   <button className="profile-item" onClick={() => { setProfileOpen(false); navigate('/admin/reception') }}>접수</button>
@@ -135,7 +136,7 @@ export function LoginGate({ children }) {
       setShake(true)
       return
     }
-    if (ok.role === 'ADMIN') {
+    if (['ADMIN', 'HQ_DIRECTOR'].includes(ok.role)) {
       navigate('/admin')
     }
   }
