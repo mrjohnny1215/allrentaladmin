@@ -28,6 +28,8 @@ export default function AdminDashboard() {
   const [employeeDetail, setEmployeeDetail] = useState(null)
   const [employeeDetailMsg, setEmployeeDetailMsg] = useState('')
   const [expandedManagerId, setExpandedManagerId] = useState(null)
+  const [allContracts, setAllContracts] = useState([])
+  const [contractsMsg, setContractsMsg] = useState('')
 
   useEffect(() => {
     if (!user || user.role !== 'ADMIN') {
@@ -46,6 +48,24 @@ export default function AdminDashboard() {
     if (administrator?.parent_id) updateUser(administrator.id, { parent_id: null })
   }, [users, updateUser])
 
+  const loadAllContracts = async () => {
+    if (!user?.id || !user?.pw || user.role !== 'ADMIN') return
+    setContractsMsg('전체 직원 계약 현황을 불러오는 중입니다.')
+    const { data, error } = await supabase.functions.invoke('submission-review-v1', {
+      body: { action: 'list', id: user.id, password: user.pw },
+    })
+    if (error || data?.error) {
+      setContractsMsg(data?.error || '계약 현황을 불러오지 못했습니다.')
+      return
+    }
+    setAllContracts(data?.submissions || [])
+    setContractsMsg('')
+  }
+
+  useEffect(() => {
+    loadAllContracts()
+  }, [user?.id, user?.pw, user?.role])
+
   const list = users.filter((u) => filterStatus === 'ALL' ? true : u.status === filterStatus)
   // 직급이 있거나 실제 소속 상위자로 지정된 회원은 조직도 관리자 묶음으로 표시한다.
   const managerIds = new Set(users.filter((u) => u.parent_id).map((u) => u.parent_id))
@@ -58,6 +78,23 @@ export default function AdminDashboard() {
   const displayedMembers = expandedManagerId
     ? list.filter((u) => u.parent_id === expandedManagerId)
     : unassignedMembers
+  const staffContractRows = users.filter((member) => member.id !== 'admin').map((member) => {
+    const contracts = allContracts.filter((contract) => contract.submittedBy === member.id)
+    return {
+      member,
+      total: contracts.length,
+      pending: contracts.filter((contract) => (contract.reviewStatus || 'PENDING') === 'PENDING').length,
+      approved: contracts.filter((contract) => contract.reviewStatus === 'APPROVED').length,
+      rejected: contracts.filter((contract) => contract.reviewStatus === 'REJECTED').length,
+      latest: contracts[0]?.createdAt || null,
+    }
+  }).sort((a, b) => b.total - a.total || a.member.name.localeCompare(b.member.name, 'ko'))
+  const contractTotals = {
+    total: allContracts.length,
+    pending: allContracts.filter((contract) => (contract.reviewStatus || 'PENDING') === 'PENDING').length,
+    approved: allContracts.filter((contract) => contract.reviewStatus === 'APPROVED').length,
+    rejected: allContracts.filter((contract) => contract.reviewStatus === 'REJECTED').length,
+  }
 
   const approve = (u) => {
     const grade = u.fee_grade || '100%'
@@ -150,6 +187,24 @@ export default function AdminDashboard() {
           {settlementAccounts.map((account) => <tr key={account.user_id}><td>{account.name} ({account.user_id})</td><td>{account.bank_name}</td><td>{account.account_number}</td><td>{account.account_holder}</td><td>{new Date(account.updated_at).toLocaleDateString('ko-KR')}</td></tr>)}
         </tbody></table>
       </div>}
+
+      <section style={{ margin: '16px', padding: 20, border: '1px solid #cfe0ff', borderRadius: 16, background: '#fff' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <div><div style={{ fontWeight: 900, fontSize: 17 }}>전체 직원 계약 현황</div><div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>모든 직원의 접수 및 검수 상태를 한눈에 확인합니다.</div></div>
+          <button className="btn btn-outline-x" onClick={loadAllContracts}>계약 현황 새로고침</button>
+        </div>
+        <div className="field-grid" style={{ margin: '16px 0 12px' }}>
+          <div className="preview-container"><b>전체 접수</b><div style={{ marginTop: 5, fontSize: 22, fontWeight: 900 }}>{contractTotals.total}건</div></div>
+          <div className="preview-container"><b>검수 대기</b><div style={{ marginTop: 5, fontSize: 22, fontWeight: 900, color: '#b45309' }}>{contractTotals.pending}건</div></div>
+          <div className="preview-container"><b>검수 확정</b><div style={{ marginTop: 5, fontSize: 22, fontWeight: 900, color: '#15803d' }}>{contractTotals.approved}건</div></div>
+          <div className="preview-container"><b>반려</b><div style={{ marginTop: 5, fontSize: 22, fontWeight: 900, color: '#dc2626' }}>{contractTotals.rejected}건</div></div>
+        </div>
+        {contractsMsg && <div style={{ color: '#64748b', fontSize: 13, marginBottom: 10 }}>{contractsMsg}</div>}
+        <div className="table-scroll"><table className="admin-table"><thead><tr><th>직원</th><th>직급</th><th>전체 접수</th><th>검수 대기</th><th>검수 확정</th><th>반려</th><th>최근 접수일</th><th>보기</th></tr></thead><tbody>
+          {staffContractRows.map(({ member, total, pending, approved, rejected, latest }) => <tr key={member.id}><td>{member.name} ({member.id})</td><td>{rankLabel(member.role)}</td><td>{total}건</td><td>{pending}건</td><td>{approved}건</td><td>{rejected}건</td><td>{latest ? new Date(latest).toLocaleDateString('ko-KR') : '-'}</td><td><button className="btn btn-outline-x" onClick={() => openEmployeeDetail(member)}>상세 보기</button></td></tr>)}
+          {!staffContractRows.length && <tr><td colSpan="8" className="empty">등록된 직원이 없습니다.</td></tr>}
+        </tbody></table></div>
+      </section>
 
       <section style={{ margin: '16px', padding: 20, border: '1px solid #cfe0ff', borderRadius: 16, background: 'linear-gradient(180deg, #f8fbff 0%, #fff 100%)' }}>
         <div style={{ fontWeight: 900, fontSize: 17 }}>조직도</div>
