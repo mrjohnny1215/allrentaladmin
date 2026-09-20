@@ -215,6 +215,15 @@ export default function AdminDashboard() {
         </div>
       </section>}
 
+      {!isSuperAdmin && <section style={{ margin: '16px', padding: 20, border: '1px solid #cfe0ff', borderRadius: 16, background: '#fff' }}>
+        <div style={{ fontWeight: 900, fontSize: 17 }}>내 소속 직원 정보</div>
+        <div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>직속으로 소속된 모든 승인 직원 정보입니다.</div>
+        <div className="table-scroll" style={{ marginTop: 14 }}><table className="admin-table"><thead><tr><th>아이디</th><th>이름</th><th>직급</th><th>생년월일</th><th>전화번호</th><th>이메일</th><th>가입일</th></tr></thead><tbody>
+          {teamMembers.map((member) => <tr key={member.id}><td>{member.id}</td><td>{member.name}</td><td>{rankLabel(member.role)}</td><td>{member.birth || '-'}</td><td>{member.phone || '-'}</td><td>{member.email || '-'}</td><td>{member.created_at ? new Date(member.created_at).toLocaleDateString('ko-KR') : '-'}</td></tr>)}
+          {!teamMembers.length && <tr><td colSpan="7" className="empty">직속으로 소속된 승인 직원이 없습니다.</td></tr>}
+        </tbody></table></div>
+      </section>}
+
       <section style={{ margin: '16px', padding: 20, border: '1px solid #cfe0ff', borderRadius: 16, background: '#fff' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
           <div><div style={{ fontWeight: 900, fontSize: 17 }}>{isSuperAdmin ? '전체 직원 계약 현황' : '내 소속 직원 판매 현황'}</div><div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>{isSuperAdmin ? '계약이 있는 직원의 접수 및 검수 상태를 한눈에 확인합니다.' : '내 직속 직원의 접수 및 검수 상태만 표시됩니다.'}</div></div>

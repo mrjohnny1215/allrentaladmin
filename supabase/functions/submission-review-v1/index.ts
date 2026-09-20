@@ -40,7 +40,7 @@ Deno.serve(async (req) => {
     if (action === "team-overview") {
       if (user.role !== "HQ_DIRECTOR") return response({ error: "본부장만 소속 직원 현황을 조회할 수 있습니다." }, 403)
       const { data: teamMembers, error: membersError } = await db.from("users")
-        .select("id,name,role,fee_grade").eq("parent_id", user.id).eq("status", "APPROVED").order("name")
+        .select("id,name,role,birth,phone,email,fee_grade,created_at").eq("parent_id", user.id).eq("status", "APPROVED").order("name")
       if (membersError) throw membersError
       const ids = (teamMembers ?? []).map((member) => member.id)
       if (!ids.length) return response({ teamMembers: [], submissions: [] })
