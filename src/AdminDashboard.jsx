@@ -87,7 +87,16 @@ export default function AdminDashboard() {
   const displayedMembers = expandedManagerId
     ? list.filter((u) => u.parent_id === expandedManagerId)
     : unassignedMembers
-  const contractMembers = isSuperAdmin ? users.filter((member) => member.id !== 'admin') : teamMembers
+  const selectedHeadquarters = expandedManagerId ? users.find((member) => member.id === expandedManagerId) : null
+  const contractMembers = isSuperAdmin
+    ? (expandedManagerId ? users.filter((member) => member.parent_id === expandedManagerId) : users.filter((member) => member.id !== 'admin'))
+    : teamMembers
+  const contractOverviewTitle = isSuperAdmin
+    ? (selectedHeadquarters ? `${selectedHeadquarters.name} 본부장 소속 직원 계약 현황` : '전체 직원 계약 현황')
+    : '내 소속 직원 판매 현황'
+  const contractOverviewDescription = isSuperAdmin
+    ? (selectedHeadquarters ? `${selectedHeadquarters.name} 본부장 직속 직원 중 계약이 있는 직원의 접수 및 검수 상태입니다.` : '계약이 있는 모든 직원의 접수 및 검수 상태를 한눈에 확인합니다.')
+    : '내 직속 직원의 접수 및 검수 상태만 표시됩니다.'
   const staffContractRows = contractMembers.map((member) => {
     const contracts = allContracts.filter((contract) => contract.submittedBy === member.id)
     return {
@@ -222,7 +231,7 @@ export default function AdminDashboard() {
 
       <section style={{ margin: '16px', padding: 20, border: '1px solid #cfe0ff', borderRadius: 16, background: '#fff' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-          <div><div style={{ fontWeight: 900, fontSize: 17 }}>{isSuperAdmin ? '전체 직원 계약 현황' : '내 소속 직원 판매 현황'}</div><div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>{isSuperAdmin ? '계약이 있는 직원의 접수 및 검수 상태를 한눈에 확인합니다.' : '내 직속 직원의 접수 및 검수 상태만 표시됩니다.'}</div></div>
+          <div><div style={{ fontWeight: 900, fontSize: 17 }}>{contractOverviewTitle}</div><div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>{contractOverviewDescription}</div></div>
           <button className="btn btn-outline-x" onClick={loadAllContracts}>계약 현황 새로고침</button>
         </div>
         <div className="field-grid" style={{ margin: '16px 0 12px' }}>
@@ -234,7 +243,7 @@ export default function AdminDashboard() {
         {contractsMsg && <div style={{ color: '#64748b', fontSize: 13, marginBottom: 10 }}>{contractsMsg}</div>}
         <div className="table-scroll"><table className="admin-table"><thead><tr><th>직원</th><th>직급</th><th>전체 접수</th><th>검수 대기</th><th>검수 확정</th><th>반려</th><th>최근 접수일</th><th>보기</th></tr></thead><tbody>
           {staffContractRows.map(({ member, total, pending, approved, rejected, latest }) => <tr key={member.id}><td>{member.name} ({member.id})</td><td>{rankLabel(member.role)}</td><td>{total}건</td><td>{pending}건</td><td>{approved}건</td><td>{rejected}건</td><td>{latest ? new Date(latest).toLocaleDateString('ko-KR') : '-'}</td><td><button className="btn btn-outline-x" onClick={() => openEmployeeDetail(member)}>상세 보기</button></td></tr>)}
-          {!staffContractRows.length && <tr><td colSpan="8" className="empty">계약이 있는 소속 직원이 없습니다.</td></tr>}
+          {!staffContractRows.length && <tr><td colSpan="8" className="empty">{selectedHeadquarters ? `${selectedHeadquarters.name} 본부장 소속 직원 중 계약이 있는 직원이 없습니다.` : '계약이 있는 소속 직원이 없습니다.'}</td></tr>}
         </tbody></table></div>
       </section>
 
