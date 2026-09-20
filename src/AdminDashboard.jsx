@@ -248,7 +248,7 @@ export default function AdminDashboard() {
                 <td>
                   <select value={u.id === 'admin' ? '' : (u.parent_id || '')} onChange={(e) => saveOrganization(u.id, { parent_id: e.target.value || null })} disabled={u.id === 'admin'}>
                     <option value="">최상위</option>
-                    {users.filter((manager) => manager.id !== u.id && manager.status === 'APPROVED' && (MANAGEMENT_ROLES.includes(manager.role) || managerIds.has(manager.id))).map((manager) => (
+                    {users.filter((manager) => manager.id !== u.id && manager.status === 'APPROVED' && manager.role === 'HQ_DIRECTOR').map((manager) => (
                       <option key={manager.id} value={manager.id}>{manager.name} · {rankLabel(manager.role)} ({manager.id})</option>
                     ))}
                   </select>
