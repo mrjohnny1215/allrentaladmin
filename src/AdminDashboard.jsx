@@ -47,7 +47,7 @@ export default function AdminDashboard() {
   const topAdministrator = users.find((member) => member.id === 'admin') || users.find((member) => member.role === 'ADMIN')
   const organizationFocus = users.find((member) => member.id === organizationFocusId) || topAdministrator
   const organizationChildren = organizationFocus
-    ? users.filter((member) => member.status === 'APPROVED' && member.parent_id === organizationFocus.id).sort((a, b) => rankOrder(a.role) - rankOrder(b.role) || a.name.localeCompare(b.name, 'ko'))
+    ? users.filter((member) => member.status === 'APPROVED' && member.id !== organizationFocus.id && (member.parent_id === organizationFocus.id || (organizationFocus.id === topAdministrator?.id && !member.parent_id))).sort((a, b) => rankOrder(a.role) - rankOrder(b.role) || a.name.localeCompare(b.name, 'ko'))
     : []
   const unassignedMembers = list.filter((u) => !managerIds.has(u.id) && (!u.parent_id || u.role === 'UNASSIGNED'))
   const displayedMembers = expandedManagerId
