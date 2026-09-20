@@ -11,6 +11,8 @@ const BANKS = [
   ['SC제일은행', 'SC', '/images/banks/sc.png'], ['부산은행', 'B', '/images/banks/bnk.png'], ['대구은행', 'D', '/images/banks/dgb.svg'], ['경남은행', 'KN', '/images/banks/knbank.png'],
 ]
 
+const BIRTH_DATE_PATTERN = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/
+
 export function LoginGate({ children }) {
   const navigate = useNavigate()
   const { user, login, logout } = useAuth()
@@ -154,6 +156,10 @@ export function LoginGate({ children }) {
       setRegMsg('모든 항목을 입력해 주세요.')
       return
     }
+    if (!BIRTH_DATE_PATTERN.test(birth) || Number.isNaN(new Date(`${birth}T00:00:00`).getTime())) {
+      setRegMsg('생년월일은 YYYY-MM-DD 형식의 완전한 날짜로 입력해 주세요.')
+      return
+    }
     const storedUsers = users.length ? users : await getUsers()
     if (storedUsers.some((u) => u.id === _id)) {
       setRegMsg('이미 존재하는 아이디입니다.')
@@ -225,7 +231,7 @@ export function LoginGate({ children }) {
               <input className="login-input" type="password" placeholder="비밀번호" value={rPw} onChange={(e) => setRPw(e.target.value)} />
               <input className="login-input" placeholder="이름" value={rName} onChange={(e) => setRName(e.target.value)} />
               <label style={{ fontSize: 13, fontWeight: 800, color: '#334155', marginBottom: -4 }}>생년월일</label>
-              <input className="login-input" type="date" aria-label="생년월일" value={rBirth} onChange={(e) => setRBirth(e.target.value)} />
+              <input className="login-input" type="date" aria-label="생년월일" min="1900-01-01" max="2026-12-31" value={rBirth} onChange={(e) => setRBirth(e.target.value)} />
               <input className="login-input" placeholder="전화번호" value={rPhone} onChange={(e) => setRPhone(e.target.value)} />
               <input className="login-input" placeholder="이메일" value={rEmail} onChange={(e) => setREmail(e.target.value)} />
               <div style={{ fontSize: 13, fontWeight: 800, color: '#334155' }}>입금 은행 선택 {rBankName && <span style={{ color: '#2563eb' }}>· {rBankName}</span>}</div>
