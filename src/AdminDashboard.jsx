@@ -88,7 +88,7 @@ export default function AdminDashboard() {
       rejected: contracts.filter((contract) => contract.reviewStatus === 'REJECTED').length,
       latest: contracts[0]?.createdAt || null,
     }
-  }).sort((a, b) => b.total - a.total || a.member.name.localeCompare(b.member.name, 'ko'))
+  }).filter((row) => row.total > 0).sort((a, b) => b.total - a.total || a.member.name.localeCompare(b.member.name, 'ko'))
   const contractTotals = {
     total: allContracts.length,
     pending: allContracts.filter((contract) => (contract.reviewStatus || 'PENDING') === 'PENDING').length,
@@ -188,24 +188,6 @@ export default function AdminDashboard() {
         </tbody></table>
       </div>}
 
-      <section style={{ margin: '16px', padding: 20, border: '1px solid #cfe0ff', borderRadius: 16, background: '#fff' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-          <div><div style={{ fontWeight: 900, fontSize: 17 }}>전체 직원 계약 현황</div><div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>모든 직원의 접수 및 검수 상태를 한눈에 확인합니다.</div></div>
-          <button className="btn btn-outline-x" onClick={loadAllContracts}>계약 현황 새로고침</button>
-        </div>
-        <div className="field-grid" style={{ margin: '16px 0 12px' }}>
-          <div className="preview-container"><b>전체 접수</b><div style={{ marginTop: 5, fontSize: 22, fontWeight: 900 }}>{contractTotals.total}건</div></div>
-          <div className="preview-container"><b>검수 대기</b><div style={{ marginTop: 5, fontSize: 22, fontWeight: 900, color: '#b45309' }}>{contractTotals.pending}건</div></div>
-          <div className="preview-container"><b>검수 확정</b><div style={{ marginTop: 5, fontSize: 22, fontWeight: 900, color: '#15803d' }}>{contractTotals.approved}건</div></div>
-          <div className="preview-container"><b>반려</b><div style={{ marginTop: 5, fontSize: 22, fontWeight: 900, color: '#dc2626' }}>{contractTotals.rejected}건</div></div>
-        </div>
-        {contractsMsg && <div style={{ color: '#64748b', fontSize: 13, marginBottom: 10 }}>{contractsMsg}</div>}
-        <div className="table-scroll"><table className="admin-table"><thead><tr><th>직원</th><th>직급</th><th>전체 접수</th><th>검수 대기</th><th>검수 확정</th><th>반려</th><th>최근 접수일</th><th>보기</th></tr></thead><tbody>
-          {staffContractRows.map(({ member, total, pending, approved, rejected, latest }) => <tr key={member.id}><td>{member.name} ({member.id})</td><td>{rankLabel(member.role)}</td><td>{total}건</td><td>{pending}건</td><td>{approved}건</td><td>{rejected}건</td><td>{latest ? new Date(latest).toLocaleDateString('ko-KR') : '-'}</td><td><button className="btn btn-outline-x" onClick={() => openEmployeeDetail(member)}>상세 보기</button></td></tr>)}
-          {!staffContractRows.length && <tr><td colSpan="8" className="empty">등록된 직원이 없습니다.</td></tr>}
-        </tbody></table></div>
-      </section>
-
       <section style={{ margin: '16px', padding: 20, border: '1px solid #cfe0ff', borderRadius: 16, background: 'linear-gradient(180deg, #f8fbff 0%, #fff 100%)' }}>
         <div style={{ fontWeight: 900, fontSize: 17 }}>조직도</div>
         <div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>본부장 카드를 누르면 해당 본부장의 직속 인원이 아래 표에 리스트로 표시됩니다.</div>
@@ -225,6 +207,24 @@ export default function AdminDashboard() {
           })}
           {!organizationChildren.length && <div className="empty">바로 아래에 등록된 조직이 없습니다.</div>}
         </div>
+      </section>
+
+      <section style={{ margin: '16px', padding: 20, border: '1px solid #cfe0ff', borderRadius: 16, background: '#fff' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <div><div style={{ fontWeight: 900, fontSize: 17 }}>전체 직원 계약 현황</div><div style={{ color: '#64748b', fontSize: 13, marginTop: 5 }}>계약이 있는 직원의 접수 및 검수 상태를 한눈에 확인합니다.</div></div>
+          <button className="btn btn-outline-x" onClick={loadAllContracts}>계약 현황 새로고침</button>
+        </div>
+        <div className="field-grid" style={{ margin: '16px 0 12px' }}>
+          <div className="preview-container"><b>전체 접수</b><div style={{ marginTop: 5, fontSize: 22, fontWeight: 900 }}>{contractTotals.total}건</div></div>
+          <div className="preview-container"><b>검수 대기</b><div style={{ marginTop: 5, fontSize: 22, fontWeight: 900, color: '#b45309' }}>{contractTotals.pending}건</div></div>
+          <div className="preview-container"><b>검수 확정</b><div style={{ marginTop: 5, fontSize: 22, fontWeight: 900, color: '#15803d' }}>{contractTotals.approved}건</div></div>
+          <div className="preview-container"><b>반려</b><div style={{ marginTop: 5, fontSize: 22, fontWeight: 900, color: '#dc2626' }}>{contractTotals.rejected}건</div></div>
+        </div>
+        {contractsMsg && <div style={{ color: '#64748b', fontSize: 13, marginBottom: 10 }}>{contractsMsg}</div>}
+        <div className="table-scroll"><table className="admin-table"><thead><tr><th>직원</th><th>직급</th><th>전체 접수</th><th>검수 대기</th><th>검수 확정</th><th>반려</th><th>최근 접수일</th><th>보기</th></tr></thead><tbody>
+          {staffContractRows.map(({ member, total, pending, approved, rejected, latest }) => <tr key={member.id}><td>{member.name} ({member.id})</td><td>{rankLabel(member.role)}</td><td>{total}건</td><td>{pending}건</td><td>{approved}건</td><td>{rejected}건</td><td>{latest ? new Date(latest).toLocaleDateString('ko-KR') : '-'}</td><td><button className="btn btn-outline-x" onClick={() => openEmployeeDetail(member)}>상세 보기</button></td></tr>)}
+          {!staffContractRows.length && <tr><td colSpan="8" className="empty">계약이 있는 직원이 없습니다.</td></tr>}
+        </tbody></table></div>
       </section>
 
       <div className="table-scroll">
