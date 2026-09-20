@@ -310,6 +310,7 @@ export default function Main() {
   const [optionModalOpen, setOptionModalOpen] = useState(false)
   const [editingItemIdx, setEditingItemIdx] = useState(0)
   const [addProductOpen, setAddProductOpen] = useState(false)
+  const [additionalCategory, setAdditionalCategory] = useState('')
 
   useEffect(() => {
     // 상담에서 전달한 상품 정보 받기
@@ -411,13 +412,19 @@ export default function Main() {
     setSearchResults([])
   }
 
-  const addProduct = () => setAddProductOpen((open) => !open)
   const selectAdditionalProduct = (productId) => {
     const product = allProducts.find((item) => String(item.id) === productId)
     if (!product) return
     setProductItems((items) => [...items, makeProductItem(product)])
     setAddProductOpen(false)
   }
+  const additionalCategories = useMemo(() => [...new Set(allProducts.map((product) => product.category).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'ko')), [allProducts])
+  const additionalProducts = useMemo(() => allProducts.filter((product) => product.category === additionalCategory), [allProducts, additionalCategory])
+  const addProduct = () => setAddProductOpen((open) => {
+    const nextOpen = !open
+    if (nextOpen) setAdditionalCategory(productItems[0]?.fullProduct?.category || allProducts[0]?.category || '')
+    return nextOpen
+  })
   const updateProductItem = (idx, field, value) => {
     const next = [...productItems]
     next[idx] = { ...next[idx], [field]: value }
@@ -657,14 +664,30 @@ export default function Main() {
               <button type="button" onClick={addProduct} className="add-product-btn" disabled={!allProducts.length}>+ 제품정보 추가</button>
               {addProductOpen && (
                 <div style={{ marginTop: 10, padding: 12, border: '1px solid #bfdbfe', borderRadius: 10, background: '#f8fbff' }}>
-                  <label className="field-label" htmlFor="additional-product-select">추가할 상품 선택</label>
-                  <select id="additional-product-select" className="input-x" defaultValue=""
-                    onChange={(e) => selectAdditionalProduct(e.target.value)} style={{ marginTop: 6 }}>
-                    <option value="" disabled>등록된 상품을 선택하세요</option>
-                    {allProducts.map((product) => (
-                      <option key={product.id} value={product.id}>{product.brand} · {product.name} · {product.model_code}</option>
-                    ))}
+                  <label className="field-label" htmlFor="additional-product-category">추가할 상품 선택</label>
+                  <select id="additional-product-category" className="input-x" value={additionalCategory}
+                    onChange={(e) => setAdditionalCategory(e.target.value)} style={{ marginTop: 6 }}>
+                    <option value="">카테고리를 선택하세요</option>
+                    {additionalCategories.map((category) => <option key={category} value={category}>{category}</option>)}
                   </select>
+                  {additionalCategory && (
+                    <div style={{ marginTop: 10, maxHeight: 300, overflowY: 'auto', border: '1px solid #dbe7f8', borderRadius: 8, background: '#fff' }}>
+                      {additionalProducts.map((product) => {
+                        const productThumbnail = img(product.thumbnail || product.images?.[0] || '')
+                        return (
+                          <button type="button" key={product.id} onClick={() => selectAdditionalProduct(String(product.id))}
+                            style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: 10, textAlign: 'left', border: 0, borderBottom: '1px solid #eef3f9', background: '#fff', cursor: 'pointer' }}>
+                            {productThumbnail ? <img src={productThumbnail} alt="" style={{ width: 48, height: 48, borderRadius: 6, objectFit: 'cover', background: '#f1f5f9', flexShrink: 0 }} /> : <span style={{ width: 48, height: 48, display: 'grid', placeItems: 'center', borderRadius: 6, background: '#f1f5f9', color: '#64748b', fontSize: 11, flexShrink: 0 }}>이미지 없음</span>}
+                            <span style={{ minWidth: 0 }}>
+                              <b style={{ display: 'block', color: '#102a62' }}>{product.name}</b>
+                              <small style={{ color: '#526783' }}>{product.brand} · 모델명 {product.model_code || '-'}</small>
+                            </span>
+                          </button>
+                        )
+                      })}
+                      {!additionalProducts.length && <div style={{ padding: 16, color: '#64748b', textAlign: 'center' }}>해당 카테고리에 등록된 상품이 없습니다.</div>}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
