@@ -99,12 +99,13 @@ export default function AdminDashboard() {
       latest: contracts[0]?.createdAt || null,
     }
   }).filter((row) => row.total > 0).sort((a, b) => b.total - a.total || a.member.name.localeCompare(b.member.name, 'ko'))
-  const contractTotals = {
-    total: allContracts.length,
-    pending: allContracts.filter((contract) => (contract.reviewStatus || 'PENDING') === 'PENDING').length,
-    approved: allContracts.filter((contract) => contract.reviewStatus === 'APPROVED').length,
-    rejected: allContracts.filter((contract) => contract.reviewStatus === 'REJECTED').length,
-  }
+  // 상단 합계는 화면에 표시된 직원들의 판매 건수와 항상 일치해야 한다.
+  const contractTotals = staffContractRows.reduce((totals, row) => ({
+    total: totals.total + row.total,
+    pending: totals.pending + row.pending,
+    approved: totals.approved + row.approved,
+    rejected: totals.rejected + row.rejected,
+  }), { total: 0, pending: 0, approved: 0, rejected: 0 })
 
   const approve = (u) => {
     const grade = u.fee_grade || '100%'
