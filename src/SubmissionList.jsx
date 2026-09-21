@@ -24,6 +24,7 @@ const REVIEW_STATUS_LABELS = {
   PENDING: '검수 대기',
   APPROVED: '검수 확정',
   REJECTED: '반려',
+  CANCELLED: '취소',
 }
 const REVIEWER_ROLES = ['ADMIN', 'HQ_DIRECTOR', 'BRANCH_MANAGER', 'CENTER_MANAGER', 'TEAM_LEAD', 'MANAGER']
 
@@ -49,20 +50,12 @@ export default function SubmissionList() {
 
   useEffect(() => {
     const requestedAppId = location.state?.selectedAppId || location.state?.newAppId
-    const sourceSubmission = location.state?.sourceSubmission
     const applySubmissions = (records) => {
       setSubmissions(records)
       if (requestedAppId) {
         const requested = records.find((submission) => String(submission.id) === String(requestedAppId))
         if (requested) setSelected(requested)
       }
-    }
-
-    // 관리자 대시보드의 직원 상세에서 진입한 경우, 현재 로그인 상태의 목록
-    // 필터와 관계없이 선택한 접수 상세를 즉시 표시한다.
-    if (sourceSubmission?.id) {
-      applySubmissions([sourceSubmission])
-      return
     }
 
     const loadSubmissions = async () => {
@@ -129,10 +122,32 @@ export default function SubmissionList() {
     setSelected((previous) => previous?.id === app.id ? { ...previous, reviewStatus } : previous)
   }
 
+  const manageContract = async (app, action) => {
+    const label = action === 'cancel' ? '취소' : '삭제'
+    if (!window.confirm(`이 계약을 ${label}할까요?`)) return
+    setReviewing(action)
+    const { data, error } = await supabase.functions.invoke('submission-review-v1', {
+      body: { action, id: user.id, password: user.pw, submissionId: app.id },
+    })
+    setReviewing('')
+    if (error || data?.error) {
+      alert(data?.error || `계약 ${label}에 실패했습니다.`)
+      return
+    }
+    if (action === 'delete') {
+      setSubmissions((previous) => previous.filter((submission) => submission.id !== app.id))
+      setSelected(null)
+      return
+    }
+    setSubmissions((previous) => previous.map((submission) => submission.id === app.id ? { ...submission, reviewStatus: 'CANCELLED' } : submission))
+    setSelected((previous) => previous?.id === app.id ? { ...previous, reviewStatus: 'CANCELLED' } : previous)
+  }
+
   const DetailModal = ({ app, onClose }) => {
     if (!app) return null
     const items = Array.isArray(app.items) ? app.items : []
     const canReview = REVIEWER_ROLES.includes(user?.role)
+    const canManageContract = user?.role === 'ADMIN'
     return (
       <div className="modal-veil" onClick={onClose}>
         <div className="modal-card" style={{ maxWidth: 800, maxHeight: '85vh' }} onClick={(e) => e.stopPropagation()}>
@@ -147,6 +162,10 @@ export default function SubmissionList() {
                 {canReview && app.reviewStatus === 'PENDING' && <div style={{ display: 'flex', gap: 8 }}>
                   <button className="btn primary" disabled={!!reviewing} onClick={() => updateReviewStatus(app, 'APPROVED')}>{reviewing === 'APPROVED' ? '처리 중...' : '검수 확정'}</button>
                   <button className="btn danger" disabled={!!reviewing} onClick={() => updateReviewStatus(app, 'REJECTED')}>{reviewing === 'REJECTED' ? '처리 중...' : '반려'}</button>
+                </div>}
+                {canManageContract && <div style={{ display: 'flex', gap: 8 }}>
+                  {app.reviewStatus !== 'CANCELLED' && <button className="btn btn-ghost-x" disabled={!!reviewing} onClick={() => manageContract(app, 'cancel')}>{reviewing === 'cancel' ? '취소 중...' : '계약 취소'}</button>}
+                  <button className="btn danger" disabled={!!reviewing} onClick={() => manageContract(app, 'delete')}>{reviewing === 'delete' ? '삭제 중...' : '계약 삭제'}</button>
                 </div>}
               </div>
               {/* 기본 정보 */}

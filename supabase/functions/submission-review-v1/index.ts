@@ -31,10 +31,31 @@ Deno.serve(async (req) => {
 
     if (action === "list") {
       let query = db.from("submission_reviews").select("id,submission,submitted_by,assigned_manager_id,review_status,submitted_at").order("submitted_at", { ascending: false })
-      if (user.role !== "ADMIN") query = query.eq("submitted_by", user.id)
+      if (user.role === "HQ_DIRECTOR") {
+        const { data: directMembers, error: membersError } = await db.from("users").select("id").eq("parent_id", user.id).eq("status", "APPROVED")
+        if (membersError) throw membersError
+        query = query.in("submitted_by", [user.id, ...(directMembers ?? []).map((member) => member.id)])
+      } else if (user.role !== "ADMIN") {
+        query = query.eq("submitted_by", user.id)
+      }
       const { data, error } = await query
       if (error) throw error
       return response({ submissions: (data ?? []).map((row) => ({ ...row.submission, id: row.id, createdAt: row.submitted_at, reviewStatus: row.review_status, submittedBy: row.submitted_by })) })
+    }
+
+    if (action === "cancel" || action === "delete") {
+      if (user.role !== "ADMIN") return response({ error: "ADMIN만 계약을 취소하거나 삭제할 수 있습니다." }, 403)
+      if (!submissionId) return response({ error: "계약 정보를 확인해 주세요." }, 400)
+      if (action === "cancel") {
+        const { data, error } = await db.from("submission_reviews").update({ review_status: "CANCELLED" }).eq("id", submissionId).select("id,review_status").maybeSingle()
+        if (error) throw error
+        if (!data) return response({ error: "계약을 찾을 수 없습니다." }, 404)
+        return response({ review: { id: data.id, reviewStatus: data.review_status } })
+      }
+      const { data, error } = await db.from("submission_reviews").delete().eq("id", submissionId).select("id").maybeSingle()
+      if (error) throw error
+      if (!data) return response({ error: "계약을 찾을 수 없습니다." }, 404)
+      return response({ deletedId: data.id })
     }
 
     if (action === "team-overview") {
