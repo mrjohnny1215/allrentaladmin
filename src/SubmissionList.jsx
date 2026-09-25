@@ -47,7 +47,7 @@ export default function SubmissionList() {
   const [search, setSearch] = useState({ startDate: '', endDate: '', keyword: '' })
   const [selected, setSelected] = useState(null)
   const [reviewing, setReviewing] = useState('')
-  const isAdmin = user?.role === 'ADMIN'
+  const canManageContracts = ['ADMIN', 'HQ_DIRECTOR'].includes(user?.role)
 
   useEffect(() => {
     const requestedAppId = location.state?.selectedAppId || location.state?.newAppId
@@ -148,7 +148,7 @@ export default function SubmissionList() {
     if (!app) return null
     const items = Array.isArray(app.items) ? app.items : []
     const canReview = REVIEWER_ROLES.includes(user?.role)
-    const canManageContract = user?.role === 'ADMIN'
+    const canManageContract = canManageContracts
     return (
       <div className="modal-veil" onClick={onClose}>
         <div className="modal-card" style={{ maxWidth: 800, maxHeight: '85vh' }} onClick={(e) => e.stopPropagation()}>
@@ -315,7 +315,7 @@ export default function SubmissionList() {
                 <th style={{ padding: '10px 12px', textAlign: 'left', borderBottom: '2px solid #e5e7eb' }}>특이사항</th>
                 <th style={{ padding: '10px 12px', textAlign: 'center', borderBottom: '2px solid #e5e7eb' }}>건수</th>
                 <th style={{ padding: '10px 12px', textAlign: 'center', borderBottom: '2px solid #e5e7eb' }}>자세히</th>
-                {isAdmin && <th style={{ padding: '10px 12px', textAlign: 'center', borderBottom: '2px solid #e5e7eb' }}>계약 관리</th>}
+                {canManageContracts && <th style={{ padding: '10px 12px', textAlign: 'center', borderBottom: '2px solid #e5e7eb' }}>계약 관리</th>}
               </tr>
             </thead>
             <tbody>
@@ -351,7 +351,7 @@ export default function SubmissionList() {
                         style={{ fontSize: 12, padding: '4px 10px' }}
                       >자세히</button>
                     </td>
-                    {isAdmin && <td style={{ padding: '10px 12px', textAlign: 'center', whiteSpace: 'nowrap' }}>
+                    {canManageContracts && <td style={{ padding: '10px 12px', textAlign: 'center', whiteSpace: 'nowrap' }}>
                       <div style={{ display: 'flex', justifyContent: 'center', gap: 6 }}>
                         {s.reviewStatus !== 'CANCELLED' && <button className="btn btn-ghost-x" disabled={!!reviewing} onClick={() => manageContract(s, 'cancel')} style={{ fontSize: 12, padding: '4px 8px' }}>{reviewing === 'cancel' ? '처리 중' : '취소'}</button>}
                         <button className="btn danger" disabled={!!reviewing} onClick={() => manageContract(s, 'delete')} style={{ fontSize: 12, padding: '4px 8px' }}>{reviewing === 'delete' ? '처리 중' : '삭제'}</button>

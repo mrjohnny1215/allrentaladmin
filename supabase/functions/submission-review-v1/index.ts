@@ -44,8 +44,18 @@ Deno.serve(async (req) => {
     }
 
     if (action === "cancel" || action === "delete") {
-      if (user.role !== "ADMIN") return response({ error: "ADMIN만 계약을 취소하거나 삭제할 수 있습니다." }, 403)
+      if (!["ADMIN", "HQ_DIRECTOR"].includes(user.role)) return response({ error: "ADMIN 또는 본부장만 계약을 취소하거나 삭제할 수 있습니다." }, 403)
       if (!submissionId) return response({ error: "계약 정보를 확인해 주세요." }, 400)
+      if (user.role === "HQ_DIRECTOR") {
+        const { data: target, error: targetError } = await db.from("submission_reviews").select("submitted_by").eq("id", submissionId).maybeSingle()
+        if (targetError) throw targetError
+        if (!target) return response({ error: "계약을 찾을 수 없습니다." }, 404)
+        if (target.submitted_by !== user.id) {
+          const { data: directMember, error: memberError } = await db.from("users").select("id").eq("id", target.submitted_by).eq("parent_id", user.id).eq("status", "APPROVED").maybeSingle()
+          if (memberError) throw memberError
+          if (!directMember) return response({ error: "본인 또는 소속 직원 계약만 관리할 수 있습니다." }, 403)
+        }
+      }
       if (action === "cancel") {
         const { data, error } = await db.from("submission_reviews").update({ review_status: "CANCELLED" }).eq("id", submissionId).select("id,review_status").maybeSingle()
         if (error) throw error
