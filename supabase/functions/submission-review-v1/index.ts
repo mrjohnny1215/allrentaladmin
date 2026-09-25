@@ -40,16 +40,16 @@ Deno.serve(async (req) => {
       }
       const { data, error } = await query
       if (error) throw error
-      return response({ submissions: (data ?? []).map((row) => ({ ...row.submission, id: row.id, createdAt: row.submitted_at, reviewStatus: row.review_status, submittedBy: row.submitted_by })) })
+      return response({ submissions: (data ?? []).map((row) => ({ ...row.submission, id: row.id, createdAt: row.submitted_at, reviewStatus: row.submission?.cancelledAt ? "CANCELLED" : row.review_status, submittedBy: row.submitted_by })) })
     }
 
     if (action === "cancel" || action === "delete") {
       if (!["ADMIN", "HQ_DIRECTOR"].includes(user.role)) return response({ error: "ADMIN 또는 본부장만 계약을 취소하거나 삭제할 수 있습니다." }, 403)
       if (!submissionId) return response({ error: "계약 정보를 확인해 주세요." }, 400)
+      const { data: target, error: targetError } = await db.from("submission_reviews").select("submitted_by,submission").eq("id", submissionId).maybeSingle()
+      if (targetError) throw targetError
+      if (!target) return response({ error: "계약을 찾을 수 없습니다." }, 404)
       if (user.role === "HQ_DIRECTOR") {
-        const { data: target, error: targetError } = await db.from("submission_reviews").select("submitted_by").eq("id", submissionId).maybeSingle()
-        if (targetError) throw targetError
-        if (!target) return response({ error: "계약을 찾을 수 없습니다." }, 404)
         if (target.submitted_by !== user.id) {
           const { data: directMember, error: memberError } = await db.from("users").select("id").eq("id", target.submitted_by).eq("parent_id", user.id).eq("status", "APPROVED").maybeSingle()
           if (memberError) throw memberError
@@ -57,7 +57,8 @@ Deno.serve(async (req) => {
         }
       }
       if (action === "cancel") {
-        const { data, error } = await db.from("submission_reviews").update({ review_status: "CANCELLED" }).eq("id", submissionId).select("id,review_status").maybeSingle()
+        const cancelledSubmission = { ...(target.submission ?? {}), cancelledAt: new Date().toISOString(), cancelledBy: user.id }
+        const { data, error } = await db.from("submission_reviews").update({ review_status: "REJECTED", submission: cancelledSubmission }).eq("id", submissionId).select("id,review_status").maybeSingle()
         if (error) throw error
         if (!data) return response({ error: "계약을 찾을 수 없습니다." }, 404)
         return response({ review: { id: data.id, reviewStatus: data.review_status } })
@@ -80,7 +81,7 @@ Deno.serve(async (req) => {
       if (error) throw error
       return response({
         teamMembers: teamMembers ?? [],
-        submissions: (data ?? []).map((row) => ({ ...row.submission, id: row.id, createdAt: row.submitted_at, reviewStatus: row.review_status, submittedBy: row.submitted_by })),
+        submissions: (data ?? []).map((row) => ({ ...row.submission, id: row.id, createdAt: row.submitted_at, reviewStatus: row.submission?.cancelledAt ? "CANCELLED" : row.review_status, submittedBy: row.submitted_by })),
       })
     }
 
@@ -105,7 +106,7 @@ Deno.serve(async (req) => {
         .select("id,submission,review_status,submitted_at").eq("submitted_by", employee.id).order("submitted_at", { ascending: false })
       if (error) throw error
       const rate = Number(String(employee.fee_grade || "100%").replace("%", "")) / 100
-      const submissions = (rows ?? []).map((row) => ({ ...row.submission, id: row.id, createdAt: row.submitted_at, reviewStatus: row.review_status }))
+      const submissions = (rows ?? []).map((row) => ({ ...row.submission, id: row.id, createdAt: row.submitted_at, reviewStatus: row.submission?.cancelledAt ? "CANCELLED" : row.review_status }))
       const baseCommission = submissions.reduce((sum, item) => sum + (item.items || []).reduce((itemSum, product) => itemSum + Number(product.selectedOption?.commission || product.commission || 0), 0), 0)
       const { data: account } = await db.from("member_financial_profiles").select("bank_name,account_number,account_holder,updated_at").eq("user_id", employee.id).maybeSingle()
       return response({ employee, submissions, settlement: { count: submissions.length, baseCommission, expectedPayout: Math.floor(baseCommission * rate), rate }, account: account || null })
