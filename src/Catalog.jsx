@@ -1,5 +1,6 @@
 
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState, useCallback } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 
 
@@ -610,6 +611,8 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
 
 /* ============ 메인 카탈로그 ============ */
 export default function Catalog() {
+  const navigate = useNavigate()
+  const { productId } = useParams()
   const _auth = useAuth();
   const { user } = _auth || {};
   const rate = user?.rate ?? 1.0
@@ -701,9 +704,26 @@ export default function Catalog() {
 
   useEffect(() => { setLimit(PAGE) }, [q, cat, brand, brandFilter, funcFilter, typeFilter, methodFilter, priceFilter, areaFilter, airFuncFilter, mattressTypeFilter, sort])
 
-  // 모달 열기: 별도 창
-  const open = useCallback((p) => setSel(p), [])
-  const close = useCallback(() => setSel(null), [])
+  // 상품을 고유 URL로 열어 새로고침·공유·뒤로가기를 지원한다.
+  const open = useCallback((p) => {
+    setSel(p)
+    navigate(`/products/${encodeURIComponent(p.id)}`)
+  }, [navigate])
+  const close = useCallback(() => {
+    setSel(null)
+    navigate('/')
+  }, [navigate])
+
+  useEffect(() => {
+    if (!all) return
+    if (!productId) {
+      setSel(null)
+      return
+    }
+    const product = all.find((p) => String(p.id) === productId)
+    if (product) setSel(product)
+    else navigate('/', { replace: true })
+  }, [all, productId, navigate])
 
   // ESC 닫기 + 배경 스크롤 잠금
   useEffect(() => {
