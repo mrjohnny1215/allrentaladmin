@@ -523,7 +523,7 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
             <ul className="filter-list">{sp.filters.map((t, i) => <li key={i}>{t}</li>)}</ul>
           </div>
         )}
-        {/* 상세 설명 본문 이미지 (카톡 상담신청 버튼 바로 위) */}
+        {/* 상세 설명 본문 이미지 */}
         {descImgs.length > 0 && (
           <div className="detail-desc w-full max-w-4xl mx-auto">
             {descImgs.map((src, i) => (
