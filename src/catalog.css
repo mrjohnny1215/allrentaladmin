@@ -726,9 +726,6 @@
   /* 본문 설명 이미지 */
   .detail-desc { gap: 3px; margin-top: 12px; }
 
-  /* 카톡 CTA */
-  .kakao-cta { font-size: 15px; padding: 14px; margin: 16px 0 6px; border-radius: 10px; }
-
   /* 상세 모달 내부 패딩 */
   .modal-body .detail-cols { gap: 14px; }
   .modal-card.fullscreen { height: 100dvh; max-height: 100dvh; }
@@ -810,17 +807,12 @@
 .detail-desc img { width: 100%; height: auto; display: block; border-radius: 8px; }
 .detail-desc:empty { margin-top: 0; }
 
-/* 카톡 CTA */
-.kakao-cta { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: #fee500; color: #3c1e1e; font-size: 16px; font-weight: 900; padding: 14px; border-radius: 12px; margin: 22px 0 8px; text-decoration: none; box-shadow: 0 4px 14px rgba(254, 229, 0, .4); }
 .receipt-cta { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 22px; padding: 14px; border: 0; border-radius: 12px; background: #2563eb; color: #fff; font: inherit; font-size: 16px; font-weight: 900; box-shadow: 0 4px 14px rgba(37,99,235,.24); }
 .receipt-choice-veil { position: fixed; inset: 0; z-index: 1200; display: grid; place-items: center; padding: 18px; background: rgba(15,23,42,.5); }
 .receipt-choice-card { width: min(100%, 540px); max-height: 82vh; overflow: auto; border-radius: 16px; background: #fff; box-shadow: 0 24px 60px rgba(0,0,0,.3); }
 .receipt-choice-head { display: flex; align-items: start; justify-content: space-between; padding: 20px; border-bottom: 1px solid #e5e7eb; font-size: 20px; }.receipt-choice-head small,.receipt-choice-list small { display: block; margin-top: 5px; color: #64748b; font-size: 13px; font-weight: 500; }.receipt-choice-head button { border: 0; background: none; color: #64748b; font-size: 30px; line-height: 1; }
 .receipt-choice-list label { display: flex; gap: 14px; align-items: center; padding: 15px 20px; border-bottom: 1px solid #e5e7eb; cursor: pointer; }.receipt-choice-list label.on { background: #eff6ff; }.receipt-choice-list input { accent-color: #2563eb; width: 18px; height: 18px; }.receipt-choice-list b { font-size: 16px; }
 .receipt-choice-actions { display: flex; justify-content: flex-end; gap: 10px; padding: 16px 20px; }.receipt-choice-actions button { padding: 10px 18px; border: 0; border-radius: 8px; background: #e2e8f0; color: #334155; font: inherit; font-weight: 800; }.receipt-choice-actions .send { background: #2563eb; color: #fff; }
-.kakao-cta:hover { filter: brightness(1.03); }
-.cta-kakao-ico { width: 28px; height: 28px; display: block; }
-.cta-txt { line-height: 1; }
 
 /* 푸터 */
 .site-footer { border-top: 1px solid var(--gray-200); margin-top: 24px; padding-top: 16px; font-size: 11.5px; color: var(--gray-500); line-height: 1.7; }
@@ -830,7 +822,6 @@
 .float-actions { position: fixed; right: 18px; bottom: 20px; z-index: 70; display: flex; flex-direction: column; gap: 12px; align-items: center; }
 .fab { width: 52px; height: 52px; border-radius: 50%; border: none; cursor: pointer; font-size: 22px; display: grid; place-items: center; box-shadow: 0 6px 18px rgba(0,0,0,.22); transition: transform .15s ease, box-shadow .15s ease; background: #fff; color: var(--gray-700); }
 .fab:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,.28); }
-.fab-kakao { background: #fee500; color: #3c1e1e; }
 .fab-top { background: #111827; color: #fff; }
 .fab-fee { background: #9ca3af; color: #fff; }      /* 회색(숨김) */
 .fab-fee.on { background: #16a34a; color: #fff; }   /* 녹색(표시) */
@@ -941,9 +932,6 @@
 .detail-fab:active { transform: scale(.94); }
 .detail-fab .fab-ico { font-size: 20px; line-height: 1; }
 .detail-fab .fab-txt { font-size: 10px; font-weight: 800; margin-top: 2px; }
-.detail-fab.fab-kakao { background: #fee500; color: #3c1e1e; padding: 0; box-shadow: 0 4px 12px rgba(254,229,0,.4); display: grid; place-items: center; }
-.detail-fab.fab-kakao .fab-kakao-ico { width: 28px; height: 28px; display: block; }
-.detail-fab.fab-kakao .fab-txt { color: #3c1e1e; }
 .detail-fab.fab-fee { background: #cbd5e1; color: #475569; }
 .detail-fab.fab-fee.on { background: #16a34a; color: #fff; }
 .detail-fab .fab-fee-txt { font-size: 14px; font-weight: 900; line-height: 1; }

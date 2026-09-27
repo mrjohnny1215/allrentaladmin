@@ -6,7 +6,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { img } from './lib/imageUrl'
 import './catalog.css'
-import { KAKAO_CHANNEL_URL, COMPANY } from './config'
 import { useAuth, applyFeeRate } from './auth.jsx'
 import AllRentalLogo from './components/AllRentalLogo'
 
@@ -317,33 +316,6 @@ const CATEGORY_EN = {
   '매트리스': 'Mattress', '안마의자': 'Massage Chair',
 }
 
-function buildAndSendKakao(p, mgmt, contract, years, color, discount, matched, matrix) {
-  if (!p) return
-  const original = matched?.monthly_fee ?? p.min_monthly_fee ?? 0
-  const cardDiscount = Math.max(0, discount || 0)
-  const finalFee = Math.max(0, original - cardDiscount)
-  const msg = [
-    '[렌탈 상담 신청]',
-    `• 브랜드: ${p.brand}`,
-    `• 모델명: ${p.name}${p.model_code ? ` (${p.model_code})` : ''}`,
-    `• 제품종류: ${p.category_detail || p.category}`,
-    `• 월 렌탈료: ${Number(original).toLocaleString()}원`,
-    `• 카드할인: ${cardDiscount.toLocaleString()}원`,
-    `• 할인적용가: ${finalFee.toLocaleString()}원`,
-    `• 관리 방식: ${mgmt || '-'}`,
-    `• 계약 유형: ${contract || '-'}`,
-    `• 약정 기간: ${years || '-'}`,
-    `• 선택 색상: ${color || '-'}`,
-    '',
-    '위 조건으로 렌탈 상담 및 신청을 희망합니다.'
-  ].join('\n')
-
-  try {
-    navigator.clipboard?.writeText(msg)
-  } catch {}
-  setTimeout(() => window.open('https://pf.kakao.com/_DaXfxkT', '_blank', 'noopener'), 80)
-}
-
 function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
   if (!p) return null
   const _auth = useAuth();
@@ -580,16 +552,8 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
             <div className="receipt-choice-actions"><button onClick={() => setReceiptOpen(false)}>취소</button><button className="send" onClick={() => { const row = (matrix.length ? matrix : [matched])[receiptOption] || matched; const selectedProduct = { ...p, colors: selColor ? [selColor] : (p.colors || []), pricing_matrix: [row] }; sessionStorage.setItem('allrental_selected_product', JSON.stringify({ product: selectedProduct })); window.location.assign('/admin/reception') }}>접수하기</button></div>
           </div>
         </div>}
-        <a className="kakao-cta" href={KAKAO_CHANNEL_URL} target="_blank" rel="noopener noreferrer" onClick={(e) => { e.preventDefault(); buildAndSendKakao(p, selMgmt, selContract, selYears, selColor, discount, matched, matrix); }}>
-          <img className="cta-kakao-ico" src="/images/kakao-icon.png" alt="카카오톡" />
-          <span className="cta-txt">카톡 상담신청</span>
-        </a>
-
-        {/* 우측 하단 플로팅 버튼 3개 (상세 모달용) */}
+        {/* 우측 하단 플로팅 버튼 (상세 모달용) */}
         <div className="detail-fab-wrap">
-          <a className="detail-fab fab-kakao" href={KAKAO_CHANNEL_URL} target="_blank" rel="noopener noreferrer" title="카카오톡 상담" onClick={(e) => { e.preventDefault(); buildAndSendKakao(p, selMgmt, selContract, selYears, selColor, discount, matched, matrix); }}>
-            <img className="fab-kakao-ico" src="/images/kakao-icon.png" alt="카카오톡" />
-          </a>
           <button className={`detail-fab fab-fee ${commissionOn ? 'on' : ''}`} onClick={() => setCommissionOn && setCommissionOn((v) => !v)} title={commissionOn ? '수수료 표시 중 (클릭 시 숨김)' : '숨김 중 (클릭 시 표시)'}>
             <span className="fab-ico fab-fee-txt">{commissionOn ? 'on' : 'off'}</span>
             <span className="fab-txt">on/off</span>
@@ -871,12 +835,6 @@ export default function Catalog() {
       <div className="float-actions">
         {sel ? (
           <>
-            <button
-              className="fab fab-kakao"
-              onClick={() => window.open(KAKAO_CHANNEL_URL, '_blank', 'noopener')}
-              title="카카오톡 상담"
-              aria-label="카카오톡 상담"
-            >💬</button>
             <button
               className={`fab fab-fee ${commissionOn ? 'on' : ''}`}
               onClick={() => setCommissionOn((v) => !v)}
