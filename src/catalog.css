@@ -797,11 +797,13 @@
 
 /* 렌탈료 매트릭스 표 */
 .table-scroll { overflow-x: auto; }
-.matrix-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 460px; }
+.matrix-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 560px; }
 .matrix-table th, .matrix-table td { border: 1px solid var(--gray-200); padding: 8px 10px; text-align: center; }
 .matrix-table th { background: var(--gray-100); font-weight: 800; color: var(--gray-700); }
 .matrix-table td b { color: var(--blue-dark); }
 .matrix-table td.hide { color: transparent; }
+.matrix-table tbody tr.selected-plan { background: var(--blue-50); }
+.matrix-table tbody tr.selected-plan td { border-color: #bfdbfe; }
 
 /* 상세 본문 설명 이미지 */
 .detail-desc { margin-top: 16px; display: flex; flex-direction: column; gap: 4px; }

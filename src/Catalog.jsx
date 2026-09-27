@@ -490,13 +490,17 @@ function DetailSection({ p, commissionOn, setCommissionOn, scrollRef }) {
                 <div className={`table-scroll ${tableOpen ? '' : 'collapsed'}`}>
                   <table className="matrix-table">
                     <thead>
-                      <tr><th>관리방법</th><th>관리주기</th><th>약정기간</th><th>월 렌탈료</th><th className={!commissionOn ? 'hide' : ''}>수수료</th></tr>
+                      <tr><th>관리방법</th><th>관리주기</th><th>계약유형</th><th>약정기간</th><th>월 렌탈료</th><th className={!commissionOn ? 'hide' : ''}>수수료</th></tr>
                     </thead>
                     <tbody>
                       {matrix.map((r, i) => (
-                        <tr key={i}>
+                        <tr
+                          key={i}
+                          className={r.mgmt === selMgmt && r.contract === selContract && r.years === selYears ? 'selected-plan' : ''}
+                        >
                           <td>{r.mgmt || '-'}</td>
                           <td>{r.mgmt_cycle || '-'}</td>
+                          <td>{r.contract || '-'}</td>
                           <td>{r.years || '-'}</td>
                           <td><b>{won(r.monthly_fee)}원</b></td>
                           <td className={!commissionOn ? 'hide' : ''}>{won(applyFeeRate(r.commission, rate))}원</td>
