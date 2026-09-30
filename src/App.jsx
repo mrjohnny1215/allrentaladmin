@@ -1,41 +1,15 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Catalog from './Catalog.jsx'
-import Layout from './components/Layout.jsx'
-import { LoginGate } from './LoginGate.jsx'
-import AdminDashboard from './AdminDashboard.jsx'
-import Main from './Main.jsx'
-import EstimateForm from './EstimateForm.jsx'
-import Counsel from './Counsel.jsx'
-import SettlementManage from './SettlementManage.jsx'
-import SubmissionList from './SubmissionList.jsx'
-import CustomerApplyManage from './CustomerApplyManage.jsx'
-import SuggestionBoard from './SuggestionBoard.jsx'
-import Details from './Details.jsx'
-
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<LoginGate><Catalog /></LoginGate>} />
-      <Route path="/products/:productId" element={<LoginGate><Catalog /></LoginGate>} />
-      <Route path="/admin/main" element={<LoginGate><Catalog /></LoginGate>} />
-      <Route path="/admin" element={<LoginGate><AdminDashboard /></LoginGate>} />
-      <Route path="/admin/counsel" element={<Layout><Counsel /></Layout>} />
-      <Route path="/admin/reception" element={<Layout><Main /></Layout>} />
-      <Route path="/admin/details" element={<Layout><Details /></Layout>} />
-      <Route path="/admin/estimate_form" element={<Layout><EstimateForm /></Layout>} />
-      <Route path="/admin/submission_list" element={<Layout><SubmissionList /></Layout>} />
-      <Route path="/admin/progress" element={<Layout><Counsel /></Layout>} />
-      <Route path="/admin/settlement_manage" element={<Layout><SettlementManage /></Layout>} />
-      <Route path="/admin/customer_apply_manage" element={<Layout><CustomerApplyManage /></Layout>} />
-      <Route path="/admin/promotions" element={<Layout><Counsel /></Layout>} />
-      <Route path="/admin/creditcard" element={<Layout><Counsel /></Layout>} />
-      <Route path="/admin/notice" element={<Layout><SuggestionBoard defaultType="공지" /></Layout>} />
-      <Route path="/admin/inquiry" element={<Layout><SuggestionBoard defaultType="문의" /></Layout>} />
-      <Route path="/admin/suggestion_board" element={<Layout><SuggestionBoard /></Layout>} />
-      <Route path="/admin/business_card" element={<Layout><Counsel /></Layout>} />
-      <Route path="/admin/faq" element={<Layout><Counsel /></Layout>} />
-      <Route path="/admin/howto" element={<Layout><Counsel /></Layout>} />
-    </Routes>
-  )
+    <div style={{ padding: '60px 20px', textAlign: 'center', fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ maxWidth: '500px', backgroundColor: '#fff', padding: '40px', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
+        <h1 style={{ fontSize: '24px', color: '#ef4444', marginBottom: '16px' }}>⚠️ 500 Internal Server Error</h1>
+        <p style={{ color: '#475569', fontSize: '15px', lineHeight: '1.6', marginBottom: '20px' }}>
+          웹 서버가 요청을 처리하는 동안 예상치 못한 데이터베이스 연결 오류 또는 일시적인 시스템 에러가 발생했습니다.
+        </p>
+        <p style={{ color: '#94a3b8', fontSize: '13px' }}>
+          관리자에게 자동으로 오류 내용이 전송되었습니다. 빠른 시간 내에 조치하겠습니다.
+        </p>
+      </div>
+    </div>
+  );
 }
